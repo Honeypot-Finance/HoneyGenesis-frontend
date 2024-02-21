@@ -6,6 +6,90 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+  color: white;
+}
+
+li {
+  list-style: none;
+}
+
 body {
   background-color: $light-brown;
+}
+
+header {
+  height: 100vh;
+  background-color: $dark-brown;
+  padding: 1rem;
+  color: white;
+}
+
+hr {
+  border: 1px solid $very-dark-brown;
+  margin: 1rem;
+}
+
+.open-header-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+}
+
+.App-header {
+  position: relative;
+  z-index: 1000;
+  padding-top: 2rem;
+
+  .close-header-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    cursor: pointer;
+  }
+
+  .medias {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+
+    &__link {
+      margin: 1rem;
+      text-align: center;
+      color: #e1bb84;
+    }
+  }
+
+  .navbar {
+    &__link {
+      text-align: center;
+      margin: 0 1rem;
+    }
+  }
+  .connect-button-container {
+    display: flex;
+    justify-content: center;
+
+    .connnect-wallet-button {
+      margin: 1rem;
+      padding: 1rem 2rem;
+      font-weight: bold;
+      background-color: #c1770d;
+      border: solid 5px $very-dark-brown;
+      border-radius: 2rem 2rem 2rem 2rem / 50% 50% 50% 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+  }
+
+  &.closed {
+    display: none;
+  }
 }

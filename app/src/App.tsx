@@ -1,21 +1,11 @@
 import React from "react";
 import "@/css/home.css";
+import Header from "@/components/Header";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <nav>
-          <li>Honeypot Finance</li>
-          <hr />
-          <li>My Assets</li>
-        </nav>
-        <div>
-          <a href="">Twitter</a>
-          <a href="">Discord</a>
-          <a href="">Gitbook</a>
-        </div>
-      </header>
+      <Header />
       <main>
         <div className="minted-display">
           <h2>minted</h2>
@@ -44,7 +34,6 @@ function App() {
           <button type="submit">Mint</button>
         </form>
       </main>
-      <footer></footer>
     </div>
   );
 }
