@@ -1,1 +1,160 @@
 @import "./partial/general.scss";
+
+.main {
+  padding: 3rem 2rem;
+
+  .title {
+    color: #ffcd4d;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, -1px -1px 0 #000,
+      1px -1px 0 #000;
+  }
+
+  .image-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .mint-form {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+
+    .price-label,
+    .amount-label {
+      color: white;
+      font-size: 1rem;
+      font-weight: 500;
+      margin: 0.5rem 0;
+    }
+
+    .price-input {
+      background-color: #00000000;
+      border: none;
+      font-weight: 500;
+      color: white;
+
+      .price-input-deco {
+        min-width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        background-color: pink;
+        display: inline-block;
+        margin: 0 0.5rem 0 0;
+        transform: translateY(0.1rem);
+      }
+    }
+
+    .price-currency {
+      width: min-content;
+      color: white;
+      font-size: 1rem;
+      font-weight: 500;
+      margin: 0.5rem 0;
+    }
+
+    .amount-input-container {
+      background-color: #ffffff1e;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      border: none;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .amount-input {
+        background-color: #00000000;
+        border: none;
+        font-weight: 500;
+        color: white;
+        width: 85%;
+
+        &::placeholder {
+          color: white;
+        }
+      }
+
+      .plus {
+        font-size: 1.5rem;
+        margin: 0 0.2rem;
+        right: 1rem;
+      }
+
+      .minus {
+        font-size: 1.5rem;
+        margin: 0 0.2rem;
+      }
+    }
+
+    .max-available {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 1rem;
+      margin: 0.2rem 0;
+    }
+
+    .terms {
+      color: rgba(255, 255, 255, 0.25);
+      font-size: 1rem;
+      margin: 1rem 0;
+
+      a {
+        color: inherit;
+        text-decoration: underline;
+      }
+    }
+
+    .mint-button {
+      padding: 1rem 2rem;
+      font-weight: bold;
+      background-color: #ffcd4d;
+      border: solid 5px #f7941a9f;
+      border-radius: 2rem 2rem 2rem 2rem / 50% 50% 50% 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-top: 1rem;
+      width: 100%;
+    }
+  }
+}
+
+.minted-display {
+  position: relative;
+  border: 0.5rem solid #fcd52927;
+  border-radius: 2rem;
+  padding: 1.5rem;
+  background: $very-dark-brown;
+
+  .minted__title {
+    color: #ffffff50;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .minted__amount {
+    font-weight: 500;
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .minted__next-price {
+    color: white;
+    font-size: 1rem;
+  }
+
+  .smoking-mole {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}

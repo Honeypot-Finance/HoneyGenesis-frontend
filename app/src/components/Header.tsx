@@ -20,7 +20,7 @@ export default function Header() {
       <div className="open-header-button" ref={openHeaderButton}>
         <p>Open Header</p>
       </div>
-      <header className="App-header">
+      <header className="App-header closed">
         <div className="close-header-button" ref={closeHeaderButton}>
           X
         </div>
