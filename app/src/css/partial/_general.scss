@@ -36,10 +36,13 @@ hr {
   top: 1rem;
   right: 1rem;
   cursor: pointer;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
 }
 
 .App-header {
-  position: relative;
   z-index: 1000;
   padding-top: 2rem;
 
@@ -87,9 +90,23 @@ hr {
       text-align: center;
       color: white;
     }
+
+    @media (min-width: 768px) {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
   }
 
   &.closed {
     display: none;
+
+    @media (min-width: 768px) {
+      display: block;
+    }
+  }
+
+  @media (min-width: 768px) {
+    height: 100%;
   }
 }
