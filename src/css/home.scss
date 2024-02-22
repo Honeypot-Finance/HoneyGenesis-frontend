@@ -76,9 +76,15 @@
           font-weight: 500;
           color: white;
           width: 85%;
+          appearance: none;
+          -webkit-appearance: none;
 
           &::placeholder {
             color: white;
+          }
+
+          &:focus {
+            outline: none;
           }
         }
 
@@ -86,11 +92,13 @@
           font-size: 1.5rem;
           margin: 0 0.2rem;
           right: 1rem;
+          cursor: pointer;
         }
 
         .minus {
           font-size: 1.5rem;
           margin: 0 0.2rem;
+          cursor: pointer;
         }
       }
 
