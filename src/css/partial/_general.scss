@@ -53,6 +53,9 @@ hr {
 }
 
 .App-header {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
   z-index: 1000;
   padding-top: 2rem;
 
@@ -121,6 +124,12 @@ hr {
   }
 
   @media (min-width: 768px) {
+    position: unset;
+    width: auto;
     height: 100%;
   }
+}
+
+.hide {
+  display: none;
 }

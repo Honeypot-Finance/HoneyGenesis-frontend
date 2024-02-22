@@ -8,17 +8,19 @@ export default function Header() {
   useEffect(() => {
     closeHeaderButton.current?.addEventListener("click", () => {
       closeHeaderButton.current?.parentElement?.classList.add("closed");
+      openHeaderButton.current?.classList.remove("hide");
     });
 
     openHeaderButton.current?.addEventListener("click", () => {
       closeHeaderButton.current?.parentElement?.classList.remove("closed");
+      openHeaderButton.current?.classList.add("hide");
     });
   }, []);
 
   return (
     <>
       <div className="open-header-button" ref={openHeaderButton}>
-        <p>Open Header</p>
+        <p>Open Menu</p>
       </div>
       <header className="App-header closed">
         <div className="close-header-button" ref={closeHeaderButton}>
