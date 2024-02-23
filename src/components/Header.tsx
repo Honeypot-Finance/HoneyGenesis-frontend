@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import "@/css/home.css";
+import WalletConnectButton from "@/components/walletConnect/WalletConnectConnectButton";
 
 export default function Header() {
   const closeHeaderButton = useRef<HTMLDivElement>(null);
@@ -42,11 +43,7 @@ export default function Header() {
             Gitbook
           </a>
         </div>
-        <div className="connect-button-container">
-          <button className="connnect-wallet-button">
-            <p>Connect Wallet</p>
-          </button>
-        </div>
+        <WalletConnectButton />
       </header>
     </>
   );

@@ -101,6 +101,7 @@ hr {
   justify-content: center;
   text-align: center;
   color: white;
+  cursor: pointer;
 }
 @media (min-width: 768px) {
   .App-header .connect-button-container {
