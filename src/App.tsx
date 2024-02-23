@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import "@/css/home.css";
 import Header from "@/components/Header";
 import {
@@ -85,8 +85,8 @@ function App() {
           </p>
           <p className="terms">
             <a href="">Click here</a> to view the contract on Etherscan. By
-            placing a bid you confirm that you have read and agree to the 
-            <a href="">terms of sale</a> for this drop. Your bid will be
+            placing a bid you confirm that you have read and agree to the
+            <a href="">terms of sale </a>for this drop. Your bid will be
             refunded if you lose the auction.
           </p>
           <button className="mint-button" type="submit">
