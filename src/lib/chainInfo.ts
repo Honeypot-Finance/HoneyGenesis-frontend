@@ -1,4 +1,10 @@
+import { useWeb3Modal } from "@web3modal/wagmi/react";
+import { useAccount } from "wagmi";
+
+
 function getCurrentPrice() {
+  const { address, isConnecting, isDisconnected } = useAccount()
+  
   return 100
 }
 
