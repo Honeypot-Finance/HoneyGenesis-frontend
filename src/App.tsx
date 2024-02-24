@@ -15,11 +15,6 @@ function App() {
     UseHoneyPot();
   const [amount, setAmount] = useState(1);
 
-  console.log(getCurrentPrice());
-  console.log(getNextPrice());
-  console.log(getMintedAmount());
-  console.log(getMaxAmount());
-
   function increaseAmount() {
     setAmount(amount + 1);
   }
