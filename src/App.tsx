@@ -1,12 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "@/css/home.css";
 import Header from "@/components/Header";
-import {
-  getCurrentPrice,
-  getNextPrice,
-  getMintedAmount,
-  getMaxAmount,
-} from "./lib/chainInfo";
+import UseHoneyPot from "@/hooks/useHoneyPot";
+import { weiToEther } from "./lib/currencyConvert";
 
 //images
 import smokingMole from "@/assets/smoking-mole.png";
@@ -15,6 +11,8 @@ import plus from "@/assets/plus.png";
 import minus from "@/assets/minus.png";
 
 function App() {
+  const { getCurrentPrice, getNextPrice, getMintedAmount, getMaxAmount } =
+    UseHoneyPot();
   const [amount, setAmount] = useState(1);
 
   function increaseAmount() {
@@ -37,7 +35,13 @@ function App() {
             {getMintedAmount()}/{getMaxAmount()}
           </p>
           <p className="minted__next-price">
-            next price: <span>{getNextPrice()}</span> USDC
+            next price:{" "}
+            <span>
+              {Number(getNextPrice())
+                ? weiToEther(parseInt(getNextPrice()))
+                : ""}
+            </span>{" "}
+            ETH
           </p>
           <img src={smokingMole} alt="smoking-mole" className="smoking-mole" />
         </div>
@@ -53,7 +57,12 @@ function App() {
           </label>
           <div className="price-input" id="price">
             <span className="price-input-deco"></span>
-            {getCurrentPrice()} USDC
+            <span>
+              {Number(getCurrentPrice())
+                ? weiToEther(parseInt(getCurrentPrice()))
+                : ""}{" "}
+              ETH
+            </span>
           </div>
           <label className="amount-label" htmlFor="amount">
             Amount
