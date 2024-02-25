@@ -19,18 +19,23 @@ function App() {
     UseHoneyPot();
   const [amount, setAmount] = useState(1);
   const { address } = useAccount();
-  const { writeContract, data, isPending } = useWriteContract();
+  const { writeContract, data, isPending, isError, error } = useWriteContract();
 
   function mintNFT(amount: number) {
     writeContract({
       abi: HoneyGenesis.abi,
       chainId: chainId,
-      functionName: `mint(${address},${amount})`,
+      functionName: `mint`,
       address: contractAddress,
+      args: [parseInt(getMintedAmount()) + 1, amount],
+      value: BigInt(parseInt(getCurrentPrice()) * amount),
     });
-
-    console.log(data);
   }
+
+  console.log(data);
+  console.log(isPending);
+  console.log(isError);
+  console.log(error);
 
   function increaseAmount() {
     setAmount(amount + 1);
@@ -120,6 +125,7 @@ function App() {
           </div>
           {data && <div>Transaction Hash: {data}</div>}
           {isPending && <div>Transaction Pending...</div>}
+          {isError && <div>Error: {error.message}</div>}
         </form>
       </main>
     </div>
