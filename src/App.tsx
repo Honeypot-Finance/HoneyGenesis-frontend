@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import UseHoneyPot from "@/hooks/useHoneyPot";
 import { weiToEther } from "./lib/currencyConvert";
 import { useWriteContract } from "wagmi";
-import { useAccount } from "wagmi";
+import { useAccount, useBalance } from "wagmi";
 import { chainId, contractAddress } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 
@@ -19,6 +19,12 @@ function App() {
     UseHoneyPot();
   const [amount, setAmount] = useState(1);
   const { address } = useAccount();
+  const balance = useBalance({
+    address: address,
+  });
+
+  console.log(balance);
+
   const { writeContract, data, isPending, isError, error } = useWriteContract();
 
   function mintNFT(amount: number) {
@@ -112,7 +118,14 @@ function App() {
             />
           </div>
           <p className="max-available">
-            MaxAvailable: <span>1.234</span> ETH
+            MaxAvailable:{" "}
+            <span>
+              {balance.data.value
+                ? parseInt(balance.data.value.toString()) /
+                  Math.pow(10, balance.data.decimals)
+                : ""}
+            </span>{" "}
+            ETH
           </p>
           <p className="terms">
             <a href="">Click here</a> to view the contract on Etherscan. By
