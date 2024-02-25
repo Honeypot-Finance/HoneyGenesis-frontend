@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "@/css/home.css";
 import Header from "@/components/Header";
 import UseHoneyPot from "@/hooks/useHoneyPot";
@@ -38,10 +38,12 @@ function App() {
     });
   }
 
-  console.log(data);
-  console.log(isPending);
-  console.log(isError);
-  console.log(error);
+  useEffect(() => {
+    if (isError) {
+      console.warn(error);
+      alert(error);
+    }
+  }, [isError, error]);
 
   function increaseAmount() {
     setAmount(amount + 1);
