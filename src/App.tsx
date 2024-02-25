@@ -23,8 +23,6 @@ function App() {
     address: address,
   });
 
-  console.log(balance);
-
   const { writeContract, data, isPending, isError, error } = useWriteContract();
 
   function mintNFT(amount: number) {
@@ -38,12 +36,34 @@ function App() {
     });
   }
 
+  //mint error handling
   useEffect(() => {
     if (isError) {
       console.warn(error);
       alert(error);
     }
   }, [isError, error]);
+
+  //amount handling
+  useEffect(() => {
+    if (amount < 0) {
+      setAmount(0);
+    }
+
+    if (!balance.data || !balance.data.value || !balance.data.decimals) return;
+
+    const singlePrice = weiToEther(parseInt(getCurrentPrice()));
+    const balanceInFloat = parseFloat(
+      (
+        parseInt(balance.data.value.toString()) /
+        Math.pow(10, balance.data.decimals)
+      ).toPrecision(5)
+    );
+
+    if (singlePrice * amount > balanceInFloat) {
+      setAmount(Math.floor(balanceInFloat / singlePrice));
+    }
+  }, [amount]);
 
   function increaseAmount() {
     setAmount(amount + 1);
