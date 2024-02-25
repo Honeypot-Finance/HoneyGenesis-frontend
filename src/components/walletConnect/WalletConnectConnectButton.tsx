@@ -3,32 +3,21 @@ import { useAccount } from "wagmi";
 
 export default function WalletConnectButton() {
   const { open } = useWeb3Modal();
-  const { address, isConnected, isConnecting } = useAccount();
+  const { isConnected, isConnecting } = useAccount();
 
   const isConnectingDisplay = <div>Connecting...</div>;
 
-  const isConnectedDisplay = (
-    <>
-      <div>Connected: </div>
-      <div>
-        <button onClick={() => open()}>{address}</button>
-      </div>
-    </>
-  );
-
-  const buttonDisplay = (
-    <button className="connnect-wallet-button" onClick={() => open()}>
-      Connect Wallet
-    </button>
-  );
+  const isConnectedDisplay = <div>Wallet</div>;
 
   return (
     <div className="connect-button-container">
-      {isConnecting
-        ? isConnectingDisplay
-        : isConnected
-        ? isConnectedDisplay
-        : buttonDisplay}
+      <button className="connnect-wallet-button" onClick={() => open()}>
+        {isConnecting
+          ? isConnectingDisplay
+          : isConnected
+          ? isConnectedDisplay
+          : "Connect Wallet"}
+      </button>
     </div>
   );
 }
