@@ -19,7 +19,11 @@ const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 
-const chains = [mainnet, arbitrum, arbitrumSepolia] as const;
+const chains = [
+  //mainnet,
+  //arbitrum,
+  arbitrumSepolia,
+] as const;
 const config = defaultWagmiConfig({
   chains, // required
   projectId, // required

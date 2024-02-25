@@ -3,6 +3,10 @@ import "@/css/home.css";
 import Header from "@/components/Header";
 import UseHoneyPot from "@/hooks/useHoneyPot";
 import { weiToEther } from "./lib/currencyConvert";
+import { useWriteContract } from "wagmi";
+import { useAccount } from "wagmi";
+import { chainId, contractAddress } from "@/consts";
+import HoneyGenesis from "@/abi/HoneyGenesis.json";
 
 //images
 import smokingMole from "@/assets/smoking-mole.png";
@@ -14,6 +18,24 @@ function App() {
   const { getCurrentPrice, getNextPrice, getMintedAmount, getMaxAmount } =
     UseHoneyPot();
   const [amount, setAmount] = useState(1);
+  const { address } = useAccount();
+  const { writeContract, data, isPending, isError, error } = useWriteContract();
+
+  function mintNFT(amount: number) {
+    writeContract({
+      abi: HoneyGenesis.abi,
+      chainId: chainId,
+      functionName: `mint`,
+      address: contractAddress,
+      args: [parseInt(getMintedAmount()) + 1, amount],
+      value: BigInt(parseInt(getCurrentPrice()) * amount),
+    });
+  }
+
+  console.log(data);
+  console.log(isPending);
+  console.log(isError);
+  console.log(error);
 
   function increaseAmount() {
     setAmount(amount + 1);
@@ -39,7 +61,7 @@ function App() {
             <span>
               {Number(getNextPrice())
                 ? weiToEther(parseInt(getNextPrice()))
-                : ""}
+                : getNextPrice()}
             </span>{" "}
             ETH
           </p>
@@ -60,7 +82,7 @@ function App() {
             <span>
               {Number(getCurrentPrice())
                 ? weiToEther(parseInt(getCurrentPrice()))
-                : ""}{" "}
+                : getNextPrice()}{" "}
               ETH
             </span>
           </div>
@@ -98,9 +120,12 @@ function App() {
             <a href="">terms of sale </a>for this drop. Your bid will be
             refunded if you lose the auction.
           </p>
-          <button className="mint-button" type="submit">
+          <div className="mint-button" onClick={() => mintNFT(amount)}>
             Mint
-          </button>
+          </div>
+          {data && <div>Transaction Hash: {data}</div>}
+          {isPending && <div>Transaction Pending...</div>}
+          {isError && <div>Error: {error.message}</div>}
         </form>
       </main>
     </div>
