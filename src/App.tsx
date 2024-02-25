@@ -120,10 +120,12 @@ function App() {
           <p className="max-available">
             MaxAvailable:{" "}
             <span>
-              {balance.data.value
-                ? parseInt(balance.data.value.toString()) /
+              {balance.data &&
+                balance.data.value &&
+                (
+                  parseInt(balance.data.value.toString()) /
                   Math.pow(10, balance.data.decimals)
-                : ""}
+                ).toPrecision(5)}
             </span>{" "}
             ETH
           </p>
@@ -133,12 +135,18 @@ function App() {
             <a href="">terms of sale </a>for this drop. Your bid will be
             refunded if you lose the auction.
           </p>
-          <div className="mint-button" onClick={() => mintNFT(amount)}>
-            Mint
-          </div>
-          {data && <div>Transaction Hash: {data}</div>}
-          {isPending && <div>Transaction Pending...</div>}
-          {isError && <div>Error: {error.message}</div>}
+          {(isPending && (
+            <div
+              className="mint-button disabled"
+              onClick={() => mintNFT(amount)}
+            >
+              Mint
+            </div>
+          )) || (
+            <div className="mint-button" onClick={() => mintNFT(amount)}>
+              Mint
+            </div>
+          )}
         </form>
       </main>
     </div>

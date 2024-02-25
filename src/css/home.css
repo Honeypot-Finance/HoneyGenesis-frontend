@@ -130,6 +130,12 @@ hr {
   display: none;
 }
 
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .App .main {
   background-color: #523914;
   padding: 3rem 2rem;
