@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "@/css/home.css";
 import Header from "@/components/Header";
 import UseHoneyPot from "@/hooks/useHoneyPot";
@@ -7,16 +7,20 @@ import { useWriteContract } from "wagmi";
 import { useAccount, useBalance } from "wagmi";
 import { chainId, contractAddress } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
+import { animate, motion } from "framer-motion";
 
 //images
 import smokingMole from "@/assets/smoking-mole.png";
 import imagePlaceholder from "@/assets/image-placeholder.png";
 import plus from "@/assets/plus.png";
 import minus from "@/assets/minus.png";
+import honeyPot from "@/assets/honey-pot.svg";
 
 function App() {
   const { getCurrentPrice, getNextPrice, getMintedAmount, getMaxAmount } =
     UseHoneyPot();
+  const mintEffectRef = useRef<HTMLDivElement>(null);
+  const mintGroupRef = useRef<HTMLDivElement>(null);
   const [amount, setAmount] = useState(1);
   const { address } = useAccount();
   const balance = useBalance({
@@ -40,13 +44,73 @@ function App() {
       args: [parseInt(getMintedAmount()) + 1, amount],
       value: BigInt(parseInt(getCurrentPrice()) * amount),
     });
+
+    const wBiggerThanH = window.innerWidth > window.innerHeight;
+
+    mintEffectRef.current.style.borderWidth = "0px";
+    mintEffectRef.current.style.width = "0" + (wBiggerThanH ? "vw" : "vh");
+    mintEffectRef.current.style.height = "0" + (wBiggerThanH ? "vw" : "vh");
+
+    animate(
+      mintEffectRef.current,
+      {
+        borderWidth: [
+          "0" + (wBiggerThanH ? "vw" : "vh"),
+          "200" + (wBiggerThanH ? "vw" : "vh"),
+        ],
+      },
+      { duration: 1 }
+    ).then(() => {
+      animate(
+        mintEffectRef.current,
+        {
+          width: [
+            "0" + (wBiggerThanH ? "vw" : "vh"),
+            "200" + (wBiggerThanH ? "vw" : "vh"),
+          ],
+        },
+        { duration: 1 }
+      );
+      console.log(mintEffectRef.current);
+      animate(
+        mintEffectRef.current,
+        {
+          height: [
+            "0" + (wBiggerThanH ? "vw" : "vh"),
+            "200" + (wBiggerThanH ? "vw" : "vh"),
+          ],
+        },
+        { duration: 1 }
+      );
+    });
   }
+
+  //init
+  useEffect(() => {
+    initEffectPosition();
+    mintEffectRef.current.style.borderWidth = "0px";
+
+    //resize
+    window.addEventListener("resize", () => {
+      initEffectPosition();
+    });
+
+    function initEffectPosition() {
+      mintEffectRef.current.style.top =
+        mintGroupRef.current.offsetTop +
+        mintGroupRef.current.offsetHeight / 2 +
+        "px";
+      mintEffectRef.current.style.left =
+        mintGroupRef.current.offsetLeft +
+        mintGroupRef.current.offsetWidth / 2 +
+        "px";
+    }
+  }, []);
 
   //mint error handling
   useEffect(() => {
     if (isError) {
       console.warn(error);
-      alert(error);
     }
   }, [isError, error]);
 
@@ -69,7 +133,7 @@ function App() {
     if (singlePrice * amount > balanceInFloat) {
       setAmount(Math.floor(balanceInFloat / singlePrice));
     }
-  }, [amount]);
+  }, [amount, balance.data, getCurrentPrice]);
 
   function increaseAmount() {
     setAmount(amount + 1);
@@ -171,10 +235,31 @@ function App() {
               Mint
             </div>
           )) || (
-            <div className="mint-button" onClick={() => mintNFT(amount)}>
-              Mint
-            </div>
-          )}
+            <motion.div
+              ref={mintGroupRef}
+              className="mint-group"
+              whileHover={{
+                scale: [1, 1.1, 1.1, 1.1, 1.1],
+                x: [0, 50, 0, -50, 0],
+                rotate: [0, 10, 0, -10, 0],
+              }}
+              transition={{ duration: 0.5 }}
+            >
+              <img
+                src={honeyPot}
+                alt="Some place holder"
+                className="mint-img"
+                onClick={() => mintNFT(amount)}
+              />
+              <div className="mint-text">Mint</div>
+            </motion.div>
+          )}{" "}
+          <motion.div
+            layout
+            className="mint-effect"
+            ref={mintEffectRef}
+            transition={{ duration: 1 }}
+          ></motion.div>
         </form>
       </main>
     </div>

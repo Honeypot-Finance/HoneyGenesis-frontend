@@ -21,7 +21,7 @@ export default function HoneyDropEffect() {
     if (!ctx) return;
 
     ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-    ctx.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    //ctx.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
 
     window.addEventListener("resize", () => {
       canvasRef.current.width = window.innerWidth;
