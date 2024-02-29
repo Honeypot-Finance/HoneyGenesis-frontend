@@ -23,7 +23,13 @@ function App() {
     address: address,
   });
 
-  const { writeContract, data, isPending, isError, error } = useWriteContract();
+  const {
+    writeContract,
+    //data,
+    isPending,
+    isError,
+    error,
+  } = useWriteContract();
 
   function mintNFT(amount: number) {
     writeContract({
