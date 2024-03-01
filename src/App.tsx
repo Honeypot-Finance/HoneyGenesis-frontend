@@ -47,7 +47,7 @@ function App() {
       chainId: chainId,
       functionName: `mint`,
       address: contractAddress,
-      args: [parseInt(getMintedAmount()) + 1, amount],
+      args: [amount],
       value: BigInt(parseInt(getCurrentPrice()) * amount),
     });
 
