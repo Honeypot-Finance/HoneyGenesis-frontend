@@ -60,29 +60,35 @@ function App() {
         ],
       },
       { duration: 1 }
-    ).then(() => {
-      animate(
-        mintEffectRef.current,
-        {
-          width: [
-            "0" + (wBiggerThanH ? "vw" : "vh"),
-            "200" + (wBiggerThanH ? "vw" : "vh"),
-          ],
-        },
-        { duration: 1 }
-      );
-      console.log(mintEffectRef.current);
-      animate(
-        mintEffectRef.current,
-        {
-          height: [
-            "0" + (wBiggerThanH ? "vw" : "vh"),
-            "200" + (wBiggerThanH ? "vw" : "vh"),
-          ],
-        },
-        { duration: 1 }
-      );
-    });
+    )
+      .then(() => {
+        animate(
+          mintEffectRef.current,
+          {
+            width: [
+              "0" + (wBiggerThanH ? "vw" : "vh"),
+              "200" + (wBiggerThanH ? "vw" : "vh"),
+            ],
+          },
+          { duration: 1 }
+        );
+        console.log(mintEffectRef.current);
+        animate(
+          mintEffectRef.current,
+          {
+            height: [
+              "0" + (wBiggerThanH ? "vw" : "vh"),
+              "200" + (wBiggerThanH ? "vw" : "vh"),
+            ],
+          },
+          { duration: 1 }
+        );
+      })
+      .then(() => {
+        mintEffectRef.current.style.borderWidth = "0px";
+        mintEffectRef.current.style.width = "0" + (wBiggerThanH ? "vw" : "vh");
+        mintEffectRef.current.style.height = "0" + (wBiggerThanH ? "vw" : "vh");
+      });
   }
 
   //init

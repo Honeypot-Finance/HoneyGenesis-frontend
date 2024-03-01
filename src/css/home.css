@@ -163,6 +163,7 @@ hr {
   justify-content: center;
   align-items: center;
   max-width: 400px;
+  width: 100%;
 }
 .App .main .mint-form {
   display: flex;
@@ -280,7 +281,7 @@ hr {
   pointer-events: none;
   position: absolute;
   background-color: rgba(255, 255, 0, 0);
-  border: 1.2rem solid #ffcd4d;
+  border: 0px solid #ffcd4d;
   border-radius: 50%;
   z-index: 1000000;
   transform: translate(-50%, -50%);
@@ -293,6 +294,7 @@ hr {
   border-radius: 2rem;
   padding: 1.5rem;
   background: #291c0a;
+  width: 100%;
 }
 .App .minted-display .minted__title {
   color: rgba(255, 255, 255, 0.3137254902);

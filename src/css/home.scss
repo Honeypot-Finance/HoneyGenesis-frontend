@@ -29,6 +29,7 @@
       justify-content: center;
       align-items: center;
       max-width: 400px;
+      width: 100%;
     }
 
     .mint-form {
@@ -164,7 +165,7 @@
     pointer-events: none;
     position: absolute;
     background-color: rgba(255, 255, 0, 0);
-    border: 1.2rem solid #ffcd4d;
+    border: 0px solid #ffcd4d;
     border-radius: 50%;
     z-index: 1000000;
     transform: translate(-50%, -50%);
@@ -178,6 +179,7 @@
     border-radius: 2rem;
     padding: 1.5rem;
     background: $very-dark-brown;
+    width: 100%;
 
     .minted__title {
       color: #ffffff50;
