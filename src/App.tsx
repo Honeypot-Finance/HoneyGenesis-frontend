@@ -6,7 +6,7 @@ import { weiToEther } from "./lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useWriteContract } from "wagmi";
 import { useAccount, useBalance } from "wagmi";
-import { chainId, contractAddress } from "@/consts";
+import { chainId, contractAddress, maxMintAcmount } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
 
@@ -143,6 +143,10 @@ function App() {
       setAmount(0);
     }
 
+    if (amount > maxMintAcmount) {
+      setAmount(maxMintAcmount);
+    }
+
     if (!balance.data || !balance.data.value || !balance.data.decimals) return;
 
     const singlePrice = weiToEther(parseInt(getCurrentPrice()));
@@ -202,7 +206,9 @@ function App() {
             <span className="price-input-deco"></span>
             <span>
               {Number(getCurrentPrice())
-                ? weiToEther(parseInt(getCurrentPrice()))
+                ? (
+                    weiToEther(parseInt(getCurrentPrice())) * amount
+                  ).toPrecision(2)
                 : getNextPrice()}{" "}
               ETH
             </span>
@@ -233,7 +239,10 @@ function App() {
             />
           </div>
           <p className="max-available">
-            MaxAvailable:{" "}
+            Max Mint per transaction: {maxMintAcmount}
+          </p>
+          <p className="max-available">
+            Wallet:{" "}
             <span>
               {balance.data &&
                 balance.data.value &&
@@ -246,8 +255,8 @@ function App() {
           </p>
           <p className="terms">
             <a href="">Click here</a> to view the contract on Etherscan. By
-            placing a bid you confirm that you have read and agree to the
-            <a href="">terms of sale </a>for this drop. Your bid will be
+            placing a bid you confirm that you have read and agree to the{" "}
+            <a href="">terms of sale</a> for this drop. Your bid will be
             refunded if you lose the auction.
           </p>
           {(isPending && (

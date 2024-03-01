@@ -28,9 +28,17 @@ export default function Header() {
           X
         </div>
         <nav className="navbar">
-          <li className="navbar__link">Honeypot Finance</li>
+          <li className="navbar__link">
+            <a href="">Honeypot Finance</a>
+          </li>
           <hr />
-          <li className="navbar__link">My Assets</li>
+          <li className="navbar__link">
+            <a href="">My Assets</a>
+          </li>
+          <hr />
+          <li className="navbar__link">
+            <a href="">Priority Mint</a>
+          </li>
         </nav>
         <div className="medias">
           <a
