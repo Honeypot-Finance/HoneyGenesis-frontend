@@ -3,6 +3,7 @@ import "@/css/home.css";
 import Header from "@/components/Header";
 import UseHoneyPot from "@/hooks/useHoneyPot";
 import { weiToEther } from "./lib/currencyConvert";
+import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useWriteContract } from "wagmi";
 import { useAccount, useBalance } from "wagmi";
 import { chainId, contractAddress } from "@/consts";
@@ -17,6 +18,7 @@ import minus from "@/assets/minus.png";
 import honeyPot from "@/assets/honey-pot.svg";
 
 function App() {
+  const { open } = useWeb3Modal();
   const { getCurrentPrice, getNextPrice, getMintedAmount, getMaxAmount } =
     UseHoneyPot();
   const mintEffectRef = useRef<HTMLDivElement>(null);
@@ -36,6 +38,10 @@ function App() {
   } = useWriteContract();
 
   function mintNFT(amount: number) {
+    if (!address) {
+      open();
+      return;
+    }
     writeContract({
       abi: HoneyGenesis.abi,
       chainId: chainId,
@@ -45,50 +51,61 @@ function App() {
       value: BigInt(parseInt(getCurrentPrice()) * amount),
     });
 
-    const wBiggerThanH = window.innerWidth > window.innerHeight;
+    const effectSize =
+      window.outerWidth > window.outerHeight
+        ? window.outerWidth
+        : window.outerHeight;
 
     mintEffectRef.current.style.borderWidth = "0px";
-    mintEffectRef.current.style.width = "0" + (wBiggerThanH ? "vw" : "vh");
-    mintEffectRef.current.style.height = "0" + (wBiggerThanH ? "vw" : "vh");
+    mintEffectRef.current.style.width = "0px";
+    mintEffectRef.current.style.height = "0px";
 
     animate(
       mintEffectRef.current,
       {
-        borderWidth: [
-          "0" + (wBiggerThanH ? "vw" : "vh"),
-          "200" + (wBiggerThanH ? "vw" : "vh"),
-        ],
+        borderWidth: ["0px", `${effectSize * 2}px`],
       },
       { duration: 1 }
-    )
-      .then(() => {
+    ).then(() => {
+      animate(
+        mintEffectRef.current,
+        {
+          width: ["0px", `${effectSize * 2}px`],
+        },
+        { duration: 1 }
+      );
+      animate(
+        mintEffectRef.current,
+        {
+          height: ["0px", `${effectSize * 2}px`],
+        },
+        { duration: 1 }
+      ).then(() => {
         animate(
           mintEffectRef.current,
           {
-            width: [
-              "0" + (wBiggerThanH ? "vw" : "vh"),
-              "200" + (wBiggerThanH ? "vw" : "vh"),
-            ],
+            borderWidth: ["0px"],
           },
-          { duration: 1 }
+          { duration: 0 }
         );
-        console.log(mintEffectRef.current);
+
         animate(
           mintEffectRef.current,
           {
-            height: [
-              "0" + (wBiggerThanH ? "vw" : "vh"),
-              "200" + (wBiggerThanH ? "vw" : "vh"),
-            ],
+            width: ["0px"],
           },
-          { duration: 1 }
+          { duration: 0 }
         );
-      })
-      .then(() => {
-        mintEffectRef.current.style.borderWidth = "0px";
-        mintEffectRef.current.style.width = "0" + (wBiggerThanH ? "vw" : "vh");
-        mintEffectRef.current.style.height = "0" + (wBiggerThanH ? "vw" : "vh");
+
+        animate(
+          mintEffectRef.current,
+          {
+            height: ["0px"],
+          },
+          { duration: 0 }
+        );
       });
+    });
   }
 
   //init
@@ -234,11 +251,14 @@ function App() {
             refunded if you lose the auction.
           </p>
           {(isPending && (
-            <div
-              className="mint-button disabled"
-              onClick={() => mintNFT(amount)}
-            >
-              Mint
+            <div className="mint-group">
+              <img
+                src={honeyPot}
+                alt="Some place holder"
+                className="mint-img"
+                onClick={() => mintNFT(amount)}
+              />
+              <div className="mint-text">...</div>
             </div>
           )) || (
             <motion.div
