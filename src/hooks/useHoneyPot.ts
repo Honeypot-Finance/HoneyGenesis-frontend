@@ -16,11 +16,11 @@ export default function useHoneyPOt() {
       address: contractAddress,
     });
 
-    return res.isPending
-      ? "loading"
-      : res.data
-      ? (res.data.toString() as string)
-      : "error";
+    if (functionName === "getMintedNFTsCount") {
+      console.log(res);
+    }
+
+    return res.isPending ? "loading" : (res.data.toString() as string);
   }
 
   function getCurrentPrice() {
