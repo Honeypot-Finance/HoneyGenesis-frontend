@@ -6,7 +6,7 @@ export default function useHoneyPOt() {
   const currentprice = useReadGenesisContract("getCurrentPrice");
   const nextPrice = useReadGenesisContract("getNextNFTPrice");
   const mintedAmount = useReadGenesisContract("getMintedNFTsCount");
-  const maxAmount = useReadGenesisContract("totalSupply");
+  const maxAmount = useReadGenesisContract("getTotalNFTCount");
 
   function useReadGenesisContract(functionName) {
     const res = useReadContract({
@@ -15,6 +15,10 @@ export default function useHoneyPOt() {
       functionName: functionName,
       address: contractAddress,
     });
+
+    if (functionName === "getMintedNFTsCount") {
+      console.log(res);
+    }
 
     return res.isPending ? "loading" : (res.data.toString() as string);
   }

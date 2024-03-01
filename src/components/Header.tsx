@@ -33,13 +33,25 @@ export default function Header() {
           <li className="navbar__link">My Assets</li>
         </nav>
         <div className="medias">
-          <a className="medias__link" href="">
+          <a
+            className="medias__link"
+            href="https://twitter.com/honeypotfinance"
+            target="_blank"
+          >
             Twitter
           </a>
-          <a className="medias__link" href="">
+          <a
+            className="medias__link"
+            href="https://discord.com/invite/8Z3VdhZ9V6"
+            target="_blank"
+          >
             Discord
           </a>
-          <a className="medias__link" href="">
+          <a
+            className="medias__link"
+            href="https://docs.honeypotfinance.xyz/"
+            target="_blank"
+          >
             Gitbook
           </a>
         </div>

@@ -1,4 +1,4 @@
-const contractAddress = "0xd1633D9C0308f697151C88e231647C1E5248FB1F";
+const contractAddress = "0xAEc22fCbf62FD087d7f3392c39De80E6b5e63805";
 const chainId = 421614;
 
 export { contractAddress, chainId };
