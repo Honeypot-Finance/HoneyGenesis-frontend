@@ -5,7 +5,7 @@
   height: 120px;
   width: 100%;
   position: absolute;
-  top: 20px;
+  top: 10vh;
   left: 100vw;
 }
 
@@ -35,6 +35,6 @@
 @media (max-width: 640px) {
   .clouds {
     height: 80px;
-    top: 25px;
+    top: 15vh;
   }
 }
