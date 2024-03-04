@@ -148,7 +148,7 @@ hr {
   position: relative;
   display: block;
   width: 100%;
-  min-height: 600px;
+  min-height: 100vh;
   background-color: rgba(0, 0, 0, 0.7333333333);
   border: 1rem solid #000000;
   overflow: hidden;
@@ -349,6 +349,7 @@ hr {
     border-radius: 0 5rem 5rem 0;
   }
   .App .mini-game {
+    min-height: 100%;
     max-width: 90%;
     margin: auto;
     grid-column-start: 4;
