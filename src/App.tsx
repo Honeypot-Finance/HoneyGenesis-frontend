@@ -16,6 +16,7 @@ import imagePlaceholder from "@/assets/image-placeholder.png";
 import plus from "@/assets/plus.png";
 import minus from "@/assets/minus.png";
 import honeyPot from "@/assets/honey-pot.svg";
+import Game from "./components/Game";
 
 function App() {
   const { open } = useWeb3Modal();
@@ -297,6 +298,8 @@ function App() {
           ></motion.div>
         </form>
       </main>
+
+      <Game className="mini-game" />
     </div>
   );
 }

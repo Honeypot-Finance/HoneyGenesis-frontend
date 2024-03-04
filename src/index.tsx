@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App";
 import HoneyDropEffect from "./components/effect/HoneyDropEffect";
 import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import { store } from "./config/redux/store";
 import WalletConnectContextProvider from "@/components/walletConnect/WalletConnectContextProvider";
 
 const root = ReactDOM.createRoot(
@@ -11,10 +13,12 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <WalletConnectContextProvider>
-      <App />
-      <HoneyDropEffect />
-    </WalletConnectContextProvider>
+    <Provider store={store}>
+      <WalletConnectContextProvider>
+        <App />
+        <HoneyDropEffect />
+      </WalletConnectContextProvider>
+    </Provider>
   </React.StrictMode>
 );
 

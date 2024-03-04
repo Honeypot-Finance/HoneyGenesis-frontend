@@ -6,6 +6,17 @@
   max-width: 100vw;
   min-height: 100vh;
 
+  .mini-game {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: 600px;
+    background-color: #000000bb;
+    border: 1rem solid #000000;
+    overflow: hidden;
+    border-radius: 5rem;
+  }
+
   .main {
     background-color: $light-brown;
     padding: 3rem 2rem;
@@ -203,7 +214,7 @@
       max-height: 100%;
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 1080px) {
       position: absolute;
       top: 7rem;
       right: 2rem;
@@ -211,16 +222,28 @@
     }
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1080px) {
     display: grid;
     grid-template-columns: 10rem repeat(5, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     background-image: url("../assets/forest-bg.png");
     background-size: cover;
 
     .main {
       grid-column-start: 2;
       grid-column-end: 4;
+      grid-row-start: 1;
+      grid-row-end: 4;
       border-radius: 0 5rem 5rem 0;
+    }
+
+    .mini-game {
+      max-width: 90%;
+      margin: auto;
+      grid-column-start: 4;
+      grid-column-end: 7;
+      grid-row-start: 2;
+      grid-row-end: 4;
     }
   }
 }

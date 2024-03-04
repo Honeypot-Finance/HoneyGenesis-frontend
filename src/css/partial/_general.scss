@@ -47,7 +47,7 @@ hr {
   right: 1rem;
   cursor: pointer;
 
-  @media (min-width: 768px) {
+  @media (min-width: 1080px) {
     display: none;
   }
 }
@@ -65,7 +65,7 @@ hr {
     left: 1rem;
     cursor: pointer;
 
-    @media (min-width: 768px) {
+    @media (min-width: 1080px) {
       display: none;
     }
   }
@@ -109,7 +109,7 @@ hr {
       cursor: pointer;
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 1080px) {
       position: absolute;
       top: 1rem;
       right: 1rem;
@@ -119,15 +119,17 @@ hr {
   &.closed {
     display: none;
 
-    @media (min-width: 768px) {
+    @media (min-width: 1080px) {
       display: block;
     }
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1080px) {
     position: unset;
     width: auto;
     height: 100%;
+    grid-row-start: 1;
+    grid-row-end: 4;
   }
 }
 
