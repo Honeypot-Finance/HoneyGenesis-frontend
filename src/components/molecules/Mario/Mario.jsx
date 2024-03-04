@@ -63,7 +63,7 @@ const Mario = () => {
       console.log(e.code);
       console.log(isPlay);
       console.log(die);
-      if (e.code === "Enter" && !isPlay && !die) {
+      if (e.code === "Space" && !isPlay && !die) {
         dispatch(setReady(true));
       }
       if (mario_jump === false && e.code === "Space" && isPlay && !die) {
