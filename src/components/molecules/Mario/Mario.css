@@ -9,7 +9,7 @@
 .jump {
   animation-name: jumping;
   animation-timing-function: ease-out;
-  animation-duration: 0.4s;
+  animation-duration: 1s;
 }
 
 @keyframes jumping {

@@ -73,7 +73,7 @@ const Mario = () => {
           dispatch(marioJumping(false));
           //jump.pause();
           //jump.currentTime = 0;
-        }, 400);
+        }, 1000);
       }
     },
     [mario_jump, 
