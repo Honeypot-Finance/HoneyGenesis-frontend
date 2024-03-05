@@ -26,6 +26,8 @@ const Obstacles = () => {
 
   useEffect(() => {
     setInterval(() => {
+      if(!obstacle1Ref.current || !obstacle2Ref.current) return;
+
       dispatch(obstacle1Height(obstacle1Ref.current.getBoundingClientRect().height));
       dispatch(obstacle1Left(obstacle1Ref.current.getBoundingClientRect().left));
       dispatch(obstacle1Top(obstacle1Ref.current.getBoundingClientRect().top));

@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { RouterProvider } from "react-router-dom";
 import "./index.css";
-import App from "./App";
 import HoneyDropEffect from "./components/effect/HoneyDropEffect";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store } from "./config/redux/store";
 import WalletConnectContextProvider from "@/components/walletConnect/WalletConnectContextProvider";
-
+import { router } from "@/router";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -15,7 +15,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <WalletConnectContextProvider>
-        <App />
+        <RouterProvider router={router} />
         <HoneyDropEffect />
       </WalletConnectContextProvider>
     </Provider>

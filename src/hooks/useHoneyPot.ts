@@ -7,6 +7,8 @@ export default function useHoneyPOt() {
   const nextPrice = useReadGenesisContract("getNextNFTPrice");
   const mintedAmount = useReadGenesisContract("getMintedNFTsCount");
   const maxAmount = useReadGenesisContract("getTotalNFTCount");
+  const totalVIPNFTCount = useReadGenesisContract("getTotalVIPNFTCount");
+  const mintedVIPNFTsCount = useReadGenesisContract("getMintedVIPNFTsCount");
 
   function useReadGenesisContract(functionName) {
     const res = useReadContract({
@@ -39,10 +41,20 @@ export default function useHoneyPOt() {
     return nextPrice;
   }
 
+  function getTotalVIPNFTCount() {
+    return totalVIPNFTCount;
+  }
+
+  function getMintedVIPNFTsCount() {
+    return mintedVIPNFTsCount;
+  }
+
   return {
     getCurrentPrice,
     getNextPrice,
     getMintedAmount,
     getMaxAmount,
+    getTotalVIPNFTCount,
+    getMintedVIPNFTsCount,
   };
 }

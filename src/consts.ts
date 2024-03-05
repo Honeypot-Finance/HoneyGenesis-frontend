@@ -1,4 +1,4 @@
-const contractAddress = "0xAEc22fCbf62FD087d7f3392c39De80E6b5e63805";
+const contractAddress = "0xfBEa12C52cf608dE2399f9E93dAF0f31AB8AD58f";
 const chainId = 421614;
 const maxMintAcmount = 20;
 

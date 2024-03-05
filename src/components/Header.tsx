@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import "@/css/home.css";
 import WalletConnectButton from "@/components/walletConnect/WalletConnectConnectButton";
 
@@ -37,7 +38,11 @@ export default function Header() {
           </li>
           <hr />
           <li className="navbar__link">
-            <a href="">Priority Mint</a>
+            <Link to="/">Mint</Link>
+          </li>
+          <hr />
+          <li className="navbar__link">
+            <Link to="/vip-mint">Priority Mint</Link>
           </li>
         </nav>
         <div className="medias">
