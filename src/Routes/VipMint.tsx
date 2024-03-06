@@ -20,12 +20,8 @@ import Game from "@/components/Game";
 
 function VipMint() {
   const { open } = useWeb3Modal();
-  const {
-    getCurrentPrice,
-    getNextPrice,
-    getMintedVIPNFTsCount,
-    getTotalVIPNFTCount,
-  } = UseHoneyPot();
+  const { getVIPNFTPrice, getMintedVIPNFTsCount, getTotalVIPNFTCount } =
+    UseHoneyPot();
   const mintEffectRef = useRef<HTMLDivElement>(null);
   const mintGroupRef = useRef<HTMLDivElement>(null);
   const [amount, setAmount] = useState(1);
@@ -53,7 +49,7 @@ function VipMint() {
       functionName: `mintVIP`,
       address: contractAddress,
       args: [amount],
-      value: BigInt(parseInt(getCurrentPrice()) * amount),
+      value: BigInt(parseInt(getVIPNFTPrice()) * amount),
     });
 
     const effectSize =
@@ -115,6 +111,8 @@ function VipMint() {
 
   //init
   useEffect(() => {
+    if (!mintGroupRef.current) return;
+
     initEffectPosition();
     mintEffectRef.current.style.borderWidth = "0px";
 
@@ -154,7 +152,7 @@ function VipMint() {
 
     if (!balance.data || !balance.data.value || !balance.data.decimals) return;
 
-    const singlePrice = weiToEther(parseInt(getCurrentPrice()));
+    const singlePrice = weiToEther(parseInt(getVIPNFTPrice()));
     const balanceInFloat = parseFloat(
       (
         parseInt(balance.data.value.toString()) /
@@ -165,7 +163,7 @@ function VipMint() {
     if (singlePrice * amount > balanceInFloat) {
       setAmount(Math.floor(balanceInFloat / singlePrice));
     }
-  }, [amount, balance.data, getCurrentPrice]);
+  }, [amount, balance.data, getVIPNFTPrice]);
 
   function increaseAmount() {
     setAmount(amount + 1);
@@ -186,15 +184,6 @@ function VipMint() {
           <p className="minted__amount">
             {getMintedVIPNFTsCount()}/{getTotalVIPNFTCount()}
           </p>
-          <p className="minted__next-price">
-            next price:{" "}
-            <span>
-              {Number(getNextPrice())
-                ? weiToEther(parseInt(getNextPrice()))
-                : getNextPrice()}
-            </span>{" "}
-            ETH
-          </p>
           <img src={smokingMole} alt="smoking-mole" className="smoking-mole" />
         </div>
         <h1 className="title">🍯VIP MINT🍯</h1>
@@ -210,11 +199,11 @@ function VipMint() {
           <div className="price-input" id="price">
             <span className="price-input-deco"></span>
             <span>
-              {Number(getCurrentPrice())
-                ? (
-                    weiToEther(parseInt(getCurrentPrice())) * amount
-                  ).toPrecision(2)
-                : getNextPrice()}{" "}
+              {Number(getVIPNFTPrice())
+                ? (weiToEther(parseInt(getVIPNFTPrice())) * amount).toPrecision(
+                    2
+                  )
+                : getVIPNFTPrice()}{" "}
               ETH
             </span>
           </div>

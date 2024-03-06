@@ -19,12 +19,11 @@
 
   .main {
     background-color: $light-brown;
-    padding: 3rem 2rem;
+    padding: 20vh 2rem;
     min-height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 
     .title {
       color: #ffcd4d;
@@ -224,16 +223,16 @@
 
   @media (min-width: 1080px) {
     display: grid;
-    grid-template-columns: 10rem repeat(5, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 20vh repeat(3, 1fr);
     background-image: url("../assets/forest-bg.png");
     background-size: cover;
 
     .main {
-      grid-column-start: 2;
+      grid-column-start: 1;
       grid-column-end: 4;
-      grid-row-start: 1;
-      grid-row-end: 4;
+      grid-row-start: 2;
+      grid-row-end: 5;
       border-radius: 0 5rem 5rem 0;
     }
 
@@ -243,8 +242,18 @@
       margin: auto;
       grid-column-start: 4;
       grid-column-end: 7;
+      grid-row-start: 3;
+      grid-row-end: 5;
+    }
+
+    .minted-display {
+      grid-column-start: 4;
+      grid-column-end: 7;
       grid-row-start: 2;
-      grid-row-end: 4;
+      grid-row-end: 3;
+      width: 90%;
+      height: 90%;
+      top: 0;
     }
   }
 }

@@ -18,10 +18,6 @@ export default function useHoneyPOt() {
       address: contractAddress,
     });
 
-    if (functionName === "getMintedNFTsCount") {
-      console.log(res);
-    }
-
     return res.isPending ? "loading" : (res.data.toString() as string);
   }
 
@@ -49,6 +45,10 @@ export default function useHoneyPOt() {
     return mintedVIPNFTsCount;
   }
 
+  function getVIPNFTPrice() {
+    return "69000000000000000";
+  }
+
   return {
     getCurrentPrice,
     getNextPrice,
@@ -56,5 +56,6 @@ export default function useHoneyPOt() {
     getMaxAmount,
     getTotalVIPNFTCount,
     getMintedVIPNFTsCount,
+    getVIPNFTPrice,
   };
 }
