@@ -14,11 +14,12 @@
     position: relative;
     display: block;
     width: 100%;
-    min-height: 100vh;
+    min-height: 80vh;
     background-color: #000000bb;
     border: 1rem solid #000000;
     overflow: hidden;
     border-radius: 5rem;
+    padding-bottom: 20vh;
   }
 
   .main {
@@ -251,7 +252,7 @@
       grid-row-start: 2;
       grid-row-end: 8;
       border-radius: 5rem;
-      border: 1rem solid #000000;
+      border: 1rem solid #f7951d50;
     }
 
     .minted-display {
@@ -265,6 +266,7 @@
     }
 
     .mini-game {
+      padding-bottom: unset;
       min-height: 100%;
       max-width: 100%;
       margin: auto;

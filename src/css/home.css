@@ -247,11 +247,12 @@ hr {
   position: relative;
   display: block;
   width: 100%;
-  min-height: 100vh;
+  min-height: 80vh;
   background-color: rgba(0, 0, 0, 0.7333333333);
   border: 1rem solid #000000;
   overflow: hidden;
   border-radius: 5rem;
+  padding-bottom: 20vh;
 }
 .App .main {
   background-color: #523914;
@@ -457,7 +458,7 @@ hr {
     grid-row-start: 2;
     grid-row-end: 8;
     border-radius: 5rem;
-    border: 1rem solid #000000;
+    border: 1rem solid rgba(247, 149, 29, 0.3137254902);
   }
   .App .minted-display {
     grid-column-start: 7;
@@ -469,6 +470,7 @@ hr {
     top: 0;
   }
   .App .mini-game {
+    padding-bottom: unset;
     min-height: 100%;
     max-width: 100%;
     margin: auto;
