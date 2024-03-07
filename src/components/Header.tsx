@@ -45,7 +45,9 @@ export default function Header() {
           className="header-bg"
           style={{ backgroundImage: `url(${honeyTopFrame})` }}
         />
-        <img src={honeyGenesisLogo} alt="logo" className="logo" />
+        <Link to={"/"}>
+          <img src={honeyGenesisLogo} alt="logo" className="logo" />
+        </Link>
         <div className="link-group">
           <nav className="navbar">
             <li className="navbar__link">

@@ -9,12 +9,12 @@ import { useAccount, useBalance } from "wagmi";
 import { chainId, contractAddress, maxMintAcmount } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
+import GeneralButton from "./components/atoms/general-buttom/GeneralButton";
 
 //images
 import smokingMole from "@/assets/smoking-mole.png";
 import plus from "@/assets/plus.png";
 import minus from "@/assets/minus.png";
-import honeyPot from "@/assets/honey-pot.svg";
 import Game from "./components/Game";
 import bgImage from "@/assets/forest-bg.png";
 
@@ -196,7 +196,7 @@ function App() {
         </div>
         <h1 className="title">Honey Genesis 🍯</h1>
 
-        <form className="mint-form" action="">
+        <div className="mint-form">
           <label className="price-label" htmlFor="price">
             Price
           </label>
@@ -258,34 +258,15 @@ function App() {
             refunded if you lose the auction.
           </p>
           {(isPending && (
-            <div className="mint-group">
-              <img
-                src={honeyPot}
-                alt="Some place holder"
-                className="mint-img"
-                onClick={() => mintNFT(amount)}
-              />
-              <div className="mint-text">...</div>
+            <div className="mint-group" ref={mintGroupRef}>
+              <GeneralButton disabled={true}>Minting...</GeneralButton>
             </div>
           )) || (
-            <motion.div
-              ref={mintGroupRef}
-              className="mint-group"
-              whileHover={{
-                scale: [1, 1.1, 1.1, 1.1, 1.1],
-                x: [0, 50, 0, -50, 0],
-                rotate: [0, 10, 0, -10, 0],
-              }}
-              transition={{ duration: 0.5 }}
-            >
-              <img
-                src={honeyPot}
-                alt="Some place holder"
-                className="mint-img"
-                onClick={() => mintNFT(amount)}
-              />
-              <div className="mint-text">Mint</div>
-            </motion.div>
+            <div className="mint-group" ref={mintGroupRef}>
+              <GeneralButton onClick={() => mintNFT(amount)}>
+                Mint
+              </GeneralButton>
+            </div>
           )}{" "}
           <motion.div
             layout
@@ -293,7 +274,7 @@ function App() {
             ref={mintEffectRef}
             transition={{ duration: 1 }}
           ></motion.div>
-        </form>
+        </div>
       </main>
 
       <Game className="mini-game" />

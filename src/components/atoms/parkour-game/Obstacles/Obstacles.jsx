@@ -1,6 +1,6 @@
 import "./Obstacles.css";
-import obstacle1 from "../../../assets/img/gif/bee.png";
-import obstacle2 from "../../../assets/img/gif/bee.png";
+import obstacle1 from "./../../../../assets/img/gif/bee.png";
+import obstacle2 from "./../../../../assets/img/gif/bee.png";
 import { useRef, useEffect } from "react";
 
 // redux
@@ -14,8 +14,8 @@ import {
   obstacle2Left,
   obstacle2Top,
   obstacle2Width
-} from "../../../config/redux/obstacleSlice";
-import { setSpeed } from "../../../config/redux/engineSlice";
+} from "../../../../config/redux/obstacleSlice";
+import { setSpeed } from "../../../../config/redux/engineSlice";
 
 const Obstacles = () => {
   const dispatch = useDispatch();

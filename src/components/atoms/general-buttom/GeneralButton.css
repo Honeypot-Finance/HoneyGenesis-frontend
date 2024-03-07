@@ -1,0 +1,29 @@
+.general-button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.general-button {
+  font-size: 1.5rem;
+  width: 100%;
+  margin: 1rem;
+  padding: 1rem 4rem;
+  font-weight: bold;
+  background-color: #c1770d;
+  border: solid 5px #291c0a;
+  border-radius: 2rem 2rem 2rem 2rem / 50% 50% 50% 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.general-button:hover {
+  background-color: #291c0a;
+  border: solid 5px #c1770d;
+}

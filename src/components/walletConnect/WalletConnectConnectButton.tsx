@@ -1,5 +1,6 @@
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useAccount } from "wagmi";
+import GeneralButton from "../atoms/general-buttom/GeneralButton";
 
 export default function WalletConnectButton() {
   const { open } = useWeb3Modal();
@@ -10,14 +11,12 @@ export default function WalletConnectButton() {
   const isConnectedDisplay = <div>Wallet</div>;
 
   return (
-    <div className="connect-button-container">
-      <button className="connnect-wallet-button" onClick={() => open()}>
-        {isConnecting
-          ? isConnectingDisplay
-          : isConnected
-          ? isConnectedDisplay
-          : "Connect Wallet"}
-      </button>
-    </div>
+    <GeneralButton onClick={() => open()}>
+      {isConnecting
+        ? isConnectingDisplay
+        : isConnected
+        ? isConnectedDisplay
+        : "Connect Wallet"}
+    </GeneralButton>
   );
 }
