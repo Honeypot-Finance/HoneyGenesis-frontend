@@ -28,8 +28,7 @@ li {
 
 body {
   background-color: $light-brown;
-
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 header {
@@ -82,6 +81,8 @@ hr {
 
   .logo {
     height: 5vh;
+    width: 10rem;
+    object-fit: contain;
   }
 
   .close-header-button {
@@ -152,6 +153,7 @@ hr {
   .connect-button-container {
     display: flex;
     justify-content: center;
+    width: 10rem;
 
     .connnect-wallet-button {
       font-size: 1.5rem;
@@ -224,6 +226,7 @@ hr {
   @media (min-width: 1600px) {
     .link-group {
       flex-direction: row;
+      flex-grow: 1;
     }
   }
 }
