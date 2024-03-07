@@ -28,7 +28,10 @@ li {
 
 body {
   background-color: $light-brown;
-  overflow-x: hidden;
+
+  @media (min-width: 1080px) {
+    overflow: hidden;
+  }
 }
 
 header {

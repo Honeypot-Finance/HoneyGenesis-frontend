@@ -26,7 +26,11 @@ li {
 
 body {
   background-color: #523914;
-  overflow-x: hidden;
+}
+@media (min-width: 1080px) {
+  body {
+    overflow: hidden;
+  }
 }
 
 header {
@@ -435,6 +439,7 @@ hr {
     grid-template-rows: 20vh repeat(9, 1fr);
   }
   .App .bg-img {
+    display: block;
     position: absolute;
     top: 0;
     left: 0;
