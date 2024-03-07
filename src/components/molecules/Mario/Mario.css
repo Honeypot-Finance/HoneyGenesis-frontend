@@ -17,7 +17,7 @@
   }
 
   50% {
-    transform: translateY(-300%);
+    transform: translateY(-100%);
   }
 
   100% {
@@ -43,6 +43,20 @@
 }
 
 /* Media Queries */
+@media (max-width: 3000px) {
+  .mario {
+    width: 4rem;
+    bottom: 120px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .mario {
+    width: 4rem;
+    bottom: 120px;
+  }
+}
+
 @media (max-width: 1280px) {
   .mario {
     width: 4rem;

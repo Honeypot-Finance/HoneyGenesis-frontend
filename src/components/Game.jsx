@@ -20,13 +20,13 @@ export default function Game(prop) {
     <div className={prop.className}>
       {!isPlay && <KeyMessage />}
       <Bricks />
-      <Mario />
       <Sun />
       <Clouds />
       <Birds />
       <Obstacles />
-      <Score />
       <MobileControls />
+      <Score />
+      <Mario />
     </div>
   );
 }

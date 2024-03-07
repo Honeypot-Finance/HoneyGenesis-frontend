@@ -12,11 +12,11 @@ import { animate, motion } from "framer-motion";
 
 //images
 import smokingMole from "@/assets/smoking-mole.png";
-import imagePlaceholder from "@/assets/image-placeholder.png";
 import plus from "@/assets/plus.png";
 import minus from "@/assets/minus.png";
 import honeyPot from "@/assets/honey-pot.svg";
 import Game from "./components/Game";
+import bgImage from "@/assets/forest-bg.png";
 
 function App() {
   const { open } = useWeb3Modal();
@@ -177,6 +177,7 @@ function App() {
     <div className="App">
       <Header />
       <main className="main">
+        <img src={bgImage} alt="" className="bg-img" />
         <div className="minted-display">
           <h2 className="minted__title">Minted</h2>
           <p className="minted__amount">
@@ -194,11 +195,7 @@ function App() {
           <img src={smokingMole} alt="smoking-mole" className="smoking-mole" />
         </div>
         <h1 className="title">Honey Genesis 🍯</h1>
-        <img
-          src={imagePlaceholder}
-          alt="Some place holder"
-          className="image-placeholder"
-        />
+
         <form className="mint-form" action="">
           <label className="price-label" htmlFor="price">
             Price
