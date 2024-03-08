@@ -252,12 +252,13 @@ function App() {
             <p className="max-available">
               Wallet:{" "}
               <span>
-                {balance.data &&
+                {(balance.data &&
                   balance.data.value &&
                   (
                     parseInt(balance.data.value.toString()) /
                     Math.pow(10, balance.data.decimals)
-                  ).toPrecision(5)}
+                  ).toPrecision(5)) ||
+                  "N/A"}
               </span>{" "}
               ETH
             </p>

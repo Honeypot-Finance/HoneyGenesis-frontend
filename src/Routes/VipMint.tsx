@@ -9,12 +9,13 @@ import { useAccount, useBalance } from "wagmi";
 import { chainId, contractAddress, maxMintAcmount } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
+import GeneralButton from "@/components/atoms/general-buttom/GeneralButton";
+import SingleDataBox from "@/components/atoms/single-data-group/SingleDataBox";
 
 //images
 import smokingMole from "@/assets/smoking-mole.png";
 import plus from "@/assets/plus.png";
 import minus from "@/assets/minus.png";
-import honeyPot from "@/assets/honey-pot.svg";
 import Game from "@/components/Game";
 import bgImage from "@/assets/forest-bg.png";
 
@@ -174,7 +175,6 @@ function VipMint() {
       setAmount(amount - 1);
     }
   }
-
   return (
     <div className="App">
       <Header />
@@ -185,99 +185,111 @@ function VipMint() {
           <p className="minted__amount">
             {getMintedVIPNFTsCount()}/{getTotalVIPNFTCount()}
           </p>
-          <img src={smokingMole} alt="smoking-mole" className="smoking-mole" />
-        </div>
-        <h1 className="title">🍯VIP MINT🍯</h1>
-        <form className="mint-form" action="">
-          <label className="price-label" htmlFor="price">
-            Price
-          </label>
-          <div className="price-input" id="price">
-            <span className="price-input-deco"></span>
+          <p className="minted__next-price">
+            next price:{" "}
             <span>
               {Number(getVIPNFTPrice())
-                ? (weiToEther(parseInt(getVIPNFTPrice())) * amount).toPrecision(
-                    2
-                  )
-                : getVIPNFTPrice()}{" "}
-              ETH
-            </span>
-          </div>
-          <label className="amount-label" htmlFor="amount">
-            Amount
-          </label>
-          <div className="amount-input-container">
-            <input
-              className="amount-input"
-              type="number"
-              id="amount"
-              name="amount"
-              value={amount}
-              onChange={(e) => setAmount(parseInt(e.target.value))}
-            />
-            <img
-              className="plus"
-              src={plus}
-              alt="plus"
-              onClick={increaseAmount}
-            />
-            <img
-              className="minus"
-              src={minus}
-              alt="minus"
-              onClick={decreaseAmount}
-            />
-          </div>
-          <p className="max-available">
-            Max Mint per transaction: {maxMintAcmount}
-          </p>
-          <p className="max-available">
-            Wallet:{" "}
-            <span>
-              {balance.data &&
-                balance.data.value &&
-                (
-                  parseInt(balance.data.value.toString()) /
-                  Math.pow(10, balance.data.decimals)
-                ).toPrecision(5)}
+                ? weiToEther(parseInt(getVIPNFTPrice()))
+                : "loading..."}
             </span>{" "}
             ETH
           </p>
-          <p className="terms">
+          <img src={smokingMole} alt="smoking-mole" className="smoking-mole" />
+        </div>
+        <h1 className="title">Honey Genesis 🍯</h1>
+
+        <div className="mint-form">
+          <SingleDataBox
+            dataName="Current Price"
+            dataValue={
+              Number(getVIPNFTPrice())
+                ? weiToEther(parseInt(getVIPNFTPrice())).toPrecision(2) + " ETH"
+                : "loading..."
+            }
+          />
+          <SingleDataBox
+            dataName="Next Price"
+            dataValue={
+              Number(getVIPNFTPrice())
+                ? weiToEther(parseInt(getVIPNFTPrice())).toPrecision(2) + " ETH"
+                : "loading..."
+            }
+          />
+          <SingleDataBox
+            dataName="Max Available"
+            dataValue={
+              Number(getTotalVIPNFTCount())
+                ? getTotalVIPNFTCount()
+                : "loading..."
+            }
+          />
+          <div style={{ gridColumn: "span 3" }}>
+            <label className="amount-label" htmlFor="amount">
+              Amount
+            </label>
+            <div className="amount-input-container">
+              <input
+                className="amount-input"
+                type="number"
+                id="amount"
+                name="amount"
+                value={amount}
+                onChange={(e) => setAmount(parseInt(e.target.value))}
+              />
+              <img
+                className="plus"
+                src={plus}
+                alt="plus"
+                onClick={increaseAmount}
+              />
+              <img
+                className="minus"
+                src={minus}
+                alt="minus"
+                onClick={decreaseAmount}
+              />
+            </div>
+            <p className="max-available">
+              Max Mint per transaction: {maxMintAcmount}
+            </p>
+            <p className="max-available">
+              Wallet:{" "}
+              <span>
+                {(balance.data &&
+                  balance.data.value &&
+                  (
+                    parseInt(balance.data.value.toString()) /
+                    Math.pow(10, balance.data.decimals)
+                  ).toPrecision(5)) ||
+                  "N/A"}
+              </span>{" "}
+              ETH
+            </p>
+          </div>
+          <p className="terms" style={{ gridColumn: "span 3" }}>
             <a href="">Click here</a> to view the contract on Etherscan. By
             placing a bid you confirm that you have read and agree to the{" "}
             <a href="">terms of sale</a> for this drop. Your bid will be
             refunded if you lose the auction.
           </p>
           {(isPending && (
-            <div className="mint-group">
-              <img
-                src={honeyPot}
-                alt="Some place holder"
-                className="mint-img"
-                onClick={() => mintNFT(amount)}
-              />
-              <div className="mint-text">...</div>
+            <div
+              className="mint-group"
+              ref={mintGroupRef}
+              style={{ gridColumn: "span 3" }}
+            >
+              <GeneralButton disabled={true}>Minting...</GeneralButton>
             </div>
           )) || (
-            <motion.div
-              ref={mintGroupRef}
+            <div
               className="mint-group"
-              whileHover={{
-                scale: [1, 1.1, 1.1, 1.1, 1.1],
-                x: [0, 50, 0, -50, 0],
-                rotate: [0, 10, 0, -10, 0],
-              }}
-              transition={{ duration: 0.5 }}
+              ref={mintGroupRef}
+              style={{ gridColumn: "span 3" }}
             >
-              <img
-                src={honeyPot}
-                alt="Some place holder"
-                className="mint-img"
-                onClick={() => mintNFT(amount)}
-              />
-              <div className="mint-text">Mint</div>
-            </motion.div>
+              <GeneralButton onClick={() => mintNFT(amount)}>
+                Mint
+              </GeneralButton>
+            </div>
           )}{" "}
           <motion.div
             layout
@@ -285,7 +297,7 @@ function VipMint() {
             ref={mintEffectRef}
             transition={{ duration: 1 }}
           ></motion.div>
-        </form>
+        </div>
       </main>
 
       <Game className="mini-game" />
