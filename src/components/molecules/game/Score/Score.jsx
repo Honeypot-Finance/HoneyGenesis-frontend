@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setScore, setLastScore } from "../../../config/redux/engineSlice";
+import { setScore, setLastScore } from "../../../../config/redux/engineSlice";
 import "./Score.css";
 
 const Score = () => {

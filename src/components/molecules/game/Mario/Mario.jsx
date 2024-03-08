@@ -1,5 +1,5 @@
 import "./Mario.css";
-import MarioCharacter from "../../../assets/img/gif/bear.png";
+import MarioCharacter from "../../../../assets/img/gif/bear.png";
 import { useEffect, useRef, useCallback } from "react";
 //import jumpAudio from "../../../assets/audio/mario-jump.mp3";
 //import backgroundMusic from "../../../assets/audio/running-about.mp3";
@@ -12,8 +12,8 @@ import {
   marioLeft,
   marioTop,
   marioWidth,
-} from "../../../config/redux/marioSlice";
-import { setReady, setDie, setScore } from "../../../config/redux/engineSlice";
+} from "../../../../config/redux/marioSlice";
+import { setReady, setDie, setScore } from "../../../../config/redux/engineSlice";
 
 // die
 //import dieAudio from "../../../assets/audio/mario-died.mp3";

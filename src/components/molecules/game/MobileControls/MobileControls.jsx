@@ -1,7 +1,7 @@
 import "./MobileControls.css";
 import { useSelector, useDispatch } from "react-redux";
-import { setReady } from "../../../config/redux/engineSlice";
-import { marioJumping } from "../../../config/redux/marioSlice";
+import { setReady } from "../../../../config/redux/engineSlice";
+import { marioJumping } from "../../../../config/redux/marioSlice";
 // import { useMemo } from "react";
 // import jumpAudio from "../../../assets/audio/mario-jump.mp3";
 
