@@ -11,12 +11,12 @@ export default function WalletConnectButton() {
   const isConnectedDisplay = <div>Wallet</div>;
 
   return (
-    <GeneralButton onClick={() => open()}>
+    <GeneralButton onClick={() => open()} style={{ width: "10rem" }}>
       {isConnecting
         ? isConnectingDisplay
         : isConnected
         ? isConnectedDisplay
-        : "Connect Wallet"}
+        : "Connect"}
     </GeneralButton>
   );
 }

@@ -27,7 +27,7 @@ export default function Header() {
         closeHeaderButton.current?.parentElement?.classList.add("closed");
         openHeaderButton.current?.classList.remove("header-closed");
       }
-    }, 200);
+    }, 1000);
   }, []);
 
   return (

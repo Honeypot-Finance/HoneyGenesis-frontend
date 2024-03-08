@@ -6,11 +6,13 @@ export default function GeneralButton({
   onClick,
   disabled,
   className,
+  style,
 }: {
   children?: ReactNode;
   onClick?: () => void;
   disabled?: boolean;
   className?: string;
+  style?: React.CSSProperties;
 }) {
   return (
     <div className="general-button-container">
@@ -18,6 +20,7 @@ export default function GeneralButton({
         onClick={onClick}
         disabled={disabled}
         className={`general-button ${className}`}
+        style={style}
       >
         {children}
       </button>

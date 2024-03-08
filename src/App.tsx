@@ -10,6 +10,7 @@ import { chainId, contractAddress, maxMintAcmount } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
 import GeneralButton from "./components/atoms/general-buttom/GeneralButton";
+import SingleDataBox from "./components/atoms/single-data-group/SingleDataBox";
 
 //images
 import smokingMole from "@/assets/smoking-mole.png";
@@ -151,6 +152,7 @@ function App() {
     if (!balance.data || !balance.data.value || !balance.data.decimals) return;
 
     const singlePrice = weiToEther(parseInt(getCurrentPrice()));
+
     const balanceInFloat = parseFloat(
       (
         parseInt(balance.data.value.toString()) /
@@ -197,72 +199,89 @@ function App() {
         <h1 className="title">Honey Genesis 🍯</h1>
 
         <div className="mint-form">
-          <label className="price-label" htmlFor="price">
-            Price
-          </label>
-          <div className="price-input" id="price">
-            <span className="price-input-deco"></span>
-            <span>
-              {Number(getCurrentPrice())
-                ? (
-                    weiToEther(parseInt(getCurrentPrice())) * amount
-                  ).toPrecision(2)
-                : getNextPrice()}{" "}
+          <SingleDataBox
+            dataName="Current Price"
+            dataValue={
+              Number(getCurrentPrice())
+                ? weiToEther(parseInt(getCurrentPrice())).toPrecision(2) +
+                  " ETH"
+                : "loading..."
+            }
+          />
+          <SingleDataBox
+            dataName="Next Price"
+            dataValue={
+              Number(getNextPrice())
+                ? weiToEther(parseInt(getNextPrice())).toPrecision(2) + " ETH"
+                : "loading..."
+            }
+          />
+          <SingleDataBox
+            dataName="Max Available"
+            dataValue={Number(getMaxAmount()) ? getMaxAmount() : "loading..."}
+          />
+          <div style={{ gridColumn: "span 3" }}>
+            <label className="amount-label" htmlFor="amount">
+              Amount
+            </label>
+            <div className="amount-input-container">
+              <input
+                className="amount-input"
+                type="number"
+                id="amount"
+                name="amount"
+                value={amount}
+                onChange={(e) => setAmount(parseInt(e.target.value))}
+              />
+              <img
+                className="plus"
+                src={plus}
+                alt="plus"
+                onClick={increaseAmount}
+              />
+              <img
+                className="minus"
+                src={minus}
+                alt="minus"
+                onClick={decreaseAmount}
+              />
+            </div>
+            <p className="max-available">
+              Max Mint per transaction: {maxMintAcmount}
+            </p>
+            <p className="max-available">
+              Wallet:{" "}
+              <span>
+                {balance.data &&
+                  balance.data.value &&
+                  (
+                    parseInt(balance.data.value.toString()) /
+                    Math.pow(10, balance.data.decimals)
+                  ).toPrecision(5)}
+              </span>{" "}
               ETH
-            </span>
+            </p>
           </div>
-          <label className="amount-label" htmlFor="amount">
-            Amount
-          </label>
-          <div className="amount-input-container">
-            <input
-              className="amount-input"
-              type="number"
-              id="amount"
-              name="amount"
-              value={amount}
-              onChange={(e) => setAmount(parseInt(e.target.value))}
-            />
-            <img
-              className="plus"
-              src={plus}
-              alt="plus"
-              onClick={increaseAmount}
-            />
-            <img
-              className="minus"
-              src={minus}
-              alt="minus"
-              onClick={decreaseAmount}
-            />
-          </div>
-          <p className="max-available">
-            Max Mint per transaction: {maxMintAcmount}
-          </p>
-          <p className="max-available">
-            Wallet:{" "}
-            <span>
-              {balance.data &&
-                balance.data.value &&
-                (
-                  parseInt(balance.data.value.toString()) /
-                  Math.pow(10, balance.data.decimals)
-                ).toPrecision(5)}
-            </span>{" "}
-            ETH
-          </p>
-          <p className="terms">
+          <p className="terms" style={{ gridColumn: "span 3" }}>
             <a href="">Click here</a> to view the contract on Etherscan. By
             placing a bid you confirm that you have read and agree to the{" "}
             <a href="">terms of sale</a> for this drop. Your bid will be
             refunded if you lose the auction.
           </p>
           {(isPending && (
-            <div className="mint-group" ref={mintGroupRef}>
+            <div
+              className="mint-group"
+              ref={mintGroupRef}
+              style={{ gridColumn: "span 3" }}
+            >
               <GeneralButton disabled={true}>Minting...</GeneralButton>
             </div>
           )) || (
-            <div className="mint-group" ref={mintGroupRef}>
+            <div
+              className="mint-group"
+              ref={mintGroupRef}
+              style={{ gridColumn: "span 3" }}
+            >
               <GeneralButton onClick={() => mintNFT(amount)}>
                 Mint
               </GeneralButton>

@@ -1,0 +1,15 @@
+.data-container {
+  margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 2px solid #f7931a37;
+  border-radius: 1rem;
+}
+
+.data,
+.data-value {
+  margin: 0.5rem;
+  color: white;
+  text-align: center;
+}
