@@ -259,6 +259,7 @@ hr {
   background-color: #523914;
   padding: 1rem;
   display: flex;
+  margin-top: 20vh;
   flex-direction: column;
   align-items: center;
   max-height: 100%;
