@@ -60,11 +60,8 @@ const Mario = () => {
   // Handling key press event.
   const handleKey = useCallback(
     (e) => {
-      console.log(e.code);
-      console.log(isPlay);
-      console.log(die);
       if (e.code === "Space" && !isPlay && !die) {
-        dispatch(setReady(true));
+        dispatch(setReady(true));dispatch(marioJumping(true));
       }
       if (mario_jump === false && e.code === "Space" && isPlay && !die) {
         dispatch(marioJumping(true));

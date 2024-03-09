@@ -24,11 +24,12 @@
 
   .main {
     background-color: $light-brown;
-    padding: 20vh 2rem;
-    min-height: 100%;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-height: 100%;
+    height: 100%;
 
     .title {
       color: #ffcd4d;
@@ -51,14 +52,6 @@
       display: flex;
       flex-direction: column;
       margin: 0 2rem;
-
-      .price-label,
-      .amount-label {
-        color: white;
-        font-size: 1rem;
-        font-weight: 500;
-        margin: 0.5rem 0;
-      }
 
       .price-input {
         background-color: #00000000;
@@ -85,48 +78,6 @@
         margin: 0.5rem 0;
       }
 
-      .amount-input-container {
-        background-color: #ffffff1e;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        border: none;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        .amount-input {
-          background-color: #00000000;
-          border: none;
-          font-weight: 500;
-          color: white;
-          width: 85%;
-          appearance: none;
-          -webkit-appearance: none;
-
-          &::placeholder {
-            color: white;
-          }
-
-          &:focus {
-            outline: none;
-          }
-        }
-
-        .plus {
-          font-size: 1.5rem;
-          margin: 0 0.2rem;
-          right: 1rem;
-          cursor: pointer;
-        }
-
-        .minus {
-          font-size: 1.5rem;
-          margin: 0 0.2rem;
-          cursor: pointer;
-        }
-      }
-
       .max-available {
         color: rgba(255, 255, 255, 0.5);
         font-size: 1rem;
@@ -146,8 +97,8 @@
 
       @media (min-width: 1080px) {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(4, 1fr);
+        grid-template-columns: repeat(3, auto);
+        grid-template-rows: auto auto auto auto;
       }
     }
   }

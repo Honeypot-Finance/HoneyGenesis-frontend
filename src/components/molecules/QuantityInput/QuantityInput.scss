@@ -1,0 +1,27 @@
+.quantity-input {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  margin: 0.5rem;
+  padding: 1rem;
+  border: 2px solid #f7931a37;
+  border-radius: 1rem;
+
+  .price-label,
+  .amount-label,
+  .extra-operation {
+    color: white;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .extra-operation {
+    text-align: right;
+    .max-button {
+      text-decoration: underline;
+      cursor: pointer;
+      color: orange;
+      font-weight: 500;
+    }
+  }
+}

@@ -1,8 +1,8 @@
 .mario {
-  width: 5rem;
+  width: 3rem;
   height: auto;
   position: absolute;
-  bottom: 12.4vh;
+  bottom: 80px;
   left: 40px;
 }
 
@@ -39,42 +39,5 @@
   }
   100% {
     bottom: -20vh;
-  }
-}
-
-/* Media Queries */
-@media (max-width: 3000px) {
-  .mario {
-    width: 4rem;
-    bottom: 120px;
-  }
-}
-
-@media (max-width: 1600px) {
-  .mario {
-    width: 4rem;
-    bottom: 120px;
-  }
-}
-
-@media (max-width: 1280px) {
-  .mario {
-    width: 4rem;
-    bottom: 100px;
-  }
-}
-
-@media (max-width: 1024px) {
-  .mario {
-    width: 3rem;
-    bottom: 60px;
-  }
-}
-
-@media (max-width: 640px) {
-  .mario {
-    width: 2rem;
-    left: 20px;
-    bottom: 60px;
   }
 }

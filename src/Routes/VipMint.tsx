@@ -9,11 +9,12 @@ import { useAccount, useBalance } from "wagmi";
 import { chainId, contractAddress, maxMintAcmount } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
-import GeneralButton from "@/components/atoms/general-buttom/GeneralButton";
-import SingleDataBox from "@/components/atoms/single-data-group/SingleDataBox";
+import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
+import SingleDataBox from "@/components/atoms/SingleDataBox/SingleDataBox";
+
+import MintedDisplay from "@/components/molecules/MintedDisplay/MintedDisplay";
 
 //images
-import smokingMole from "@/assets/smoking-mole.png";
 import plus from "@/assets/plus.png";
 import minus from "@/assets/minus.png";
 import Game from "@/components/Game";
@@ -21,8 +22,7 @@ import bgImage from "@/assets/forest-bg.png";
 
 function VipMint() {
   const { open } = useWeb3Modal();
-  const { getVIPNFTPrice, getMintedVIPNFTsCount, getTotalVIPNFTCount } =
-    UseHoneyPot();
+  const { getVIPNFTPrice, getTotalVIPNFTCount } = UseHoneyPot();
   const mintEffectRef = useRef<HTMLDivElement>(null);
   const mintGroupRef = useRef<HTMLDivElement>(null);
   const [amount, setAmount] = useState(1);
@@ -180,22 +180,7 @@ function VipMint() {
       <Header />
       <main className="main">
         <img src={bgImage} alt="" className="bg-img" />
-        <div className="minted-display">
-          <h2 className="minted__title">Minted</h2>
-          <p className="minted__amount">
-            {getMintedVIPNFTsCount()}/{getTotalVIPNFTCount()}
-          </p>
-          <p className="minted__next-price">
-            next price:{" "}
-            <span>
-              {Number(getVIPNFTPrice())
-                ? weiToEther(parseInt(getVIPNFTPrice()))
-                : "loading..."}
-            </span>{" "}
-            ETH
-          </p>
-          <img src={smokingMole} alt="smoking-mole" className="smoking-mole" />
-        </div>
+        <MintedDisplay />
         <h1 className="title">Honey Genesis 🍯</h1>
 
         <div className="mint-form">

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "@/css/home.css";
 import Header from "@/components/Header";
 import UseHoneyPot from "@/hooks/useHoneyPot";
@@ -6,30 +6,28 @@ import { weiToEther } from "./lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useWriteContract } from "wagmi";
 import { useAccount, useBalance } from "wagmi";
-import { chainId, contractAddress, maxMintAcmount } from "@/consts";
+import { chainId, contractAddress } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
-import GeneralButton from "./components/atoms/general-buttom/GeneralButton";
-import SingleDataBox from "./components/atoms/single-data-group/SingleDataBox";
+import GeneralButton from "./components/atoms/GeneralButton/GeneralButton";
+import SingleDataBox from "./components/atoms/SingleDataBox/SingleDataBox";
+import MintedDisplay from "./components/molecules/MintedDisplay/MintedDisplay";
+import QuantityInput from "./components/molecules/QuantityInput/QuantityInput";
 
 //images
-import smokingMole from "@/assets/smoking-mole.png";
-import plus from "@/assets/plus.png";
-import minus from "@/assets/minus.png";
 import Game from "./components/Game";
 import bgImage from "@/assets/forest-bg.png";
 
 function App() {
+  const [amount, setAmount] = useState(1);
   const { open } = useWeb3Modal();
-  const { getCurrentPrice, getNextPrice, getMintedAmount, getMaxAmount } =
-    UseHoneyPot();
+  const { getCurrentPrice, getNextPrice, getMaxAmount } = UseHoneyPot();
   const mintEffectRef = useRef<HTMLDivElement>(null);
   const mintGroupRef = useRef<HTMLDivElement>(null);
-  const [amount, setAmount] = useState(1);
   const { address } = useAccount();
-  const balance = useBalance({
-    address: address,
-  });
+  // const balance = useBalance({
+  //   address: address,
+  // });
 
   const {
     writeContract,
@@ -44,6 +42,7 @@ function App() {
       open();
       return;
     }
+
     writeContract({
       abi: HoneyGenesis.abi,
       chainId: chainId,
@@ -139,63 +138,12 @@ function App() {
     }
   }, [isError, error]);
 
-  //amount handling
-  useEffect(() => {
-    if (amount < 0) {
-      setAmount(0);
-    }
-
-    if (amount > maxMintAcmount) {
-      setAmount(maxMintAcmount);
-    }
-
-    if (!balance.data || !balance.data.value || !balance.data.decimals) return;
-
-    const singlePrice = weiToEther(parseInt(getCurrentPrice()));
-
-    const balanceInFloat = parseFloat(
-      (
-        parseInt(balance.data.value.toString()) /
-        Math.pow(10, balance.data.decimals)
-      ).toPrecision(5)
-    );
-
-    if (singlePrice * amount > balanceInFloat) {
-      setAmount(Math.floor(balanceInFloat / singlePrice));
-    }
-  }, [amount, balance.data, getCurrentPrice]);
-
-  function increaseAmount() {
-    setAmount(amount + 1);
-  }
-
-  function decreaseAmount() {
-    if (amount > 0) {
-      setAmount(amount - 1);
-    }
-  }
-
   return (
     <div className="App">
       <Header />
       <main className="main">
         <img src={bgImage} alt="" className="bg-img" />
-        <div className="minted-display">
-          <h2 className="minted__title">Minted</h2>
-          <p className="minted__amount">
-            {getMintedAmount()}/{getMaxAmount()}
-          </p>
-          <p className="minted__next-price">
-            next price:{" "}
-            <span>
-              {Number(getNextPrice())
-                ? weiToEther(parseInt(getNextPrice()))
-                : getNextPrice()}
-            </span>{" "}
-            ETH
-          </p>
-          <img src={smokingMole} alt="smoking-mole" className="smoking-mole" />
-        </div>
+        <MintedDisplay />
         <h1 className="title">Honey Genesis 🍯</h1>
 
         <div className="mint-form">
@@ -220,49 +168,11 @@ function App() {
             dataName="Max Available"
             dataValue={Number(getMaxAmount()) ? getMaxAmount() : "loading..."}
           />
-          <div style={{ gridColumn: "span 3" }}>
-            <label className="amount-label" htmlFor="amount">
-              Amount
-            </label>
-            <div className="amount-input-container">
-              <input
-                className="amount-input"
-                type="number"
-                id="amount"
-                name="amount"
-                value={amount}
-                onChange={(e) => setAmount(parseInt(e.target.value))}
-              />
-              <img
-                className="plus"
-                src={plus}
-                alt="plus"
-                onClick={increaseAmount}
-              />
-              <img
-                className="minus"
-                src={minus}
-                alt="minus"
-                onClick={decreaseAmount}
-              />
-            </div>
-            <p className="max-available">
-              Max Mint per transaction: {maxMintAcmount}
-            </p>
-            <p className="max-available">
-              Wallet:{" "}
-              <span>
-                {(balance.data &&
-                  balance.data.value &&
-                  (
-                    parseInt(balance.data.value.toString()) /
-                    Math.pow(10, balance.data.decimals)
-                  ).toPrecision(5)) ||
-                  "N/A"}
-              </span>{" "}
-              ETH
-            </p>
-          </div>
+          <QuantityInput
+            inputName="Quantity"
+            value={amount}
+            setValue={setAmount}
+          />
           <p className="terms" style={{ gridColumn: "span 3" }}>
             <a href="">Click here</a> to view the contract on Etherscan. By
             placing a bid you confirm that you have read and agree to the{" "}

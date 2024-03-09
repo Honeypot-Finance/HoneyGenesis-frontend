@@ -1,14 +1,15 @@
 .general-button-container {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .general-button {
   font-size: 1.5rem;
   width: 100%;
-  margin: 1rem;
-  padding: 1rem 4rem;
+  height: 100%;
   font-weight: bold;
+  padding: 1rem 4rem;
   background-color: #c1770d;
   border: solid 5px #291c0a;
   border-radius: 2rem 2rem 2rem 2rem / 50% 50% 50% 50%;

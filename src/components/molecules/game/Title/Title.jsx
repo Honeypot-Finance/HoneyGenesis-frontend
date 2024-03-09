@@ -1,7 +1,7 @@
 import "./Title.css";
 
 // assets
-import Mario from "../../../assets/img/mario.png";
+import Mario from "../../../../assets/img/mario.png";
 
 const Title = () => {
   return (

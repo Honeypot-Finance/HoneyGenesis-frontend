@@ -2,7 +2,7 @@ import { useReadContract } from "wagmi";
 import { chainId, contractAddress } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 
-export default function useHoneyPOt() {
+export default function useHoneyPot() {
   const currentprice = useReadGenesisContract("getCurrentPrice");
   const nextPrice = useReadGenesisContract("getNextNFTPrice");
   const mintedAmount = useReadGenesisContract("getMintedNFTsCount");
