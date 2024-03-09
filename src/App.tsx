@@ -5,7 +5,10 @@ import UseHoneyPot from "@/hooks/useHoneyPot";
 import { weiToEther } from "./lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useWriteContract } from "wagmi";
-import { useAccount, useBalance } from "wagmi";
+import {
+  useAccount,
+  //useBalance
+} from "wagmi";
 import { chainId, contractAddress } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";

@@ -6,12 +6,12 @@ import "./NumberInput.css";
 export default function NumberInput({
   value,
   setValue,
-  unit,
+  unitName,
   style,
 }: {
   value: number;
   setValue: (value: number) => void;
-  unit: string;
+  unitName: string;
   style?: React.CSSProperties;
 }) {
   const plusRef = useRef<HTMLImageElement>(null);
@@ -59,7 +59,7 @@ export default function NumberInput({
         alt="minus"
         onClick={decreaseAmount}
       />
-      <div className="unit-name">{unit}</div>
+      <div className="unit-name">{unitName}</div>
     </div>
   );
 }

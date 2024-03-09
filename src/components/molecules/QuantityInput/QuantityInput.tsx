@@ -89,7 +89,7 @@ export default function QuantityInput({
       <NumberInput
         value={value}
         setValue={setValue}
-        unit="ETH"
+        unitName="ETH"
         style={{ gridColumnStart: 1, gridColumnEnd: 3 }}
       />
     </div>
