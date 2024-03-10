@@ -23,5 +23,9 @@
   color: orange;
   font-weight: 500;
 }
+.quantity-input .total-price {
+  margin: 0.5rem;
+  color: white;
+}
 
 /*# sourceMappingURL=QuantityInput.css.map */

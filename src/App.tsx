@@ -18,7 +18,7 @@ import MintedDisplay from "./components/molecules/MintedDisplay/MintedDisplay";
 import QuantityInput from "./components/molecules/QuantityInput/QuantityInput";
 
 //images
-import Game from "./components/Game";
+import Game from "@/components/Game";
 import bgImage from "@/assets/forest-bg.png";
 
 function App() {

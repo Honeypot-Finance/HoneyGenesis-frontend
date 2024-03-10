@@ -89,9 +89,16 @@ export default function QuantityInput({
       <NumberInput
         value={value}
         setValue={setValue}
-        unitName="ETH"
+        unitName="UNIT"
         style={{ gridColumnStart: 1, gridColumnEnd: 3 }}
       />
+      <div className="total-price">
+        Total Price:{" "}
+        {Number(getCurrentPrice())
+          ? weiToEther(parseInt(getCurrentPrice()) * value).toPrecision(2) +
+            " ETH"
+          : "loading..."}
+      </div>
     </div>
   );
 }

@@ -61,10 +61,10 @@ export default function Header() {
             <li className="navbar__link">
               <Link to="/">Mint</Link>
             </li>
-            <hr />
+            {/* <hr />
             <li className="navbar__link">
               <Link to="/vip-mint">Priority Mint</Link>
-            </li>
+            </li> */}
           </nav>
           <div className="medias">
             <a
