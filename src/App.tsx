@@ -20,6 +20,7 @@ import QuantityInput from "./components/molecules/QuantityInput/QuantityInput";
 //images
 import Game from "@/components/Game";
 import bgImage from "@/assets/forest-bg.png";
+import nftImg from "@/assets/nft-img.jpg";
 
 function App() {
   const [amount, setAmount] = useState(1);
@@ -144,6 +145,9 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <div className="nft-img-container">
+        <img className="nft-img" src={nftImg} alt="Nft Image" />
+      </div>
       <main className="main">
         <img src={bgImage} alt="" className="bg-img" />
         <MintedDisplay />
