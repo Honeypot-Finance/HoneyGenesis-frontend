@@ -20,6 +20,7 @@ const MobileControls = () => {
       dispatch(setReady(true));
     }
   };
+
   const handleJump = () => {
     if (mario_jump === false) {
       dispatch(marioJumping(true));
@@ -31,6 +32,7 @@ const MobileControls = () => {
       }, 1000);
     }
   };
+  
   return (
     <div className="mobile-controls-container">
       {!isPlay && !isDie && <button className="control-start-button" onClick={handleStart}>START</button>}

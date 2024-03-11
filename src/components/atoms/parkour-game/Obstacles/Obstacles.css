@@ -8,10 +8,10 @@
 
 .obstacle1,
 .obstacle2 {
-  height: 60px;
+  height: 40px;
   width: auto;
   position: absolute;
-  bottom: 70px;
+  bottom: 10px;
 }
 
 .obstacle1 {
@@ -23,14 +23,14 @@
 
 .obstacle1-move {
   animation-name: obstacle1-animation;
-  animation-duration: 3s;
+  animation-duration: 6s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
 
 .obstacle2-move {
   animation-name: obstacle2-animation;
-  animation-duration: 6s;
+  animation-duration: 12s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }

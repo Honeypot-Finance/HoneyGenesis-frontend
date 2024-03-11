@@ -209,7 +209,6 @@ function App() {
           ></motion.div>
         </div>
       </main>
-
       <Game className="mini-game" />
     </div>
   );

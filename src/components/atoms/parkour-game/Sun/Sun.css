@@ -7,6 +7,7 @@
   position: absolute;
   top: 25px;
   right: 100px;
+  z-index: -2;
 }
 
 /* Media Queries */

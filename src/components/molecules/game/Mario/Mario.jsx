@@ -22,7 +22,6 @@ const Mario = () => {
   const marioRef = useRef();
   const dispatch = useDispatch();
   const die = useSelector((state) => state.engine.die);
-
   const isPlay = useSelector((state) => state.engine.play);
   // Mario positions & jump
   const mario_jump = useSelector((state) => state.mario.jumping);
@@ -60,8 +59,11 @@ const Mario = () => {
   // Handling key press event.
   const handleKey = useCallback(
     (e) => {
+      if(die) return;
+      console.log(mario_jump);
       if (e.code === "Space" && !isPlay && !die) {
-        dispatch(setReady(true));dispatch(marioJumping(true));
+        dispatch(setReady(true));
+        dispatch(marioJumping(true));
       }
       if (mario_jump === false && e.code === "Space" && isPlay && !die) {
         dispatch(marioJumping(true));
@@ -150,9 +152,7 @@ const Mario = () => {
       //bgMusic.pause();
       //bgMusic.currentTime = 0;
     }
-  }, [handleKey, dispatch, 
-    //bgMusic,
-     isPlay]);
+  }, [handleKey, isPlay]);
 
   return (
     <div className="mario-container">
@@ -175,4 +175,5 @@ const Mario = () => {
     </div>
   );
 };
+
 export default Mario;
