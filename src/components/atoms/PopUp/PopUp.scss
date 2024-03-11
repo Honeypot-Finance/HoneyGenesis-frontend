@@ -37,10 +37,12 @@
         font-size: 1.5rem;
         font-weight: 500;
         color: white;
+        padding: 0 2rem;
       }
 
       .pop-up-close-button {
         position: absolute;
+        text-align: center;
         right: 1rem;
         font-size: 1.5rem;
         width: 2rem;
@@ -108,7 +110,7 @@
     .pop-up-container {
       .pop-up-header {
         .pop-up-title {
-          color: rgb(140, 255, 8);
+          color: rgb(71, 131, 2);
         }
 
         .pop-up-close-button {
