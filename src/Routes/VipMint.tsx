@@ -21,7 +21,7 @@ import Game from "@/components/Game";
 import bgImage from "@/assets/forest-bg.png";
 
 function VipMint() {
-  const isLock = import.meta.env.VITE_LOCK_MINT;
+  const isLock = import.meta.env.VITE_LOCK_MINT ? true : false;
   const { open } = useWeb3Modal();
   const { getVIPNFTPrice, getTotalVIPNFTCount } = UseHoneyPot();
   const mintEffectRef = useRef<HTMLDivElement>(null);

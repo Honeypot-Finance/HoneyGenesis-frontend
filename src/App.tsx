@@ -24,7 +24,7 @@ import bgImage from "@/assets/forest-bg.png";
 import nftImg from "@/assets/nft-img.jpg";
 
 function App() {
-  const isLock = import.meta.env.VITE_LOCK_MINT;
+  const isLock = import.meta.env.VITE_LOCK_MINT ? true : false;
   const [amount, setAmount] = useState(1);
   const { open } = useWeb3Modal();
   const { getCurrentPrice, getNextPrice, getMaxAmount } = UseHoneyPot();
