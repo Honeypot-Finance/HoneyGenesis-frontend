@@ -37,7 +37,7 @@ const Obstacles = () => {
       dispatch(obstacle2Left(obstacle2Ref.current.getBoundingClientRect().left));
       dispatch(obstacle2Top(obstacle2Ref.current.getBoundingClientRect().top));
       dispatch(obstacle2Width(obstacle2Ref.current.getBoundingClientRect().width));
-    }, 100);
+    }, 1000/60);
   }, [dispatch]);
 
   useEffect(() => {
