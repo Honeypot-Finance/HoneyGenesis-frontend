@@ -9,7 +9,7 @@ function MainContentWrapper({ lock, children }: MainContentWrapperProps) {
   return (
     <>
       <Header />
-      {(lock && <PageLock />) || children}
+      {lock ? <PageLock /> : children}
     </>
   );
 }

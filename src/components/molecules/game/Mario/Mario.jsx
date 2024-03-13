@@ -58,11 +58,9 @@ const Mario = () => {
 
   const jump = useCallback(() => {
     dispatch(marioJumping(true));
-        console.log("jumping start");
         //jump.play();
         setTimeout(() => {
           dispatch(marioJumping(false));
-          console.log("jumping finish");
           //jump.pause();
           //jump.currentTime = 0;
         }, 1000);
@@ -73,7 +71,6 @@ const Mario = () => {
   // Handling key press event.
   const handleKey = useCallback(
     (e) => {
-      console.log(mario_jump);
       if (e.code === "Space" && !isPlay && !die) {
         dispatch(setReady(true));        
         jump();
