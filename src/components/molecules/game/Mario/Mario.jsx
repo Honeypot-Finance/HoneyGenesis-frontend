@@ -56,28 +56,34 @@ const Mario = () => {
   //   return new Audio(backgroundMusic);
   // }, []);
 
-  // Handling key press event.
-  const handleKey = useCallback(
-    (e) => {
-      if(die) return;
-      console.log(mario_jump);
-      if (e.code === "Space" && !isPlay && !die) {
-        dispatch(setReady(true));
-        dispatch(marioJumping(true));
-      }
-      if (mario_jump === false && e.code === "Space" && isPlay && !die) {
-        dispatch(marioJumping(true));
+  const jump = useCallback(() => {
+    dispatch(marioJumping(true));
+        console.log("jumping start");
         //jump.play();
         setTimeout(() => {
           dispatch(marioJumping(false));
+          console.log("jumping finish");
           //jump.pause();
           //jump.currentTime = 0;
         }, 1000);
+  }
+  , [dispatch]);
+
+
+  // Handling key press event.
+  const handleKey = useCallback(
+    (e) => {
+      console.log(mario_jump);
+      if (e.code === "Space" && !isPlay && !die) {
+        dispatch(setReady(true));        
+        jump();
+      }
+
+      if (mario_jump === false && e.code === "Space" && isPlay && !die) {
+        jump();
       }
     },
-    [mario_jump, 
-      //jump,
-       dispatch, isPlay, die]
+    [die, dispatch, isPlay, jump, mario_jump]
   );
 
   useEffect(() => {
@@ -88,6 +94,7 @@ const Mario = () => {
       mario_top + mario_height > obs1_top
     ) {
       dispatch(setDie(true));
+      dispatch(marioJumping(false));
      // marioDie.play();
       dispatch(setReady(false));
       setTimeout(() => {
@@ -106,6 +113,7 @@ const Mario = () => {
       mario_top + mario_height > obs2_top
     ) {
       dispatch(setDie(true));
+      dispatch(marioJumping(false));
       //marioDie.play();
       dispatch(setReady(false));
       setTimeout(() => {
@@ -152,6 +160,12 @@ const Mario = () => {
       //bgMusic.pause();
       //bgMusic.currentTime = 0;
     }
+
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      //bgMusic.pause();
+      //bgMusic.currentTime = 0;
+    };
   }, [handleKey, isPlay]);
 
   return (
