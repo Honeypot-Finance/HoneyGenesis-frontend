@@ -14,12 +14,14 @@ import SingleDataBox from "@/components/atoms/SingleDataBox/SingleDataBox";
 import QuantityInput from "@/components/molecules/QuantityInput/QuantityInput";
 
 import MintedDisplay from "@/components/molecules/MintedDisplay/MintedDisplay";
+import MainContentWrapper from "@/components/template/MainContentWrapper/MainContentWrapper";
 
 //images
 import Game from "@/components/Game";
 import bgImage from "@/assets/forest-bg.png";
 
 function VipMint() {
+  const isLock = import.meta.env.VITE_LOCK_MINT;
   const { open } = useWeb3Modal();
   const { getVIPNFTPrice, getTotalVIPNFTCount } = UseHoneyPot();
   const mintEffectRef = useRef<HTMLDivElement>(null);
@@ -168,76 +170,80 @@ function VipMint() {
   return (
     <div className="App">
       <Header />
-      <main className="main">
-        <img src={bgImage} alt="" className="bg-img" />
-        <MintedDisplay />
-        <h1 className="title">VIP MINT 🍯</h1>
+      <MainContentWrapper lock={isLock}>
+        <main className="main">
+          <img src={bgImage} alt="" className="bg-img" />
+          <MintedDisplay />
+          <h1 className="title">VIP MINT 🍯</h1>
 
-        <div className="mint-form">
-          <SingleDataBox
-            dataName="Current Price"
-            dataValue={
-              Number(getVIPNFTPrice())
-                ? weiToEther(parseInt(getVIPNFTPrice())).toPrecision(2) + " ETH"
-                : "loading..."
-            }
-          />
-          <SingleDataBox
-            dataName="Next Price"
-            dataValue={
-              Number(getVIPNFTPrice())
-                ? weiToEther(parseInt(getVIPNFTPrice())).toPrecision(2) + " ETH"
-                : "loading..."
-            }
-          />
-          <SingleDataBox
-            dataName="Max Available"
-            dataValue={
-              Number(getTotalVIPNFTCount())
-                ? getTotalVIPNFTCount()
-                : "loading..."
-            }
-          />
-          <QuantityInput
-            inputName="Quantity"
-            value={amount}
-            setValue={setAmount}
-          />
-          <p className="terms" style={{ gridColumn: "span 3" }}>
-            <a href="">Click here</a> to view the contract on Etherscan. By
-            placing a bid you confirm that you have read and agree to the{" "}
-            <a href="">terms of sale</a> for this drop. Your bid will be
-            refunded if you lose the auction.
-          </p>
-          {(isPending && (
-            <div
-              className="mint-group"
-              ref={mintGroupRef}
-              style={{ gridColumn: "span 3" }}
-            >
-              <GeneralButton disabled={true}>Minting...</GeneralButton>
-            </div>
-          )) || (
-            <div
-              className="mint-group"
-              ref={mintGroupRef}
-              style={{ gridColumn: "span 3" }}
-            >
-              <GeneralButton onClick={() => mintNFT(amount)}>
-                Mint
-              </GeneralButton>
-            </div>
-          )}{" "}
-          <motion.div
-            layout
-            className="mint-effect"
-            ref={mintEffectRef}
-            transition={{ duration: 1 }}
-          ></motion.div>
-        </div>
-      </main>
+          <div className="mint-form">
+            <SingleDataBox
+              dataName="Current Price"
+              dataValue={
+                Number(getVIPNFTPrice())
+                  ? weiToEther(parseInt(getVIPNFTPrice())).toPrecision(2) +
+                    " ETH"
+                  : "loading..."
+              }
+            />
+            <SingleDataBox
+              dataName="Next Price"
+              dataValue={
+                Number(getVIPNFTPrice())
+                  ? weiToEther(parseInt(getVIPNFTPrice())).toPrecision(2) +
+                    " ETH"
+                  : "loading..."
+              }
+            />
+            <SingleDataBox
+              dataName="Max Available"
+              dataValue={
+                Number(getTotalVIPNFTCount())
+                  ? getTotalVIPNFTCount()
+                  : "loading..."
+              }
+            />
+            <QuantityInput
+              inputName="Quantity"
+              value={amount}
+              setValue={setAmount}
+            />
+            <p className="terms" style={{ gridColumn: "span 3" }}>
+              <a href="">Click here</a> to view the contract on Etherscan. By
+              placing a bid you confirm that you have read and agree to the{" "}
+              <a href="">terms of sale</a> for this drop. Your bid will be
+              refunded if you lose the auction.
+            </p>
+            {(isPending && (
+              <div
+                className="mint-group"
+                ref={mintGroupRef}
+                style={{ gridColumn: "span 3" }}
+              >
+                <GeneralButton disabled={true}>Minting...</GeneralButton>
+              </div>
+            )) || (
+              <div
+                className="mint-group"
+                ref={mintGroupRef}
+                style={{ gridColumn: "span 3" }}
+              >
+                <GeneralButton onClick={() => mintNFT(amount)}>
+                  Mint
+                </GeneralButton>
+              </div>
+            )}{" "}
+            <motion.div
+              layout
+              className="mint-effect"
+              ref={mintEffectRef}
+              transition={{ duration: 1 }}
+            ></motion.div>
+          </div>
+        </main>
 
-      <Game className="mini-game" />
+        <Game className="mini-game" />
+      </MainContentWrapper>
     </div>
   );
 }

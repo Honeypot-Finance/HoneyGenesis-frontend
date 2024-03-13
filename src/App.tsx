@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import "@/css/home.css";
-import Header from "@/components/Header";
 import UseHoneyPot from "@/hooks/useHoneyPot";
 import { weiToEther } from "./lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
@@ -17,12 +16,15 @@ import SingleDataBox from "./components/atoms/SingleDataBox/SingleDataBox";
 import MintedDisplay from "./components/molecules/MintedDisplay/MintedDisplay";
 import QuantityInput from "./components/molecules/QuantityInput/QuantityInput";
 
+import MainContentWrapper from "./components/template/MainContentWrapper/MainContentWrapper";
+
 //images
 import Game from "@/components/Game";
 import bgImage from "@/assets/forest-bg.png";
 import nftImg from "@/assets/nft-img.jpg";
 
 function App() {
+  const isLock = import.meta.env.VITE_LOCK_MINT;
   const [amount, setAmount] = useState(1);
   const { open } = useWeb3Modal();
   const { getCurrentPrice, getNextPrice, getMaxAmount } = UseHoneyPot();
@@ -115,6 +117,8 @@ function App() {
 
   //init
   useEffect(() => {
+    if (mintEffectRef.current === null || mintGroupRef.current === null) return;
+
     initEffectPosition();
     mintEffectRef.current.style.borderWidth = "0px";
 
@@ -144,76 +148,77 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <div className="nft-img-container">
-        <img className="nft-img" src={nftImg} alt="Nft Image" />
-      </div>
-      <main className="main">
-        <img src={bgImage} alt="" className="bg-img" />
-        <MintedDisplay />
-        <h1 className="title">Honey Genesis 🍯</h1>
-
-        <div className="mint-form">
-          <SingleDataBox
-            dataName="Current Price"
-            dataValue={
-              Number(getCurrentPrice())
-                ? weiToEther(parseInt(getCurrentPrice())).toPrecision(2) +
-                  " ETH"
-                : "loading..."
-            }
-          />
-          <SingleDataBox
-            dataName="Next Price"
-            dataValue={
-              Number(getNextPrice())
-                ? weiToEther(parseInt(getNextPrice())).toPrecision(2) + " ETH"
-                : "loading..."
-            }
-          />
-          <SingleDataBox
-            dataName="Max Available"
-            dataValue={Number(getMaxAmount()) ? getMaxAmount() : "loading..."}
-          />
-          <QuantityInput
-            inputName="Quantity"
-            value={amount}
-            setValue={setAmount}
-          />
-          <p className="terms" style={{ gridColumn: "span 3" }}>
-            <a href="">Click here</a> to view the contract on Etherscan. By
-            placing a bid you confirm that you have read and agree to the{" "}
-            <a href="">terms of sale</a> for this drop. Your bid will be
-            refunded if you lose the auction.
-          </p>
-          {(isPending && (
-            <div
-              className="mint-group"
-              ref={mintGroupRef}
-              style={{ gridColumn: "span 3" }}
-            >
-              <GeneralButton disabled={true}>Minting...</GeneralButton>
-            </div>
-          )) || (
-            <div
-              className="mint-group"
-              ref={mintGroupRef}
-              style={{ gridColumn: "span 3" }}
-            >
-              <GeneralButton onClick={() => mintNFT(amount)}>
-                Mint
-              </GeneralButton>
-            </div>
-          )}{" "}
-          <motion.div
-            layout
-            className="mint-effect"
-            ref={mintEffectRef}
-            transition={{ duration: 1 }}
-          ></motion.div>
+      <MainContentWrapper lock={isLock}>
+        <div className="nft-img-container">
+          <img className="nft-img" src={nftImg} alt="Nft Image" />
         </div>
-      </main>
-      <Game className="mini-game" />
+        <main className="main">
+          <img src={bgImage} alt="" className="bg-img" />
+          <MintedDisplay />
+          <h1 className="title">Honey Genesis 🍯</h1>
+
+          <div className="mint-form">
+            <SingleDataBox
+              dataName="Current Price"
+              dataValue={
+                Number(getCurrentPrice())
+                  ? weiToEther(parseInt(getCurrentPrice())).toPrecision(2) +
+                    " ETH"
+                  : "loading..."
+              }
+            />
+            <SingleDataBox
+              dataName="Next Price"
+              dataValue={
+                Number(getNextPrice())
+                  ? weiToEther(parseInt(getNextPrice())).toPrecision(2) + " ETH"
+                  : "loading..."
+              }
+            />
+            <SingleDataBox
+              dataName="Max Available"
+              dataValue={Number(getMaxAmount()) ? getMaxAmount() : "loading..."}
+            />
+            <QuantityInput
+              inputName="Quantity"
+              value={amount}
+              setValue={setAmount}
+            />
+            <p className="terms" style={{ gridColumn: "span 3" }}>
+              <a href="">Click here</a> to view the contract on Etherscan. By
+              placing a bid you confirm that you have read and agree to the{" "}
+              <a href="">terms of sale</a> for this drop. Your bid will be
+              refunded if you lose the auction.
+            </p>
+            {(isPending && (
+              <div
+                className="mint-group"
+                ref={mintGroupRef}
+                style={{ gridColumn: "span 3" }}
+              >
+                <GeneralButton disabled={true}>Minting...</GeneralButton>
+              </div>
+            )) || (
+              <div
+                className="mint-group"
+                ref={mintGroupRef}
+                style={{ gridColumn: "span 3" }}
+              >
+                <GeneralButton onClick={() => mintNFT(amount)}>
+                  Mint
+                </GeneralButton>
+              </div>
+            )}{" "}
+            <motion.div
+              layout
+              className="mint-effect"
+              ref={mintEffectRef}
+              transition={{ duration: 1 }}
+            ></motion.div>
+          </div>
+        </main>
+        <Game className="mini-game" />
+      </MainContentWrapper>
     </div>
   );
 }
