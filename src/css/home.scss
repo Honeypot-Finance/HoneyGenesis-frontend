@@ -327,6 +327,9 @@
   height: 100%;
   padding: 1rem;
   margin: 30vh 0;
+  .critical-data-group {
+    display: flex;
+  }
 
   .logo-group {
     display: flex;

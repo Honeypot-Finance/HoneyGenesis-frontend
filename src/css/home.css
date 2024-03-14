@@ -548,6 +548,9 @@ hr {
   padding: 1rem;
   margin: 30vh 0;
 }
+.homepage-main .critical-data-group {
+  display: flex;
+}
 .homepage-main .logo-group {
   display: flex;
   align-items: center;

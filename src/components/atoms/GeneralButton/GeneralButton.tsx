@@ -2,22 +2,16 @@ import { ReactNode } from "react";
 import "./GeneralButton.css";
 
 interface GeneralButtonProps
-  extends React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
   onClick?: () => void;
   disabled?: boolean;
-  className?: string;
   containerStyle?: React.CSSProperties;
 }
 
 export default function GeneralButton({
   children,
   onClick,
-  disabled,
-  className,
   containerStyle,
   ...props
 }: GeneralButtonProps) {
@@ -25,8 +19,7 @@ export default function GeneralButton({
     <div className="general-button-container" style={containerStyle}>
       <button
         onClick={onClick}
-        disabled={disabled}
-        className={`general-button ${className}`}
+        className={`general-button ${props.className}`}
         {...props}
       >
         {children}
