@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "@/App";
 import VipMint from "@/Routes/VipMint";
 import WhiteListCheck from "./Routes/WhiteListCheck";
+import MyAssets from "./Routes/MyAssets";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,11 @@ const router = createBrowserRouter([
     element: <VipMint />,
   },
   {
-    path: "/white-list-check",
+    path: "/my-assets",
+    element: <MyAssets />,
+  },
+  {
+    path: "/whitelist-check",
     element: <WhiteListCheck />,
   },
 ]);

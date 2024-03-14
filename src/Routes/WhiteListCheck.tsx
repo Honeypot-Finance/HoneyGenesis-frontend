@@ -42,7 +42,7 @@ export default function WhiteListCheck() {
       <main className="main white-list-page">
         <img src={bgImage} alt="" className="bg-img" />
 
-        <h1 className="title">🍯 White List Check 🍯</h1>
+        <h1 className="title">🍯 Check Eligibility 🍯</h1>
 
         <div className="mint-form">
           <GeneralInput

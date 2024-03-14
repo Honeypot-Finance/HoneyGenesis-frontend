@@ -7,7 +7,7 @@ import {
   Obstacles,
   Sun,
   KeyMessage,
-  //Score,
+  Score,
   MobileControls,
 } from ".";
 import { useSelector } from "react-redux";
@@ -25,9 +25,9 @@ export default function Game(prop) {
       <Birds />
       <Obstacles />
       <MobileControls />
-      {
-      //<Score />
-      }
+      
+      <Score />
+      
       <Mario />
     </div>
   );

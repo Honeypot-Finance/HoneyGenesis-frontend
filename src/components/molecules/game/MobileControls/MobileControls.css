@@ -1,7 +1,8 @@
 @media (min-width: 1080px) {
   .mobile-controls-container,
   .control-start-button,
-  .control-jump-button {
+  .control-jump-button,
+  .control-die-button {
     display: none;
   }
 }
@@ -31,15 +32,18 @@
 }
 
 .control-start-button:hover,
-.control-jump-button:hover {
+.control-jump-button:hover,
+.control-die-button:hover {
   filter: saturate(10);
 }
 
-.control-start-button,
+.control-start-button {
+  background-color: #73e955b0;
+}
 .control-die-button {
-  background-color: #e52521;
+  background-color: #eb3a3a;
 }
 
 .control-jump-button {
-  background-color: #fbd000;
+  background-color: #b1960ec8;
 }

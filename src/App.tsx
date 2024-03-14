@@ -155,12 +155,14 @@ function App() {
   return (
     <div className="App">
       <MainContentWrapper lock={isLock}>
-        <div className="nft-img-container">
-          <img className="nft-img" src={nftImg} alt="Nft Image" />
+        <div className="right-section">
+          <div className="nft-img-container">
+            <img className="nft-img" src={nftImg} alt="Nft Image" />
+          </div>
+          <MintedDisplay />
         </div>
         <main className="main">
           <img src={bgImage} alt="" className="bg-img" />
-          <MintedDisplay />
           <h1 className="title">Honey Genesis 🍯</h1>
 
           <div className="mint-form">

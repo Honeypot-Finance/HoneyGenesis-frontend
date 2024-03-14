@@ -51,15 +51,21 @@ export default function Header() {
         <div className="link-group">
           <nav className="navbar">
             <li className="navbar__link">
-              <a href="">Honeypot Finance</a>
+              <a href="https://honeypotfinance.xyz/" target="blank">
+                Honeypot Finance
+              </a>
             </li>
             <hr />
             <li className="navbar__link">
-              <a href="">My Assets</a>
+              <Link to="/my-assets">My Assets</Link>
             </li>
             <hr />
             <li className="navbar__link">
               <Link to="/">Mint</Link>
+            </li>{" "}
+            <hr />
+            <li className="navbar__link">
+              <Link to="/whitelist-check">Whitelist</Link>
             </li>
             {/* <hr />
             <li className="navbar__link">
