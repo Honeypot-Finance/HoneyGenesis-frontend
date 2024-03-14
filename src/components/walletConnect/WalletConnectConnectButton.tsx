@@ -11,28 +11,35 @@ export default function WalletConnectButton() {
   const isConnectingDisplay = <div>Connecting...</div>;
 
   const isConnectedDisplay = (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <img
-        style={{
-          width: "1.5rem",
-          height: "1.5rem",
-          marginRight: "0.5rem",
-          borderRadius: "50%",
-        }}
-        src={walletIcon}
-        alt=""
-      />
-      {address.toString().substring(0, 3)}...
-      {address
-        .toString()
-        .substring(address.toString().length - 3, address.toString().length)}
-    </div>
+    <>
+      {address && (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            style={{
+              width: "1.5rem",
+              height: "1.5rem",
+              marginRight: "0.5rem",
+              borderRadius: "50%",
+            }}
+            src={walletIcon}
+            alt=""
+          />
+          {address.toString().substring(0, 3)}...
+          {address
+            .toString()
+            .substring(
+              address.toString().length - 3,
+              address.toString().length
+            )}
+        </div>
+      )}
+    </>
   );
 
   return (
