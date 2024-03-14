@@ -6,6 +6,9 @@
   border: 2px solid #f7931a37;
   border-radius: 1rem;
 }
+.data-container.solid {
+  background-color: #77470c;
+}
 
 .data,
 .data-value {
