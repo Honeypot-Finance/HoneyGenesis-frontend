@@ -7,6 +7,7 @@ import { weiToEther } from "./lib/currencyConvert";
 
 import honeyGenesisLogo from "@/assets/honey-genesis-icon.png";
 import SingleDataBox from "./components/atoms/SingleDataBox/SingleDataBox";
+import mole from "@/assets/smoking-mole.png";
 
 function App() {
   const { getCurrentPrice, getNextPrice, getMaxAmount } = useHoneyPot();
@@ -15,6 +16,8 @@ function App() {
       <MainContentWrapper>
         <main className="homepage-main">
           <div className="bg-logo" />
+          <img className="meme-img" src={mole} alt="" />{" "}
+          <img className="meme-img2" src={mole} alt="" />
           <div className="logo-group">
             <img className="logo" src={honeyGenesisLogo} alt="" />
             <h1 className="title">Honey Genesis</h1>
@@ -51,7 +54,13 @@ function App() {
             />
           </div>
           <Link to={"./mint"}>
-            <GeneralButton>Mint Now</GeneralButton>
+            <GeneralButton
+              style={{
+                margin: "3rem",
+              }}
+            >
+              Mint Now
+            </GeneralButton>
           </Link>
         </main>
       </MainContentWrapper>

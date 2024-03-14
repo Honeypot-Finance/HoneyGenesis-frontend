@@ -538,7 +538,6 @@ hr {
 }
 
 .homepage-main {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -546,10 +545,28 @@ hr {
   width: 100%;
   height: 100%;
   padding: 1rem;
-  margin: 30vh 0;
+  margin: 35vh 0;
 }
 .homepage-main .critical-data-group {
   display: flex;
+}
+.homepage-main .meme-img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 30%;
+  object-fit: contain;
+  z-index: -1;
+}
+.homepage-main .meme-img2 {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30%;
+  object-fit: contain;
+  transform: scaleX(-1);
+  z-index: -1;
 }
 .homepage-main .logo-group {
   display: flex;
