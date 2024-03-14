@@ -6,7 +6,7 @@ import { weiToEther } from "@/lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useWriteContract } from "wagmi";
 import { useAccount, useBalance } from "wagmi";
-import { chainId, contractAddress, maxMintAcmount } from "@/consts";
+import { chainId, contractAddress, maxMintAmount } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
@@ -15,10 +15,13 @@ import QuantityInput from "@/components/molecules/QuantityInput/QuantityInput";
 
 import MintedDisplay from "@/components/molecules/MintedDisplay/MintedDisplay";
 import MainContentWrapper from "@/components/template/MainContentWrapper/MainContentWrapper";
+import { useAppDispatch } from "@/hooks/useAppSelector";
+import { openPopUp } from "@/config/redux/popUpSlice";
 
 //images
 import Game from "@/components/Game";
 import bgImage from "@/assets/forest-bg.png";
+import nftImg from "@/assets/nft-img.jpg";
 
 function VipMint() {
   const isLock: boolean =
@@ -29,7 +32,7 @@ function VipMint() {
       : false;
 
   const { open } = useWeb3Modal();
-  const { getVIPNFTPrice, getTotalVIPNFTCount } = UseHoneyPot();
+  const { getVIPNFTPrice, getTotalVIPNFTCount, getMaxAmount } = UseHoneyPot();
   const mintEffectRef = useRef<HTMLDivElement>(null);
   const mintGroupRef = useRef<HTMLDivElement>(null);
   const [amount, setAmount] = useState(1);
@@ -37,14 +40,9 @@ function VipMint() {
   const balance = useBalance({
     address: address,
   });
+  const dispatch = useAppDispatch();
 
-  const {
-    writeContract,
-    //data,
-    isPending,
-    isError,
-    error,
-  } = useWriteContract();
+  const { writeContract, data, isPending, isError, error } = useWriteContract();
 
   function mintNFT(amount: number) {
     if (!address) {
@@ -144,9 +142,29 @@ function VipMint() {
   //mint error handling
   useEffect(() => {
     if (isError) {
+      dispatch(
+        openPopUp({
+          title: "Something went wrong",
+          message: error.message,
+          info: "error",
+        })
+      );
       console.warn(error);
     }
-  }, [isError, error]);
+  }, [isError, error, dispatch]);
+
+  //mint success handling
+  useEffect(() => {
+    if (data) {
+      dispatch(
+        openPopUp({
+          title: "Mint Success",
+          message: `You have successfully minted ${amount} NFTs`,
+          info: "success",
+        })
+      );
+    }
+  }, [data, amount, dispatch]);
 
   //amount handling
   useEffect(() => {
@@ -154,8 +172,8 @@ function VipMint() {
       setAmount(0);
     }
 
-    if (amount > maxMintAcmount) {
-      setAmount(maxMintAcmount);
+    if (amount > maxMintAmount) {
+      setAmount(maxMintAmount);
     }
 
     if (!balance.data || !balance.data.value || !balance.data.decimals) return;
@@ -177,9 +195,14 @@ function VipMint() {
     <div className="App">
       <Header />
       <MainContentWrapper lock={isLock}>
+        <div className="right-section">
+          <div className="nft-img-container">
+            <img className="nft-img" src={nftImg} alt="Nft Image" />
+          </div>
+          <MintedDisplay isVIPMint />
+        </div>
         <main className="main">
           <img src={bgImage} alt="" className="bg-img" />
-          <MintedDisplay />
           <h1 className="title">VIP MINT 🍯</h1>
 
           <div className="mint-form">
@@ -204,8 +227,8 @@ function VipMint() {
             <SingleDataBox
               dataName="Max Available"
               dataValue={
-                Number(getTotalVIPNFTCount())
-                  ? getTotalVIPNFTCount()
+                Number(getMaxAmount())
+                  ? parseInt(getMaxAmount()) + parseInt(getTotalVIPNFTCount())
                   : "loading..."
               }
             />

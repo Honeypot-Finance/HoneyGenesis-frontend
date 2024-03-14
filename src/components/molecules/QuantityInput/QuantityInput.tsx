@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useAccount, useBalance } from "wagmi";
 
-import { maxMintAcmount } from "@/consts";
+import { maxMintAmount } from "@/consts";
 import { weiToEther } from "@/lib/currencyConvert";
 import useHoneyPot from "@/hooks/useHoneyPot";
 
@@ -30,8 +30,8 @@ export default function QuantityInput({
       setValue(0);
     }
 
-    if (value > maxMintAcmount) {
-      setValue(maxMintAcmount);
+    if (value > maxMintAmount) {
+      setValue(maxMintAmount);
     }
 
     if (!balance.data || !balance.data.value || !balance.data.decimals) return;
