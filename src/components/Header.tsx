@@ -61,7 +61,7 @@ export default function Header() {
             </li>
             <hr />
             <li className="navbar__link">
-              <Link to="/">Mint</Link>
+              <Link to="/mint">Mint</Link>
             </li>{" "}
             <hr />
             <li className="navbar__link">
