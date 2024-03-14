@@ -15,7 +15,8 @@ import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
 import SingleDataBox from "@/components/atoms/SingleDataBox/SingleDataBox";
 import MintedDisplay from "@/components/molecules/MintedDisplay/MintedDisplay";
 import QuantityInput from "@/components/molecules/QuantityInput/QuantityInput";
-
+import { useAppDispatch } from "@/hooks/useAppSelector";
+import { openPopUp } from "@/config/redux/popUpSlice";
 import MainContentWrapper from "@/components/template/MainContentWrapper/MainContentWrapper";
 
 //images
@@ -33,21 +34,17 @@ function Mint() {
 
   const [amount, setAmount] = useState(1);
   const { open } = useWeb3Modal();
-  const { getCurrentPrice, getNextPrice, getMaxAmount } = UseHoneyPot();
+  const { getCurrentPrice, getNextPrice, getMaxAmount, getTotalVIPNFTCount } =
+    UseHoneyPot();
   const mintEffectRef = useRef<HTMLDivElement>(null);
   const mintGroupRef = useRef<HTMLDivElement>(null);
   const { address } = useAccount();
   // const balance = useBalance({
   //   address: address,
   // });
+  const dispatch = useAppDispatch();
 
-  const {
-    writeContract,
-    //data,
-    isPending,
-    isError,
-    error,
-  } = useWriteContract();
+  const { writeContract, data, isPending, isError, error } = useWriteContract();
 
   function mintNFT(amount: number) {
     if (!address) {
@@ -148,10 +145,29 @@ function Mint() {
   //mint error handling
   useEffect(() => {
     if (isError) {
+      dispatch(
+        openPopUp({
+          title: "Something went wrong",
+          message: error.message,
+          info: "error",
+        })
+      );
       console.warn(error);
     }
-  }, [isError, error]);
+  }, [isError, error, dispatch]);
 
+  //mint success handling
+  useEffect(() => {
+    if (data) {
+      dispatch(
+        openPopUp({
+          title: "Mint Success",
+          message: `You have successfully minted ${amount} NFTs`,
+          info: "success",
+        })
+      );
+    }
+  }, [data, amount, dispatch]);
   return (
     <div className="App">
       <MainContentWrapper lock={isLock}>
@@ -185,7 +201,11 @@ function Mint() {
             />
             <SingleDataBox
               dataName="Max Available"
-              dataValue={Number(getMaxAmount()) ? getMaxAmount() : "loading..."}
+              dataValue={
+                Number(getMaxAmount())
+                  ? parseInt(getMaxAmount()) + parseInt(getTotalVIPNFTCount())
+                  : "loading..."
+              }
             />
             <QuantityInput
               inputName="Quantity"
