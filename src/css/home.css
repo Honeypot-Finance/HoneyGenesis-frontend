@@ -1,9 +1,11 @@
 :root {
   --primary-color: White;
-  --secondary-color: #ffcd4d;
+  --secondary-color: #31220c;
   --border-color: #f7951d50;
   --border-size: 0.5rem;
+  --border-size-sm: 0.1rem;
   --border-radius: 2rem;
+  --border-radius-sm: 0.5rem;
 }
 
 * {

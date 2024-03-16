@@ -2,35 +2,27 @@ import "@/css/home.css";
 import MainContentWrapper from "./components/template/MainContentWrapper/MainContentWrapper";
 import GeneralButton from "./components/atoms/GeneralButton/GeneralButton";
 import { Link } from "react-router-dom";
+import Container from "./components/atoms/Container/Container";
 
 import honeyGenesisLogo from "@/assets/honey-genesis-icon.png";
 import mole from "@/assets/smoking-mole.png";
 import bgPot from "@/assets/background-pot-icon.svg";
 
-import Countdown from "react-countdown";
+import Countdown from "@/components/molecules/CountDown/CountDown";
 
 function App() {
-  const countDownRenderer = ({ days, hours, minutes, seconds, completed }) => {
-    if (completed) {
-      return (
-        <Link to={"./mint"}>
-          <GeneralButton
-            style={{
-              margin: "3rem",
-            }}
-          >
-            Mint Now
-          </GeneralButton>
-        </Link>
-      );
-    } else {
-      return (
-        <span>
-          {days}d {hours}h {minutes}m {seconds}s
-        </span>
-      );
-    }
-  };
+  const countDownDate = new Date("2024-03-22");
+  const completeRenderer = (
+    <Link to={"./mint"}>
+      <GeneralButton
+        style={{
+          margin: "3rem",
+        }}
+      >
+        Mint Now
+      </GeneralButton>
+    </Link>
+  );
 
   return (
     <div className="App" style={{ backgroundImage: `url(${bgPot})` }}>
@@ -48,10 +40,8 @@ function App() {
             Defend your honeypot, earn $HPOT tokens, and mutate into Gen-1 NFTs
             on Berachain's mainnet. Dive into the adventure today!
           </p>{" "}
-          <Countdown
-            date={new Date("2024-03-22")}
-            renderer={countDownRenderer}
-          />
+          <Container>Mint Live:</Container>
+          <Countdown date={countDownDate} completeRenderer={completeRenderer} />
         </main>
       </MainContentWrapper>
     </div>
