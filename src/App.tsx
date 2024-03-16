@@ -6,7 +6,6 @@ import Container from "./components/atoms/Container/Container";
 
 import honeyGenesisLogo from "@/assets/honey-genesis-icon.png";
 import mole from "@/assets/smoking-mole.png";
-import bgPot from "@/assets/background-pot-icon.svg";
 
 import Countdown from "@/components/molecules/CountDown/CountDown";
 
