@@ -5,7 +5,12 @@
 :root {
   --primary-color: White;
   --secondary-color: #31220c;
+  --secondary-color-light: #f7951d;
   --border-color: #f7951d50;
+  --success-color: #22a722;
+  --error-color: #f7941d;
+  --warning-color: #f7941d;
+  --pending-color: #ecc94e;
   --border-size: 0.5rem;
   --border-size-sm: 0.1rem;
   --border-radius: 2rem;

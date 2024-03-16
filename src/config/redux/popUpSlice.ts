@@ -3,7 +3,7 @@ interface PopUpState {
   isOpen: boolean;
   title: string;
   message: string;
-  info: "normal" | "error" | "success";
+  info: "normal" | "error" | "success" | "warning" | "pending";
 }
 
 const initialState = {
