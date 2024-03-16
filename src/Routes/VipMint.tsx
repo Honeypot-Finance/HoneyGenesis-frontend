@@ -214,7 +214,10 @@ function VipMint() {
             <SingleDataBox
               dataName="Current Price"
               dataValue={
-                Number(getVIPNFTPrice())
+                parseFloat(getMintedVIPNFTsCount()) >=
+                parseFloat(getMaxAmount())
+                  ? "Sold Out"
+                  : Number(getVIPNFTPrice())
                   ? weiToEther(parseInt(getVIPNFTPrice())).toPrecision(2) +
                     " ETH"
                   : "loading..."
@@ -223,7 +226,10 @@ function VipMint() {
             <SingleDataBox
               dataName="Next Price"
               dataValue={
-                Number(getVIPNFTPrice())
+                parseFloat(getMintedVIPNFTsCount()) >=
+                parseFloat(getTotalVIPNFTCount()) - 1
+                  ? "Sold Out"
+                  : Number(getVIPNFTPrice())
                   ? weiToEther(parseInt(getVIPNFTPrice())).toPrecision(2) +
                     " ETH"
                   : "loading..."

@@ -233,7 +233,9 @@ function Mint() {
             <SingleDataBox
               dataName="Current Price"
               dataValue={
-                Number(getCurrentPrice())
+                parseFloat(getMintedAmount()) >= parseFloat(getMaxAmount())
+                  ? "Sold Out"
+                  : Number(getCurrentPrice())
                   ? weiToEther(parseInt(getCurrentPrice())).toPrecision(2) +
                     " ETH"
                   : "loading..."
@@ -242,7 +244,7 @@ function Mint() {
             <SingleDataBox
               dataName="Next Price"
               dataValue={
-                getMintedAmount() == getMaxAmount()
+                parseFloat(getMintedAmount()) >= parseFloat(getMaxAmount()) - 1
                   ? "Sold Out"
                   : Number(getNextPrice())
                   ? weiToEther(parseInt(getNextPrice())).toPrecision(2) + " ETH"
