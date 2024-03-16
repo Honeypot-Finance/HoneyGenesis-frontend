@@ -54,8 +54,14 @@ function Mint() {
   // });
   const dispatch = useAppDispatch();
 
-  const { writeContract, data, isPending, isError, error, isSuccess } =
-    useWriteContract();
+  const {
+    writeContract,
+    //data,
+    isPending,
+    isError,
+    error,
+    isSuccess,
+  } = useWriteContract();
 
   const mintNFT = useCallback(
     (amount: number) => {
