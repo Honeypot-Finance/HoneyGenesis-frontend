@@ -54,14 +54,9 @@ function Mint() {
   // });
   const dispatch = useAppDispatch();
 
-  const {
-    writeContract,
-    //data,
-    isPending,
-    isError,
-    error,
-    isSuccess,
-  } = useWriteContract();
+  const [previousData, setPreviousData] = useState<string>(null);
+  const { writeContract, data, isPending, isError, error, isSuccess } =
+    useWriteContract();
 
   const mintNFT = useCallback(
     (amount: number) => {
@@ -170,7 +165,7 @@ function Mint() {
 
   //mint error handling
   useEffect(() => {
-    if (isError) {
+    if (data !== previousData && isError) {
       if (error.message.includes("User denied transaction signature")) {
         dispatch(
           openPopUp({
@@ -202,12 +197,22 @@ function Mint() {
         );
       }
       console.warn(error.message);
+      setPreviousData(data);
     }
-  }, [isError, error, dispatch, refetchData, mintNFT, amount]);
+  }, [
+    isError,
+    error,
+    dispatch,
+    refetchData,
+    mintNFT,
+    amount,
+    data,
+    previousData,
+  ]);
 
   //mint success handling
   useEffect(() => {
-    if (isSuccess) {
+    if (data !== previousData && isSuccess) {
       dispatch(
         openPopUp({
           title: "Mint Success",
@@ -215,12 +220,15 @@ function Mint() {
           info: "success",
         })
       );
+
       //refetch
       setTimeout(() => {
         refetchData();
       }, 1000);
+
+      setPreviousData(data);
     }
-  }, [isSuccess, amount, dispatch, refetchData]);
+  }, [data, amount, dispatch, refetchData, previousData, isSuccess]);
 
   return (
     <div className="App">

@@ -41,7 +41,6 @@ export default function useHoneyPot() {
 
   function getNextPrice() {
     if (!nextPrice.data) return "loading";
-    console.log(nextPrice);
     return nextPrice.isPending
       ? "loading"
       : (nextPrice.data.toString() as string);

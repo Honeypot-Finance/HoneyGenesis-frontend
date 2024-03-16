@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import "@/css/home.css";
 import Header from "@/components/Header";
 import UseHoneyPot from "@/hooks/useHoneyPot";
@@ -37,6 +37,9 @@ function VipMint() {
     getTotalVIPNFTCount,
     getMaxAmount,
     getMintedVIPNFTsCount,
+    totalVIPNFTCount,
+    maxAmount,
+    mintedVIPNFTsCount,
   } = UseHoneyPot();
   const mintEffectRef = useRef<HTMLDivElement>(null);
   const mintGroupRef = useRef<HTMLDivElement>(null);
@@ -47,78 +50,89 @@ function VipMint() {
   });
   const dispatch = useAppDispatch();
 
-  const { writeContract, data, isPending, isError, error } = useWriteContract();
+  const [previousData, setPreviousData] = useState<string>(null);
+  const { writeContract, data, isPending, isError, error, isSuccess } =
+    useWriteContract();
 
-  function mintNFT(amount: number) {
-    if (!address) {
-      open();
-      return;
-    }
-    writeContract({
-      abi: HoneyGenesis.abi,
-      chainId: chainId,
-      functionName: `mintVIP`,
-      address: contractAddress,
-      args: [amount],
-      value: BigInt(parseInt(getVIPNFTPrice()) * amount),
-    });
+  const mintNFT = useCallback(
+    (amount: number) => {
+      if (!address) {
+        open();
+        return;
+      }
+      writeContract({
+        abi: HoneyGenesis.abi,
+        chainId: chainId,
+        functionName: `mintVIP`,
+        address: contractAddress,
+        args: [amount],
+        value: BigInt(parseInt(getVIPNFTPrice()) * amount),
+      });
 
-    const effectSize =
-      window.outerWidth > window.outerHeight
-        ? window.outerWidth
-        : window.outerHeight;
+      const effectSize =
+        window.outerWidth > window.outerHeight
+          ? window.outerWidth
+          : window.outerHeight;
 
-    mintEffectRef.current.style.borderWidth = "0px";
-    mintEffectRef.current.style.width = "0px";
-    mintEffectRef.current.style.height = "0px";
+      mintEffectRef.current.style.borderWidth = "0px";
+      mintEffectRef.current.style.width = "0px";
+      mintEffectRef.current.style.height = "0px";
 
-    animate(
-      mintEffectRef.current,
-      {
-        borderWidth: ["0px", `${effectSize * 2}px`],
-      },
-      { duration: 1 }
-    ).then(() => {
       animate(
         mintEffectRef.current,
         {
-          width: ["0px", `${effectSize * 2}px`],
-        },
-        { duration: 1 }
-      );
-      animate(
-        mintEffectRef.current,
-        {
-          height: ["0px", `${effectSize * 2}px`],
+          borderWidth: ["0px", `${effectSize * 2}px`],
         },
         { duration: 1 }
       ).then(() => {
         animate(
           mintEffectRef.current,
           {
-            borderWidth: ["0px"],
+            width: ["0px", `${effectSize * 2}px`],
           },
-          { duration: 0 }
+          { duration: 1 }
         );
-
         animate(
           mintEffectRef.current,
           {
-            width: ["0px"],
+            height: ["0px", `${effectSize * 2}px`],
           },
-          { duration: 0 }
-        );
+          { duration: 1 }
+        ).then(() => {
+          animate(
+            mintEffectRef.current,
+            {
+              borderWidth: ["0px"],
+            },
+            { duration: 0 }
+          );
 
-        animate(
-          mintEffectRef.current,
-          {
-            height: ["0px"],
-          },
-          { duration: 0 }
-        );
+          animate(
+            mintEffectRef.current,
+            {
+              width: ["0px"],
+            },
+            { duration: 0 }
+          );
+
+          animate(
+            mintEffectRef.current,
+            {
+              height: ["0px"],
+            },
+            { duration: 0 }
+          );
+        });
       });
-    });
-  }
+    },
+    [address, getVIPNFTPrice, open, writeContract]
+  );
+
+  const refetchData = useCallback(() => {
+    mintedVIPNFTsCount.refetch();
+    maxAmount.refetch();
+    totalVIPNFTCount.refetch();
+  }, [maxAmount, mintedVIPNFTsCount, totalVIPNFTCount]);
 
   //init
   useEffect(() => {
@@ -146,21 +160,54 @@ function VipMint() {
 
   //mint error handling
   useEffect(() => {
-    if (isError) {
-      dispatch(
-        openPopUp({
-          title: "Something went wrong",
-          message: error.message,
-          info: "error",
-        })
-      );
-      console.warn(error);
+    if (data !== previousData && isError) {
+      if (error.message.includes("User denied transaction signature")) {
+        dispatch(
+          openPopUp({
+            title: "Transaction Rejected",
+            message: "You have rejected the transaction",
+            info: "error",
+          })
+        );
+      } else if (error.message.includes("Insufficient funds")) {
+        refetchData();
+        setTimeout(() => {
+          mintNFT(amount);
+        }, 1000);
+      } else if (error.message.includes("Exceeds total VIP supply cap")) {
+        dispatch(
+          openPopUp({
+            title: "Exceeds total VIP supply cap",
+            message: "Contact our support team for more information.",
+            info: "error",
+          })
+        );
+      } else {
+        dispatch(
+          openPopUp({
+            title: "Something went wrong",
+            message: "Please try again later",
+            info: "error",
+          })
+        );
+      }
+      console.warn(error.message);
+      setPreviousData(data);
     }
-  }, [isError, error, dispatch]);
+  }, [
+    isError,
+    error,
+    dispatch,
+    refetchData,
+    mintNFT,
+    amount,
+    data,
+    previousData,
+  ]);
 
   //mint success handling
   useEffect(() => {
-    if (data) {
+    if (data !== previousData && isSuccess) {
       dispatch(
         openPopUp({
           title: "Mint Success",
@@ -168,8 +215,15 @@ function VipMint() {
           info: "success",
         })
       );
+
+      //refetch
+      setTimeout(() => {
+        refetchData();
+      }, 1000);
+
+      setPreviousData(data);
     }
-  }, [data, amount, dispatch]);
+  }, [data, amount, dispatch, refetchData, previousData, isSuccess]);
 
   //amount handling
   useEffect(() => {

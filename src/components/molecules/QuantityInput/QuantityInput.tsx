@@ -26,7 +26,7 @@ export default function QuantityInput({
 
   //amount handling
   useEffect(() => {
-    if (value < 0) {
+    if (value <= 0) {
       setValue(0);
     }
 
