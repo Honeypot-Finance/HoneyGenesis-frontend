@@ -1,5 +1,10 @@
 @import "./partial/general.scss";
 
+@font-face {
+  font-family: "inter black";
+  src: url("./../assets/font/Inter-Black.ttf");
+}
+
 .App {
   background-repeat: repeat;
   position: relative;
@@ -369,12 +374,10 @@
   }
 
   .desc {
-    color: #ffcd4d;
+    color: white;
     font-size: 2rem;
     margin: 2rem 0;
     text-align: center;
-    text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, -1px -1px 0 #000,
-      1px -1px 0 #000;
   }
   .bg-logo {
     position: absolute;
@@ -386,19 +389,6 @@
     object-fit: cover;
     overflow: visible;
     border-radius: 50%;
-    animation: glow 5s infinite ease-in-out;
-
-    @keyframes glow {
-      0% {
-        box-shadow: 0 0 5rem 0px #ffbd2f;
-      }
-      50% {
-        box-shadow: 0 0 50rem 20rem #ffbd2f;
-      }
-      100% {
-        box-shadow: 0 0 5rem 0px #ffbd2f;
-      }
-    }
   }
 
   @media (min-width: 1080px) {

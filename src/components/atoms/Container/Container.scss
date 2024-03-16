@@ -1,0 +1,9 @@
+.honey-pot-design-container {
+  display: inline-block;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  background-color: var(--secondary-color);
+  //border: var(--border-size-sm) solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  color: var(--primary-color);
+}
