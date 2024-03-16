@@ -87,7 +87,7 @@ export default function HoneyDropEffect() {
       if (Date.now() - lastCellSpawn < HONEY_CELL_SPAWN_RATE) return;
       setLastCellSpawn(Date.now());
 
-      const spawnNum = Math.floor(Math.random() * 3);
+      const spawnNum = Math.floor(Math.random() * 2) + 1;
 
       for (let i = 0; i < spawnNum; i++) {
         const x = e.clientX + Math.random() * 24 - 12;
