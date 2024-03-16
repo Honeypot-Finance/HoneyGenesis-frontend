@@ -25,7 +25,10 @@ function App() {
   );
 
   return (
-    <div className="App" style={{ backgroundImage: `url(${bgPot})` }}>
+    <div
+      className="App"
+      style={{ backgroundImage: `url(/background-pot-icon.svg)` }}
+    >
       <MainContentWrapper>
         <main className="homepage-main">
           <div className="bg-logo" />
