@@ -36,9 +36,8 @@ function App() {
             <h1 className="title">Honey Genesis</h1>
           </div>
           <p className="desc">
-            Join HoneyGenesis NFT for a thrilling battle over sweet rewards.
-            Defend your honeypot, earn $HPOT tokens, and mutate into Gen-1 NFTs
-            on Berachain's mainnet. Dive into the adventure today!
+            Join <span className="color-yellow">HoneyGenesis NFT</span> for a
+            thrilling battle with sweet rewards.
           </p>{" "}
           <Container>Mint Live:</Container>
           <Countdown date={countDownDate} completeRenderer={completeRenderer} />

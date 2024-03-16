@@ -56,7 +56,7 @@ export default function WalletConnectButton() {
         ? isConnectingDisplay
         : isConnected
         ? isConnectedDisplay
-        : "Connect"}
+        : "Connect Wallet"}
     </GeneralButton>
   );
 }

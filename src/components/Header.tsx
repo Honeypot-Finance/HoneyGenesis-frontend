@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "@/css/home.css";
 import WalletConnectButton from "@/components/walletConnect/WalletConnectConnectButton";
 import honeyTopFrame from "@/assets/honey-top-frame.png";
-import honeyGenesisLogo from "@/assets/honey-genesis-icon.png";
+import honeyGenesisLogo from "@/assets/brand-header-icon.svg";
 
 //icons
 import discordIcon from "@/assets/icon-discord.svg";
