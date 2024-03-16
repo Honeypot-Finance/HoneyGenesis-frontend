@@ -9,6 +9,7 @@ import honeyGenesisLogo from "@/assets/brand-header-icon.svg";
 import discordIcon from "@/assets/icon-discord.svg";
 import twitterIcon from "@/assets/icon-twitter.svg";
 import gitbookIcon from "@/assets/icon-gitbook.svg";
+import externalLinkIcon from "@/assets/external-link-icon.svg";
 
 export default function Header() {
   const closeHeaderButton = useRef<HTMLDivElement>(null);
@@ -56,12 +57,6 @@ export default function Header() {
         <div className="link-group">
           <nav className="navbar">
             <li className="navbar__link">
-              <a href="https://honeypotfinance.xyz/" target="blank">
-                Honeypot Finance
-              </a>
-            </li>
-            <hr />
-            <li className="navbar__link">
               <Link to="/my-assets">My Assets</Link>
             </li>
             <hr />
@@ -71,6 +66,17 @@ export default function Header() {
             <hr />
             <li className="navbar__link">
               <Link to="/whitelist-check">Whitelist</Link>
+            </li>
+            <hr />{" "}
+            <li className="navbar__link">
+              <a href="https://honeypotfinance.xyz/" target="blank">
+                Honeypot Finance{" "}
+                <img
+                  src={externalLinkIcon}
+                  alt=""
+                  style={{ display: "inline" }}
+                />
+              </a>
             </li>
             {/* <hr />
             <li className="navbar__link">
