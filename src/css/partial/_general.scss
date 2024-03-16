@@ -46,16 +46,12 @@ li {
 html {
   font-size: 10px;
 
-  @media (min-width: 1080px) {
-    font-size: 12px;
-  }
-
   @media (min-width: 1600px) {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   @media (min-width: 1920px) {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 

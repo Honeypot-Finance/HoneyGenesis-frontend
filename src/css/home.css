@@ -41,19 +41,14 @@ li {
 html {
   font-size: 10px;
 }
-@media (min-width: 1080px) {
-  html {
-    font-size: 12px;
-  }
-}
 @media (min-width: 1600px) {
   html {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 @media (min-width: 1920px) {
   html {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 
