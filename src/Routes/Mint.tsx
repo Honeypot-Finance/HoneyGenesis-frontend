@@ -39,6 +39,7 @@ function Mint() {
     getNextPrice,
     getMaxAmount,
     getTotalVIPNFTCount,
+    getMintedAmount,
     mintedAmount,
     nextPrice,
     maxAmount,
@@ -241,7 +242,9 @@ function Mint() {
             <SingleDataBox
               dataName="Next Price"
               dataValue={
-                Number(getNextPrice())
+                getMintedAmount() == getMaxAmount()
+                  ? "Sold Out"
+                  : Number(getNextPrice())
                   ? weiToEther(parseInt(getNextPrice())).toPrecision(2) + " ETH"
                   : "loading..."
               }

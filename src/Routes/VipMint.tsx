@@ -32,7 +32,12 @@ function VipMint() {
       : false;
 
   const { open } = useWeb3Modal();
-  const { getVIPNFTPrice, getTotalVIPNFTCount, getMaxAmount } = UseHoneyPot();
+  const {
+    getVIPNFTPrice,
+    getTotalVIPNFTCount,
+    getMaxAmount,
+    getMintedVIPNFTsCount,
+  } = UseHoneyPot();
   const mintEffectRef = useRef<HTMLDivElement>(null);
   const mintGroupRef = useRef<HTMLDivElement>(null);
   const [amount, setAmount] = useState(1);
@@ -227,7 +232,9 @@ function VipMint() {
             <SingleDataBox
               dataName="Max Available"
               dataValue={
-                Number(getMaxAmount())
+                getMintedVIPNFTsCount() == getTotalVIPNFTCount()
+                  ? "Sold Out"
+                  : Number(getMaxAmount())
                   ? parseInt(getMaxAmount()) + parseInt(getTotalVIPNFTCount())
                   : "loading..."
               }

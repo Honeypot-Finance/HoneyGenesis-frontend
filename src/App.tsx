@@ -2,16 +2,36 @@ import "@/css/home.css";
 import MainContentWrapper from "./components/template/MainContentWrapper/MainContentWrapper";
 import GeneralButton from "./components/atoms/GeneralButton/GeneralButton";
 import { Link } from "react-router-dom";
-import useHoneyPot from "./hooks/useHoneyPot";
-import { weiToEther } from "./lib/currencyConvert";
 
 import honeyGenesisLogo from "@/assets/honey-genesis-icon.png";
-import SingleDataBox from "./components/atoms/SingleDataBox/SingleDataBox";
 import mole from "@/assets/smoking-mole.png";
 import bgPot from "@/assets/background-pot-icon.svg";
 
+import Countdown from "react-countdown";
+
 function App() {
-  const { getCurrentPrice, getNextPrice, getMaxAmount } = useHoneyPot();
+  const countDownRenderer = ({ days, hours, minutes, seconds, completed }) => {
+    if (completed) {
+      return (
+        <Link to={"./mint"}>
+          <GeneralButton
+            style={{
+              margin: "3rem",
+            }}
+          >
+            Mint Now
+          </GeneralButton>
+        </Link>
+      );
+    } else {
+      return (
+        <span>
+          {days}d {hours}h {minutes}m {seconds}s
+        </span>
+      );
+    }
+  };
+
   return (
     <div className="App" style={{ backgroundImage: `url(${bgPot})` }}>
       <MainContentWrapper>
@@ -28,41 +48,10 @@ function App() {
             Defend your honeypot, earn $HPOT tokens, and mutate into Gen-1 NFTs
             on Berachain's mainnet. Dive into the adventure today!
           </p>{" "}
-          <div className="critical-data-group">
-            <SingleDataBox
-              dataName="Current Price"
-              dataValue={
-                Number(getCurrentPrice())
-                  ? weiToEther(parseInt(getCurrentPrice())).toPrecision(2) +
-                    " ETH"
-                  : "loading..."
-              }
-              bgType="solid"
-            />
-            <SingleDataBox
-              dataName="Next Price"
-              dataValue={
-                Number(getNextPrice())
-                  ? weiToEther(parseInt(getNextPrice())).toPrecision(2) + " ETH"
-                  : "loading..."
-              }
-              bgType="solid"
-            />
-            <SingleDataBox
-              dataName="Max Available"
-              dataValue={Number(getMaxAmount()) ? getMaxAmount() : "loading..."}
-              bgType="solid"
-            />
-          </div>
-          <Link to={"./mint"}>
-            <GeneralButton
-              style={{
-                margin: "3rem",
-              }}
-            >
-              Mint Now
-            </GeneralButton>
-          </Link>
+          <Countdown
+            date={new Date("2024-03-22")}
+            renderer={countDownRenderer}
+          />
         </main>
       </MainContentWrapper>
     </div>
