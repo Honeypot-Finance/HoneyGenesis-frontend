@@ -8,11 +8,12 @@ import { weiToEther } from "./lib/currencyConvert";
 import honeyGenesisLogo from "@/assets/honey-genesis-icon.png";
 import SingleDataBox from "./components/atoms/SingleDataBox/SingleDataBox";
 import mole from "@/assets/smoking-mole.png";
+import bgPot from "@/assets/background-pot-icon.svg";
 
 function App() {
   const { getCurrentPrice, getNextPrice, getMaxAmount } = useHoneyPot();
   return (
-    <div className="App">
+    <div className="App" style={{ backgroundImage: `url(${bgPot})` }}>
       <MainContentWrapper>
         <main className="homepage-main">
           <div className="bg-logo" />

@@ -3,6 +3,7 @@ import marioReducer from "./marioSlice";
 import obstacleReducer from "./obstacleSlice";
 import engineReducer from "./engineSlice";
 import popUpReducer from "./popUpSlice";
+import honeyPotMintReducer from "./honeyPotMintSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     mario: marioReducer,
     obstacle: obstacleReducer,
     engine: engineReducer,
+    honey: honeyPotMintReducer,
   },
 });
 

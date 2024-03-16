@@ -5,6 +5,11 @@ import WalletConnectButton from "@/components/walletConnect/WalletConnectConnect
 import honeyTopFrame from "@/assets/honey-top-frame.png";
 import honeyGenesisLogo from "@/assets/honey-genesis-icon.png";
 
+//icons
+import discordIcon from "@/assets/icon-discord.svg";
+import twitterIcon from "@/assets/icon-twitter.svg";
+import gitbookIcon from "@/assets/icon-gitbook.svg";
+
 export default function Header() {
   const closeHeaderButton = useRef<HTMLDivElement>(null);
   const openHeaderButton = useRef<HTMLDivElement>(null);
@@ -78,21 +83,21 @@ export default function Header() {
               href="https://twitter.com/honeypotfinance"
               target="_blank"
             >
-              Twitter
+              <img src={twitterIcon} alt="Twitter" />
             </a>
             <a
               className="medias__link"
               href="https://discord.com/invite/8Z3VdhZ9V6"
               target="_blank"
             >
-              Discord
+              <img src={discordIcon} alt="Discord" />
             </a>
             <a
               className="medias__link"
               href="https://docs.honeypotfinance.xyz/"
               target="_blank"
             >
-              Gitbook
+              <img src={gitbookIcon} alt="Gitbook" />
             </a>
           </div>
         </div>

@@ -18,31 +18,45 @@ export default function useHoneyPot() {
       address: contractAddress,
     });
 
-    return res.isPending ? "loading" : (res.data.toString() as string);
+    return res;
   }
 
   function getCurrentPrice() {
-    return currentprice;
+    return currentprice.isPending
+      ? "loading"
+      : (currentprice.data.toString() as string);
   }
 
   function getMintedAmount() {
-    return mintedAmount;
+    return mintedAmount.isPending
+      ? "loading"
+      : (mintedAmount.data.toString() as string);
   }
 
   function getMaxAmount() {
-    return maxAmount;
+    return maxAmount.isPending
+      ? "loading"
+      : (maxAmount.data.toString() as string);
   }
 
   function getNextPrice() {
-    return nextPrice;
+    if (!nextPrice.data) return "loading";
+    console.log(nextPrice);
+    return nextPrice.isPending
+      ? "loading"
+      : (nextPrice.data.toString() as string);
   }
 
   function getTotalVIPNFTCount() {
-    return totalVIPNFTCount;
+    return totalVIPNFTCount.isPending
+      ? "loading"
+      : (totalVIPNFTCount.data.toString() as string);
   }
 
   function getMintedVIPNFTsCount() {
-    return mintedVIPNFTsCount;
+    return mintedVIPNFTsCount.isPending
+      ? "loading"
+      : (mintedVIPNFTsCount.data.toString() as string);
   }
 
   function getVIPNFTPrice() {
@@ -57,5 +71,11 @@ export default function useHoneyPot() {
     getTotalVIPNFTCount,
     getMintedVIPNFTsCount,
     getVIPNFTPrice,
+    currentprice,
+    nextPrice,
+    mintedAmount,
+    maxAmount,
+    totalVIPNFTCount,
+    mintedVIPNFTsCount,
   };
 }

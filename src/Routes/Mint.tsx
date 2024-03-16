@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "@/css/home.css";
 import UseHoneyPot from "@/hooks/useHoneyPot";
 import { weiToEther } from "@/lib/currencyConvert";
@@ -34,8 +34,17 @@ function Mint() {
 
   const [amount, setAmount] = useState(1);
   const { open } = useWeb3Modal();
-  const { getCurrentPrice, getNextPrice, getMaxAmount, getTotalVIPNFTCount } =
-    UseHoneyPot();
+  const {
+    getCurrentPrice,
+    getNextPrice,
+    getMaxAmount,
+    getTotalVIPNFTCount,
+    mintedAmount,
+    nextPrice,
+    maxAmount,
+    totalVIPNFTCount,
+  } = UseHoneyPot();
+
   const mintEffectRef = useRef<HTMLDivElement>(null);
   const mintGroupRef = useRef<HTMLDivElement>(null);
   const { address } = useAccount();
@@ -44,79 +53,89 @@ function Mint() {
   // });
   const dispatch = useAppDispatch();
 
-  const { writeContract, data, isPending, isError, error } = useWriteContract();
+  const { writeContract, data, isPending, isError, error, isSuccess } =
+    useWriteContract();
 
-  function mintNFT(amount: number) {
-    if (!address) {
-      open();
-      return;
-    }
+  const mintNFT = useCallback(
+    (amount: number) => {
+      const effectSize =
+        window.outerWidth > window.outerHeight
+          ? window.outerWidth
+          : window.outerHeight;
 
-    writeContract({
-      abi: HoneyGenesis.abi,
-      chainId: chainId,
-      functionName: `mint`,
-      address: contractAddress,
-      args: [amount],
-      value: BigInt(parseInt(getCurrentPrice()) * amount),
-    });
+      mintEffectRef.current.style.borderWidth = "0px";
+      mintEffectRef.current.style.width = "0px";
+      mintEffectRef.current.style.height = "0px";
+      if (!address) {
+        open();
+        return;
+      }
 
-    const effectSize =
-      window.outerWidth > window.outerHeight
-        ? window.outerWidth
-        : window.outerHeight;
+      writeContract({
+        abi: HoneyGenesis.abi,
+        chainId: chainId,
+        functionName: `mint`,
+        address: contractAddress,
+        args: [amount],
+        value: BigInt(parseInt(getCurrentPrice()) * amount),
+      });
 
-    mintEffectRef.current.style.borderWidth = "0px";
-    mintEffectRef.current.style.width = "0px";
-    mintEffectRef.current.style.height = "0px";
-
-    animate(
-      mintEffectRef.current,
-      {
-        borderWidth: ["0px", `${effectSize * 2}px`],
-      },
-      { duration: 1 }
-    ).then(() => {
       animate(
         mintEffectRef.current,
         {
-          width: ["0px", `${effectSize * 2}px`],
-        },
-        { duration: 1 }
-      );
-      animate(
-        mintEffectRef.current,
-        {
-          height: ["0px", `${effectSize * 2}px`],
+          borderWidth: ["0px", `${effectSize * 2}px`],
         },
         { duration: 1 }
       ).then(() => {
         animate(
           mintEffectRef.current,
           {
-            borderWidth: ["0px"],
+            width: ["0px", `${effectSize * 2}px`],
           },
-          { duration: 0 }
+          { duration: 1 }
         );
-
         animate(
           mintEffectRef.current,
           {
-            width: ["0px"],
+            height: ["0px", `${effectSize * 2}px`],
           },
-          { duration: 0 }
-        );
+          { duration: 1 }
+        ).then(() => {
+          animate(
+            mintEffectRef.current,
+            {
+              borderWidth: ["0px"],
+            },
+            { duration: 0 }
+          );
 
-        animate(
-          mintEffectRef.current,
-          {
-            height: ["0px"],
-          },
-          { duration: 0 }
-        );
+          animate(
+            mintEffectRef.current,
+            {
+              width: ["0px"],
+            },
+            { duration: 0 }
+          );
+
+          animate(
+            mintEffectRef.current,
+            {
+              height: ["0px"],
+            },
+            { duration: 0 }
+          );
+        });
       });
-    });
-  }
+    },
+    [address, getCurrentPrice, open, writeContract]
+  );
+
+  const refetchData = useCallback(() => {
+    mintedAmount.refetch();
+    nextPrice.refetch();
+    maxAmount.refetch();
+    totalVIPNFTCount.refetch();
+  }, [maxAmount, mintedAmount, nextPrice, totalVIPNFTCount]);
 
   //init
   useEffect(() => {
@@ -140,25 +159,48 @@ function Mint() {
         mintGroupRef.current.offsetWidth / 2 +
         "px";
     }
-  }, []);
+  }, [mintedAmount]);
 
   //mint error handling
   useEffect(() => {
     if (isError) {
-      dispatch(
-        openPopUp({
-          title: "Something went wrong",
-          message: error.message,
-          info: "error",
-        })
-      );
-      console.warn(error);
+      if (error.message.includes("User denied transaction signature")) {
+        dispatch(
+          openPopUp({
+            title: "Transaction Rejected",
+            message: "You have rejected the transaction",
+            info: "error",
+          })
+        );
+      } else if (error.message.includes("Insufficient funds")) {
+        refetchData();
+        setTimeout(() => {
+          mintNFT(amount);
+        }, 1000);
+      } else if (error.message.includes("Exceeds total VIP supply cap")) {
+        dispatch(
+          openPopUp({
+            title: "Exceeds total VIP supply cap",
+            message: "Contact our support team for more information.",
+            info: "error",
+          })
+        );
+      } else {
+        dispatch(
+          openPopUp({
+            title: "Something went wrong",
+            message: "Please try again later",
+            info: "error",
+          })
+        );
+      }
+      console.warn(error.message);
     }
-  }, [isError, error, dispatch]);
+  }, [isError, error, dispatch, refetchData, mintNFT, amount]);
 
   //mint success handling
   useEffect(() => {
-    if (data) {
+    if (isSuccess) {
       dispatch(
         openPopUp({
           title: "Mint Success",
@@ -166,8 +208,13 @@ function Mint() {
           info: "success",
         })
       );
+      //refetch
+      setTimeout(() => {
+        refetchData();
+      }, 1000);
     }
-  }, [data, amount, dispatch]);
+  }, [isSuccess, amount, dispatch, refetchData]);
+
   return (
     <div className="App">
       <MainContentWrapper lock={isLock}>
