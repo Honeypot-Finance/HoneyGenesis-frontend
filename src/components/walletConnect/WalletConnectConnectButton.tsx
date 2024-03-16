@@ -47,7 +47,6 @@ export default function WalletConnectButton() {
       onClick={() => open()}
       style={{
         padding: "0.5rem 1rem",
-        fontSize: "1rem",
         borderWidth: "0.2rem",
         borderRadius: "1rem",
       }}

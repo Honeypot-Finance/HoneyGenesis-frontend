@@ -38,6 +38,25 @@ li {
   list-style: none;
 }
 
+html {
+  font-size: 10px;
+}
+@media (min-width: 1080px) {
+  html {
+    font-size: 12px;
+  }
+}
+@media (min-width: 1600px) {
+  html {
+    font-size: 16px;
+  }
+}
+@media (min-width: 1920px) {
+  html {
+    font-size: 20px;
+  }
+}
+
 body {
   font-family: "inter black", sans-serif;
   background-color: #523914;
@@ -166,7 +185,7 @@ hr {
   justify-content: center;
 }
 .App-header .connect-button-container .connnect-wallet-button {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin: 1rem;
   padding: 1rem 4rem;
   font-weight: bold;

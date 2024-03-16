@@ -1,4 +1,4 @@
-const contractAddress = "0x3956EE19d53487cCC334d94085a2A425a8496b2d";
+const contractAddress = "0xEC752580aD907a471f0c2cD95A89840Bf3802Ade";
 const chainId = 421614; //arbitrum sepolia
 const maxMintAmount = 20;
 
