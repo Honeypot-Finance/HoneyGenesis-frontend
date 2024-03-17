@@ -44,7 +44,7 @@ li {
 }
 
 html {
-  font-size: 10px;
+  font-size: 16px;
 }
 @media (min-width: 1080px) {
   html {
@@ -53,12 +53,12 @@ html {
 }
 @media (min-width: 1600px) {
   html {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 @media (min-width: 1920px) {
   html {
-    font-size: 18px;
+    font-size: 20px;
   }
 }
 
@@ -300,6 +300,13 @@ hr {
   max-width: 100vw;
   min-height: 100vh;
 }
+.App .partner-with {
+  color: white;
+  text-align: center;
+  width: 100%;
+  padding: 1rem;
+  z-index: 1000000;
+}
 .App .nft-img-container {
   position: relative;
   margin: auto;
@@ -403,7 +410,7 @@ hr {
 }
 .App .main .mint-form .terms {
   color: rgba(255, 255, 255, 0.25);
-  font-size: 1rem;
+  font-size: 0.7rem;
   margin: 1rem 0;
 }
 .App .main .mint-form .terms a {

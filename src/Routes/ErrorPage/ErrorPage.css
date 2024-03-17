@@ -1,0 +1,34 @@
+.App {
+  grid-template-columns: 1fr;
+  grid-template-rows: 20vh 1fr;
+}
+.App .main-404 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  margin: 35vh 0;
+}
+.App .main-404 .img-404 {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-width: 500px;
+  max-height: 500px;
+}
+.App .main-404 .text-404 {
+  color: white;
+  font-size: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+@media (min-width: 1080px) {
+  .App .main-404 {
+    margin: 0;
+  }
+}
+
+/*# sourceMappingURL=ErrorPage.css.map */

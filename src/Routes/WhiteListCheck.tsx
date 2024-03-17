@@ -6,6 +6,7 @@ import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
 import GeneralInput from "@/components/atoms/GeneralInput/GeneralInput";
 import { useAppDispatch } from "@/hooks/useAppSelector";
 import { openPopUp } from "@/config/redux/popUpSlice";
+import Container from "@/components/atoms/Container/Container";
 
 interface subText {
   text: string;
@@ -15,6 +16,19 @@ interface subText {
 export default function WhiteListCheck() {
   const [adressToCheck, setAdressToCheck] = useState("0x");
   const [subText, setSubText] = useState<subText>(null);
+
+  const whitelistPartners = [
+    "Nobody",
+    "DoubleTop",
+    "BOINK",
+    "BONK",
+    "Beraland",
+    "Beramonium",
+    "Beradrome",
+    "Kingdomly",
+    "gumball protocol",
+    "THC",
+  ];
 
   const mockWhiteList = ["0x988D8FE9F7F53946c6f7f5204F7B71a1215685B8"];
   const mockMintChance = 5;
@@ -67,6 +81,12 @@ export default function WhiteListCheck() {
             Check
           </GeneralButton>
           {subText && <p className={subText.info}>{subText.text}</p>}
+          <h2 className="partner-with">Partnered with:</h2>
+          <Container>
+            {whitelistPartners.map((partner, index) => {
+              return <Container key={index}>{partner}</Container>;
+            })}
+          </Container>
         </div>
       </main>
       <Game className="mini-game" />
