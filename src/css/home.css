@@ -305,7 +305,6 @@ hr {
   text-align: center;
   width: 100%;
   padding: 1rem;
-  z-index: 1000000;
 }
 .App .nft-img-container {
   position: relative;

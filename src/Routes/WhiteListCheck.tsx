@@ -8,6 +8,9 @@ import { useAppDispatch } from "@/hooks/useAppSelector";
 import { openPopUp } from "@/config/redux/popUpSlice";
 import Container from "@/components/atoms/Container/Container";
 
+//data
+import whitelistData from "@/data/mintAmount.json";
+
 interface subText {
   text: string;
   info: string;
@@ -30,20 +33,17 @@ export default function WhiteListCheck() {
     "THC",
   ];
 
-  const mockWhiteList = ["0x988D8FE9F7F53946c6f7f5204F7B71a1215685B8"];
-  const mockMintChance = 5;
-
   const dispatch = useAppDispatch();
   const checkAddress = () => {
-    if (mockWhiteList.includes(adressToCheck)) {
+    if (whitelistData[adressToCheck] !== undefined) {
       setSubText({
-        text: `🎉 Congradulations! 🎉 you have total ${mockMintChance} minting chances in priority mint!`,
+        text: `🎉 Congradulations! 🎉 you have total ${whitelistData[adressToCheck]} minting chances in priority mint!`,
         info: "success",
       });
       dispatch(
         openPopUp({
           title: "🎉 Congradulations! 🎉",
-          message: `you have total ${mockMintChance} minting chances in priority mint!`,
+          message: `you have total ${whitelistData[adressToCheck]} minting chances in priority mint!`,
           info: "success",
         })
       );
