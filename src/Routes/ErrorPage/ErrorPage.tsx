@@ -5,7 +5,7 @@ import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
 
 export default function ErrorPage() {
   return (
-    <div className="App">
+    <div className="App error">
       <Header />
       <main className="main-404">
         <img className="img-404" src={icon404} alt="" />
