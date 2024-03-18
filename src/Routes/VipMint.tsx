@@ -31,16 +31,6 @@ function VipMint() {
       ? true
       : false;
 
-  const { open } = useWeb3Modal();
-  const {
-    getVIPNFTPrice,
-    getTotalVIPNFTCount,
-    getMaxAmount,
-    getMintedVIPNFTsCount,
-    totalVIPNFTCount,
-    maxAmount,
-    mintedVIPNFTsCount,
-  } = UseHoneyPot();
   const mintEffectRef = useRef<HTMLDivElement>(null);
   const mintGroupRef = useRef<HTMLDivElement>(null);
   const [amount, setAmount] = useState(1);
@@ -50,10 +40,23 @@ function VipMint() {
   });
   const dispatch = useAppDispatch();
   const currentChainId = useChainId();
-
   const [previousData, setPreviousData] = useState<string>(null);
   const { writeContract, data, isPending, isError, error, isSuccess } =
     useWriteContract();
+
+  const { open } = useWeb3Modal();
+  const {
+    getVIPNFTPrice,
+    getTotalVIPNFTCount,
+    getMaxAmount,
+    getMintedVIPNFTsCount,
+    totalVIPNFTCount,
+    maxAmount,
+    mintedVIPNFTsCount,
+    VIPPrice,
+    useVIPMintQuota,
+  } = UseHoneyPot();
+  const mintQuota = useVIPMintQuota(address);
 
   const mintNFT = useCallback(
     (amount: number) => {
@@ -134,7 +137,9 @@ function VipMint() {
     mintedVIPNFTsCount.refetch();
     maxAmount.refetch();
     totalVIPNFTCount.refetch();
-  }, [maxAmount, mintedVIPNFTsCount, totalVIPNFTCount]);
+    VIPPrice.refetch();
+    mintQuota.refetch();
+  }, [VIPPrice, maxAmount, mintQuota, mintedVIPNFTsCount, totalVIPNFTCount]);
 
   //init
   useEffect(() => {
@@ -296,9 +301,7 @@ function VipMint() {
               dataValue={
                 getMintedVIPNFTsCount() == getTotalVIPNFTCount()
                   ? "Sold Out"
-                  : Number(getMaxAmount())
-                  ? parseInt(getMaxAmount()) + parseInt(getTotalVIPNFTCount())
-                  : "loading..."
+                  : parseInt(mintQuota.data as string)
               }
             />
             <QuantityInput

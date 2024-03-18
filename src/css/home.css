@@ -130,6 +130,7 @@ hr {
   align-self: center;
   margin: auto;
   height: 5vh;
+  max-width: 100%;
   object-fit: contain;
 }
 .App-header .close-header-button {

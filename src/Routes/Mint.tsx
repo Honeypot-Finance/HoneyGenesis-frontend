@@ -60,6 +60,7 @@ function Mint() {
 
   const mintNFT = useCallback(
     (amount: number) => {
+      initEffectPosition();
       const effectSize =
         window.outerWidth > window.outerHeight
           ? window.outerWidth
@@ -150,18 +151,7 @@ function Mint() {
     window.addEventListener("resize", () => {
       initEffectPosition();
     });
-
-    function initEffectPosition() {
-      mintEffectRef.current.style.top =
-        mintGroupRef.current.offsetTop +
-        mintGroupRef.current.offsetHeight / 2 +
-        "px";
-      mintEffectRef.current.style.left =
-        mintGroupRef.current.offsetLeft +
-        mintGroupRef.current.offsetWidth / 2 +
-        "px";
-    }
-  }, [mintedAmount]);
+  }, []);
 
   //mint error handling
   useEffect(() => {
@@ -230,6 +220,18 @@ function Mint() {
     }
   }, [data, amount, dispatch, refetchData, previousData, isSuccess]);
 
+  function initEffectPosition() {
+    mintEffectRef.current.style.transform = "translate(-50%, -50%)";
+
+    mintEffectRef.current.style.top =
+      mintGroupRef.current.offsetTop +
+      mintGroupRef.current.offsetHeight / 2 +
+      "px";
+    mintEffectRef.current.style.left =
+      mintGroupRef.current.offsetLeft +
+      mintGroupRef.current.offsetWidth / 2 +
+      "px";
+  }
   return (
     <div className="App">
       <MainContentWrapper lock={isLock}>

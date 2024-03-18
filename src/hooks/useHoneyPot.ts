@@ -11,13 +11,18 @@ export default function useHoneyPot() {
   const maxAmount = useReadGenesisContract("getTotalNFTCount");
   const totalVIPNFTCount = useReadGenesisContract("getTotalVIPNFTCount");
   const mintedVIPNFTsCount = useReadGenesisContract("getMintedVIPNFTsCount");
+  const VIPPrice = useReadGenesisContract("getVIPPrice");
 
-  function useReadGenesisContract(functionName) {
+  const useVIPMintQuota = (address: string) =>
+    useReadGenesisContract("getVIPMintQuota", address);
+
+  function useReadGenesisContract(functionName, ...args: string[]) {
     const res = useReadContract({
       abi: HoneyGenesis.abi,
       chainId: currentChainId,
       functionName: functionName,
       address: contracts[currentChainId],
+      args: args,
     });
 
     return res;
@@ -75,7 +80,6 @@ export default function useHoneyPot() {
   }
 
   function getMintedVIPNFTsCount() {
-    console.log(mintedVIPNFTsCount);
     if (mintedVIPNFTsCount.error) console.log(mintedVIPNFTsCount.error);
     if (mintedVIPNFTsCount.data == undefined) {
       return "loading";
@@ -86,7 +90,13 @@ export default function useHoneyPot() {
   }
 
   function getVIPNFTPrice() {
-    return "69000000000000000";
+    if (VIPPrice.error) console.log(VIPPrice.error);
+    if (VIPPrice.data == undefined) {
+      return "loading";
+    }
+    return VIPPrice.isPending
+      ? "loading"
+      : (VIPPrice.data.toString() as string);
   }
 
   return {
@@ -103,5 +113,7 @@ export default function useHoneyPot() {
     maxAmount,
     totalVIPNFTCount,
     mintedVIPNFTsCount,
+    VIPPrice,
+    useVIPMintQuota,
   };
 }
