@@ -10,7 +10,7 @@ import mole from "@/assets/smoking-mole.png";
 import Countdown from "@/components/molecules/CountDown/CountDown";
 
 function App() {
-  const countDownDate = new Date("2024-03-22");
+  const countDownDate = new Date("2024-03-21 15:30 UTC");
   const completeRenderer = (
     <Link to={"./mint"}>
       <GeneralButton
