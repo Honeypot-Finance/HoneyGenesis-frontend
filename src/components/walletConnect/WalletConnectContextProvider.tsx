@@ -6,6 +6,7 @@ import {
   //arbitrum,
   arbitrumSepolia,
   // mainnet
+  berachainTestnet,
 } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -27,6 +28,7 @@ const chains = [
   //mainnet,
   //arbitrum,
   arbitrumSepolia,
+  berachainTestnet,
 ] as const;
 const config = defaultWagmiConfig({
   chains, // required

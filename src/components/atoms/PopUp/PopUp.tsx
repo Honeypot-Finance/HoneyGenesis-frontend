@@ -44,7 +44,7 @@ export default function PopUp({ ...props }: PopUpProps) {
 
             <div className="pop-up-content">
               <h2 className="pop-up-title">{popUp.title}</h2>
-              <p className="pop-up-text">{popUp.message}</p>
+              <pre className="pop-up-text">{popUp.message}</pre>
             </div>
 
             <div>
