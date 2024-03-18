@@ -118,7 +118,7 @@ export default function WhiteListCheck() {
             Check
           </GeneralButton>
           <pre>{subText && <p className={subText.info}>{subText.text}</p>}</pre>
-          <h2 className="partner-with">Partnered with:</h2>
+          <h2 className="partner-with">Get Priority Mints from:</h2>
           <Container>
             {whitelistPartners.map((partner, index) => {
               return <Container key={index}>{partner}</Container>;
