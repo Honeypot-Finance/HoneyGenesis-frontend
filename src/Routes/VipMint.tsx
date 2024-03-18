@@ -216,6 +216,14 @@ function VipMint() {
     previousData,
   ]);
 
+  useEffect(() => {
+    if (mintQuota.data === undefined) return;
+    console.log(parseInt(mintQuota.data as string));
+    if (parseInt(mintQuota.data as string) === 0) {
+      window.location.href = "/mint";
+    }
+  }, [mintQuota]);
+
   //mint success handling
   useEffect(() => {
     if (data !== previousData && isSuccess) {
