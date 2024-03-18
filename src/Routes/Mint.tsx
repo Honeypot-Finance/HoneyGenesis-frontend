@@ -206,7 +206,7 @@ function Mint() {
       dispatch(
         openPopUp({
           title: "Mint Success",
-          message: `You have successfully minted ${amount} NFTs`,
+          message: `You have successfully minted ${amount} NFTs\ntransaction hash: ${data}`,
           info: "success",
         })
       );
