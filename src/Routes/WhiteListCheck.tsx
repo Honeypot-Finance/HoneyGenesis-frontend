@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
 import Header from "@/components/Header";
 import Game from "@/components/Game";
 import bgImage from "@/assets/forest-bg.png";
@@ -12,7 +12,7 @@ import Container from "@/components/atoms/Container/Container";
 import whitelistData from "@/data/mintAmount.json";
 
 interface subText {
-  text: string;
+  text: string | ReactNode;
   info: string;
 }
 
@@ -20,40 +20,77 @@ export default function WhiteListCheck() {
   const [adressToCheck, setAdressToCheck] = useState("0x");
   const [subText, setSubText] = useState<subText>(null);
 
-  const whitelistPartners = [
-    "Nobody",
-    "DoubleTop",
-    "BOINK",
-    "BONK",
-    "Beraland",
-    "Beramonium",
-    "Beradrome",
-    "Kingdomly",
-    "gumball protocol",
-    "THC",
-  ];
+  const whitelistPartners = Object.keys(whitelistData);
+
+  const hasMintAmount = useCallback(
+    (address: string) => {
+      let output = false;
+
+      whitelistPartners.forEach((partner) => {
+        const findAddress = Object.entries(whitelistData[partner]).find(
+          ([key]) => {
+            if (key.trim() == address.trim()) {
+              return true;
+            }
+          }
+        );
+        if (findAddress != undefined) {
+          output = true;
+          return true;
+        }
+      });
+
+      return output;
+    },
+    [whitelistPartners]
+  );
+
+  const getMintAmountText = useCallback(
+    (address: string) => {
+      let output = "\n";
+
+      whitelistPartners.forEach((partner) => {
+        Object.keys(whitelistData[partner]).forEach((key) => {
+          console.log(key);
+          if (key.trim() == address.trim()) {
+            output += `${whitelistData[partner][key]} minting chance from ${partner}\n`;
+          }
+        });
+      });
+
+      return output;
+    },
+    [whitelistPartners]
+  );
 
   const dispatch = useAppDispatch();
-  const checkAddress = () => {
-    if (whitelistData[adressToCheck] !== undefined) {
+
+  const checkAddress = useCallback(() => {
+    if (hasMintAmount(adressToCheck)) {
+      console.log(hasMintAmount(adressToCheck));
       setSubText({
-        text: `🎉 Congradulations! 🎉 you have total ${whitelistData[adressToCheck]} minting chances in priority mint!`,
+        text: `🎉 Congradulations! 🎉 you have ${getMintAmountText(
+          adressToCheck
+        )} in priority mint!`,
         info: "success",
       });
       dispatch(
         openPopUp({
           title: "🎉 Congradulations! 🎉",
-          message: `you have total ${whitelistData[adressToCheck]} minting chances in priority mint!`,
+          message: `you have ${getMintAmountText(
+            adressToCheck
+          )} in priority mint!`,
           info: "success",
         })
       );
     } else {
+      console.log(hasMintAmount(adressToCheck));
       setSubText({
         text: "You are not on the white list, contact us if you think this is a mistake.",
         info: "error",
       });
     }
-  };
+  }, [hasMintAmount, adressToCheck, getMintAmountText, dispatch]);
 
   return (
     <div className="App">
@@ -80,7 +117,7 @@ export default function WhiteListCheck() {
           >
             Check
           </GeneralButton>
-          {subText && <p className={subText.info}>{subText.text}</p>}
+          <pre>{subText && <p className={subText.info}>{subText.text}</p>}</pre>
           <h2 className="partner-with">Partnered with:</h2>
           <Container>
             {whitelistPartners.map((partner, index) => {

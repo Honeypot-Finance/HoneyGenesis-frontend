@@ -5,17 +5,24 @@ import { readFileSync, writeFileSync } from "fs";
 const allContents = readFileSync("PriorityMints.txt", "utf-8");
 const mintAmount = {};
 
+let currentProvider = "";
+
 allContents.split(/\r?\n/).forEach((line) => {
   //console.log("line: ", line);
   if (line.trim() === "" || line.startsWith("#")) return;
+  if (line.startsWith("*")) {
+    currentProvider = line.split("*")[1].trim();
+    mintAmount[currentProvider] = {};
+    return;
+  }
 
   const [address, amount] = line.split(",");
 
-  if (mintAmount[address] === undefined) {
-    mintAmount[address] = 0;
+  if (mintAmount[currentProvider][address] === undefined) {
+    mintAmount[currentProvider][address] = 0;
   }
 
-  mintAmount[address] += parseInt(amount);
+  mintAmount[currentProvider][address] += parseInt(amount);
 });
 
 console.log("mintAmount: ", JSON.parse(JSON.stringify(mintAmount)));

@@ -48,11 +48,18 @@ li {
   list-style: none;
 }
 
+pre {
+  font-family: "inter black", sans-serif;
+  font-size: 1rem;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
 html {
   font-size: 16px;
 
   @media (min-width: 1080px) {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   @media (min-width: 1600px) {
@@ -296,4 +303,8 @@ hr {
 }
 .color-yellow {
   color: #f7951d;
+}
+
+.hightlight-dark {
+  color: rgba(0, 0, 0, 0.3);
 }
