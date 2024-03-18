@@ -65,6 +65,8 @@ function VipMint() {
         return;
       }
 
+      initEffectPosition();
+
       writeContract({
         abi: HoneyGenesis.abi,
         chainId: currentChainId,
@@ -152,18 +154,20 @@ function VipMint() {
     window.addEventListener("resize", () => {
       initEffectPosition();
     });
-
-    function initEffectPosition() {
-      mintEffectRef.current.style.top =
-        mintGroupRef.current.offsetTop +
-        mintGroupRef.current.offsetHeight / 2 +
-        "px";
-      mintEffectRef.current.style.left =
-        mintGroupRef.current.offsetLeft +
-        mintGroupRef.current.offsetWidth / 2 +
-        "px";
-    }
   }, []);
+
+  function initEffectPosition() {
+    mintEffectRef.current.style.transform = "translate(-50%, -50%)";
+
+    mintEffectRef.current.style.top =
+      mintGroupRef.current.offsetTop +
+      mintGroupRef.current.offsetHeight / 2 +
+      "px";
+    mintEffectRef.current.style.left =
+      mintGroupRef.current.offsetLeft +
+      mintGroupRef.current.offsetWidth / 2 +
+      "px";
+  }
 
   //mint error handling
   useEffect(() => {
