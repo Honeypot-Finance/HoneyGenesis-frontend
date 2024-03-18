@@ -8,7 +8,7 @@ import {
   useAccount,
   //useBalance
 } from "wagmi";
-import { contracts, maxMintAmount } from "@/consts";
+import { contracts, maxMintAmount, chainUnit } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
@@ -253,7 +253,8 @@ function Mint() {
                   ? "Sold Out"
                   : Number(getCurrentPrice())
                   ? weiToEther(parseInt(getCurrentPrice())).toPrecision(2) +
-                    " ETH"
+                    " " +
+                    chainUnit[currentChainId]
                   : "loading..."
               }
             />
@@ -263,7 +264,9 @@ function Mint() {
                 parseFloat(getMintedAmount()) >= parseFloat(getMaxAmount()) - 1
                   ? "Sold Out"
                   : Number(getNextPrice())
-                  ? weiToEther(parseInt(getNextPrice())).toPrecision(2) + " ETH"
+                  ? weiToEther(parseInt(getNextPrice())).toPrecision(2) +
+                    " " +
+                    chainUnit[currentChainId]
                   : "loading..."
               }
             />

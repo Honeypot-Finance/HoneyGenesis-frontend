@@ -6,7 +6,7 @@ import { weiToEther } from "@/lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useWriteContract, useChainId } from "wagmi";
 import { useAccount, useBalance } from "wagmi";
-import { contracts, maxMintAmount } from "@/consts";
+import { contracts, maxMintAmount, chainUnit } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
@@ -34,7 +34,7 @@ function VipMint() {
   const mintEffectRef = useRef<HTMLDivElement>(null);
   const mintGroupRef = useRef<HTMLDivElement>(null);
   const [amount, setAmount] = useState(1);
-  const { address } = useAccount();
+  const { address, chainId } = useAccount();
   const balance = useBalance({
     address: address,
   });
@@ -284,7 +284,8 @@ function VipMint() {
                   ? "Sold Out"
                   : Number(getVIPNFTPrice())
                   ? weiToEther(parseInt(getVIPNFTPrice())).toPrecision(2) +
-                    " ETH"
+                    " " +
+                    chainUnit[chainId]
                   : "loading..."
               }
             />
@@ -296,7 +297,8 @@ function VipMint() {
                   ? "Sold Out"
                   : Number(getVIPNFTPrice())
                   ? weiToEther(parseInt(getVIPNFTPrice())).toPrecision(2) +
-                    " ETH"
+                    " " +
+                    chainUnit[chainId]
                   : "loading..."
               }
             />
