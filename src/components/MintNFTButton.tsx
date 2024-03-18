@@ -1,6 +1,6 @@
 import { useWriteContract } from "wagmi";
 import { useAccount } from "wagmi";
-import { chainId, contractAddress } from "@/consts";
+import { chainId, arbitrumSepoliaContractAddress } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 
 export default function MintNFTButton() {
@@ -12,7 +12,7 @@ export default function MintNFTButton() {
       abi: HoneyGenesis.abi,
       chainId: chainId,
       functionName: `mint(${address},${amount})`,
-      address: contractAddress,
+      address: arbitrumSepoliaContractAddress,
     });
   }
 

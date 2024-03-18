@@ -4,9 +4,9 @@ import Header from "@/components/Header";
 import UseHoneyPot from "@/hooks/useHoneyPot";
 import { weiToEther } from "@/lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
-import { useWriteContract } from "wagmi";
+import { useWriteContract, useChainId } from "wagmi";
 import { useAccount, useBalance } from "wagmi";
-import { chainId, contractAddress, maxMintAmount } from "@/consts";
+import { contracts, maxMintAmount } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
@@ -49,6 +49,7 @@ function VipMint() {
     address: address,
   });
   const dispatch = useAppDispatch();
+  const currentChainId = useChainId();
 
   const [previousData, setPreviousData] = useState<string>(null);
   const { writeContract, data, isPending, isError, error, isSuccess } =
@@ -60,11 +61,12 @@ function VipMint() {
         open();
         return;
       }
+
       writeContract({
         abi: HoneyGenesis.abi,
-        chainId: chainId,
+        chainId: currentChainId,
         functionName: `mintVIP`,
-        address: contractAddress,
+        address: contracts[currentChainId],
         args: [amount],
         value: BigInt(parseInt(getVIPNFTPrice()) * amount),
       });
@@ -125,7 +127,7 @@ function VipMint() {
         });
       });
     },
-    [address, getVIPNFTPrice, open, writeContract]
+    [address, currentChainId, getVIPNFTPrice, open, writeContract]
   );
 
   const refetchData = useCallback(() => {

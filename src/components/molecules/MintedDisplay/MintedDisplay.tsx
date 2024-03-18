@@ -24,7 +24,6 @@ export default function MintedDisplay({ isVIPMint = false }) {
           {parseInt(getMaxAmount()) + parseInt(getTotalVIPNFTCount())}
         </p>
       )}
-
       <img src={smokingMole} alt="smoking-mole" className="smoking-mole" />
     </div>
   );

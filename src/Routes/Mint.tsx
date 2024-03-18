@@ -3,12 +3,12 @@ import "@/css/home.css";
 import UseHoneyPot from "@/hooks/useHoneyPot";
 import { weiToEther } from "@/lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
-import { useWriteContract } from "wagmi";
+import { useWriteContract, useChainId } from "wagmi";
 import {
   useAccount,
   //useBalance
 } from "wagmi";
-import { chainId, contractAddress } from "@/consts";
+import { contracts, maxMintAmount } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
@@ -38,7 +38,6 @@ function Mint() {
     getCurrentPrice,
     getNextPrice,
     getMaxAmount,
-    getTotalVIPNFTCount,
     getMintedAmount,
     mintedAmount,
     nextPrice,
@@ -53,6 +52,7 @@ function Mint() {
   //   address: address,
   // });
   const dispatch = useAppDispatch();
+  const currentChainId = useChainId();
 
   const [previousData, setPreviousData] = useState<string>(null);
   const { writeContract, data, isPending, isError, error, isSuccess } =
@@ -75,9 +75,9 @@ function Mint() {
 
       writeContract({
         abi: HoneyGenesis.abi,
-        chainId: chainId,
+        chainId: currentChainId,
         functionName: `mint`,
-        address: contractAddress,
+        address: contracts[currentChainId],
         args: [amount],
         value: BigInt(parseInt(getCurrentPrice()) * amount),
       });
@@ -129,7 +129,7 @@ function Mint() {
         });
       });
     },
-    [address, getCurrentPrice, open, writeContract]
+    [address, currentChainId, getCurrentPrice, open, writeContract]
   );
 
   const refetchData = useCallback(() => {
@@ -265,14 +265,7 @@ function Mint() {
                   : "loading..."
               }
             />
-            <SingleDataBox
-              dataName="Max Available"
-              dataValue={
-                Number(getMaxAmount())
-                  ? parseInt(getMaxAmount()) + parseInt(getTotalVIPNFTCount())
-                  : "loading..."
-              }
-            />
+            <SingleDataBox dataName="Max Available" dataValue={maxMintAmount} />
             <QuantityInput
               inputName="Quantity"
               value={amount}
