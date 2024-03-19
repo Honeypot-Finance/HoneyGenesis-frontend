@@ -1,37 +1,31 @@
-img {
+.horizontal-scroll {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.horizontal-scroll .wrapper {
+  display: flex;
+}
+.horizontal-scroll section {
+  display: flex;
+  animation: swipe var(--speed) linear infinite backwards;
+}
+@keyframes swipe {
+  0% {
+    transform: translate(0);
+  }
+  100% {
+    transform: translate(-100%);
+  }
+}
+.horizontal-scroll img {
   max-width: 150px;
   height: 5rem;
   padding: 0 15px;
   object-fit: cover;
 }
-
-img:last-of-type {
+.horizontal-scroll img:last-of-type {
   padding-left: 0;
 }
 
-.inner {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  height: 5rem;
-}
-
-.wrapper {
-  position: absolute;
-  display: flex;
-}
-
-section {
-  display: flex;
-  animation: swipe var(--speed) linear infinite backwards;
-}
-
-@keyframes swipe {
-  0% {
-    transform: translate(0);
-  }
-
-  100% {
-    transform: translate(-100%);
-  }
-}
+/*# sourceMappingURL=HorizontalScroll.css.map */

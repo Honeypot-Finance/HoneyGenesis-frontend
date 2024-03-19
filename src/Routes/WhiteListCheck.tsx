@@ -7,6 +7,7 @@ import GeneralInput from "@/components/atoms/GeneralInput/GeneralInput";
 import { useAppDispatch } from "@/hooks/useAppSelector";
 import { openPopUp } from "@/config/redux/popUpSlice";
 import Container from "@/components/atoms/Container/Container";
+import HorizontalScroll from "@/components/molecules/HorizontalScroll/HorizontalScroll";
 
 //data
 import whitelistData from "@/data/mintAmount.json";
@@ -119,11 +120,23 @@ export default function WhiteListCheck() {
           </GeneralButton>
           <pre>{subText && <p className={subText.info}>{subText.text}</p>}</pre>
           <h2 className="partner-with">Get Priority Mints from:</h2>
-          <Container>
+          <HorizontalScroll
+            items={whitelistPartners.map((partner) => {
+              return {
+                content: (
+                  <Container oneline key={partner}>
+                    {partner}
+                  </Container>
+                ),
+              };
+            })}
+            speed={10000}
+          />
+          {/* <Container>
             {whitelistPartners.map((partner, index) => {
               return <Container key={index}>{partner}</Container>;
             })}
-          </Container>
+          </Container> */}
         </div>
       </main>
       <Game className="mini-game" />
