@@ -33,8 +33,8 @@ function App() {
           <img className="meme-img" src={mole} alt="" />{" "}
           <img className="meme-img2" src={mole} alt="" />
           <p className="desc">
-            Join <span className="color-yellow">HoneyGenesis NFT</span> for a
-            thrilling battle with sweet rewards.
+            Join <span style={{ color: "#ECC94E" }}>HoneyGenesis NFT</span> for
+            a thrilling battle with sweet rewards.
           </p>{" "}
           <Container style={{ color: "#ECC94E" }}>Mint Live:</Container>
           <Countdown date={countDownDate} completeRenderer={completeRenderer} />
