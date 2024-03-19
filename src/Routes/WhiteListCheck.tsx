@@ -86,8 +86,8 @@ export default function WhiteListCheck() {
     } else {
       console.log(hasMintAmount(adressToCheck));
       setSubText({
-        text: "You are not on the white list, contact us if you think this is a mistake.",
-        info: "error",
+        text: "Oops! you are not in the priority mint list. Some tickets may still in progress, please check again later.",
+        info: "white-trans",
       });
     }
   }, [hasMintAmount, adressToCheck, getMintAmountText, dispatch]);
