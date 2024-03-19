@@ -1,6 +1,7 @@
 import Container from "@/components/atoms/Container/Container";
 import { ReactNode } from "react";
 import Countdown from "react-countdown";
+import "./CountDown.css";
 
 export default function CountDown({
   date,
