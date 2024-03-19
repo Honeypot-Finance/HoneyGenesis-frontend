@@ -6,5 +6,8 @@
   border-radius: var(--border-radius-sm);
   color: var(--primary-color);
 }
+.honey-pot-design-container.oneline {
+  white-space: nowrap;
+}
 
 /*# sourceMappingURL=Container.css.map */

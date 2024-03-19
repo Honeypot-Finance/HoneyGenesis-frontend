@@ -56,18 +56,16 @@ pre {
 }
 
 html {
-  font-size: 16px;
-
   @media (min-width: 1080px) {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   @media (min-width: 1600px) {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   @media (min-width: 1920px) {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 
@@ -308,4 +306,7 @@ hr {
 
 .hightlight-dark {
   color: rgba(0, 0, 0, 0.3);
+}
+.white-trans {
+  color: rgba(255, 255, 255, 0.5);
 }

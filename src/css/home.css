@@ -50,22 +50,19 @@ pre {
   white-space: pre-wrap;
 }
 
-html {
-  font-size: 16px;
-}
 @media (min-width: 1080px) {
   html {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 @media (min-width: 1600px) {
   html {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 @media (min-width: 1920px) {
   html {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 
@@ -299,6 +296,10 @@ hr {
 
 .hightlight-dark {
   color: rgba(0, 0, 0, 0.3);
+}
+
+.white-trans {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 @font-face {
@@ -647,7 +648,7 @@ hr {
 }
 .homepage-main .desc {
   color: white;
-  font-size: 2rem;
+  font-size: 3rem;
   margin: 2rem 0;
   text-align: center;
 }

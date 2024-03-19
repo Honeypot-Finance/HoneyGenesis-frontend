@@ -6,11 +6,19 @@ interface ContainerProps extends React.HTMLAttributes<HTMLElement> {
   align?: "left" | "center" | "right";
   justify?: "left" | "center" | "right";
   border?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  oneline?: boolean;
 }
 
-export default function Container({ children, ...props }: ContainerProps) {
+export default function Container({
+  oneline,
+  children,
+  ...props
+}: ContainerProps) {
   return (
-    <div className="honey-pot-design-container" {...props}>
+    <div
+      className={"honey-pot-design-container" + (oneline ? " oneline" : "")}
+      {...props}
+    >
       {children}
     </div>
   );
