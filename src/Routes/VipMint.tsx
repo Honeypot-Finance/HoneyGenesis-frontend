@@ -216,6 +216,7 @@ function VipMint() {
     previousData,
   ]);
 
+  //if user have no vip mint quota, redirect to normal mint page
   useEffect(() => {
     if (mintQuota.data === undefined) return;
     console.log(parseInt(mintQuota.data as string));
