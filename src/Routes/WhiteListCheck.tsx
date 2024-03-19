@@ -131,6 +131,7 @@ export default function WhiteListCheck() {
               };
             })}
             speed={10000}
+            stopOnHover
           />
           {/* <Container>
             {whitelistPartners.map((partner, index) => {

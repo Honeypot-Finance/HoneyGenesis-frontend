@@ -256,7 +256,7 @@ hr {
   }
   .App-header .link-group {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     margin: 0.5rem;
@@ -648,7 +648,7 @@ hr {
 }
 .homepage-main .desc {
   color: white;
-  font-size: 3rem;
+  font-size: 5rem;
   margin: 2rem 0;
   text-align: center;
 }
@@ -673,7 +673,7 @@ hr {
     width: 100%;
     margin: 0;
     max-width: unset;
-    max-width: 800px;
+    max-width: min(1200px, 70vw);
     grid-column-start: 2;
     grid-column-end: 10;
     grid-row-start: 2;

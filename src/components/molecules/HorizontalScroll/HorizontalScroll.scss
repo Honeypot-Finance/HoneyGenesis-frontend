@@ -6,7 +6,7 @@
   .wrapper {
     display: flex;
   }
-  section {
+  .content {
     display: flex;
     animation: swipe var(--speed) linear infinite backwards;
   }
