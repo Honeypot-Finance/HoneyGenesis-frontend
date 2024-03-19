@@ -41,7 +41,7 @@ function App() {
             Join <span className="color-yellow">HoneyGenesis NFT</span> for a
             thrilling battle with sweet rewards.
           </p>{" "}
-          <Container>Mint Live:</Container>
+          <Container style={{ color: "#ECC94E" }}>Mint Live:</Container>
           <Countdown date={countDownDate} completeRenderer={completeRenderer} />
         </main>
       </MainContentWrapper>
