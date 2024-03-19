@@ -30,7 +30,7 @@ export default function WhiteListCheck() {
       whitelistPartners.forEach((partner) => {
         const findAddress = Object.entries(whitelistData[partner]).find(
           ([key]) => {
-            if (key.trim() == address.trim()) {
+            if (key.trim().toLowerCase() == address.trim().toLowerCase()) {
               return true;
             }
           }
@@ -53,7 +53,7 @@ export default function WhiteListCheck() {
       whitelistPartners.forEach((partner) => {
         Object.keys(whitelistData[partner]).forEach((key) => {
           console.log(key);
-          if (key.trim() == address.trim()) {
+          if (key.trim().toLowerCase() == address.trim().toLowerCase()) {
             output += `${whitelistData[partner][key]} minting chance from ${partner}\n`;
           }
         });
