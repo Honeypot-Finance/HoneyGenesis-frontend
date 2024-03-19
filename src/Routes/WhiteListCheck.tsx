@@ -70,14 +70,14 @@ export default function WhiteListCheck() {
     if (hasMintAmount(adressToCheck)) {
       console.log(hasMintAmount(adressToCheck));
       setSubText({
-        text: `🎉 Congradulations! 🎉 you have ${getMintAmountText(
+        text: `🎉 Congratulations! 🎉 you have ${getMintAmountText(
           adressToCheck
         )} in priority mint!`,
         info: "success",
       });
       dispatch(
         openPopUp({
-          title: "🎉 Congradulations! 🎉",
+          title: "🎉 Congratulations! 🎉",
           message: `you have ${getMintAmountText(
             adressToCheck
           )} in priority mint!`,
