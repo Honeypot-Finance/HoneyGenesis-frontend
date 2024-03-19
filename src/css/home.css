@@ -50,14 +50,6 @@ pre {
   white-space: pre-wrap;
 }
 
-html {
-  font-size: 8px;
-}
-@media (min-width: 720px) {
-  html {
-    font-size: 10px;
-  }
-}
 @media (min-width: 1080px) {
   html {
     font-size: 12px;
