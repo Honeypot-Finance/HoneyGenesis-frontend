@@ -6,7 +6,7 @@
 .horizontal-scroll .wrapper {
   display: flex;
 }
-.horizontal-scroll section {
+.horizontal-scroll .content {
   display: flex;
   animation: swipe var(--speed) linear infinite backwards;
 }
