@@ -8,13 +8,13 @@ interface scrollItem {
 interface HorizontalScrollProps {
   items: scrollItem[];
   speed?: number;
-  stopOnHover: boolean;
+  stopOnHover?: boolean;
 }
 
 const HorizontalScroll = ({
   items,
   speed = 5000,
-  stopOnHover = true,
+  stopOnHover = false,
 }: HorizontalScrollProps) => {
   const horizontalScroll = useRef<HTMLDivElement>(null);
   const scrollRef1 = useRef<HTMLDivElement>(null);
