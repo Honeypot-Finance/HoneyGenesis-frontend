@@ -255,6 +255,7 @@ hr {
     transition-duration: 1s;
   }
   .App-header .link-group {
+    font-size: 1.3rem;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -265,6 +266,7 @@ hr {
 }
 @media (min-width: 1600px) {
   .App-header .link-group {
+    font-size: 1.8rem;
     flex-direction: row;
     flex-grow: 1;
   }
