@@ -14,13 +14,15 @@ export default function QuantityInput({
   inputName,
   value,
   setValue,
+  vip = false,
 }: {
   inputName: string;
   value: number;
   setValue: (value: number) => void;
+  vip?: boolean;
 }) {
   const maxButton = useRef<HTMLSpanElement>(null);
-  const { getCurrentPrice } = useHoneyPot();
+  const { getCurrentPrice, getVIPNFTPrice } = useHoneyPot();
   const { address, chainId } = useAccount();
   const balance = useBalance({
     address: address,
@@ -97,7 +99,9 @@ export default function QuantityInput({
       <div className="total-price">
         Total Price:{" "}
         {Number(getCurrentPrice())
-          ? weiToEther(parseInt(getCurrentPrice()) * value).toPrecision(2) +
+          ? weiToEther(
+              parseInt(vip ? getVIPNFTPrice() : getCurrentPrice()) * value
+            ).toPrecision(2) +
             " " +
             chainUnit[chainId]
           : "loading..."}

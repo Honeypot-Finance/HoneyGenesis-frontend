@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import "@/css/home.css";
 import UseHoneyPot from "@/hooks/useHoneyPot";
-import { weiToEther } from "@/lib/currencyConvert";
+import { weiToEther, etherToWei } from "@/lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useWriteContract, useChainId } from "wagmi";
 import {
   useAccount,
   //useBalance
 } from "wagmi";
-import { contracts, maxMintAmount, chainUnit } from "@/consts";
+import { contracts, maxMintAmount, chainUnit, kingdomlyFee } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
@@ -58,6 +58,16 @@ function Mint() {
   const { writeContract, data, isPending, isError, error, isSuccess } =
     useWriteContract();
 
+  function addTest() {
+    writeContract({
+      abi: HoneyGenesis.abi,
+      chainId: currentChainId,
+      functionName: `addVIPMinterTestnet`,
+      address: contracts[currentChainId],
+      args: ["0x988D8FE9F7F53946c6f7f5204F7B71a1215685B8", 1],
+    });
+  }
+
   const mintNFT = useCallback(
     (amount: number) => {
       initEffectPosition();
@@ -73,6 +83,7 @@ function Mint() {
         open();
         return;
       }
+      console.log(parseInt(getCurrentPrice() + etherToWei(kingdomlyFee)));
 
       writeContract({
         abi: HoneyGenesis.abi,
@@ -80,7 +91,9 @@ function Mint() {
         functionName: `mint`,
         address: contracts[currentChainId],
         args: [amount],
-        value: BigInt(parseInt(getCurrentPrice()) * amount),
+        value: BigInt(
+          (parseInt(getCurrentPrice()) + etherToWei(kingdomlyFee)) * amount
+        ),
       });
 
       animate(
@@ -307,6 +320,7 @@ function Mint() {
               ref={mintEffectRef}
               transition={{ duration: 1 }}
             ></motion.div>
+            {/* <GeneralButton onClick={addTest}>Add Test</GeneralButton> */}
           </div>
         </main>
         <Game className="mini-game" />
