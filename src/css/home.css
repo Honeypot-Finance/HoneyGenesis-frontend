@@ -227,10 +227,11 @@ hr {
 }
 @media (min-width: 1080px) {
   .App-header {
+    padding-top: 1.5rem;
     font-size: 1rem;
     display: grid;
     grid-template-columns: 20vw 60vw 20vw;
-    grid-template-rows: 10vh;
+    grid-template-rows: 5vh;
     position: relative;
     justify-items: center;
     align-items: center;
@@ -247,7 +248,7 @@ hr {
     top: 0;
     left: 0;
     width: 100%;
-    height: 250%;
+    height: 200%;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: bottom;
@@ -255,7 +256,7 @@ hr {
     transition-duration: 1s;
   }
   .App-header .link-group {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     display: flex;
     flex-direction: row;
     align-items: center;
