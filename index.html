@@ -11,10 +11,4 @@
     <div id="root"></div>
     <script type="module" src="/src/index.tsx"></script>
   </body>
-  <script>
-    const oppositeOrientation = screen.orientation.type.startsWith("portrait")
-      ? "landscape"
-      : "portrait";
-    screen.orientation.lock(oppositeOrientation);
-  </script>
 </html>

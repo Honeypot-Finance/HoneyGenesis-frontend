@@ -1,0 +1,7 @@
+.count-down {
+  font-size: 1.5rem;
+
+  @media (min-width: 1080px) {
+    font-size: 3rem;
+  }
+}

@@ -1,13 +1,3 @@
-// <div className="page-lock">
-// <div className="lock-icon">
-//   <img src={lockIcon} alt="" />
-// </div>
-// <div className="lock-text">
-//   <h1>Page Locked</h1>
-//   <p>Connect your wallet to </p>
-// </div>
-// </div>
-
 .page-lock {
   display: flex;
   text-align: center;
@@ -23,21 +13,17 @@
   z-index: 10;
   .lock-icon {
     img {
-      width: 100px;
-      height: 100px;
+      width: 80vw;
+      height: auto;
+      max-width: 300px;
     }
   }
   .lock-text {
-    h1 {
-      font-size: 24px;
-      font-weight: 700;
-      color: #fff;
-      margin: 0;
-    }
+    h1,
     p {
       font-size: 16px;
-      color: #fff;
-      margin: 0;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 1rem;
     }
   }
 }
