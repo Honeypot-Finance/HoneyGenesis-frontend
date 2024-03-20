@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useAccount, useBalance } from "wagmi";
 
-import { maxMintAmount } from "@/consts";
+import { maxMintAmount, kingdomlyFee } from "@/consts";
 import { weiToEther } from "@/lib/currencyConvert";
 import useHoneyPot from "@/hooks/useHoneyPot";
 
@@ -104,7 +104,10 @@ export default function QuantityInput({
             ).toPrecision(2) +
             " " +
             chainUnit[chainId]
-          : "loading..."}
+          : "loading..."}{" "}
+        <span className="half-transparent">
+          + Kingdomly Fee :{kingdomlyFee} {chainUnit[chainId]}
+        </span>
       </div>
     </div>
   );

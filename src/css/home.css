@@ -304,6 +304,10 @@ hr {
   color: rgba(255, 255, 255, 0.5);
 }
 
+.half-transparent {
+  opacity: 0.5;
+}
+
 @font-face {
   font-family: "inter black";
   src: url("./../assets/font/Inter-Black.ttf");
