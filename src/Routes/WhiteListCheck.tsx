@@ -18,7 +18,7 @@ interface subText {
 }
 
 export default function WhiteListCheck() {
-  const [adressToCheck, setAdressToCheck] = useState("0x");
+  const [adressToCheck, setAdressToCheck] = useState("");
   const [subText, setSubText] = useState<subText>(null);
 
   const whitelistPartners = Object.keys(whitelistData);
@@ -107,6 +107,7 @@ export default function WhiteListCheck() {
             setValue={setAdressToCheck}
             unitName="Address"
             style={{ margin: "1rem" }}
+            placeholder="0x..."
           />
           <GeneralButton
             containerStyle={{

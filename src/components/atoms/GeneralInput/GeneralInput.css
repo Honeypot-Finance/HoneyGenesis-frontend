@@ -18,7 +18,7 @@
   -webkit-appearance: none;
 }
 .amount-input-container .amount-input::placeholder {
-  color: white;
+  color: rgba(255, 255, 255, 0.3);
 }
 .amount-input-container .amount-input:focus {
   outline: none;

@@ -21,6 +21,7 @@ export default function GeneralInput({
         name="value"
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        placeholder={props.placeholder}
       />
 
       <div className="unit-name">{unitName}</div>
