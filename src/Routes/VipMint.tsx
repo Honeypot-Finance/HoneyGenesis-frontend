@@ -172,8 +172,9 @@ function VipMint() {
   }
 
   //mint error handling
-  useEffect(() => {
-    if (data !== previousData && isError) {
+
+  function popError() {
+    if (isError && error) {
       if (error.message.includes("User denied transaction signature")) {
         dispatch(
           openPopUp({
@@ -205,18 +206,13 @@ function VipMint() {
         );
       }
       console.warn(error.message);
-      setPreviousData(data);
     }
-  }, [
-    isError,
-    error,
-    dispatch,
-    refetchData,
-    mintNFT,
-    amount,
-    data,
-    previousData,
-  ]);
+  }
+
+  useEffect(() => {
+    popError();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error]);
 
   //if user have no vip mint quota, redirect to normal mint page
   useEffect(() => {

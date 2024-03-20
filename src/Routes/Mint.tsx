@@ -58,15 +58,15 @@ function Mint() {
   const { writeContract, data, isPending, isError, error, isSuccess } =
     useWriteContract();
 
-  function addTest() {
-    writeContract({
-      abi: HoneyGenesis.abi,
-      chainId: currentChainId,
-      functionName: `addVIPMinterTestnet`,
-      address: contracts[currentChainId],
-      args: ["0x988D8FE9F7F53946c6f7f5204F7B71a1215685B8", 1],
-    });
-  }
+  // function addTest() {
+  //   writeContract({
+  //     abi: HoneyGenesis.abi,
+  //     chainId: currentChainId,
+  //     functionName: `addVIPMinterTestnet`,
+  //     address: contracts[currentChainId],
+  //     args: ["0x988D8FE9F7F53946c6f7f5204F7B71a1215685B8", 1],
+  //   });
+  // }
 
   const mintNFT = useCallback(
     (amount: number) => {
@@ -83,7 +83,6 @@ function Mint() {
         open();
         return;
       }
-      console.log(parseInt(getCurrentPrice() + etherToWei(kingdomlyFee)));
 
       writeContract({
         abi: HoneyGenesis.abi,
@@ -166,9 +165,8 @@ function Mint() {
     });
   }, []);
 
-  //mint error handling
-  useEffect(() => {
-    if (data !== previousData && isError) {
+  function popError() {
+    if (isError && error) {
       if (error.message.includes("User denied transaction signature")) {
         dispatch(
           openPopUp({
@@ -200,18 +198,14 @@ function Mint() {
         );
       }
       console.warn(error.message);
-      setPreviousData(data);
     }
-  }, [
-    isError,
-    error,
-    dispatch,
-    refetchData,
-    mintNFT,
-    amount,
-    data,
-    previousData,
-  ]);
+  }
+
+  //mint error handling
+  useEffect(() => {
+    popError();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error]);
 
   //mint success handling
   useEffect(() => {
@@ -234,6 +228,7 @@ function Mint() {
   }, [data, amount, dispatch, refetchData, previousData, isSuccess]);
 
   function initEffectPosition() {
+    if (mintEffectRef.current === null || mintGroupRef.current === null) return;
     mintEffectRef.current.style.transform = "translate(-50%, -50%)";
 
     mintEffectRef.current.style.top =

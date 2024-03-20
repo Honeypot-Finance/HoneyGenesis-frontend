@@ -266,7 +266,7 @@ hr {
 }
 @media (min-width: 1600px) {
   .App-header .link-group {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     flex-direction: row;
     flex-grow: 1;
   }
@@ -302,6 +302,10 @@ hr {
 
 .white-trans {
   color: rgba(255, 255, 255, 0.5);
+}
+
+.half-transparent {
+  opacity: 0.5;
 }
 
 @font-face {
@@ -650,9 +654,14 @@ hr {
 }
 .homepage-main .desc {
   color: white;
-  font-size: 5rem;
+  font-size: 3rem;
   margin: 2rem 0;
   text-align: center;
+}
+@media (min-width: 1080px) {
+  .homepage-main .desc {
+    font-size: 5rem;
+  }
 }
 .homepage-main .bg-logo {
   position: absolute;
