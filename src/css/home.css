@@ -266,7 +266,7 @@ hr {
 }
 @media (min-width: 1600px) {
   .App-header .link-group {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     flex-direction: row;
     flex-grow: 1;
   }
