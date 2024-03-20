@@ -15,22 +15,25 @@ export default function CountDown({
       return completeRenderer;
     } else {
       return (
-        <Container>
-          <div className="count-down">
-            <Container>
-              <span className="count-down-part">{days}d</span>{" "}
-            </Container>
-            <Container>
-              <span className="count-down-part">{hours}h</span>{" "}
-            </Container>
-            <Container>
-              <span className="count-down-part">{minutes}m</span>{" "}
-            </Container>
-            <Container>
-              <span className="count-down-part">{seconds}s</span>{" "}
-            </Container>
-          </div>
-        </Container>
+        <>
+          <Container style={{ color: "#ECC94E" }}>Mint Live:</Container>
+          <Container>
+            <div className="count-down">
+              <Container>
+                <span className="count-down-part">{days}d</span>{" "}
+              </Container>
+              <Container>
+                <span className="count-down-part">{hours}h</span>{" "}
+              </Container>
+              <Container>
+                <span className="count-down-part">{minutes}m</span>{" "}
+              </Container>
+              <Container>
+                <span className="count-down-part">{seconds}s</span>{" "}
+              </Container>
+            </div>
+          </Container>
+        </>
       );
     }
   };

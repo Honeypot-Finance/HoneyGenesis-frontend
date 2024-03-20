@@ -7,10 +7,10 @@ export default function useHoneyPot() {
   const currentChainId = useChainId();
   const currentprice = useReadGenesisContract("getCurrentPrice");
   const nextPrice = useReadGenesisContract("getNextNFTPrice");
-  const mintedAmount = useReadGenesisContract("getMintedNFTsCount");
-  const maxAmount = useReadGenesisContract("getTotalNFTCount");
+  const mintedAmount = useReadGenesisContract("tokenCountNormal");
+  const maxAmount = useReadGenesisContract("TOTAL_SUPPLY_CAP");
   const totalVIPNFTCount = useReadGenesisContract("getTotalVIPNFTCount");
-  const mintedVIPNFTsCount = useReadGenesisContract("getMintedVIPNFTsCount");
+  const mintedVIPNFTsCount = useReadGenesisContract("tokenCountVIP");
   const VIPPrice = useReadGenesisContract("getVIPPrice");
 
   const useVIPMintQuota = (address: string) =>

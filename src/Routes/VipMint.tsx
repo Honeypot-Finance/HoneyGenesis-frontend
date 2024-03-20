@@ -2,11 +2,11 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import "@/css/home.css";
 import Header from "@/components/Header";
 import UseHoneyPot from "@/hooks/useHoneyPot";
-import { weiToEther } from "@/lib/currencyConvert";
+import { etherToWei, weiToEther } from "@/lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useWriteContract, useChainId } from "wagmi";
 import { useAccount, useBalance } from "wagmi";
-import { contracts, maxMintAmount, chainUnit } from "@/consts";
+import { contracts, maxMintAmount, chainUnit, kingdomlyFee } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
@@ -73,7 +73,9 @@ function VipMint() {
         functionName: `mintVIP`,
         address: contracts[currentChainId],
         args: [amount],
-        value: BigInt(parseInt(getVIPNFTPrice()) * amount),
+        value: BigInt(
+          (parseInt(getVIPNFTPrice()) + etherToWei(kingdomlyFee)) * amount
+        ),
       });
 
       const effectSize =
@@ -170,8 +172,9 @@ function VipMint() {
   }
 
   //mint error handling
-  useEffect(() => {
-    if (data !== previousData && isError) {
+
+  function popError() {
+    if (isError && error) {
       if (error.message.includes("User denied transaction signature")) {
         dispatch(
           openPopUp({
@@ -203,18 +206,13 @@ function VipMint() {
         );
       }
       console.warn(error.message);
-      setPreviousData(data);
     }
-  }, [
-    isError,
-    error,
-    dispatch,
-    refetchData,
-    mintNFT,
-    amount,
-    data,
-    previousData,
-  ]);
+  }
+
+  useEffect(() => {
+    popError();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error]);
 
   //if user have no vip mint quota, redirect to normal mint page
   useEffect(() => {
@@ -323,6 +321,7 @@ function VipMint() {
               inputName="Quantity"
               value={amount}
               setValue={setAmount}
+              vip
             />
             <p className="terms" style={{ gridColumn: "span 3" }}>
               <a href="">Click here</a> to view the contract on Etherscan. By
