@@ -3,10 +3,10 @@ import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
 
 import { WagmiProvider } from "wagmi";
 import {
-  //arbitrum,
-  arbitrumSepolia,
+  arbitrum,
+  //arbitrumSepolia,
   // mainnet
-  berachainTestnet,
+  //berachainTestnet,
 } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -26,9 +26,9 @@ const metadata = {
 
 const chains = [
   //mainnet,
-  //arbitrum,
-  arbitrumSepolia,
-  berachainTestnet,
+  arbitrum,
+  //arbitrumSepolia,
+  //berachainTestnet,
 ] as const;
 const config = defaultWagmiConfig({
   chains, // required
