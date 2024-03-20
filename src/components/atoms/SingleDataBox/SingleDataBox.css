@@ -12,6 +12,7 @@
 
 .data,
 .data-value {
+  font-size: 0.7rem;
   margin: 0.5rem;
   color: white;
   text-align: center;

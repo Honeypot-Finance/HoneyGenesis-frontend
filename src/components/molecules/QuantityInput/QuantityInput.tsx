@@ -5,6 +5,8 @@ import { maxMintAmount } from "@/consts";
 import { weiToEther } from "@/lib/currencyConvert";
 import useHoneyPot from "@/hooks/useHoneyPot";
 
+import { chainUnit } from "@/consts";
+
 import NumberInput from "@/components/atoms/NumberInput/NumberInput";
 import "./QuantityInput.css";
 
@@ -12,14 +14,16 @@ export default function QuantityInput({
   inputName,
   value,
   setValue,
+  vip = false,
 }: {
   inputName: string;
   value: number;
   setValue: (value: number) => void;
+  vip?: boolean;
 }) {
   const maxButton = useRef<HTMLSpanElement>(null);
-  const { getCurrentPrice } = useHoneyPot();
-  const { address } = useAccount();
+  const { getCurrentPrice, getVIPNFTPrice } = useHoneyPot();
+  const { address, chainId } = useAccount();
   const balance = useBalance({
     address: address,
   });
@@ -95,8 +99,11 @@ export default function QuantityInput({
       <div className="total-price">
         Total Price:{" "}
         {Number(getCurrentPrice())
-          ? weiToEther(parseInt(getCurrentPrice()) * value).toPrecision(2) +
-            " ETH"
+          ? weiToEther(
+              parseInt(vip ? getVIPNFTPrice() : getCurrentPrice()) * value
+            ).toPrecision(2) +
+            " " +
+            chainUnit[chainId]
           : "loading..."}
       </div>
     </div>

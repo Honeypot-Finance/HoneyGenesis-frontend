@@ -2,11 +2,11 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import "@/css/home.css";
 import Header from "@/components/Header";
 import UseHoneyPot from "@/hooks/useHoneyPot";
-import { weiToEther } from "@/lib/currencyConvert";
+import { etherToWei, weiToEther } from "@/lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useWriteContract, useChainId } from "wagmi";
 import { useAccount, useBalance } from "wagmi";
-import { contracts, maxMintAmount } from "@/consts";
+import { contracts, maxMintAmount, chainUnit, kingdomlyFee } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
@@ -31,6 +31,19 @@ function VipMint() {
       ? true
       : false;
 
+  const mintEffectRef = useRef<HTMLDivElement>(null);
+  const mintGroupRef = useRef<HTMLDivElement>(null);
+  const [amount, setAmount] = useState(1);
+  const { address, chainId } = useAccount();
+  const balance = useBalance({
+    address: address,
+  });
+  const dispatch = useAppDispatch();
+  const currentChainId = useChainId();
+  const [previousData, setPreviousData] = useState<string>(null);
+  const { writeContract, data, isPending, isError, error, isSuccess } =
+    useWriteContract();
+
   const { open } = useWeb3Modal();
   const {
     getVIPNFTPrice,
@@ -40,20 +53,10 @@ function VipMint() {
     totalVIPNFTCount,
     maxAmount,
     mintedVIPNFTsCount,
+    VIPPrice,
+    useVIPMintQuota,
   } = UseHoneyPot();
-  const mintEffectRef = useRef<HTMLDivElement>(null);
-  const mintGroupRef = useRef<HTMLDivElement>(null);
-  const [amount, setAmount] = useState(1);
-  const { address } = useAccount();
-  const balance = useBalance({
-    address: address,
-  });
-  const dispatch = useAppDispatch();
-  const currentChainId = useChainId();
-
-  const [previousData, setPreviousData] = useState<string>(null);
-  const { writeContract, data, isPending, isError, error, isSuccess } =
-    useWriteContract();
+  const mintQuota = useVIPMintQuota(address);
 
   const mintNFT = useCallback(
     (amount: number) => {
@@ -62,13 +65,17 @@ function VipMint() {
         return;
       }
 
+      initEffectPosition();
+
       writeContract({
         abi: HoneyGenesis.abi,
         chainId: currentChainId,
         functionName: `mintVIP`,
         address: contracts[currentChainId],
         args: [amount],
-        value: BigInt(parseInt(getVIPNFTPrice()) * amount),
+        value: BigInt(
+          (parseInt(getVIPNFTPrice()) + etherToWei(kingdomlyFee)) * amount
+        ),
       });
 
       const effectSize =
@@ -134,7 +141,9 @@ function VipMint() {
     mintedVIPNFTsCount.refetch();
     maxAmount.refetch();
     totalVIPNFTCount.refetch();
-  }, [maxAmount, mintedVIPNFTsCount, totalVIPNFTCount]);
+    VIPPrice.refetch();
+    mintQuota.refetch();
+  }, [VIPPrice, maxAmount, mintQuota, mintedVIPNFTsCount, totalVIPNFTCount]);
 
   //init
   useEffect(() => {
@@ -147,18 +156,20 @@ function VipMint() {
     window.addEventListener("resize", () => {
       initEffectPosition();
     });
-
-    function initEffectPosition() {
-      mintEffectRef.current.style.top =
-        mintGroupRef.current.offsetTop +
-        mintGroupRef.current.offsetHeight / 2 +
-        "px";
-      mintEffectRef.current.style.left =
-        mintGroupRef.current.offsetLeft +
-        mintGroupRef.current.offsetWidth / 2 +
-        "px";
-    }
   }, []);
+
+  function initEffectPosition() {
+    mintEffectRef.current.style.transform = "translate(-50%, -50%)";
+
+    mintEffectRef.current.style.top =
+      mintGroupRef.current.offsetTop +
+      mintGroupRef.current.offsetHeight / 2 +
+      "px";
+    mintEffectRef.current.style.left =
+      mintGroupRef.current.offsetLeft +
+      mintGroupRef.current.offsetWidth / 2 +
+      "px";
+  }
 
   //mint error handling
   useEffect(() => {
@@ -207,13 +218,22 @@ function VipMint() {
     previousData,
   ]);
 
+  //if user have no vip mint quota, redirect to normal mint page
+  useEffect(() => {
+    if (mintQuota.data === undefined) return;
+    console.log(parseInt(mintQuota.data as string));
+    if (parseInt(mintQuota.data as string) === 0) {
+      window.location.href = "/mint";
+    }
+  }, [mintQuota]);
+
   //mint success handling
   useEffect(() => {
     if (data !== previousData && isSuccess) {
       dispatch(
         openPopUp({
           title: "Mint Success",
-          message: `You have successfully minted ${amount} NFTs`,
+          message: `You have successfully minted ${amount} NFTs\ntransaction hash: ${data}`,
           info: "success",
         })
       );
@@ -275,7 +295,8 @@ function VipMint() {
                   ? "Sold Out"
                   : Number(getVIPNFTPrice())
                   ? weiToEther(parseInt(getVIPNFTPrice())).toPrecision(2) +
-                    " ETH"
+                    " " +
+                    chainUnit[chainId]
                   : "loading..."
               }
             />
@@ -287,7 +308,8 @@ function VipMint() {
                   ? "Sold Out"
                   : Number(getVIPNFTPrice())
                   ? weiToEther(parseInt(getVIPNFTPrice())).toPrecision(2) +
-                    " ETH"
+                    " " +
+                    chainUnit[chainId]
                   : "loading..."
               }
             />
@@ -296,15 +318,14 @@ function VipMint() {
               dataValue={
                 getMintedVIPNFTsCount() == getTotalVIPNFTCount()
                   ? "Sold Out"
-                  : Number(getMaxAmount())
-                  ? parseInt(getMaxAmount()) + parseInt(getTotalVIPNFTCount())
-                  : "loading..."
+                  : parseInt(mintQuota.data as string)
               }
             />
             <QuantityInput
               inputName="Quantity"
               value={amount}
               setValue={setAmount}
+              vip
             />
             <p className="terms" style={{ gridColumn: "span 3" }}>
               <a href="">Click here</a> to view the contract on Etherscan. By

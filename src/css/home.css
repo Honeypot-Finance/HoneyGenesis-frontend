@@ -50,22 +50,19 @@ pre {
   white-space: pre-wrap;
 }
 
-html {
-  font-size: 16px;
-}
 @media (min-width: 1080px) {
   html {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 @media (min-width: 1600px) {
   html {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 @media (min-width: 1920px) {
   html {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 
@@ -130,6 +127,7 @@ hr {
   align-self: center;
   margin: auto;
   height: 5vh;
+  max-width: 100%;
   object-fit: contain;
 }
 .App-header .close-header-button {
@@ -257,8 +255,9 @@ hr {
     transition-duration: 1s;
   }
   .App-header .link-group {
+    font-size: 1.3rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     margin: 0.5rem;
@@ -267,6 +266,7 @@ hr {
 }
 @media (min-width: 1600px) {
   .App-header .link-group {
+    font-size: 1.8rem;
     flex-direction: row;
     flex-grow: 1;
   }
@@ -298,6 +298,10 @@ hr {
 
 .hightlight-dark {
   color: rgba(0, 0, 0, 0.3);
+}
+
+.white-trans {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 @font-face {
@@ -646,7 +650,7 @@ hr {
 }
 .homepage-main .desc {
   color: white;
-  font-size: 2rem;
+  font-size: 5rem;
   margin: 2rem 0;
   text-align: center;
 }
@@ -671,7 +675,7 @@ hr {
     width: 100%;
     margin: 0;
     max-width: unset;
-    max-width: 800px;
+    max-width: min(1200px, 70vw);
     grid-column-start: 2;
     grid-column-end: 10;
     grid-row-start: 2;

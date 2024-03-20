@@ -6,4 +6,8 @@
   //border: var(--border-size-sm) solid var(--border-color);
   border-radius: var(--border-radius-sm);
   color: var(--primary-color);
+
+  &.oneline {
+    white-space: nowrap;
+  }
 }

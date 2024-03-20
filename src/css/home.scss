@@ -382,7 +382,7 @@
 
   .desc {
     color: white;
-    font-size: 2rem;
+    font-size: 5rem;
     margin: 2rem 0;
     text-align: center;
   }
@@ -407,7 +407,7 @@
     width: 100%;
     margin: 0;
     max-width: unset;
-    max-width: 800px;
+    max-width: min(1200px, 70vw);
 
     grid-column-start: 2;
     grid-column-end: 10;

@@ -7,6 +7,7 @@ import GeneralInput from "@/components/atoms/GeneralInput/GeneralInput";
 import { useAppDispatch } from "@/hooks/useAppSelector";
 import { openPopUp } from "@/config/redux/popUpSlice";
 import Container from "@/components/atoms/Container/Container";
+import HorizontalScroll from "@/components/molecules/HorizontalScroll/HorizontalScroll";
 
 //data
 import whitelistData from "@/data/mintAmount.json";
@@ -29,7 +30,7 @@ export default function WhiteListCheck() {
       whitelistPartners.forEach((partner) => {
         const findAddress = Object.entries(whitelistData[partner]).find(
           ([key]) => {
-            if (key.trim() == address.trim()) {
+            if (key.trim().toLowerCase() == address.trim().toLowerCase()) {
               return true;
             }
           }
@@ -52,7 +53,7 @@ export default function WhiteListCheck() {
       whitelistPartners.forEach((partner) => {
         Object.keys(whitelistData[partner]).forEach((key) => {
           console.log(key);
-          if (key.trim() == address.trim()) {
+          if (key.trim().toLowerCase() == address.trim().toLowerCase()) {
             output += `${whitelistData[partner][key]} minting chance from ${partner}\n`;
           }
         });
@@ -69,14 +70,14 @@ export default function WhiteListCheck() {
     if (hasMintAmount(adressToCheck)) {
       console.log(hasMintAmount(adressToCheck));
       setSubText({
-        text: `🎉 Congradulations! 🎉 you have ${getMintAmountText(
+        text: `🎉 Congratulations! 🎉 you have ${getMintAmountText(
           adressToCheck
         )} in priority mint!`,
         info: "success",
       });
       dispatch(
         openPopUp({
-          title: "🎉 Congradulations! 🎉",
+          title: "🎉 Congratulations! 🎉",
           message: `you have ${getMintAmountText(
             adressToCheck
           )} in priority mint!`,
@@ -86,8 +87,8 @@ export default function WhiteListCheck() {
     } else {
       console.log(hasMintAmount(adressToCheck));
       setSubText({
-        text: "You are not on the white list, contact us if you think this is a mistake.",
-        info: "error",
+        text: "Oops! you are not in the priority mint list. Some tickets may still in progress, please check again later.",
+        info: "white-trans",
       });
     }
   }, [hasMintAmount, adressToCheck, getMintAmountText, dispatch]);
@@ -118,12 +119,25 @@ export default function WhiteListCheck() {
             Check
           </GeneralButton>
           <pre>{subText && <p className={subText.info}>{subText.text}</p>}</pre>
-          <h2 className="partner-with">Partnered with:</h2>
-          <Container>
+          <h2 className="partner-with">Get Priority Mints from:</h2>
+          <HorizontalScroll
+            items={whitelistPartners.map((partner) => {
+              return {
+                content: (
+                  <Container oneline key={partner}>
+                    {partner}
+                  </Container>
+                ),
+              };
+            })}
+            speed={10000}
+            stopOnHover
+          />
+          {/* <Container>
             {whitelistPartners.map((partner, index) => {
               return <Container key={index}>{partner}</Container>;
             })}
-          </Container>
+          </Container> */}
         </div>
       </main>
       <Game className="mini-game" />
