@@ -228,6 +228,7 @@ function Mint() {
   }, [data, amount, dispatch, refetchData, previousData, isSuccess]);
 
   function initEffectPosition() {
+    if (mintEffectRef.current === null || mintGroupRef.current === null) return;
     mintEffectRef.current.style.transform = "translate(-50%, -50%)";
 
     mintEffectRef.current.style.top =

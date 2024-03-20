@@ -650,9 +650,14 @@ hr {
 }
 .homepage-main .desc {
   color: white;
-  font-size: 5rem;
+  font-size: 3rem;
   margin: 2rem 0;
   text-align: center;
+}
+@media (min-width: 1080px) {
+  .homepage-main .desc {
+    font-size: 5rem;
+  }
 }
 .homepage-main .bg-logo {
   position: absolute;

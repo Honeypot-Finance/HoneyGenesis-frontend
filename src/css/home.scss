@@ -382,9 +382,12 @@
 
   .desc {
     color: white;
-    font-size: 5rem;
+    font-size: 3rem;
     margin: 2rem 0;
     text-align: center;
+    @media (min-width: 1080px) {
+      font-size: 5rem;
+    }
   }
   .bg-logo {
     position: absolute;

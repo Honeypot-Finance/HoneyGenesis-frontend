@@ -1,5 +1,10 @@
 .count-down {
-  font-size: 3rem;
+  font-size: 1.5rem;
+}
+@media (min-width: 1080px) {
+  .count-down {
+    font-size: 3rem;
+  }
 }
 
 /*# sourceMappingURL=CountDown.css.map */
