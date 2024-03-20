@@ -5,6 +5,7 @@ import WhiteListCheck from "./Routes/WhiteListCheck";
 import MyAssets from "./Routes/MyAssets";
 import Mint from "./Routes/Mint";
 import ErrorPage from "./Routes/ErrorPage/ErrorPage";
+import Terms from "./Routes/Terms";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/whitelist-check",
         element: <WhiteListCheck />,
+      },
+      {
+        path: "/terms",
+        element: <Terms />,
       },
     ],
     errorElement: <ErrorPage />,

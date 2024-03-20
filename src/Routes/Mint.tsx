@@ -23,6 +23,7 @@ import MainContentWrapper from "@/components/template/MainContentWrapper/MainCon
 import Game from "@/components/Game";
 import bgImage from "@/assets/forest-bg.png";
 import nftImg from "@/assets/nft-img.jpg";
+import { Link } from "react-router-dom";
 
 function Mint() {
   const isLock: boolean =
@@ -285,10 +286,16 @@ function Mint() {
               setValue={setAmount}
             />
             <p className="terms" style={{ gridColumn: "span 3" }}>
-              <a href="">Click here</a> to view the contract on Etherscan. By
-              placing a bid you confirm that you have read and agree to the{" "}
-              <a href="">terms of sale</a> for this drop. Your bid will be
-              refunded if you lose the auction.
+              <a
+                href={`https://arbiscan.io/address/${contracts[currentChainId]}`}
+                target="_blank"
+              >
+                Click here
+              </a>{" "}
+              to view the contract on Etherscan. By placing a bid you confirm
+              that you have read and agree to the{" "}
+              <Link to="/terms">terms of sale</Link> for this drop. Your bid
+              will be refunded if you lose the auction.
             </p>
             {(isPending && (
               <div
