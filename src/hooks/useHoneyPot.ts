@@ -12,6 +12,7 @@ export default function useHoneyPot() {
   const totalVIPNFTCount = useReadGenesisContract("getTotalVIPNFTCount");
   const mintedVIPNFTsCount = useReadGenesisContract("tokenCountVIP");
   const VIPPrice = useReadGenesisContract("getVIPPrice");
+  const nftBaseURI = useReadGenesisContract("tokenURI");
 
   const useVIPMintQuota = (address: string) =>
     useReadGenesisContract("getVIPMintQuota", address);
@@ -115,5 +116,6 @@ export default function useHoneyPot() {
     mintedVIPNFTsCount,
     VIPPrice,
     useVIPMintQuota,
+    nftBaseURI,
   };
 }

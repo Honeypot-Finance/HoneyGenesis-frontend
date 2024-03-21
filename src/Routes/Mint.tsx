@@ -22,7 +22,7 @@ import MainContentWrapper from "@/components/template/MainContentWrapper/MainCon
 //images
 import Game from "@/components/Game";
 import bgImage from "@/assets/forest-bg.png";
-import nftImg from "@/assets/nft-img.jpg";
+//import nftImg from "@/assets/nft-img.jpg";
 import { Link } from "react-router-dom";
 
 function Mint() {
@@ -67,6 +67,17 @@ function Mint() {
   //     address: contracts[currentChainId],
   //     args: ["0x988D8FE9F7F53946c6f7f5204F7B71a1215685B8", 1],
   //   });
+  // }
+
+  // function getKingdomlyFee() {
+  //   return weiToEther(etherToWei(kingdomlyFee)).toPrecision(2);
+  // }
+
+  // function getTotalPrice() {
+  //   return (
+  //     parseFloat(getCurrentPrice()) +
+  //     parseFloat(getKingdomlyFee()) * amount
+  //   ).toPrecision(2);
   // }
 
   const mintNFT = useCallback(
@@ -246,7 +257,13 @@ function Mint() {
       <MainContentWrapper lock={isLock}>
         <div className="right-section">
           <div className="nft-img-container">
-            <img className="nft-img" src={nftImg} alt="Nft Image" />
+            <img
+              className="nft-img"
+              src={
+                "https://bafybeianvftytynjzo3twbmv36xrolkwmwfai5xcrxo6u5q3s5zsg5hwb4.ipfs.nftstorage.link"
+              }
+              alt="Nft Image"
+            />
           </div>
           <MintedDisplay />
         </div>

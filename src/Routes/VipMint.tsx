@@ -275,7 +275,13 @@ function VipMint() {
       <MainContentWrapper lock={isLock}>
         <div className="right-section">
           <div className="nft-img-container">
-            <img className="nft-img" src={nftImg} alt="Nft Image" />
+            <img
+              className="nft-img"
+              src={
+                "https://bafybeianvftytynjzo3twbmv36xrolkwmwfai5xcrxo6u5q3s5zsg5hwb4.ipfs.nftstorage.link"
+              }
+              alt="Nft Image"
+            />
           </div>
           <MintedDisplay isVIPMint />
         </div>
