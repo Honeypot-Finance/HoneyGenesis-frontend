@@ -8,7 +8,7 @@ const maxMintAmount = 20;
 const arbitrumChainId = 42161;
 const arbitrumSepoliaChainId = 421614;
 const berachainChainId = 80085;
-const kingdomlyFee = 0.009; //eth
+const kingdomlyFee = 0.0009; //eth
 
 const countDownDate = new Date(1711035000000); //"2024-03-21 15:30 UTC"
 
