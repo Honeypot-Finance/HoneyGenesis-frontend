@@ -1,5 +1,5 @@
 import { useReadContract } from "wagmi";
-import { contracts, kingdomlyFee } from "@/consts";
+import { contracts, kingdomlyFee, acceptChainId } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { useChainId } from "wagmi";
 import { weiToEther } from "@/lib/currencyConvert";
@@ -23,7 +23,9 @@ export default function useHoneyPot() {
       abi: HoneyGenesis.abi,
       chainId: currentChainId,
       functionName: functionName,
-      address: contracts[currentChainId],
+      address: contracts[currentChainId]
+        ? contracts[currentChainId]
+        : contracts[acceptChainId[0]],
       args: args,
     });
 
