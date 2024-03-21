@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import "@/css/home.css";
 import UseHoneyPot from "@/hooks/useHoneyPot";
-import { weiToEther, etherToWei } from "@/lib/currencyConvert";
+import { etherToWei, weiToEther } from "@/lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useWriteContract, useChainId } from "wagmi";
 import {
   useAccount,
   //useBalance
 } from "wagmi";
-import { contracts, maxMintAmount, chainUnit, kingdomlyFee } from "@/consts";
+import { contracts, maxMintAmount, chainUnit } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
@@ -44,6 +44,7 @@ function Mint() {
     nextPrice,
     maxAmount,
     totalVIPNFTCount,
+    getTotalPriceWithFee,
   } = UseHoneyPot();
 
   const mintEffectRef = useRef<HTMLDivElement>(null);
@@ -102,9 +103,7 @@ function Mint() {
         functionName: `mint`,
         address: contracts[currentChainId],
         args: [amount],
-        value: BigInt(
-          (parseInt(getCurrentPrice()) + etherToWei(kingdomlyFee)) * amount
-        ),
+        value: BigInt(etherToWei(getTotalPriceWithFee(false, amount))),
       });
 
       animate(
@@ -154,7 +153,7 @@ function Mint() {
         });
       });
     },
-    [address, currentChainId, getCurrentPrice, open, writeContract]
+    [address, currentChainId, getTotalPriceWithFee, open, writeContract]
   );
 
   const refetchData = useCallback(() => {

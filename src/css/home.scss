@@ -252,6 +252,7 @@
     }
 
     .main {
+      overflow-y: scroll;
       justify-self: center;
       background-color: #1d1407;
       margin: 0 1rem;
@@ -264,6 +265,7 @@
       border: var(--border-size) solid var(--border-color);
       max-width: 800px;
       max-height: 800px;
+      scrollbar-color: #ffcd4d #1d1407;
     }
 
     .minted-display {
@@ -295,6 +297,7 @@
     }
 
     .mini-game {
+      pointer-events: none;
       padding-bottom: unset;
       min-height: 100%;
       max-width: 100%;

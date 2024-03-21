@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useAccount, useBalance } from "wagmi";
 
-import { maxMintAmount, kingdomlyFee } from "@/consts";
+import { maxMintAmount } from "@/consts";
 import { weiToEther } from "@/lib/currencyConvert";
 import useHoneyPot from "@/hooks/useHoneyPot";
 
@@ -22,7 +22,7 @@ export default function QuantityInput({
   vip?: boolean;
 }) {
   const maxButton = useRef<HTMLSpanElement>(null);
-  const { getCurrentPrice, getVIPNFTPrice } = useHoneyPot();
+  const { getCurrentPrice, getTotalPrice, getKingdomlyFee } = useHoneyPot();
   const { address, chainId } = useAccount();
   const balance = useBalance({
     address: address,
@@ -82,10 +82,7 @@ export default function QuantityInput({
       </label>
       <div className="extra-operation">
         Balance:{" "}
-        {balance.data &&
-          weiToEther(parseInt(balance.data.value.toString())).toPrecision(
-            5
-          )}{" "}
+        {balance.data && weiToEther(parseInt(balance.data.value.toString()))}{" "}
         <span ref={maxButton} className="max-button">
           MAX
         </span>
@@ -98,15 +95,12 @@ export default function QuantityInput({
       />
       <div className="total-price">
         Total Price:{" "}
-        {Number(getCurrentPrice())
-          ? weiToEther(
-              parseInt(vip ? getVIPNFTPrice() : getCurrentPrice()) * value
-            ).toPrecision(2) +
-            " " +
-            chainUnit[chainId]
-          : "loading..."}{" "}
+        {getTotalPrice(vip, value).toPrecision(5) +
+          " " +
+          (chainUnit[chainId] ? chainUnit[chainId] : "ETH")}{" "}
         <span className="half-transparent">
-          + Kingdomly Fee :{kingdomlyFee} {chainUnit[chainId]}
+          + Kingdomly Fee :{getKingdomlyFee(vip, value).toPrecision(5)}{" "}
+          {chainUnit[chainId] ? chainUnit[chainId] : "ETH"}
         </span>
       </div>
     </div>
