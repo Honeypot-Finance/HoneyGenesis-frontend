@@ -13,6 +13,7 @@ import {
   maxMintAmount,
   chainUnit,
   acceptChainId,
+  countDownDate,
   //countDownDate,
 } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
@@ -33,7 +34,7 @@ import nftV2 from "@/assets/nft-v2.jpg";
 import { Link } from "react-router-dom";
 
 function Mint() {
-  const isLock: boolean = true;
+  const isLock: boolean = countDownDate.getTime() > new Date().getTime();
 
   const [amount, setAmount] = useState(1);
   const { open } = useWeb3Modal();
