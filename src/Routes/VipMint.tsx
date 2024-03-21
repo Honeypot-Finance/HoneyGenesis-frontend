@@ -28,6 +28,7 @@ import { openPopUp } from "@/config/redux/popUpSlice";
 import Game from "@/components/Game";
 import bgImage from "@/assets/forest-bg.png";
 //import nftImg from "@/assets/nft-img.jpg";
+import nftV2 from "@/assets/nft-v2.jpg";
 import { Link } from "react-router-dom";
 
 function VipMint() {
@@ -277,9 +278,10 @@ function VipMint() {
           <div className="nft-img-container">
             <img
               className="nft-img"
-              src={
-                "https://bafybeianvftytynjzo3twbmv36xrolkwmwfai5xcrxo6u5q3s5zsg5hwb4.ipfs.nftstorage.link"
-              }
+              // src={
+              //   "https://bafybeianvftytynjzo3twbmv36xrolkwmwfai5xcrxo6u5q3s5zsg5hwb4.ipfs.nftstorage.link"
+              // }
+              src={nftV2}
               alt="Nft Image"
             />
           </div>

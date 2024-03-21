@@ -13,7 +13,7 @@ import {
   maxMintAmount,
   chainUnit,
   acceptChainId,
-  countDownDate,
+  //countDownDate,
 } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
@@ -33,7 +33,7 @@ import nftV2 from "@/assets/nft-v2.jpg";
 import { Link } from "react-router-dom";
 
 function Mint() {
-  const isLock: boolean = true;
+  const isLock: boolean = false;
 
   const [amount, setAmount] = useState(1);
   const { open } = useWeb3Modal();
@@ -70,17 +70,6 @@ function Mint() {
   //     address: contracts[currentChainId],
   //     args: ["0x988D8FE9F7F53946c6f7f5204F7B71a1215685B8", 1],
   //   });
-  // }
-
-  // function getKingdomlyFee() {
-  //   return weiToEther(etherToWei(kingdomlyFee)).toPrecision(2);
-  // }
-
-  // function getTotalPrice() {
-  //   return (
-  //     parseFloat(getCurrentPrice()) +
-  //     parseFloat(getKingdomlyFee()) * amount
-  //   ).toPrecision(2);
   // }
 
   const mintNFT = useCallback(
