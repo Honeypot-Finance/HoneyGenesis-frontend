@@ -10,7 +10,7 @@ import {
   contracts,
   maxMintAmount,
   chainUnit,
-  //countDownDate,
+  countDownDate,
   acceptChainId,
 } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
@@ -31,8 +31,7 @@ import bgImage from "@/assets/forest-bg.png";
 import { Link } from "react-router-dom";
 
 function VipMint() {
-  //const isLock: boolean = Date.now() < countDownDate.getTime();
-  const isLock: boolean = false;
+  const isLock: boolean = Date.now() < countDownDate.getTime();
 
   const mintEffectRef = useRef<HTMLDivElement>(null);
   const mintGroupRef = useRef<HTMLDivElement>(null);
