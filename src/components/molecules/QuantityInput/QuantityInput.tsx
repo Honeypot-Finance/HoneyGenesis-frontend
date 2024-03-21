@@ -22,7 +22,12 @@ export default function QuantityInput({
   vip?: boolean;
 }) {
   const maxButton = useRef<HTMLSpanElement>(null);
-  const { getCurrentPrice, getTotalPrice, getKingdomlyFee } = useHoneyPot();
+  const {
+    getCurrentPrice,
+    getTotalPrice,
+    getKingdomlyFee,
+    getTotalPriceWithFee,
+  } = useHoneyPot();
   const { address, chainId } = useAccount();
   const balance = useBalance({
     address: address,
@@ -40,7 +45,8 @@ export default function QuantityInput({
 
     if (!balance.data || !balance.data.value || !balance.data.decimals) return;
 
-    const singlePrice = weiToEther(parseInt(getCurrentPrice()));
+    //const singlePrice = weiToEther(parseInt(getCurrentPrice()));
+    const singlePrice = getTotalPriceWithFee(vip, value);
 
     const balanceInFloat = parseFloat(
       (
@@ -49,10 +55,12 @@ export default function QuantityInput({
       ).toPrecision(5)
     );
 
+    console.log(singlePrice, "  ", balanceInFloat);
+
     if (singlePrice * value > balanceInFloat) {
       setValue(Math.floor(balanceInFloat / singlePrice));
     }
-  }, [value, balance.data, getCurrentPrice, setValue]);
+  }, [balance.data, getTotalPriceWithFee, setValue, value, vip]);
 
   //max button handling
   useEffect(() => {
