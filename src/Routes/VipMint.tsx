@@ -6,7 +6,7 @@ import { etherToWei, weiToEther } from "@/lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useWriteContract, useChainId } from "wagmi";
 import { useAccount, useBalance } from "wagmi";
-import { contracts, maxMintAmount, chainUnit, kingdomlyFee } from "@/consts";
+import { contracts, maxMintAmount, chainUnit } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
@@ -21,7 +21,7 @@ import { openPopUp } from "@/config/redux/popUpSlice";
 //images
 import Game from "@/components/Game";
 import bgImage from "@/assets/forest-bg.png";
-import nftImg from "@/assets/nft-img.jpg";
+//import nftImg from "@/assets/nft-img.jpg";
 import { Link } from "react-router-dom";
 
 function VipMint() {
@@ -56,6 +56,7 @@ function VipMint() {
     mintedVIPNFTsCount,
     VIPPrice,
     useVIPMintQuota,
+    getTotalPriceWithFee,
   } = UseHoneyPot();
   const mintQuota = useVIPMintQuota(address);
 
@@ -74,9 +75,7 @@ function VipMint() {
         functionName: `mintVIP`,
         address: contracts[currentChainId],
         args: [amount],
-        value: BigInt(
-          (parseInt(getVIPNFTPrice()) + etherToWei(kingdomlyFee)) * amount
-        ),
+        value: BigInt(etherToWei(getTotalPriceWithFee(true, amount))),
       });
 
       const effectSize =
@@ -135,7 +134,7 @@ function VipMint() {
         });
       });
     },
-    [address, currentChainId, getVIPNFTPrice, open, writeContract]
+    [address, currentChainId, getTotalPriceWithFee, open, writeContract]
   );
 
   const refetchData = useCallback(() => {
@@ -275,7 +274,13 @@ function VipMint() {
       <MainContentWrapper lock={isLock}>
         <div className="right-section">
           <div className="nft-img-container">
-            <img className="nft-img" src={nftImg} alt="Nft Image" />
+            <img
+              className="nft-img"
+              src={
+                "https://bafybeianvftytynjzo3twbmv36xrolkwmwfai5xcrxo6u5q3s5zsg5hwb4.ipfs.nftstorage.link"
+              }
+              alt="Nft Image"
+            />
           </div>
           <MintedDisplay isVIPMint />
         </div>

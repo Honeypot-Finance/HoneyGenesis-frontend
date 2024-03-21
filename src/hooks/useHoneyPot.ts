@@ -1,7 +1,8 @@
 import { useReadContract } from "wagmi";
-import { contracts } from "@/consts";
+import { contracts, kingdomlyFee } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { useChainId } from "wagmi";
+import { weiToEther } from "@/lib/currencyConvert";
 
 export default function useHoneyPot() {
   const currentChainId = useChainId();
@@ -12,6 +13,7 @@ export default function useHoneyPot() {
   const totalVIPNFTCount = useReadGenesisContract("getTotalVIPNFTCount");
   const mintedVIPNFTsCount = useReadGenesisContract("tokenCountVIP");
   const VIPPrice = useReadGenesisContract("getVIPPrice");
+  const nftBaseURI = useReadGenesisContract("tokenURI");
 
   const useVIPMintQuota = (address: string) =>
     useReadGenesisContract("getVIPMintQuota", address);
@@ -99,6 +101,26 @@ export default function useHoneyPot() {
       : (VIPPrice.data.toString() as string);
   }
 
+  function getTotalPrice(vip, mintAmount) {
+    const nftPrice = weiToEther(
+      parseInt(vip ? getVIPNFTPrice() : getCurrentPrice())
+    );
+    const totalPrice = nftPrice * mintAmount;
+
+    if (mintAmount <= 0 || nftPrice <= 0) return 0;
+    return totalPrice;
+  }
+
+  function getKingdomlyFee(vip, mintAmount) {
+    const price = getTotalPrice(vip, mintAmount);
+    const commission = price * 0.03;
+    return kingdomlyFee * mintAmount + commission;
+  }
+
+  function getTotalPriceWithFee(vip, mintAmount) {
+    return getTotalPrice(vip, mintAmount) + getKingdomlyFee(vip, mintAmount);
+  }
+
   return {
     getCurrentPrice,
     getNextPrice,
@@ -115,5 +137,9 @@ export default function useHoneyPot() {
     mintedVIPNFTsCount,
     VIPPrice,
     useVIPMintQuota,
+    nftBaseURI,
+    getTotalPrice,
+    getKingdomlyFee,
+    getTotalPriceWithFee,
   };
 }

@@ -52,17 +52,17 @@ pre {
 
 @media (min-width: 1080px) {
   html {
-    font-size: 10px;
+    font-size: 16px;
   }
 }
 @media (min-width: 1600px) {
   html {
-    font-size: 14px;
+    font-size: 18px;
   }
 }
 @media (min-width: 1920px) {
   html {
-    font-size: 18px;
+    font-size: 20px;
   }
 }
 @media (min-width: 2560px) {
@@ -547,6 +547,7 @@ hr {
     filter: brightness(0.3);
   }
   .App .main {
+    overflow-y: scroll;
     justify-self: center;
     background-color: #1d1407;
     margin: 0 1rem;
@@ -559,6 +560,7 @@ hr {
     border: var(--border-size) solid var(--border-color);
     max-width: 800px;
     max-height: 800px;
+    scrollbar-color: #ffcd4d #1d1407;
   }
   .App .minted-display {
     position: relative;
@@ -587,6 +589,7 @@ hr {
     max-height: 800px;
   }
   .App .mini-game {
+    pointer-events: none;
     padding-bottom: unset;
     min-height: 100%;
     max-width: 100%;
