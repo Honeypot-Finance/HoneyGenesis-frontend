@@ -158,7 +158,7 @@ hr {
   margin-top: 2rem;
 }
 .App-header .medias__link {
-  margin: 1rem;
+  margin: 0.2rem;
   text-align: center;
   color: black;
   transition-duration: 0.2s;
@@ -266,7 +266,7 @@ hr {
     transition-duration: 1s;
   }
   .App-header .link-group {
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -277,7 +277,7 @@ hr {
 }
 @media (min-width: 1600px) {
   .App-header .link-group {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     flex-direction: row;
     flex-grow: 1;
   }
