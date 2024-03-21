@@ -65,6 +65,10 @@ export default function Header() {
             </li>{" "}
             <hr />
             <li className="navbar__link">
+              <Link to="/vip-mint">Priority Mint</Link>
+            </li>
+            <hr />
+            <li className="navbar__link">
               <Link to="/whitelist-check">Whitelist</Link>
             </li>
             <hr />{" "}
@@ -78,10 +82,6 @@ export default function Header() {
                 />
               </a>
             </li>
-            {/* <hr />
-            <li className="navbar__link">
-              <Link to="/vip-mint">Priority Mint</Link>
-            </li> */}
           </nav>
           <div className="medias">
             <a
