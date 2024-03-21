@@ -33,7 +33,7 @@ import nftV2 from "@/assets/nft-v2.jpg";
 import { Link } from "react-router-dom";
 
 function Mint() {
-  const isLock: boolean = false;
+  const isLock: boolean = true;
 
   const [amount, setAmount] = useState(1);
   const { open } = useWeb3Modal();
