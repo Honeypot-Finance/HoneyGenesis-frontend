@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useAccount, useBalance } from "wagmi";
 
-//import { maxMintAmount } from "@/consts";
+import { maxMintAmount } from "@/consts";
 import { weiToEther } from "@/lib/currencyConvert";
 import useHoneyPot from "@/hooks/useHoneyPot";
 
@@ -34,30 +34,30 @@ export default function QuantityInput({
   });
 
   //amount handling
-  // useEffect(() => {
-  //   if (value <= 0) {
-  //     setValue(0);
-  //   }
+  useEffect(() => {
+    if (value <= 0) {
+      setValue(0);
+    }
 
-  //   if (value > maxMintAmount) {
-  //     setValue(maxMintAmount);
-  //   }
+    if (value > maxMintAmount) {
+      setValue(maxMintAmount);
+    }
 
-  //   if (!balance.data || !balance.data.value || !balance.data.decimals) return;
+    // if (!balance.data || !balance.data.value || !balance.data.decimals) return;
 
-  //   const singlePrice = getTotalPriceWithFee(vip, value);
+    // const singlePrice = getTotalPriceWithFee(vip, value);
 
-  //   const balanceInFloat = parseFloat(
-  //     (
-  //       parseInt(balance.data.value.toString()) /
-  //       Math.pow(10, balance.data.decimals)
-  //     ).toPrecision(5)
-  //   );
+    // const balanceInFloat = parseFloat(
+    //   (
+    //     parseInt(balance.data.value.toString()) /
+    //     Math.pow(10, balance.data.decimals)
+    //   ).toPrecision(5)
+    // );
 
-  //   if (singlePrice * value > balanceInFloat) {
-  //     setValue(Math.floor(balanceInFloat / singlePrice));
-  //   }
-  // }, [balance.data, getTotalPriceWithFee, setValue, value, vip]);
+    // if (singlePrice * value > balanceInFloat) {
+    //   setValue(Math.floor(balanceInFloat / singlePrice));
+    // }
+  }, [balance.data, setValue, value, vip]);
 
   //max button handling
   useEffect(() => {

@@ -8,11 +8,13 @@ export default function NumberInput({
   setValue,
   unitName,
   style,
+  step,
 }: {
   value: number;
   setValue: (value: number) => void;
   unitName: string;
   style?: React.CSSProperties;
+  step?: number;
 }) {
   const plusRef = useRef<HTMLImageElement>(null);
   const minusRef = useRef<HTMLImageElement>(null);
@@ -44,6 +46,7 @@ export default function NumberInput({
         name="amount"
         value={value}
         onChange={(e) => setValue(parseInt(e.target.value))}
+        step={step}
       />
       <img
         ref={plusRef}
