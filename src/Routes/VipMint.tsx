@@ -6,7 +6,13 @@ import { etherToWei, weiToEther } from "@/lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useWriteContract, useChainId } from "wagmi";
 import { useAccount, useBalance } from "wagmi";
-import { contracts, maxMintAmount, chainUnit } from "@/consts";
+import {
+  contracts,
+  maxMintAmount,
+  chainUnit,
+  countDownDate,
+  acceptChainId,
+} from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
@@ -25,12 +31,7 @@ import bgImage from "@/assets/forest-bg.png";
 import { Link } from "react-router-dom";
 
 function VipMint() {
-  const isLock: boolean =
-    import.meta.env.VITE_LOCK_MINT === undefined
-      ? true
-      : import.meta.env.VITE_LOCK_MINT?.toString() === "true"
-      ? true
-      : false;
+  const isLock: boolean = Date.now() < countDownDate.getTime();
 
   const mintEffectRef = useRef<HTMLDivElement>(null);
   const mintGroupRef = useRef<HTMLDivElement>(null);
@@ -71,9 +72,9 @@ function VipMint() {
 
       writeContract({
         abi: HoneyGenesis.abi,
-        chainId: currentChainId,
+        chainId: currentChainId ? currentChainId : acceptChainId[0],
         functionName: `mintVIP`,
-        address: contracts[currentChainId],
+        address: contracts[currentChainId ? currentChainId : acceptChainId[0]],
         args: [amount],
         value: BigInt(etherToWei(getTotalPriceWithFee(true, amount))),
       });
@@ -325,7 +326,9 @@ function VipMint() {
             />{" "}
             <p className="terms" style={{ gridColumn: "span 3" }}>
               <a
-                href={`https://arbiscan.io/address/${contracts[currentChainId]}`}
+                href={`https://arbiscan.io/address/${
+                  contracts[currentChainId ? currentChainId : acceptChainId[0]]
+                }`}
                 target="_blank"
               >
                 Click here

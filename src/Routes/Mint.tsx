@@ -8,7 +8,13 @@ import {
   useAccount,
   //useBalance
 } from "wagmi";
-import { contracts, maxMintAmount, chainUnit } from "@/consts";
+import {
+  contracts,
+  maxMintAmount,
+  chainUnit,
+  acceptChainId,
+  countDownDate,
+} from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
@@ -26,12 +32,7 @@ import bgImage from "@/assets/forest-bg.png";
 import { Link } from "react-router-dom";
 
 function Mint() {
-  const isLock: boolean =
-    import.meta.env.VITE_LOCK_MINT === undefined
-      ? true
-      : import.meta.env.VITE_LOCK_MINT?.toString() === "true"
-      ? true
-      : false;
+  const isLock: boolean = Date.now() < countDownDate.getTime();
 
   const [amount, setAmount] = useState(1);
   const { open } = useWeb3Modal();
@@ -99,9 +100,9 @@ function Mint() {
 
       writeContract({
         abi: HoneyGenesis.abi,
-        chainId: currentChainId,
+        chainId: currentChainId ? currentChainId : acceptChainId[0],
         functionName: `mint`,
-        address: contracts[currentChainId],
+        address: contracts[currentChainId ? currentChainId : acceptChainId[0]],
         args: [amount],
         value: BigInt(etherToWei(getTotalPriceWithFee(false, amount))),
       });
@@ -279,7 +280,9 @@ function Mint() {
                   : Number(getCurrentPrice())
                   ? weiToEther(parseInt(getCurrentPrice())).toPrecision(2) +
                     " " +
-                    chainUnit[currentChainId]
+                    chainUnit[
+                      currentChainId ? currentChainId : acceptChainId[0]
+                    ]
                   : "loading..."
               }
             />
@@ -291,7 +294,9 @@ function Mint() {
                   : Number(getNextPrice())
                   ? weiToEther(parseInt(getNextPrice())).toPrecision(2) +
                     " " +
-                    chainUnit[currentChainId]
+                    chainUnit[
+                      currentChainId ? currentChainId : acceptChainId[0]
+                    ]
                   : "loading..."
               }
             />
@@ -303,7 +308,9 @@ function Mint() {
             />
             <p className="terms" style={{ gridColumn: "span 3" }}>
               <a
-                href={`https://arbiscan.io/address/${contracts[currentChainId]}`}
+                href={`https://arbiscan.io/address/${
+                  contracts[currentChainId ? currentChainId : acceptChainId[0]]
+                }`}
                 target="_blank"
               >
                 Click here
