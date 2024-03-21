@@ -1,5 +1,5 @@
 const arbitrumMainNetContractAddress =
-  "0x53B9fC0A0833f2A090bB92D4914430eEd4C0AAAC";
+  "0x7c2f99C405fa3102519F2637f186C5A06C074a0F";
 const arbitrumSepoliaContractAddress =
   "0x4ccE6489B9063C39522F06532D6345572d2945c2";
 const BeraTestnetContractAddress = "0x53B9fC0A0833f2A090bB92D4914430eEd4C0AAAC";
