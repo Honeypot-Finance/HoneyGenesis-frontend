@@ -13,7 +13,7 @@ import {
   maxMintAmount,
   chainUnit,
   acceptChainId,
-  countDownDate,
+  //countDownDate,
 } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
@@ -32,7 +32,8 @@ import bgImage from "@/assets/forest-bg.png";
 import { Link } from "react-router-dom";
 
 function Mint() {
-  const isLock: boolean = Date.now() < countDownDate.getTime();
+  //const isLock: boolean = Date.now() < countDownDate.getTime();
+  const isLock: boolean = false;
 
   const [amount, setAmount] = useState(1);
   const { open } = useWeb3Modal();
