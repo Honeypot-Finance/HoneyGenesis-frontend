@@ -20,8 +20,7 @@ export default function MintedDisplay({ isVIPMint = false }) {
         </p>
       ) : (
         <p className="minted__amount">
-          {parseInt(getMintedAmount()) + parseInt(getMintedVIPNFTsCount())}/
-          {parseInt(getMaxAmount()) + parseInt(getTotalVIPNFTCount())}
+          {parseInt(getMintedAmount())}/{parseInt(getMaxAmount())}
         </p>
       )}
       <img src={smokingMole} alt="smoking-mole" className="smoking-mole" />
