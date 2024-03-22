@@ -169,8 +169,14 @@ function Mint() {
   }, []);
 
   function popError() {
+    const rejectedMessage = "User denied transaction signature";
+    const insufficientFundsMessage = "Insufficient funds";
+    const insufficientWalletBalanceMessage =
+      "The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account.";
+    const exceedsTotalSupplyCapMessage = "Exceeds total VIP supply cap";
+
     if (isError && error) {
-      if (error.message.includes("User denied transaction signature")) {
+      if (error.message.includes(rejectedMessage)) {
         dispatch(
           openPopUp({
             title: "Transaction Rejected",
@@ -178,12 +184,12 @@ function Mint() {
             info: "error",
           })
         );
-      } else if (error.message.includes("Insufficient funds")) {
+      } else if (error.message.includes(insufficientFundsMessage)) {
         refetchData();
         setTimeout(() => {
           mintNFT(amount);
         }, 1000);
-      } else if (error.message.includes("Exceeds total VIP supply cap")) {
+      } else if (error.message.includes(exceedsTotalSupplyCapMessage)) {
         dispatch(
           openPopUp({
             title: "Exceeds total VIP supply cap",
@@ -191,11 +197,19 @@ function Mint() {
             info: "error",
           })
         );
+      } else if (error.message.includes(insufficientWalletBalanceMessage)) {
+        dispatch(
+          openPopUp({
+            title: "Insufficient Wallet Balance",
+            message: "Please add more funds to your wallet",
+            info: "error",
+          })
+        );
       } else {
         dispatch(
           openPopUp({
             title: "Something went wrong",
-            message: "Please try again later",
+            message: "Error: " + error.message + "\nPlease try again later.",
             info: "error",
           })
         );
