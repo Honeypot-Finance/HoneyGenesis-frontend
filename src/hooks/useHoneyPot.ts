@@ -21,9 +21,9 @@ export default function useHoneyPot() {
   function useReadGenesisContract(functionName, ...args: string[]) {
     const res = useReadContract({
       abi: HoneyGenesis.abi,
-      chainId: currentChainId,
+      chainId: currentChainId ? currentChainId : acceptChainId[0],
       functionName: functionName,
-      address: contracts[currentChainId]
+      address: currentChainId
         ? contracts[currentChainId]
         : contracts[acceptChainId[0]],
       args: args,
