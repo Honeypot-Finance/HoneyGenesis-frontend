@@ -5,7 +5,7 @@ import UseHoneyPot from "@/hooks/useHoneyPot";
 import { etherToWei, weiToEther } from "@/lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useWriteContract, useChainId } from "wagmi";
-import { useAccount, useBalance } from "wagmi";
+import { useAccount } from "wagmi";
 import { contracts, chainUnit, countDownDate, acceptChainId } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
@@ -32,9 +32,6 @@ function VipMint() {
   const mintGroupRef = useRef<HTMLDivElement>(null);
   const [amount, setAmount] = useState(1);
   const { address, chainId } = useAccount();
-  const balance = useBalance({
-    address: address,
-  });
   const dispatch = useAppDispatch();
   const currentChainId = useChainId();
   const [previousData, setPreviousData] = useState<string>(null);
