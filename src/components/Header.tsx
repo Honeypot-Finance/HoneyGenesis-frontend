@@ -64,9 +64,9 @@ export default function Header() {
               <Link to="/mint">Mint</Link>
             </li>{" "}
             <hr />
-            <li className="navbar__link">
+            {/* <li className="navbar__link">
               <Link to="/vip-mint">Priority Mint</Link>
-            </li>
+            </li> */}
             <hr />
             <li className="navbar__link">
               <Link to="/whitelist-check">Whitelist</Link>

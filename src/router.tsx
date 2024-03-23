@@ -19,7 +19,7 @@ const router = createBrowserRouter([
         element: <Mint />,
       },
       {
-        path: "/vip-mint",
+        path: "/v123i4p5-m1i2n3t4",
         element: <VipMint />,
       },
       {
