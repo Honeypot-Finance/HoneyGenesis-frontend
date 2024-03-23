@@ -31,7 +31,7 @@ function VipMint() {
   const mintEffectRef = useRef<HTMLDivElement>(null);
   const mintGroupRef = useRef<HTMLDivElement>(null);
   const [amount, setAmount] = useState(1);
-  const { address, chainId } = useAccount();
+  const { address } = useAccount();
   const dispatch = useAppDispatch();
   const currentChainId = useChainId();
   const [previousData, setPreviousData] = useState<string>(null);
@@ -280,7 +280,9 @@ function VipMint() {
                   : Number(getVIPNFTPrice())
                   ? weiToEther(parseInt(getVIPNFTPrice())).toPrecision(2) +
                     " " +
-                    chainUnit[chainId]
+                    chainUnit[
+                      currentChainId ? currentChainId : acceptChainId[0]
+                    ]
                   : "loading..."
               }
             />
@@ -293,7 +295,9 @@ function VipMint() {
                   : Number(getVIPNFTPrice())
                   ? weiToEther(parseInt(getVIPNFTPrice())).toPrecision(2) +
                     " " +
-                    chainUnit[chainId]
+                    chainUnit[
+                      currentChainId ? currentChainId : acceptChainId[0]
+                    ]
                   : "loading..."
               }
             />
