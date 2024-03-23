@@ -1,11 +1,12 @@
 import { useReadContract } from "wagmi";
 import { contracts, kingdomlyFee, acceptChainId } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
-import { useChainId } from "wagmi";
+import { useAccount } from "wagmi";
 import { weiToEther } from "@/lib/currencyConvert";
 
 export default function useHoneyPot() {
-  const currentChainId = useChainId();
+  const { chainId: currentChainId } = useAccount();
+
   const currentprice = useReadGenesisContract("getCurrentPrice");
   const nextPrice = useReadGenesisContract("getNextNFTPrice");
   const mintedAmount = useReadGenesisContract("tokenCountNormal");
