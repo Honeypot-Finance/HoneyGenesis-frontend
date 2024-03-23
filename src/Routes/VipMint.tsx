@@ -5,14 +5,8 @@ import UseHoneyPot from "@/hooks/useHoneyPot";
 import { etherToWei, weiToEther } from "@/lib/currencyConvert";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useWriteContract, useChainId } from "wagmi";
-import { useAccount, useBalance } from "wagmi";
-import {
-  contracts,
-  maxMintAmount,
-  chainUnit,
-  countDownDate,
-  acceptChainId,
-} from "@/consts";
+import { useAccount } from "wagmi";
+import { contracts, chainUnit, countDownDate, acceptChainId } from "@/consts";
 import HoneyGenesis from "@/abi/HoneyGenesis.json";
 import { animate, motion } from "framer-motion";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
@@ -38,9 +32,6 @@ function VipMint() {
   const mintGroupRef = useRef<HTMLDivElement>(null);
   const [amount, setAmount] = useState(1);
   const { address, chainId } = useAccount();
-  const balance = useBalance({
-    address: address,
-  });
   const dispatch = useAppDispatch();
   const currentChainId = useChainId();
   const [previousData, setPreviousData] = useState<string>(null);
@@ -257,31 +248,6 @@ function VipMint() {
       setPreviousData(data);
     }
   }, [data, amount, dispatch, refetchData, previousData, isSuccess]);
-
-  //amount handling
-  useEffect(() => {
-    if (amount < 0) {
-      setAmount(0);
-    }
-
-    if (amount > maxMintAmount) {
-      setAmount(maxMintAmount);
-    }
-
-    if (!balance.data || !balance.data.value || !balance.data.decimals) return;
-
-    const singlePrice = weiToEther(parseInt(getVIPNFTPrice()));
-    const balanceInFloat = parseFloat(
-      (
-        parseInt(balance.data.value.toString()) /
-        Math.pow(10, balance.data.decimals)
-      ).toPrecision(5)
-    );
-
-    if (singlePrice * amount > balanceInFloat) {
-      setAmount(Math.floor(balanceInFloat / singlePrice));
-    }
-  }, [amount, balance.data, getVIPNFTPrice]);
 
   return (
     <div className="App">
