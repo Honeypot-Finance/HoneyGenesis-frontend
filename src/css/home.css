@@ -717,6 +717,25 @@ hr {
   }
 }
 
+.App.nft .nft-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: 90%;
+}
+.App.nft .nft-section .main.nft {
+  margin-top: unset;
+}
+.App.nft .nft-section .nft-img-container {
+  height: unset;
+}
+.App.nft .nft-section .nft-img-container .nft-img {
+  background: black;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+}
 @media (min-width: 1080px) {
   .App.nft .nft-section {
     grid-column-start: 1;
@@ -725,15 +744,16 @@ hr {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    max-height: 90%;
   }
-}
-.App.nft .nft-img-container .nft-img {
-  background: black;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: bottom;
-  flex-grow: 1;
+  .App.nft .nft-section .nft-img-container .nft-img {
+    background: black;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: bottom;
+    flex-grow: 1;
+  }
 }
 
 .App.term {
