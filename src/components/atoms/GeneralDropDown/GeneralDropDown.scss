@@ -39,39 +39,8 @@
     cursor: pointer;
   }
   .unit-name {
-    text-align: center;
     background-color: rgba(0, 0, 0, 0.7);
     padding: 0.3rem;
     border-radius: 0.3rem;
-    min-width: 100px;
-  }
-
-  &::selection {
-    background-color: #00000000;
-  }
-  .select {
-    text-align: center;
-    background-color: #00000000;
-    border: none;
-    font-weight: 500;
-    color: white;
-    width: 85%;
-    min-width: 100px;
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.3);
-    }
-    &:focus {
-      outline: none;
-    }
-
-    .option {
-      text-align: center;
-      appearance: none;
-      -webkit-appearance: none;
-      background-color: #00000000;
-      font-weight: 500;
-      color: black;
-      width: 85%;
-    }
   }
 }

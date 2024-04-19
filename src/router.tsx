@@ -6,6 +6,7 @@ import MyAssets from "./Routes/MyAssets";
 import Mint from "./Routes/Mint";
 import ErrorPage from "./Routes/ErrorPage/ErrorPage";
 import Terms from "./Routes/Terms";
+import NFT from "./Routes/NFT";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/terms",
         element: <Terms />,
+      },
+      {
+        path: "/nft",
+        element: <NFT />,
       },
     ],
     errorElement: <ErrorPage />,
