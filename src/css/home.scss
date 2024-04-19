@@ -325,7 +325,7 @@
       height: 90%;
       max-width: unset;
       max-height: unset;
-      flex-grow: 3fr;
+      flex-grow: 3;
     }
   }
 }
@@ -422,6 +422,29 @@
     grid-row-end: 10;
   }
 }
+.App.nft {
+  @media (min-width: 1080px) {
+    .nft-section {
+      grid-column-start: 1;
+      grid-column-end: 11;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+  .nft-img-container {
+    .nft-img {
+      background: black;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: bottom;
+      flex-grow: 1;
+    }
+  }
+}
+
 .App.term {
   overflow-y: visible;
   .terms {

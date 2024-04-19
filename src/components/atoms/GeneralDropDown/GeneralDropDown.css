@@ -35,38 +35,9 @@
   cursor: pointer;
 }
 .amount-input-container .unit-name {
-  text-align: center;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 0.3rem;
   border-radius: 0.3rem;
-  min-width: 100px;
-}
-.amount-input-container::selection {
-  background-color: rgba(0, 0, 0, 0);
-}
-.amount-input-container .select {
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0);
-  border: none;
-  font-weight: 500;
-  color: white;
-  width: 85%;
-  min-width: 100px;
-}
-.amount-input-container .select::placeholder {
-  color: rgba(255, 255, 255, 0.3);
-}
-.amount-input-container .select:focus {
-  outline: none;
-}
-.amount-input-container .select .option {
-  text-align: center;
-  appearance: none;
-  -webkit-appearance: none;
-  background-color: rgba(0, 0, 0, 0);
-  font-weight: 500;
-  color: black;
-  width: 85%;
 }
 
-/*# sourceMappingURL=GeneralInput.css.map */
+/*# sourceMappingURL=GeneralDropDown.css.map */
