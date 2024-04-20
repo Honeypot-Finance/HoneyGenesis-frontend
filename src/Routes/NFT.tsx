@@ -26,36 +26,43 @@ export default function NFT() {
   const layer6Options = [];
   const layers = {
     0: {
+      name: "background",
       value: layer0,
       setValue: setLayer0,
       options: layer0Options,
     },
     1: {
+      name: "bear",
       value: layer1,
       setValue: setLayer1,
       options: layer1Options,
     },
     2: {
+      name: "t-shirt",
       value: layer2,
       setValue: setLayer2,
       options: layer2Options,
     },
     3: {
+      name: "hat",
       value: layer3,
       setValue: setLayer3,
       options: layer3Options,
     },
     4: {
+      name: "glasses",
       value: layer4,
       setValue: setLayer4,
       options: layer4Options,
     },
     5: {
+      name: "smoke",
       value: layer5,
       setValue: setLayer5,
       options: layer5Options,
     },
     6: {
+      name: "weapon",
       value: layer6,
       setValue: setLayer6,
       options: layer6Options,
@@ -107,12 +114,12 @@ export default function NFT() {
               options={bearOptions}
             ></GeneralDropDown>
 
-            {Object.values(layers).map((layer, index) => {
+            {Object.values(layers).map((layer) => {
               return (
                 <GeneralDropDown
                   value={layer.value}
                   setValue={layer.setValue}
-                  unitName={"layer" + index.toString()}
+                  unitName={layer.name}
                   options={layer.options}
                 ></GeneralDropDown>
               );
