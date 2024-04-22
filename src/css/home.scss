@@ -459,6 +459,8 @@
       flex-direction: row;
       justify-content: center;
       max-height: 90%;
+      max-width: unset;
+      flex-grow: 1;
 
       .nft-img-container {
         .nft-img {
@@ -468,6 +470,18 @@
           object-position: bottom;
           flex-grow: 1;
         }
+      }
+
+      .main.nft {
+        width: 500px;
+        min-width: 500px;
+        flex-grow: 1;
+      }
+
+      .right-section {
+        min-width: 500px;
+        width: 500px;
+        flex-grow: 1;
       }
     }
   }

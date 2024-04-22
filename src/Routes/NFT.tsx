@@ -6,16 +6,19 @@ import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
 //imgs
 import bgImage from "@/assets/forest-bg.png";
 import { useState } from "react";
+import noneImg from "@/assets/nft/None.png";
 
 export default function NFT() {
   const [bearType, setBearType] = useState("pot");
-  const [layer0, setLayer0] = useState("0");
-  const [layer1, setLayer1] = useState("0");
-  const [layer2, setLayer2] = useState("0");
-  const [layer3, setLayer3] = useState("0");
-  const [layer4, setLayer4] = useState("0");
-  const [layer5, setLayer5] = useState("0");
-  const [layer6, setLayer6] = useState("0");
+  const [layer0, setLayer0] = useState({ name: "none", img: noneImg });
+  const [layer1, setLayer1] = useState({ name: "none", img: noneImg });
+  const [layer2, setLayer2] = useState({ name: "none", img: noneImg });
+  const [layer3, setLayer3] = useState({ name: "none", img: noneImg });
+  const [layer4, setLayer4] = useState({ name: "none", img: noneImg });
+  const [layer5, setLayer5] = useState({ name: "none", img: noneImg });
+  const [layer6, setLayer6] = useState({ name: "none", img: noneImg });
+  const [layer7, setLayer7] = useState({ name: "none", img: noneImg });
+  const [layer8, setLayer8] = useState({ name: "none", img: noneImg });
 
   const bearOptions = ["pot", "predator"];
   const layers = {
@@ -32,33 +35,45 @@ export default function NFT() {
       options: [],
     },
     2: {
-      name: "t-shirt",
+      name: "nail",
       value: layer2,
       setValue: setLayer2,
       options: [],
     },
     3: {
-      name: "hat",
+      name: "emotion",
       value: layer3,
       setValue: setLayer3,
       options: [],
     },
     4: {
-      name: "glasses",
+      name: "cloth",
       value: layer4,
       setValue: setLayer4,
       options: [],
     },
     5: {
-      name: "smoke",
+      name: "hat",
       value: layer5,
       setValue: setLayer5,
       options: [],
     },
     6: {
-      name: "weapon",
+      name: "glasses",
       value: layer6,
       setValue: setLayer6,
+      options: [],
+    },
+    7: {
+      name: "smoke",
+      value: layer7,
+      setValue: setLayer7,
+      options: [],
+    },
+    8: {
+      name: "weapon",
+      value: layer8,
+      setValue: setLayer8,
       options: [],
     },
   };
@@ -70,20 +85,25 @@ export default function NFT() {
       const layer = layers[key];
       layer.options = [];
       for (let i = 0; i < NFT_PARTS[bear][key].length; i++) {
-        layer.options.push(i);
+        layer.options.push(NFT_PARTS[bear][key][i]);
       }
     }
+
+    console.log(layers);
   }
 
   function changeBearHandler(value: string) {
     setBearType(value);
-    setLayer0("0");
-    setLayer1("0");
-    setLayer2("0");
-    setLayer3("0");
-    setLayer4("0");
-    setLayer5("0");
-    setLayer6("0");
+    refreshLayerOptions(value);
+    setLayer0(layers[0][0]);
+    setLayer1(layers[1][0]);
+    setLayer2(layers[2][0]);
+    setLayer3(layers[3][0]);
+    setLayer4(layers[4][0]);
+    setLayer5(layers[5][0]);
+    setLayer6(layers[6][0]);
+    setLayer7(layers[7][0]);
+    setLayer8(layers[8][0]);
   }
 
   function randomNFTHandler() {
@@ -92,27 +112,24 @@ export default function NFT() {
     setBearType(newBearType);
     refreshLayerOptions(newBearType);
 
-    const newLayer0 = Math.floor(
-      Math.random() * layers[0].options.length
-    ).toString();
-    const newLayer1 = Math.floor(
-      Math.random() * layers[1].options.length
-    ).toString();
-    const newLayer2 = Math.floor(
-      Math.random() * layers[2].options.length
-    ).toString();
-    const newLayer3 = Math.floor(
-      Math.random() * layers[3].options.length
-    ).toString();
-    const newLayer4 = Math.floor(
-      Math.random() * layers[4].options.length
-    ).toString();
-    const newLayer5 = Math.floor(
-      Math.random() * layers[5].options.length
-    ).toString();
-    const newLayer6 = Math.floor(
-      Math.random() * layers[6].options.length
-    ).toString();
+    const newLayer0 =
+      layers[0].options[Math.floor(Math.random() * layers[0].options.length)];
+    const newLayer1 =
+      layers[1].options[Math.floor(Math.random() * layers[1].options.length)];
+    const newLayer2 =
+      layers[2].options[Math.floor(Math.random() * layers[2].options.length)];
+    const newLayer3 =
+      layers[3].options[Math.floor(Math.random() * layers[3].options.length)];
+    const newLayer4 =
+      layers[4].options[Math.floor(Math.random() * layers[4].options.length)];
+    const newLayer5 =
+      layers[5].options[Math.floor(Math.random() * layers[5].options.length)];
+    const newLayer6 =
+      layers[6].options[Math.floor(Math.random() * layers[6].options.length)];
+    const newLayer7 =
+      layers[7].options[Math.floor(Math.random() * layers[7].options.length)];
+    const newLayer8 =
+      layers[8].options[Math.floor(Math.random() * layers[8].options.length)];
 
     setLayer0(newLayer0);
     setLayer1(newLayer1);
@@ -121,6 +138,8 @@ export default function NFT() {
     setLayer4(newLayer4);
     setLayer5(newLayer5);
     setLayer6(newLayer6);
+    setLayer7(newLayer7);
+    setLayer8(newLayer8);
   }
 
   return (
@@ -132,12 +151,22 @@ export default function NFT() {
               {Object.values(layers).map((layer, index) => {
                 return (
                   <img
+                    key={index}
                     className="nft-img"
-                    src={NFT_PARTS[bearType][index][layer.value]}
+                    src={layer.value.img}
                     alt=""
                   />
                 );
               })}
+              <img
+                className="nft-img"
+                src={
+                  layer2.name === "none"
+                    ? noneImg
+                    : NFT_PARTS[bearType][9][1].img
+                }
+                alt=""
+              />
             </div>
           </div>
           <main className="main nft">
@@ -157,10 +186,14 @@ export default function NFT() {
               return (
                 <GeneralDropDown
                   key={index}
-                  value={layer.value}
-                  setValue={layer.setValue}
+                  value={layer.value.name}
+                  setValue={(value) => {
+                    layer.setValue(
+                      layer.options.find((option) => option.name === value)
+                    );
+                  }}
                   unitName={layer.name}
-                  options={layer.options}
+                  options={layer.options.map((option) => option.name)}
                 ></GeneralDropDown>
               );
             })}
