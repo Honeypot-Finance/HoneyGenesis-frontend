@@ -5,7 +5,7 @@ import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
 
 //imgs
 import bgImage from "@/assets/forest-bg.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import noneImg from "@/assets/nft/None.png";
 
 export default function NFT() {
@@ -79,6 +79,11 @@ export default function NFT() {
   };
 
   refreshLayerOptions();
+  useEffect(() => {
+    setTimeout(() => {
+      randomNFTHandler();
+    }, 100);
+  }, []);
 
   function refreshLayerOptions(bear: string = bearType) {
     for (const key in layers) {
