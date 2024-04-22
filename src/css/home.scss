@@ -452,13 +452,14 @@
 
   @media (min-width: 1080px) {
     .nft-section {
+      padding: 0 10vw;
       grid-column-start: 1;
       grid-column-end: 11;
       width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: center;
-      max-height: 90%;
+      max-height: 80%;
       max-width: unset;
       flex-grow: 1;
 
