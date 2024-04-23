@@ -6,6 +6,9 @@ import bgBlue_0 from "./单色背景/0-蓝色.png";
 import bgYellow_0 from "./单色背景/0-黄色.png";
 
 //-------------predator-------------
+//layer 0 bgimage for predator
+import predator_farm_0 from "./掠夺阵营/0-农场围栏外.png";
+import predator_jail_0 from "./掠夺阵营/0-监狱.png";
 //layer 1 bear type
 import predator_polarBear_1 from "./掠夺阵营/1-北极熊.png";
 import predator_brownBear_1 from "./掠夺阵营/1-棕熊.png";
@@ -38,6 +41,9 @@ import predator_sickle_8 from "./掠夺阵营/8b-镰刀.png";
 import predator_topNail_9 from "./掠夺阵营/9-上层爪子.png";
 
 //-------------pot-------------
+//layer 0 bgimage for pot
+import pot_farm_0 from "./蜜罐阵营/0-农场.png";
+import pot_house_0 from "./蜜罐阵营/0-家庭.png";
 //layer 1 bear type
 import pot_polarBear_1 from "./蜜罐阵营/1-北极熊.png";
 import pot_brownBear_1 from "./蜜罐阵营/1-棕熊.png";
@@ -53,6 +59,7 @@ import pot_purple_4 from "./蜜罐阵营/4-紫衣服.png";
 import pot_green_4 from "./蜜罐阵营/4-绿衣服.png";
 //layer 5 hat
 import pot_red_5 from "./蜜罐阵营/5-红帽子.png";
+import pot_honeyCellHat_5 from "./蜜罐阵营/5-蜂窝帽.png";
 import pot_ironPot_5 from "./蜜罐阵营/5-铁锅帽.png";
 //layer 6 glasses
 import pot_triangle_6 from "./蜜罐阵营/6-三角眼镜.png";
@@ -62,9 +69,12 @@ import pot_cigarette_7 from "./蜜罐阵营/7-卷烟.png";
 import pot_pipe_7 from "./蜜罐阵营/7-烟斗.png";
 import pot_cigar_7 from "./蜜罐阵营/7-雪茄.png";
 //layer 8 weapon
+import pot_ikeaBag_8 from "./蜜罐阵营/8a-IKEA购物袋.png";
 import pot_honeyCell_8 from "./蜜罐阵营/8a-蜂窝.png";
 import pot_ironPot_8 from "./蜜罐阵营/8a-铁锅.png";
 import pot_clayPot_8 from "./蜜罐阵营/8a-陶罐.png";
+import pot_bronzeHotPot_8 from "./蜜罐阵营/8a-铜火锅.png";
+import pot_highPressurePot_8 from "./蜜罐阵营/8a-高压锅.png";
 //layer 9 nail
 import pot_topNail_9 from "./蜜罐阵营/9-上层爪子.png";
 
@@ -75,6 +85,8 @@ const NFT_PARTS = {
       { name: "green", img: bgGreen_0 },
       { name: "blue", img: bgBlue_0 },
       { name: "yellow", img: bgYellow_0 },
+      { name: "farm", img: pot_farm_0 },
+      { name: "house", img: pot_house_0 },
     ],
     1: [
       { name: "polarBear", img: pot_polarBear_1 },
@@ -99,6 +111,7 @@ const NFT_PARTS = {
       { name: "none", img: none },
       { name: "red", img: pot_red_5 },
       { name: "ironPot", img: pot_ironPot_5 },
+      { name: "honeyCellHat", img: pot_honeyCellHat_5 },
     ],
     6: [
       { name: "none", img: none },
@@ -116,6 +129,9 @@ const NFT_PARTS = {
       { name: "honeyCell", img: pot_honeyCell_8 },
       { name: "ironPot", img: pot_ironPot_8 },
       { name: "clayPot", img: pot_clayPot_8 },
+      { name: "ikeaBag", img: pot_ikeaBag_8 },
+      { name: "bronzeHotPot", img: pot_bronzeHotPot_8 },
+      { name: "highPressurePot", img: pot_highPressurePot_8 },
     ],
     9: [
       { name: "none", img: none },
@@ -128,6 +144,8 @@ const NFT_PARTS = {
       { name: "green", img: bgGreen_0 },
       { name: "blue", img: bgBlue_0 },
       { name: "yellow", img: bgYellow_0 },
+      { name: "farm", img: predator_farm_0 },
+      { name: "jail", img: predator_jail_0 },
     ],
     1: [
       { name: "polarBear", img: predator_polarBear_1 },

@@ -93,22 +93,20 @@ export default function NFT() {
         layer.options.push(NFT_PARTS[bear][key][i]);
       }
     }
-
-    console.log(layers);
   }
 
   function changeBearHandler(value: string) {
     setBearType(value);
     refreshLayerOptions(value);
-    setLayer0(layers[0][0]);
-    setLayer1(layers[1][0]);
-    setLayer2(layers[2][0]);
-    setLayer3(layers[3][0]);
-    setLayer4(layers[4][0]);
-    setLayer5(layers[5][0]);
-    setLayer6(layers[6][0]);
-    setLayer7(layers[7][0]);
-    setLayer8(layers[8][0]);
+    setLayer0(layers[0].options[0]);
+    setLayer1(layers[1].options[0]);
+    setLayer2(layers[2].options[0]);
+    setLayer3(layers[3].options[0]);
+    setLayer4(layers[4].options[0]);
+    setLayer5(layers[5].options[0]);
+    setLayer6(layers[6].options[0]);
+    setLayer7(layers[7].options[0]);
+    setLayer8(layers[8].options[0]);
   }
 
   function randomNFTHandler() {
@@ -182,7 +180,9 @@ export default function NFT() {
             </GeneralButton>
             <GeneralDropDown
               value={bearType}
-              setValue={changeBearHandler}
+              setValue={() =>
+                changeBearHandler(bearType === "pot" ? "predator" : "pot")
+              }
               unitName="Bear"
               options={bearOptions}
             ></GeneralDropDown>

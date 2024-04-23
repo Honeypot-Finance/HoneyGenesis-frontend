@@ -29,7 +29,7 @@ export default function Header() {
 
     //close header on mobile after navigation
     setTimeout(() => {
-      if (window.innerWidth < 1024) {
+      if (window.innerWidth <= 1080) {
         closeHeaderButton.current?.parentElement?.classList.add("closed");
         openHeaderButton.current?.classList.remove("header-closed");
       }
