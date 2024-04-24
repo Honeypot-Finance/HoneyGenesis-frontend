@@ -153,11 +153,10 @@ export default function NFT() {
             <div
               className="nft-img-container"
               style={{
-                height: "20vh",
+                height: "15vh",
                 maxHeight: "50%",
-                maxWidth: "20vh",
-                margin: "5% auto",
-                minHeight: "20vh",
+                maxWidth: "15vh",
+                minHeight: "15vh",
               }}
             >
               {Object.values(layers).map((layer, index) => {
@@ -182,7 +181,7 @@ export default function NFT() {
                 alt=""
               />
             </div>
-            <div className="nft-img-container">
+            <div className="nft-img-container" style={{ marginTop: "5%" }}>
               {Object.values(layers).map((layer, index) => {
                 return (
                   <img
