@@ -150,6 +150,38 @@ export default function NFT() {
       <MainContentWrapper lock={false}>
         <div className="nft-section">
           <div className="right-section">
+            <div
+              className="nft-img-container"
+              style={{
+                height: "20vh",
+                maxHeight: "50%",
+                maxWidth: "20vh",
+                margin: "5% auto",
+                minHeight: "20vh",
+              }}
+            >
+              {Object.values(layers).map((layer, index) => {
+                return (
+                  <img
+                    style={{ objectFit: "cover", objectPosition: "top" }}
+                    key={index}
+                    className="nft-img"
+                    src={layer.value.img}
+                    alt=""
+                  />
+                );
+              })}
+              <img
+                style={{ objectFit: "cover" }}
+                className="nft-img"
+                src={
+                  layer2.name === "none"
+                    ? noneImg
+                    : NFT_PARTS[bearType][9][1].img
+                }
+                alt=""
+              />
+            </div>
             <div className="nft-img-container">
               {Object.values(layers).map((layer, index) => {
                 return (
