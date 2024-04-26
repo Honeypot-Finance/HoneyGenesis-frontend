@@ -5,11 +5,12 @@ import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
 
 //imgs
 import bgImage from "@/assets/forest-bg.png";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import noneImg from "@/assets/nft/None.png";
 
 export default function NFT() {
   const [bearType, setBearType] = useState("pot");
+  const nftContainer = useRef<HTMLDivElement>(null);
   const [layer0, setLayer0] = useState({ name: "none", img: noneImg });
   const [layer1, setLayer1] = useState({ name: "none", img: noneImg });
   const [layer2, setLayer2] = useState({ name: "none", img: noneImg });
@@ -79,10 +80,16 @@ export default function NFT() {
   };
 
   refreshLayerOptions();
+
   useEffect(() => {
-    setTimeout(() => {
-      randomNFTHandler();
-    }, 100);
+    //preload images
+    for (const key in layers) {
+      const layer = layers[key];
+      for (let i = 0; i < layer.options.length; i++) {
+        preloadImage(layer.options[i].img);
+      }
+    }
+    randomNFTHandler();
   }, []);
 
   function refreshLayerOptions(bear: string = bearType) {
@@ -145,6 +152,11 @@ export default function NFT() {
     setLayer8(newLayer8);
   }
 
+  function preloadImage(url) {
+    const img = new Image();
+    img.src = url;
+  }
+
   return (
     <div className="App nft">
       <MainContentWrapper lock={false}>
@@ -162,7 +174,11 @@ export default function NFT() {
               {Object.values(layers).map((layer, index) => {
                 return (
                   <img
-                    style={{ objectFit: "cover", objectPosition: "top" }}
+                    style={{
+                      objectFit: "cover",
+                      objectPosition: "0% 0%",
+                      scale: "1.7",
+                    }}
                     key={index}
                     className="nft-img"
                     src={layer.value.img}
@@ -171,7 +187,11 @@ export default function NFT() {
                 );
               })}
               <img
-                style={{ objectFit: "cover" }}
+                style={{
+                  objectFit: "cover",
+                  objectPosition: "0% 0%",
+                  scale: "1.7",
+                }}
                 className="nft-img"
                 src={
                   layer2.name === "none"
@@ -181,7 +201,14 @@ export default function NFT() {
                 alt=""
               />
             </div>
-            <div className="nft-img-container" style={{ marginTop: "5%" }}>
+            <div
+              ref={nftContainer}
+              className="nft-img-container"
+              style={{
+                marginTop: "5%",
+                width: nftContainer.current?.clientHeight * 0.9,
+              }}
+            >
               {Object.values(layers).map((layer, index) => {
                 return (
                   <img

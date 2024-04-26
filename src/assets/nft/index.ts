@@ -1,9 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+//-------------common-------------
 import none from "./None.png";
 
 // layer 0 bgimage for both predator and pot
 import bgGreen_0 from "./单色背景/0-绿色.png";
 import bgBlue_0 from "./单色背景/0-蓝色.png";
 import bgYellow_0 from "./单色背景/0-黄色.png";
+import logoBlue_0 from "./单色背景/0-logo蓝色.png";
+import logoYellow from "./单色背景/0-logo黄色.png";
 
 //-------------predator-------------
 //layer 0 bgimage for predator
@@ -44,6 +49,7 @@ import predator_topNail_9 from "./掠夺阵营/9-上层爪子.png";
 //layer 0 bgimage for pot
 import pot_farm_0 from "./蜜罐阵营/0-农场.png";
 import pot_house_0 from "./蜜罐阵营/0-家庭.png";
+import pot_aigen_0 from "./蜜罐阵营/0-AIgen.png";
 //layer 1 bear type
 import pot_polarBear_1 from "./蜜罐阵营/1-北极熊.png";
 import pot_brownBear_1 from "./蜜罐阵营/1-棕熊.png";
@@ -81,22 +87,21 @@ import pot_topNail_9 from "./蜜罐阵营/9-上层爪子.png";
 const NFT_PARTS = {
   pot: {
     0: [
-      { name: "none", img: none },
       { name: "green", img: bgGreen_0 },
       { name: "blue", img: bgBlue_0 },
       { name: "yellow", img: bgYellow_0 },
       { name: "farm", img: pot_farm_0 },
       { name: "house", img: pot_house_0 },
+      { name: "aigen", img: pot_aigen_0 },
+      { name: "logoBlue", img: logoBlue_0 },
+      { name: "logoYellow", img: logoYellow },
     ],
     1: [
       { name: "polarBear", img: pot_polarBear_1 },
       { name: "brownBear", img: pot_brownBear_1 },
       { name: "pandaBear", img: pot_pandaBear_1 },
     ],
-    2: [
-      { name: "none", img: none },
-      { name: "bottomNail", img: pot_bottomNail_2 },
-    ],
+    2: [{ name: "none", img: none }],
     3: [
       { name: "anger", img: pot_anger_3 },
       { name: "normal", img: pot_normal_3 },
@@ -125,7 +130,6 @@ const NFT_PARTS = {
       { name: "cigar", img: pot_cigar_7 },
     ],
     8: [
-      { name: "none", img: none },
       { name: "honeyCell", img: pot_honeyCell_8 },
       { name: "ironPot", img: pot_ironPot_8 },
       { name: "clayPot", img: pot_clayPot_8 },
@@ -133,19 +137,17 @@ const NFT_PARTS = {
       { name: "bronzeHotPot", img: pot_bronzeHotPot_8 },
       { name: "highPressurePot", img: pot_highPressurePot_8 },
     ],
-    9: [
-      { name: "none", img: none },
-      { name: "topNail", img: pot_topNail_9 },
-    ],
+    9: [{ name: "none", img: none }],
   },
   predator: {
     0: [
-      { name: "none", img: none },
       { name: "green", img: bgGreen_0 },
       { name: "blue", img: bgBlue_0 },
       { name: "yellow", img: bgYellow_0 },
       { name: "farm", img: predator_farm_0 },
       { name: "jail", img: predator_jail_0 },
+      { name: "logoBlue", img: logoBlue_0 },
+      { name: "logoYellow", img: logoYellow },
     ],
     1: [
       { name: "polarBear", img: predator_polarBear_1 },
