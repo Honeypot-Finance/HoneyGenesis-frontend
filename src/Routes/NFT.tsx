@@ -2,6 +2,7 @@ import MainContentWrapper from "@/components/template/MainContentWrapper/MainCon
 import GeneralDropDown from "@/components/atoms/GeneralDropDown/GeneralDropDown";
 import NFT_PARTS from "@/assets/nft";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
+import mergeImages from "merge-images";
 
 //imgs
 import bgImage from "@/assets/forest-bg.png";
@@ -158,6 +159,53 @@ export default function NFT() {
     img.src = url;
   }
 
+  function handleDownload() {
+    mergeImages([
+      { src: layer0.img },
+      { src: layer1.img },
+      { src: layer2.img },
+      { src: layer3.img },
+      { src: layer4.img },
+      { src: layer5.img },
+      { src: layer6.img },
+      { src: layer7.img },
+      { src: layer8.img },
+    ]).then((img) => {
+      function urltoFile(url, filename, mimeType) {
+        mimeType = mimeType || (url.match(/^data:([^;]+);/) || "")[1];
+        return fetch(url)
+          .then(function (res) {
+            return res.arrayBuffer();
+          })
+          .then(function (buf) {
+            return new File([buf], filename, { type: mimeType });
+          });
+      }
+
+      urltoFile(img, "nft.png", "base64").then(function (file) {
+        console.log(file);
+        const url = URL.createObjectURL(file);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "nft.png";
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      // console.log(img);
+      // const decodedImg = atob(img.split(",")[1]);
+      // console.log(img.split(","));
+      // console.log(decodedImg);
+      // const file = new File([decodedImg], "nft.png", { type: "image/png" });
+      // const url = URL.createObjectURL(file);
+      // const a = document.createElement("a");
+      // a.href = url;
+      // a.download = "nft.png";
+      // a.click();
+      // URL.revokeObjectURL(url);
+    });
+  }
+
   return (
     <div className="App nft">
       <MainContentWrapper lock={false}>
@@ -178,7 +226,7 @@ export default function NFT() {
                     style={{
                       objectPosition: "50% 0%",
                       scale: "1.6",
-                      transform: "translate(10%, 5%)",
+                      transform: "translate(10%, 0%)",
                     }}
                     key={index}
                     className="nft-img"
@@ -192,7 +240,7 @@ export default function NFT() {
                 style={{
                   objectPosition: "50% 0%",
                   scale: "1.6",
-                  transform: "translate(10%, 5%)",
+                  transform: "translate(10%, 0%)",
                 }}
                 className="nft-img"
                 src={
@@ -240,6 +288,9 @@ export default function NFT() {
             <h1 className="title">Choose Your NFT</h1>
             <GeneralButton onClick={() => randomNFTHandler()}>
               Random
+            </GeneralButton>
+            <GeneralButton onClick={() => handleDownload()}>
+              Download
             </GeneralButton>
             <GeneralDropDown
               value={bearType}
