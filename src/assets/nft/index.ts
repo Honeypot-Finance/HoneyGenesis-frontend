@@ -54,6 +54,7 @@ import pot_aigen_0 from "./蜜罐阵营/0-AIgen.png";
 import pot_polarBear_1 from "./蜜罐阵营/1-北极熊.png";
 import pot_brownBear_1 from "./蜜罐阵营/1-棕熊.png";
 import pot_pandaBear_1 from "./蜜罐阵营/1-熊猫.png";
+import pot_blackBear_1 from "./蜜罐阵营/1-黑熊.png";
 //layer 2 nail
 //import pot_bottomNail_2 from "./蜜罐阵营/2-下层爪子.png";
 //layer 3 emotion
@@ -100,6 +101,7 @@ const NFT_PARTS = {
       { name: "polarBear", img: pot_polarBear_1 },
       { name: "brownBear", img: pot_brownBear_1 },
       { name: "pandaBear", img: pot_pandaBear_1 },
+      { name: "blackBear", img: pot_blackBear_1 },
     ],
     2: [{ name: "none", img: none }],
     3: [
