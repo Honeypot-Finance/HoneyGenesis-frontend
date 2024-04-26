@@ -55,7 +55,7 @@ import pot_polarBear_1 from "./蜜罐阵营/1-北极熊.png";
 import pot_brownBear_1 from "./蜜罐阵营/1-棕熊.png";
 import pot_pandaBear_1 from "./蜜罐阵营/1-熊猫.png";
 //layer 2 nail
-import pot_bottomNail_2 from "./蜜罐阵营/2-下层爪子.png";
+//import pot_bottomNail_2 from "./蜜罐阵营/2-下层爪子.png";
 //layer 3 emotion
 import pot_anger_3 from "./蜜罐阵营/3-生气.png";
 import pot_normal_3 from "./蜜罐阵营/3-默认.png";
@@ -82,7 +82,7 @@ import pot_clayPot_8 from "./蜜罐阵营/8a-陶罐.png";
 import pot_bronzeHotPot_8 from "./蜜罐阵营/8a-铜火锅.png";
 import pot_highPressurePot_8 from "./蜜罐阵营/8a-高压锅.png";
 //layer 9 nail
-import pot_topNail_9 from "./蜜罐阵营/9-上层爪子.png";
+//import pot_topNail_9 from "./蜜罐阵营/9-上层爪子.png";
 
 const NFT_PARTS = {
   pot: {

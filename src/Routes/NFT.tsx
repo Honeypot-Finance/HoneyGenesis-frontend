@@ -183,6 +183,7 @@ export default function NFT() {
                     className="nft-img"
                     src={layer.value.img}
                     alt=""
+                    loading="lazy"
                   />
                 );
               })}
@@ -198,6 +199,7 @@ export default function NFT() {
                     ? noneImg
                     : NFT_PARTS[bearType][9][1].img
                 }
+                loading="lazy"
                 alt=""
               />
             </div>
@@ -216,6 +218,7 @@ export default function NFT() {
                     className="nft-img"
                     src={layer.value.img}
                     alt=""
+                    loading="lazy"
                   />
                 );
               })}
@@ -227,6 +230,7 @@ export default function NFT() {
                     : NFT_PARTS[bearType][9][1].img
                 }
                 alt=""
+                loading="lazy"
               />
             </div>
           </div>
