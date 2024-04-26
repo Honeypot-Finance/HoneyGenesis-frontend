@@ -177,8 +177,8 @@ export default function NFT() {
                   <img
                     style={{
                       objectPosition: "50% 0%",
-                      scale: "2",
-                      transform: "translate(10%, 10%)",
+                      scale: "1.6",
+                      transform: "translate(10%, 5%)",
                     }}
                     key={index}
                     className="nft-img"
@@ -191,8 +191,8 @@ export default function NFT() {
               <img
                 style={{
                   objectPosition: "50% 0%",
-                  scale: "2",
-                  transform: "translate(10%, 10%)",
+                  scale: "1.6",
+                  transform: "translate(10%, 5%)",
                 }}
                 className="nft-img"
                 src={
