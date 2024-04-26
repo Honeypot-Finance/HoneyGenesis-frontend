@@ -12,8 +12,8 @@ import logoYellow from "./单色背景/0-logo黄色.png";
 
 //-------------predator-------------
 //layer 0 bgimage for predator
-import predator_farm_0 from "./掠夺阵营/0-农场围栏外.png";
-import predator_jail_0 from "./掠夺阵营/0-监狱.png";
+import predator_farm_0 from "./掠夺阵营/0-农场围栏外-compressed.png";
+import predator_jail_0 from "./掠夺阵营/0-监狱-compressed.png";
 //layer 1 bear type
 import predator_polarBear_1 from "./掠夺阵营/1-北极熊.png";
 import predator_brownBear_1 from "./掠夺阵营/1-棕熊.png";
@@ -47,9 +47,9 @@ import predator_topNail_9 from "./掠夺阵营/9-上层爪子.png";
 
 //-------------pot-------------
 //layer 0 bgimage for pot
-import pot_farm_0 from "./蜜罐阵营/0-农场.png";
-import pot_house_0 from "./蜜罐阵营/0-家庭.png";
-import pot_aigen_0 from "./蜜罐阵营/0-AIgen.png";
+import pot_farm_0 from "./蜜罐阵营/0-农场-compressed.png";
+import pot_house_0 from "./蜜罐阵营/0-家庭-compressed.png";
+import pot_aigen_0 from "./蜜罐阵营/0-AIgen-compressed.png";
 //layer 1 bear type
 import pot_polarBear_1 from "./蜜罐阵营/1-北极熊.png";
 import pot_brownBear_1 from "./蜜罐阵营/1-棕熊.png";

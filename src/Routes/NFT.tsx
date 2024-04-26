@@ -89,6 +89,7 @@ export default function NFT() {
         preloadImage(layer.options[i].img);
       }
     }
+
     randomNFTHandler();
   }, []);
 
@@ -175,9 +176,9 @@ export default function NFT() {
                 return (
                   <img
                     style={{
-                      objectFit: "cover",
-                      objectPosition: "0% 0%",
-                      scale: "1.7",
+                      objectPosition: "50% 0%",
+                      scale: "2",
+                      transform: "translate(10%, 10%)",
                     }}
                     key={index}
                     className="nft-img"
@@ -189,9 +190,9 @@ export default function NFT() {
               })}
               <img
                 style={{
-                  objectFit: "cover",
-                  objectPosition: "0% 0%",
-                  scale: "1.7",
+                  objectPosition: "50% 0%",
+                  scale: "2",
+                  transform: "translate(10%, 10%)",
                 }}
                 className="nft-img"
                 src={
@@ -208,7 +209,7 @@ export default function NFT() {
               className="nft-img-container"
               style={{
                 marginTop: "5%",
-                width: nftContainer.current?.clientHeight * 0.9,
+                width: nftContainer.current?.clientHeight * 0.89,
               }}
             >
               {Object.values(layers).map((layer, index) => {
