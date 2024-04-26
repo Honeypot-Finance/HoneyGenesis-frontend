@@ -286,12 +286,14 @@ export default function NFT() {
           <main className="main nft">
             <img src={bgImage} alt="" className="bg-img" />
             <h1 className="title">Choose Your NFT</h1>
-            <GeneralButton onClick={() => randomNFTHandler()}>
-              Random
-            </GeneralButton>
-            <GeneralButton onClick={() => handleDownload()}>
-              Download
-            </GeneralButton>
+            <div>
+              <GeneralButton onClick={() => randomNFTHandler()}>
+                Random
+              </GeneralButton>
+              <GeneralButton onClick={() => handleDownload()}>
+                Download
+              </GeneralButton>
+            </div>
             <GeneralDropDown
               value={bearType}
               setValue={() =>
