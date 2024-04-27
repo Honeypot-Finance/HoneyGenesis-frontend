@@ -313,11 +313,7 @@ export default function NFT() {
               })}
               <img
                 className="nft-img"
-                src={
-                  layer2.name === "none"
-                    ? noneImg
-                    : NFT_PARTS[bearType][9][1].img
-                }
+                src={NFT_PARTS[bearType][9][0].img}
                 alt=""
                 loading="lazy"
               />
@@ -346,18 +342,20 @@ export default function NFT() {
 
             {Object.values(layers).map((layer, index) => {
               return (
-                <GeneralDropDown
-                  key={index}
-                  value={layer.value.name}
-                  setValue={(value) => {
-                    layer.setValue(
-                      layer.options.find((option) => option.name === value)
-                    );
-                  }}
-                  unitName={layer.name}
-                  unitNamePos="left"
-                  options={layer.options.map((option) => option.name)}
-                ></GeneralDropDown>
+                layer.options.length > 1 && (
+                  <GeneralDropDown
+                    key={index}
+                    value={layer.value.name}
+                    setValue={(value) => {
+                      layer.setValue(
+                        layer.options.find((option) => option.name === value)
+                      );
+                    }}
+                    unitName={layer.name}
+                    unitNamePos="left"
+                    options={layer.options.map((option) => option.name)}
+                  ></GeneralDropDown>
+                )
               );
             })}
           </main>
