@@ -4,16 +4,19 @@ interface GeneralInputProps extends React.HTMLProps<HTMLInputElement> {
   value: string;
   setValue: (value: string) => void;
   unitName: string;
+  unitNamePos?: "left" | "right";
 }
 
 export default function GeneralInput({
   value,
   setValue,
   unitName,
+  unitNamePos = "right",
   ...props
 }: GeneralInputProps) {
   return (
     <div className="amount-input-container" {...props}>
+      {unitNamePos === "left" && <div className="unit-name">{unitName}</div>}
       <input
         className="amount-input"
         type="text"
@@ -24,7 +27,7 @@ export default function GeneralInput({
         placeholder={props.placeholder}
       />
 
-      <div className="unit-name">{unitName}</div>
+      {unitNamePos === "right" && <div className="unit-name">{unitName}</div>}
     </div>
   );
 }

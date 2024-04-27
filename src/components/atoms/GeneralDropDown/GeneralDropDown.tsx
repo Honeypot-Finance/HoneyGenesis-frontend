@@ -4,6 +4,7 @@ interface GeneralDropDownProps extends React.HTMLProps<HTMLInputElement> {
   value: string;
   setValue: (value: string) => void;
   unitName: string;
+  unitNamePos?: "left" | "right";
   options: string[];
 }
 
@@ -12,10 +13,12 @@ export default function GeneralDropDown({
   setValue,
   unitName,
   options,
+  unitNamePos = "right",
   ...props
 }: GeneralDropDownProps) {
   return (
     <div className="amount-input-container" {...props}>
+      {unitNamePos === "left" && <div className="unit-name">{unitName}</div>}
       <select
         className="select"
         value={value}
@@ -29,7 +32,8 @@ export default function GeneralDropDown({
           </option>
         ))}
       </select>
-      <div className="unit-name">{unitName}</div>
+
+      {unitNamePos === "right" && <div className="unit-name">{unitName}</div>}
     </div>
   );
 }

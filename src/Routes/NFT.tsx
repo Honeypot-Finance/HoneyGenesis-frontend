@@ -340,6 +340,7 @@ export default function NFT() {
                 changeBearHandler(bearType === "pot" ? "predator" : "pot")
               }
               unitName="Bear"
+              unitNamePos="left"
               options={bearOptions}
             ></GeneralDropDown>
 
@@ -354,6 +355,7 @@ export default function NFT() {
                     );
                   }}
                   unitName={layer.name}
+                  unitNamePos="left"
                   options={layer.options.map((option) => option.name)}
                 ></GeneralDropDown>
               );
