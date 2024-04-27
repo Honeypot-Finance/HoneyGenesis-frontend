@@ -74,7 +74,7 @@ export default function NFT() {
       options: [],
     },
     8: {
-      name: "weapon",
+      name: "handhold",
       value: layer8,
       setValue: setLayer8,
       options: [],
