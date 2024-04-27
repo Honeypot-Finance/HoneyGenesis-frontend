@@ -6,10 +6,11 @@ import mergeImages from "merge-images";
 
 //imgs
 import bgImage from "@/assets/forest-bg.png";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import noneImg from "@/assets/nft/None.png";
 
 export default function NFT() {
+  const avatarImage = useRef<HTMLImageElement>(null);
   const [bearType, setBearType] = useState("pot");
   const nftContainer = useRef<HTMLDivElement>(null);
   const [layer0, setLayer0] = useState({ name: "none", img: noneImg });
@@ -80,6 +81,67 @@ export default function NFT() {
     },
   };
 
+  const updateAvatarImage = useCallback(
+    (download = false) => {
+      function urltoFile(url, filename, mimeType) {
+        mimeType = mimeType || (url.match(/^data:([^;]+);/) || "")[1];
+        return fetch(url)
+          .then(function (res) {
+            return res.arrayBuffer();
+          })
+          .then(function (buf) {
+            return new File([buf], filename, { type: mimeType });
+          });
+      }
+
+      const xPadding = 30;
+      const yPadding = 800;
+      const imageSize = 3000;
+      mergeImages(
+        [
+          { src: layer0.img, x: -xPadding, y: -yPadding },
+          { src: layer1.img, x: -xPadding, y: -yPadding },
+          { src: layer2.img, x: -xPadding, y: -yPadding },
+          { src: layer3.img, x: -xPadding, y: -yPadding },
+          { src: layer4.img, x: -xPadding, y: -yPadding },
+          { src: layer5.img, x: -xPadding, y: -yPadding },
+          { src: layer6.img, x: -xPadding, y: -yPadding },
+          { src: layer7.img, x: -xPadding, y: -yPadding },
+          { src: layer8.img, x: -xPadding, y: -yPadding },
+        ],
+        {
+          width: imageSize,
+          height: imageSize,
+        }
+      ).then((img) => {
+        avatarImage.current.src = img;
+
+        if (download) {
+          urltoFile(img, "nft.png", "base64").then(function (file) {
+            console.log(file);
+            const url = URL.createObjectURL(file);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "nft.png";
+            a.click();
+            URL.revokeObjectURL(url);
+          });
+        }
+      });
+    },
+    [
+      layer0.img,
+      layer1.img,
+      layer2.img,
+      layer3.img,
+      layer4.img,
+      layer5.img,
+      layer6.img,
+      layer7.img,
+      layer8.img,
+    ]
+  );
+
   refreshLayerOptions();
 
   useEffect(() => {
@@ -90,9 +152,24 @@ export default function NFT() {
         preloadImage(layer.options[i].img);
       }
     }
-
     randomNFTHandler();
   }, []);
+
+  useEffect(() => {
+    updateAvatarImage();
+  }, [
+    bearType,
+    layer0,
+    layer1,
+    layer2,
+    layer3,
+    layer4,
+    layer5,
+    layer6,
+    layer7,
+    layer8,
+    updateAvatarImage,
+  ]);
 
   function refreshLayerOptions(bear: string = bearType) {
     for (const key in layers) {
@@ -159,53 +236,6 @@ export default function NFT() {
     img.src = url;
   }
 
-  function handleDownload() {
-    mergeImages([
-      { src: layer0.img },
-      { src: layer1.img },
-      { src: layer2.img },
-      { src: layer3.img },
-      { src: layer4.img },
-      { src: layer5.img },
-      { src: layer6.img },
-      { src: layer7.img },
-      { src: layer8.img },
-    ]).then((img) => {
-      function urltoFile(url, filename, mimeType) {
-        mimeType = mimeType || (url.match(/^data:([^;]+);/) || "")[1];
-        return fetch(url)
-          .then(function (res) {
-            return res.arrayBuffer();
-          })
-          .then(function (buf) {
-            return new File([buf], filename, { type: mimeType });
-          });
-      }
-
-      urltoFile(img, "nft.png", "base64").then(function (file) {
-        console.log(file);
-        const url = URL.createObjectURL(file);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "nft.png";
-        a.click();
-        URL.revokeObjectURL(url);
-      });
-
-      // console.log(img);
-      // const decodedImg = atob(img.split(",")[1]);
-      // console.log(img.split(","));
-      // console.log(decodedImg);
-      // const file = new File([decodedImg], "nft.png", { type: "image/png" });
-      // const url = URL.createObjectURL(file);
-      // const a = document.createElement("a");
-      // a.href = url;
-      // a.download = "nft.png";
-      // a.click();
-      // URL.revokeObjectURL(url);
-    });
-  }
-
   return (
     <div className="App nft">
       <MainContentWrapper lock={false}>
@@ -220,7 +250,7 @@ export default function NFT() {
                 minHeight: "15vh",
               }}
             >
-              {Object.values(layers).map((layer, index) => {
+              {/* {Object.values(layers).map((layer, index) => {
                 return (
                   <img
                     style={{
@@ -250,6 +280,16 @@ export default function NFT() {
                 }
                 loading="lazy"
                 alt=""
+              /> */}
+              <img
+                ref={avatarImage}
+                src=""
+                alt=""
+                style={{
+                  objectFit: "contain",
+                  width: "100%",
+                  height: "100%",
+                }}
               />
             </div>
             <div
@@ -290,7 +330,7 @@ export default function NFT() {
               <GeneralButton onClick={() => randomNFTHandler()}>
                 Random
               </GeneralButton>
-              <GeneralButton onClick={() => handleDownload()}>
+              <GeneralButton onClick={() => updateAvatarImage(true)}>
                 Download
               </GeneralButton>
             </div>
