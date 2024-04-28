@@ -4,9 +4,9 @@
 import none from "./None.png";
 
 // layer 0 bgimage for both predator and pot
-import bgGreen_0 from "./单色背景/0-绿色.png";
-import bgBlue_0 from "./单色背景/0-蓝色.png";
-import bgYellow_0 from "./单色背景/0-黄色.png";
+//import bgGreen_0 from "./单色背景/0-绿色.png";
+//import bgBlue_0 from "./单色背景/0-蓝色.png";
+//import bgYellow_0 from "./单色背景/0-黄色.png";
 import logoBlue_0 from "./单色背景/0-logo蓝色.png";
 import logoYellow from "./单色背景/0-logo黄色.png";
 
