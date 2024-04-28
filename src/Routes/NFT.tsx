@@ -335,7 +335,7 @@ export default function NFT() {
               setValue={() =>
                 changeBearHandler(bearType === "pot" ? "predator" : "pot")
               }
-              unitName="Bear"
+              unitName="Faction"
               unitNamePos="left"
               options={bearOptions}
             ></GeneralDropDown>
