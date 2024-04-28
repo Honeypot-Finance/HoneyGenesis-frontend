@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         element: <Terms />,
       },
       {
-        path: "/nft",
+        path: "/reveal",
         element: <NFT />,
       },
     ],
