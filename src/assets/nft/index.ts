@@ -33,6 +33,8 @@ import predator_ironPot_5 from "./掠夺阵营/5-铁锅帽.png";
 //layer 6 glasses
 import predator_triangle_6 from "./掠夺阵营/6-三角眼镜.png";
 import predator_white_6 from "./掠夺阵营/6-白框眼镜.png";
+import predator_roundGlasses_6 from "./掠夺阵营/6-圆框眼镜.png";
+import predator_largeSunGlasses_6 from "./掠夺阵营/6-描边墨镜.png";
 //layer 7 smoke
 import predator_cigarette_7 from "./掠夺阵营/7-卷烟.png";
 import predator_pipe_7 from "./掠夺阵营/7-烟斗.png";
@@ -71,6 +73,8 @@ import pot_ironPot_5 from "./蜜罐阵营/5-铁锅帽.png";
 //layer 6 glasses
 import pot_triangle_6 from "./蜜罐阵营/6-三角眼镜.png";
 import pot_iron_6 from "./蜜罐阵营/6-金属框墨镜.png";
+import pot_roundGlasses_6 from "./蜜罐阵营/6-圆框眼镜.png";
+import pot_largeSunGlasses_6 from "./蜜罐阵营/6-描边墨镜.png";
 //layer 7 smoke
 import pot_cigarette_7 from "./蜜罐阵营/7-卷烟.png";
 import pot_pipe_7 from "./蜜罐阵营/7-烟斗.png";
@@ -121,6 +125,8 @@ const NFT_PARTS = {
       { name: "None", img: none },
       { name: "Triangle", img: pot_triangle_6 },
       { name: "Iron", img: pot_iron_6 },
+      { name: "Round Glasses", img: pot_roundGlasses_6 },
+      { name: "Large Sun Glasses", img: pot_largeSunGlasses_6 },
     ],
     7: [
       { name: "None", img: none },
@@ -154,38 +160,40 @@ const NFT_PARTS = {
     ],
     2: [{ name: "Nail", img: predator_bottomNail_2 }],
     3: [
-      { name: "anger", img: predator_anger_3 },
-      { name: "normal", img: predator_normal_3 },
+      { name: "Anger", img: predator_anger_3 },
+      { name: "Normal", img: predator_normal_3 },
     ],
     4: [
-      { name: "none", img: none },
-      { name: "purple", img: predator_purple_4 },
-      { name: "green", img: predator_green_4 },
+      { name: "None", img: none },
+      { name: "Purple", img: predator_purple_4 },
+      { name: "Green", img: predator_green_4 },
     ],
     5: [
-      { name: "none", img: none },
-      { name: "honeyCell", img: predator_honeyCell_5 },
-      { name: "ironPot", img: predator_ironPot_5 },
+      { name: "None", img: none },
+      { name: "Honey Cell", img: predator_honeyCell_5 },
+      { name: "Iron Pot", img: predator_ironPot_5 },
     ],
     6: [
-      { name: "none", img: none },
-      { name: "triangle", img: predator_triangle_6 },
-      { name: "white", img: predator_white_6 },
+      { name: "None", img: none },
+      { name: "Triangle", img: predator_triangle_6 },
+      { name: "White", img: predator_white_6 },
+      { name: "Round Glasses", img: predator_roundGlasses_6 },
+      { name: "Large Sun Glasses", img: predator_largeSunGlasses_6 },
     ],
     7: [
-      { name: "none", img: none },
-      { name: "cigarette", img: predator_cigarette_7 },
-      { name: "pipe", img: predator_pipe_7 },
-      { name: "cigar", img: predator_cigar_7 },
+      { name: "None", img: none },
+      { name: "Cigarette", img: predator_cigarette_7 },
+      { name: "Pipe", img: predator_pipe_7 },
+      { name: "Cigar", img: predator_cigar_7 },
     ],
     8: [
-      { name: "none", img: none },
-      { name: "pan", img: predator_pan_8 },
-      { name: "chainSaw", img: predator_chainSaw_8 },
-      { name: "ironShove", img: predator_ironShove_8 },
-      { name: "sickle", img: predator_sickle_8 },
+      { name: "None", img: none },
+      { name: "Pan", img: predator_pan_8 },
+      { name: "Chain Saw", img: predator_chainSaw_8 },
+      { name: "Iron Shove", img: predator_ironShove_8 },
+      { name: "Sickle", img: predator_sickle_8 },
     ],
-    9: [{ name: "nail", img: predator_topNail_9 }],
+    9: [{ name: "Nail", img: predator_topNail_9 }],
   },
 };
 
