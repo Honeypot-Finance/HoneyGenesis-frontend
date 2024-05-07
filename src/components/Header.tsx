@@ -56,10 +56,10 @@ export default function Header() {
         </Link>
         <div className="link-group">
           <nav className="navbar">
-            {/* <li className="navbar__link">
-              <Link to="/my-assets">My Assets</Link>
+            <li className="navbar__link">
+              <Link to="/reveal">Reveal</Link>
             </li>
-            <hr /> */}
+            <hr />
             {/* <li className="navbar__link">
               <Link to="/mint">Mint</Link>
             </li>{" "}
