@@ -1,6 +1,6 @@
 import MainContentWrapper from "@/components/template/MainContentWrapper/MainContentWrapper";
 import GeneralDropDown from "@/components/atoms/GeneralDropDown/GeneralDropDown";
-import NFT_PARTS from "@/assets/nft";
+import NFT_PARTS from "@/assets/nft_sm";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
 import mergeImages from "merge-images";
 
@@ -94,9 +94,9 @@ export default function NFT() {
           });
       }
 
-      const xPadding = 30;
-      const yPadding = 800;
-      const imageSize = 3000;
+      const xPadding = 0;
+      const yPadding = 50;
+      const imageSize = 400;
       mergeImages(
         [
           { src: layer0.img, x: -xPadding, y: -yPadding },
