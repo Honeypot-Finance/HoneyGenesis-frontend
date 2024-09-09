@@ -9,6 +9,19 @@ import bgImage from "@/assets/forest-bg.png";
 import { useEffect, useState, useRef, useCallback } from "react";
 import noneImg from "@/assets/nft/None.png";
 
+type layerType = {
+  name: string;
+  value: layerOption;
+  setValue: (value: layerOption) => void;
+  options: layerOption[];
+};
+
+type layerOption = {
+  name: string;
+  img: string;
+  layerConstrain?: Record<number, string[]>;
+};
+
 export default function NFT() {
   const avatarImage = useRef<HTMLImageElement>(null);
   const [bearType, setBearType] = useState("pot");
@@ -24,7 +37,7 @@ export default function NFT() {
   const [layer8, setLayer8] = useState({ name: "none", img: noneImg });
 
   const bearOptions = ["pot", "predator"];
-  const layers = {
+  const layers: Record<number, layerType> = {
     0: {
       name: "Background",
       value: layer0,
@@ -34,51 +47,132 @@ export default function NFT() {
     1: {
       name: "Bear",
       value: layer1,
-      setValue: setLayer1,
+      setValue: (value) => {
+        setLayer(1, value);
+      },
       options: [],
     },
     2: {
       name: "Nail",
       value: layer2,
-      setValue: setLayer2,
+      setValue: (value) => {
+        setLayer(2, value);
+      },
       options: [],
     },
     3: {
       name: "Emotion",
       value: layer3,
-      setValue: setLayer3,
+      setValue: (value) => {
+        setLayer(3, value);
+      },
       options: [],
     },
     4: {
       name: "Cloth",
       value: layer4,
-      setValue: setLayer4,
+      setValue: (value) => {
+        setLayer(4, value);
+      },
       options: [],
     },
     5: {
       name: "Hat",
       value: layer5,
-      setValue: setLayer5,
+      setValue: (value) => {
+        setLayer(5, value);
+      },
       options: [],
     },
     6: {
       name: "Glasses",
       value: layer6,
-      setValue: setLayer6,
+      setValue: (value) => {
+        setLayer(6, value);
+      },
       options: [],
     },
     7: {
       name: "Smoke",
       value: layer7,
-      setValue: setLayer7,
+      setValue: (value) => {
+        setLayer(7, value);
+      },
       options: [],
     },
     8: {
       name: "Handhold",
       value: layer8,
-      setValue: setLayer8,
+      setValue: (value) => {
+        setLayer(8, value);
+      },
       options: [],
     },
+  };
+
+  const layerContraintHandler = (layer: number) => {
+    console.log(NFT_PARTS[bearType][layer]);
+    console.log(layers[layer].value);
+    const layerConstrain = NFT_PARTS[bearType][layer].find(
+      (option) => option.name === layers[layer].value.name
+    )?.layerConstrain;
+
+    console.log(layerConstrain);
+    if (layerConstrain) {
+      refreshSingleLayerOptions(
+        layer,
+        NFT_PARTS[bearType][layer].filter((option) => {
+          for (const key in layerConstrain) {
+            if (layerConstrain[key].includes(option.name)) {
+              return true;
+            }
+          }
+          return false;
+        })
+      );
+    }
+  };
+
+  const setLayer = (layer: number, value: layerOption) => {
+    switch (layer) {
+      case 0:
+        setLayer0(value);
+        layerContraintHandler(0);
+        break;
+      case 1:
+        setLayer1(value);
+        layerContraintHandler(1);
+        break;
+      case 2:
+        setLayer2(value);
+        layerContraintHandler(2);
+        break;
+      case 3:
+        setLayer3(value);
+        layerContraintHandler(3);
+        break;
+      case 4:
+        setLayer4(value);
+        console.log(value);
+        layerContraintHandler(4);
+        break;
+      case 5:
+        setLayer5(value);
+        layerContraintHandler(5);
+        break;
+      case 6:
+        setLayer6(value);
+        layerContraintHandler(6);
+        break;
+      case 7:
+        setLayer7(value);
+        layerContraintHandler(7);
+        break;
+      case 8:
+        setLayer8(value);
+        layerContraintHandler(8);
+        break;
+    }
   };
 
   const updateAvatarImage = useCallback(
@@ -179,20 +273,33 @@ export default function NFT() {
         layer.options.push(NFT_PARTS[bear][key][i]);
       }
     }
+    console.log(layers);
+  }
+
+  function refreshSingleLayerOptions(layer: number, options?: layerOption[]) {
+    const layerOption = layers[layer];
+    layerOption.options = options ?? [];
+    console.log(layerOption.options);
+    if (options) {
+      return;
+    }
+    for (let i = 0; i < NFT_PARTS[bearType][layer].length; i++) {
+      layerOption.options.push(NFT_PARTS[bearType][layer][i]);
+    }
   }
 
   function changeBearHandler(value: string) {
     setBearType(value);
     refreshLayerOptions(value);
-    setLayer0(layers[0].options[0]);
-    setLayer1(layers[1].options[0]);
-    setLayer2(layers[2].options[0]);
-    setLayer3(layers[3].options[0]);
-    setLayer4(layers[4].options[0]);
-    setLayer5(layers[5].options[0]);
-    setLayer6(layers[6].options[0]);
-    setLayer7(layers[7].options[0]);
-    setLayer8(layers[8].options[0]);
+    setLayer(0, layers[0].options[0]);
+    setLayer(1, layers[1].options[0]);
+    setLayer(2, layers[2].options[0]);
+    setLayer(3, layers[3].options[0]);
+    setLayer(4, layers[4].options[0]);
+    setLayer(5, layers[5].options[0]);
+    setLayer(6, layers[6].options[0]);
+    setLayer(7, layers[7].options[0]);
+    setLayer(8, layers[8].options[0]);
   }
 
   function randomNFTHandler() {
@@ -220,15 +327,15 @@ export default function NFT() {
     const newLayer8 =
       layers[8].options[Math.floor(Math.random() * layers[8].options.length)];
 
-    setLayer0(newLayer0);
-    setLayer1(newLayer1);
-    setLayer2(newLayer2);
-    setLayer3(newLayer3);
-    setLayer4(newLayer4);
-    setLayer5(newLayer5);
-    setLayer6(newLayer6);
-    setLayer7(newLayer7);
-    setLayer8(newLayer8);
+    setLayer(0, newLayer0);
+    setLayer(1, newLayer1);
+    setLayer(2, newLayer2);
+    setLayer(3, newLayer3);
+    setLayer(4, newLayer4);
+    setLayer(5, newLayer5);
+    setLayer(6, newLayer6);
+    setLayer(7, newLayer7);
+    setLayer(8, newLayer8);
   }
 
   function preloadImage(url) {
@@ -250,37 +357,6 @@ export default function NFT() {
                 minHeight: "15vh",
               }}
             >
-              {/* {Object.values(layers).map((layer, index) => {
-                return (
-                  <img
-                    style={{
-                      objectPosition: "50% 0%",
-                      scale: "1.6",
-                      transform: "translate(10%, 0%)",
-                    }}
-                    key={index}
-                    className="nft-img"
-                    src={layer.value.img}
-                    alt=""
-                    loading="lazy"
-                  />
-                );
-              })}
-              <img
-                style={{
-                  objectPosition: "50% 0%",
-                  scale: "1.6",
-                  transform: "translate(10%, 0%)",
-                }}
-                className="nft-img"
-                src={
-                  layer2.name === "none"
-                    ? noneImg
-                    : NFT_PARTS[bearType][9][1].img
-                }
-                loading="lazy"
-                alt=""
-              /> */}
               <img
                 ref={avatarImage}
                 src=""

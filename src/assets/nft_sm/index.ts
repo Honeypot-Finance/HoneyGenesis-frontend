@@ -48,6 +48,7 @@ import predator_pan_8 from "./掠夺阵营/8b-平底锅_sm.png";
 import predator_chainSaw_8 from "./掠夺阵营/8b-电锯_sm.png";
 import predator_ironShove_8 from "./掠夺阵营/8b-铁铲_sm.png";
 import predator_sickle_8 from "./掠夺阵营/8b-镰刀_sm.png";
+import predator_bullas_whip_8 from "./掠夺阵营/8-BullasWhip_sm.png";
 //layer 9 nail
 import predator_topNail_9 from "./掠夺阵营/9-上层爪子_sm.png";
 
@@ -56,6 +57,8 @@ import predator_topNail_9 from "./掠夺阵营/9-上层爪子_sm.png";
 import pot_farm_0 from "./蜜罐阵营/0-农场_sm.png";
 import pot_house_0 from "./蜜罐阵营/0-家庭_sm.png";
 import pot_aigen_0 from "./蜜罐阵营/0-AIgen_sm.png";
+import pot_beraboyz_dollarbills_0 from "./蜜罐阵营/0-BeraBoyz-DollarBills_sm.png";
+import pot_beraboyz_paltrees_0 from "./蜜罐阵营/0-BeraBoyz-PalmTrees_sm.png";
 //layer 1 bear type
 import pot_polarBear_1 from "./蜜罐阵营/1-北极熊_sm.png";
 import pot_brownBear_1 from "./蜜罐阵营/1-棕熊_sm.png";
@@ -65,6 +68,11 @@ import pot_beraboyz_blackBear_1 from "./蜜罐阵营/1-Beraboyz黑熊_sm.png";
 import pot_beraboyz_pandaBear_1 from "./蜜罐阵营/1-Beraboyz熊猫_sm.png";
 import pot_beraboyz_polarBear_1 from "./蜜罐阵营/1-Beraboyz北极熊_sm.png";
 import pot_beraboyz_brownBear_1 from "./蜜罐阵营/1-Beraboyz棕熊_sm.png";
+import pot_berabaddies_blackBear_1 from "./蜜罐阵营/1-Berabaddies_black_sm.png";
+import pot_berabaddies_pandaBear_1 from "./蜜罐阵营/1-Berabaddies_panda_sm.png";
+import pot_berabaddies_polarBear_1 from "./蜜罐阵营/1-Berabaddies_polar_sm.png";
+import pot_berabaddies_brownBear_1 from "./蜜罐阵营/1-Berabaddies_brown_sm.png";
+
 //layer 2 nail
 //import pot_bottomNail_2 from "./蜜罐阵营/2-下层爪子_sm.png";
 //layer 3 emotion
@@ -72,6 +80,7 @@ import pot_anger_3 from "./蜜罐阵营/3-生气_sm.png";
 import pot_normal_3 from "./蜜罐阵营/3-默认_sm.png";
 import pot_nervous_3 from "./蜜罐阵营/3-紧张_sm.png";
 import pot_beraboyz_stare_3 from "./蜜罐阵营/3-Beraboyz瞪眼_sm.png";
+import pot_berabaddies_face_3 from "./蜜罐阵营/3-berabaddies_face_sm.png";
 //layer 4 clothes
 import pot_purple_4 from "./蜜罐阵营/4-紫衣服_sm.png";
 import pot_green_4 from "./蜜罐阵营/4-绿衣服_sm.png";
@@ -82,6 +91,10 @@ import pot_thc_garland_4 from "./蜜罐阵营/4-THC花环_sm.png";
 import pot_red_5 from "./蜜罐阵营/5-红帽子_sm.png";
 import pot_honeyCellHat_5 from "./蜜罐阵营/5-蜂窝帽_sm.png";
 import pot_ironPot_5 from "./蜜罐阵营/5-铁锅帽_sm.png";
+import pot_berabaddies_flower_5 from "./蜜罐阵营/5-berabaddies_flower_sm.png";
+import pot_berabaddies_hairband_5 from "./蜜罐阵营/5-berabaddies_hairband_sm.png";
+import pot_berahourse_5 from "./蜜罐阵营/5-BeraHorse_sm.png";
+
 //layer 6 glasses
 import pot_triangle_6 from "./蜜罐阵营/6-三角眼镜_sm.png";
 import pot_iron_6 from "./蜜罐阵营/6-金属框墨镜_sm.png";
@@ -104,7 +117,19 @@ import pot_yeetie_doll_8 from "./蜜罐阵营/8-Yeetie玩偶_sm.png";
 //layer 9 nail
 //import pot_topNail_9 from "./蜜罐阵营/9-上层爪子_sm.png";
 
-const NFT_PARTS = {
+export type NFT_PARTS_TYPE = {
+  [key: string]: {
+    [key: number]: {
+      name: string;
+      img: string;
+      layerConstrain?: {
+        [key: number]: string[];
+      };
+    }[];
+  };
+};
+
+const NFT_PARTS: NFT_PARTS_TYPE = {
   pot: {
     0: [
       { name: "Farm", img: pot_farm_0 },
@@ -112,6 +137,8 @@ const NFT_PARTS = {
       { name: "AI Generated", img: pot_aigen_0 },
       { name: "Logo Blue", img: logoBlue_0 },
       { name: "Logo Yellow", img: logoYellow },
+      { name: "Beraboyz Dollar Bills", img: pot_beraboyz_dollarbills_0 },
+      { name: "Beraboyz Palm Trees", img: pot_beraboyz_paltrees_0 },
     ],
     1: [
       { name: "Polar Bear", img: pot_polarBear_1 },
@@ -122,20 +149,53 @@ const NFT_PARTS = {
       { name: "Beraboyz Brown Bear", img: pot_beraboyz_brownBear_1 },
       { name: "Beraboyz Panda Bear", img: pot_beraboyz_pandaBear_1 },
       { name: "Beraboyz Black Bear", img: pot_beraboyz_blackBear_1 },
+      { name: "Berabaddies Black Bear", img: pot_berabaddies_blackBear_1 },
+      { name: "Berabaddies Panda Bear", img: pot_berabaddies_pandaBear_1 },
+      { name: "Berabaddies Polar Bear", img: pot_berabaddies_polarBear_1 },
+      { name: "Berabaddies Brown Bear", img: pot_berabaddies_brownBear_1 },
     ],
     2: [{ name: "None", img: none }],
     3: [
       { name: "Anger", img: pot_anger_3 },
       { name: "Normal", img: pot_normal_3 },
       { name: "Nervous", img: pot_nervous_3 },
-      { name: "Beraboyz Stare", img: pot_beraboyz_stare_3 },
+      {
+        name: "Beraboyz Stare",
+        img: pot_beraboyz_stare_3,
+        layerConstrain: {
+          1: [
+            "Beraboyz Polar Bear",
+            "Beraboyz Brown Bear",
+            "Beraboyz Panda Bear",
+            "Beraboyz Black Bear",
+          ],
+        },
+      },
+      {
+        name: "Berabaddies Face",
+        img: pot_berabaddies_face_3,
+        layerConstrain: {
+          1: [
+            "Berabaddies Polar Bear",
+            "Berabaddies Brown Bear",
+            "Berabaddies Panda Bear",
+            "Berabaddies Black Bear",
+          ],
+        },
+      },
     ],
     4: [
       { name: "None", img: none },
       { name: "Purple", img: pot_purple_4 },
       { name: "Green", img: pot_green_4 },
       { name: "Beraboyz Golden Pendant", img: pot_beraboyz_golden_pendant_4 },
-      { name: "Fable Cape", img: pot_fable_cape_4 },
+      {
+        name: "Fable Cape",
+        img: pot_fable_cape_4,
+        layerConstrain: {
+          5: ["None"],
+        },
+      },
       { name: "THC Garland", img: pot_thc_garland_4 },
     ],
     5: [
@@ -143,6 +203,9 @@ const NFT_PARTS = {
       { name: "Red", img: pot_red_5 },
       { name: "Iron Pot", img: pot_ironPot_5 },
       { name: "Honey Cell Hat", img: pot_honeyCellHat_5 },
+      { name: "Berabaddies Flower", img: pot_berabaddies_flower_5 },
+      { name: "Berabaddies Hairband", img: pot_berabaddies_hairband_5 },
+      { name: "BeraHorse", img: pot_berahourse_5 },
     ],
     6: [
       { name: "None", img: none },
@@ -159,6 +222,7 @@ const NFT_PARTS = {
       { name: "Cigar", img: pot_cigar_7 },
     ],
     8: [
+      { name: "None", img: none },
       { name: "Honey Cell", img: pot_honeyCell_8 },
       { name: "Iron Pot", img: pot_ironPot_8 },
       { name: "Clay Pot", img: pot_clayPot_8 },
@@ -222,6 +286,7 @@ const NFT_PARTS = {
       { name: "Chain Saw", img: predator_chainSaw_8 },
       { name: "Iron Shove", img: predator_ironShove_8 },
       { name: "Sickle", img: predator_sickle_8 },
+      { name: "Bullas Whip", img: predator_bullas_whip_8 },
     ],
     9: [{ name: "Nail", img: predator_topNail_9 }],
   },
