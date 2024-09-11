@@ -54,9 +54,9 @@ import predator_topNail_9 from "./掠夺阵营/9-上层爪子_sm.png";
 
 //-------------pot-------------
 //layer 0 bgimage for pot
-import pot_farm_0 from "./蜜罐阵营/0-农场_sm.png";
+import pot_farm_0 from "./蜜罐阵营/0-农场-compressed_sm.png";
 import pot_house_0 from "./蜜罐阵营/0-家庭_sm.png";
-import pot_aigen_0 from "./蜜罐阵营/0-AIgen_sm.png";
+import pot_aigen_0 from "./蜜罐阵营/0-AIgen-compressed_sm.png";
 import pot_beraboyz_dollarbills_0 from "./蜜罐阵营/0-BeraBoyz-DollarBills_sm.png";
 import pot_beraboyz_paltrees_0 from "./蜜罐阵营/0-BeraBoyz-PalmTrees_sm.png";
 //layer 1 bear type
@@ -68,10 +68,10 @@ import pot_beraboyz_blackBear_1 from "./蜜罐阵营/1-Beraboyz黑熊_sm.png";
 import pot_beraboyz_pandaBear_1 from "./蜜罐阵营/1-Beraboyz熊猫_sm.png";
 import pot_beraboyz_polarBear_1 from "./蜜罐阵营/1-Beraboyz北极熊_sm.png";
 import pot_beraboyz_brownBear_1 from "./蜜罐阵营/1-Beraboyz棕熊_sm.png";
-import pot_berabaddies_blackBear_1 from "./蜜罐阵营/1-Berabaddies_black_sm.png";
-import pot_berabaddies_pandaBear_1 from "./蜜罐阵营/1-Berabaddies_panda_sm.png";
-import pot_berabaddies_polarBear_1 from "./蜜罐阵营/1-Berabaddies_polar_sm.png";
-import pot_berabaddies_brownBear_1 from "./蜜罐阵营/1-Berabaddies_brown_sm.png";
+import pot_berabaddies_blackBear_1 from "./蜜罐阵营/1-BeraBaddies_black_sm.png";
+import pot_berabaddies_pandaBear_1 from "./蜜罐阵营/1-BeraBaddies_panda_sm.png";
+import pot_berabaddies_polarBear_1 from "./蜜罐阵营/1-BeraBaddies_polar_sm.png";
+import pot_berabaddies_brownBear_1 from "./蜜罐阵营/1-BeraBaddies_brown_sm.png";
 
 //layer 2 nail
 //import pot_bottomNail_2 from "./蜜罐阵营/2-下层爪子_sm.png";
@@ -91,8 +91,8 @@ import pot_thc_garland_4 from "./蜜罐阵营/4-THC花环_sm.png";
 import pot_red_5 from "./蜜罐阵营/5-红帽子_sm.png";
 import pot_honeyCellHat_5 from "./蜜罐阵营/5-蜂窝帽_sm.png";
 import pot_ironPot_5 from "./蜜罐阵营/5-铁锅帽_sm.png";
-import pot_berabaddies_flower_5 from "./蜜罐阵营/5-berabaddies_flower_sm.png";
-import pot_berabaddies_hairband_5 from "./蜜罐阵营/5-berabaddies_hairband_sm.png";
+import pot_berabaddies_flower_5 from "./蜜罐阵营/5-BeraBaddies_flower_sm.png";
+import pot_berabaddies_hairband_5 from "./蜜罐阵营/5-BeraBaddies_hairband_sm.png";
 import pot_berahourse_5 from "./蜜罐阵营/5-BeraHorse_sm.png";
 
 //layer 6 glasses

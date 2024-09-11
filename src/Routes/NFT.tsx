@@ -111,13 +111,13 @@ export default function NFT() {
   };
 
   const layerContraintHandler = (layer: number) => {
-    console.log(NFT_PARTS[bearType][layer]);
-    console.log(layers[layer].value);
-    const layerConstrain = NFT_PARTS[bearType][layer].find(
-      (option) => option.name === layers[layer].value.name
-    )?.layerConstrain;
+    const layerConstrain = NFT_PARTS[bearType][layer].find((option) => {
+      // console.log(option.name);
+      // console.log(layers[layer].value.name);
+      return option.name === layers[layer].value.name;
+    })?.layerConstrain;
 
-    console.log(layerConstrain);
+    // console.log(layerConstrain);
     if (layerConstrain) {
       refreshSingleLayerOptions(
         layer,
@@ -153,7 +153,6 @@ export default function NFT() {
         break;
       case 4:
         setLayer4(value);
-        console.log(value);
         layerContraintHandler(4);
         break;
       case 5:
@@ -212,7 +211,7 @@ export default function NFT() {
 
         if (download) {
           urltoFile(img, "nft.png", "base64").then(function (file) {
-            console.log(file);
+            // console.log(file);
             const url = URL.createObjectURL(file);
             const a = document.createElement("a");
             a.href = url;
@@ -273,13 +272,13 @@ export default function NFT() {
         layer.options.push(NFT_PARTS[bear][key][i]);
       }
     }
-    console.log(layers);
+    //console.log(layers);
   }
 
   function refreshSingleLayerOptions(layer: number, options?: layerOption[]) {
     const layerOption = layers[layer];
     layerOption.options = options ?? [];
-    console.log(layerOption.options);
+    //console.log(layerOption.options);
     if (options) {
       return;
     }
@@ -337,6 +336,88 @@ export default function NFT() {
     setLayer(7, newLayer7);
     setLayer(8, newLayer8);
   }
+
+  // async function downloadAllPossibleNFTs() {
+  //   const zip = new JSZip();
+  //   const folder = zip.folder("nfts");
+
+  //   const combData = {
+  //     0: {
+  //       current: 0,
+  //     },
+  //     1: {
+  //       current: 0,
+  //     },
+  //     2: {
+  //       current: 0,
+  //     },
+  //     3: {
+  //       current: 0,
+  //     },
+  //     4: {
+  //       current: 0,
+  //     },
+  //     5: {
+  //       current: 0,
+  //     },
+  //     6: {
+  //       current: 0,
+  //     },
+  //     7: {
+  //       current: 0,
+  //     },
+  //     8: {
+  //       current: 0,
+  //     },
+  //   };
+
+  //   while (combData[8].current < layers[8].options.length) {
+  //     const combName = `${NFT_PARTS[bearType][0][combData[0].current].name}-${
+  //       NFT_PARTS[bearType][1][combData[1].current].name
+  //     }-${NFT_PARTS[bearType][2][combData[2].current].name}-${
+  //       NFT_PARTS[bearType][3][combData[3].current].name
+  //     }-${NFT_PARTS[bearType][4][combData[4].current].name}-${
+  //       NFT_PARTS[bearType][5][combData[5].current].name
+  //     }-${NFT_PARTS[bearType][6][combData[6].current].name}-${
+  //       NFT_PARTS[bearType][7][combData[7].current].name
+  //     }-${NFT_PARTS[bearType][8][combData[8].current].name}`;
+  //     setLayer(0, NFT_PARTS[bearType][0][combData[0].current]);
+  //     setLayer(1, NFT_PARTS[bearType][1][combData[1].current]);
+  //     setLayer(2, NFT_PARTS[bearType][2][combData[2].current]);
+  //     setLayer(3, NFT_PARTS[bearType][3][combData[3].current]);
+  //     setLayer(4, NFT_PARTS[bearType][4][combData[4].current]);
+  //     setLayer(5, NFT_PARTS[bearType][5][combData[5].current]);
+  //     setLayer(6, NFT_PARTS[bearType][6][combData[6].current]);
+  //     setLayer(7, NFT_PARTS[bearType][7][combData[7].current]);
+  //     setLayer(8, NFT_PARTS[bearType][8][combData[8].current]);
+
+  //     updateAvatarImage();
+
+  //     folder.file(`${combName}.png`, avatarImage.current.src);
+
+  //     combData[0].current++;
+  //     for (let i = 0; i < 8; i++) {
+  //       if (combData[i].current === layers[i].options.length) {
+  //         combData[i].current = 0;
+  //         combData[i + 1].current++;
+  //       } else {
+  //         break;
+  //       }
+  //     }
+  //   }
+
+  //   console.log(folder);
+
+  //   zip.generateAsync({ type: "blob" }).then(function (content) {
+  //     const url = URL.createObjectURL(content);
+  //     const a = document.createElement("a");
+  //     a.href = url;
+  //     a.download = "nfts.zip";
+  //     a.click();
+
+  //     URL.revokeObjectURL(url);
+  //   });
+  // }
 
   function preloadImage(url) {
     const img = new Image();
@@ -405,6 +486,9 @@ export default function NFT() {
               <GeneralButton onClick={() => updateAvatarImage(true)}>
                 Download
               </GeneralButton>
+              {/**<GeneralButton onClick={() => downloadAllPossibleNFTs()}>
+                Download All
+              </GeneralButton>*/}
             </div>
             <GeneralDropDown
               value={bearType}

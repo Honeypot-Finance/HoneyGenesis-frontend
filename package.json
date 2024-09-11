@@ -14,6 +14,7 @@
     "@tanstack/react-query": "^5.22.2",
     "@web3modal/wagmi": "^4.0.10",
     "framer-motion": "^11.0.6",
+    "jszip": "^3.10.1",
     "merge-images": "^2.0.0",
     "merkletreejs": "^0.3.11",
     "react": "^18.2.0",
@@ -37,8 +38,11 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "fs": "^0.0.1-security",
+    "sharp": "^0.33.5",
+    "svgo": "^3.3.2",
     "typescript": "^5.2.2",
     "vite": "^5.1.4",
+    "vite-plugin-image-optimizer": "^1.1.8",
     "vite-tsconfig-paths": "^4.3.1"
   }
 }
