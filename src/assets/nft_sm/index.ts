@@ -23,11 +23,16 @@ import predator_bullas_polarBear_1 from "./掠夺阵营/1-Bullas-北极熊_sm.pn
 import predator_bullas_brownBear_1 from "./掠夺阵营/1-Bullas-棕熊_sm.png";
 import predator_bullas_pandaBear_1 from "./掠夺阵营/1-Bullas-熊猫_sm.png";
 import predator_bullas_blackBear_1 from "./掠夺阵营/1-Bullas-黑熊_sm.png";
+import predator_beraborrow_polarBear_1 from "./掠夺阵营/1-BeraBorrow北极熊_sm.png";
+import predator_beraborrow_brownBear_1 from "./掠夺阵营/1-BeraBorrow棕熊_sm.png";
+import predator_beraborrow_pandaBear_1 from "./掠夺阵营/1-BeraBorrow熊猫_sm.png";
+import predator_beraborrow_blackBear_1 from "./掠夺阵营/1-BeraBorrow黑熊_sm.png";
 //layer 2 nail
 import predator_bottomNail_2 from "./掠夺阵营/2-下层爪子_sm.png";
 //layer 3 emotion
 import predator_anger_3 from "./掠夺阵营/3-愤怒_sm.png";
 import predator_normal_3 from "./掠夺阵营/3-默认_sm.png";
+import predator_beraborrow_smirk_3 from "./掠夺阵营/3-BeraBorrow揶揄_sm.png";
 //layer 4 clothes
 import predator_purple_4 from "./掠夺阵营/4-紫衣服破_sm.png";
 import predator_green_4 from "./掠夺阵营/4-绿衣服破_sm.png";
@@ -94,6 +99,7 @@ import pot_ironPot_5 from "./蜜罐阵营/5-铁锅帽_sm.png";
 import pot_berabaddies_flower_5 from "./蜜罐阵营/5-BeraBaddies_flower_sm.png";
 import pot_berabaddies_hairband_5 from "./蜜罐阵营/5-BeraBaddies_hairband_sm.png";
 import pot_berahourse_5 from "./蜜罐阵营/5-BeraHorse_sm.png";
+import pot_Beracer_helmet_5 from "./蜜罐阵营/5-Beracer头盔_sm.png";
 
 //layer 6 glasses
 import pot_triangle_6 from "./蜜罐阵营/6-三角眼镜_sm.png";
@@ -207,6 +213,7 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
       { name: "Berabaddies Flower", img: pot_berabaddies_flower_5 },
       { name: "Berabaddies Hairband", img: pot_berabaddies_hairband_5 },
       { name: "BeraHorse", img: pot_berahourse_5 },
+      { name: "beracer helmet", img: pot_Beracer_helmet_5 },
     ],
     6: [
       { name: "None", img: none },
@@ -252,11 +259,27 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
       { name: "Bullas Brown Bear", img: predator_bullas_brownBear_1 },
       { name: "Bullas Panda Bear", img: predator_bullas_pandaBear_1 },
       { name: "Bullas Black Bear", img: predator_bullas_blackBear_1 },
+      { name: "Beraborrow Polar Bear", img: predator_beraborrow_polarBear_1 },
+      { name: "Beraborrow Brown Bear", img: predator_beraborrow_brownBear_1 },
+      { name: "Beraborrow Panda Bear", img: predator_beraborrow_pandaBear_1 },
+      { name: "Beraborrow Black Bear", img: predator_beraborrow_blackBear_1 },
     ],
     2: [{ name: "Nail", img: predator_bottomNail_2 }],
     3: [
       { name: "Anger", img: predator_anger_3 },
       { name: "Normal", img: predator_normal_3 },
+      {
+        name: "Beraborrow Smirk",
+        img: predator_beraborrow_smirk_3,
+        layerConstrain: {
+          1: [
+            "Beraborrow Polar Bear",
+            "Beraborrow Brown Bear",
+            "Beraborrow Panda Bear",
+            "Beraborrow Black Bear",
+          ],
+        },
+      },
     ],
     4: [
       { name: "None", img: none },
