@@ -116,16 +116,17 @@ import pot_thj_doll_8 from "./蜜罐阵营/8-THJ玩偶_sm.png";
 import pot_yeetie_doll_8 from "./蜜罐阵营/8-Yeetie玩偶_sm.png";
 //layer 9 nail
 //import pot_topNail_9 from "./蜜罐阵营/9-上层爪子_sm.png";
+export type layerOption = {
+  name: string;
+  img: string;
+  layerConstrain?: {
+    [key: number]: string[];
+  };
+};
 
 export type NFT_PARTS_TYPE = {
   [key: string]: {
-    [key: number]: {
-      name: string;
-      img: string;
-      layerConstrain?: {
-        [key: number]: string[];
-      };
-    }[];
+    [key: number]: layerOption[];
   };
 };
 

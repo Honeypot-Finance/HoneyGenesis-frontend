@@ -68,5 +68,12 @@
   color: black;
   width: 85%;
 }
+.amount-input-container .select .option:hover {
+  background-color: #c48f2e;
+}
+.amount-input-container .select .option:disabled {
+  background-color: #999999;
+  color: black;
+}
 
 /*# sourceMappingURL=GeneralInput.css.map */

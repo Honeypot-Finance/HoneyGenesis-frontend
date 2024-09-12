@@ -49,6 +49,7 @@
   &::selection {
     background-color: #00000000;
   }
+
   .select {
     text-align: center;
     background-color: #00000000;
@@ -72,6 +73,15 @@
       font-weight: 500;
       color: black;
       width: 85%;
+
+      &:hover {
+        background-color: #c48f2e;
+      }
+
+      &:disabled {
+        background-color: #999999;
+        color: black;
+      }
     }
   }
 }

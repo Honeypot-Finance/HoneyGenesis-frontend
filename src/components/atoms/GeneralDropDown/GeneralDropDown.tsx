@@ -6,6 +6,7 @@ interface GeneralDropDownProps extends React.HTMLProps<HTMLInputElement> {
   unitName: string;
   unitNamePos?: "left" | "right";
   options: string[];
+  enabledOptions?: string[];
 }
 
 export default function GeneralDropDown({
@@ -16,6 +17,7 @@ export default function GeneralDropDown({
   unitNamePos = "right",
   ...props
 }: GeneralDropDownProps) {
+  // console.log(props.enabledOptions);
   return (
     <div className="amount-input-container" {...props}>
       {unitNamePos === "left" && <div className="unit-name">{unitName}</div>}
@@ -27,7 +29,16 @@ export default function GeneralDropDown({
         }}
       >
         {options.map((option) => (
-          <option className="option" key={option} value={option}>
+          <option
+            className="option"
+            key={option}
+            value={option}
+            disabled={
+              props.enabledOptions && props.enabledOptions.length > 0
+                ? !props.enabledOptions.includes(option)
+                : false
+            }
+          >
             {option}
           </option>
         ))}
