@@ -77,7 +77,14 @@ import pot_berabaddies_blackBear_1 from "./蜜罐阵营/1-BeraBaddies_black_sm.p
 import pot_berabaddies_pandaBear_1 from "./蜜罐阵营/1-BeraBaddies_panda_sm.png";
 import pot_berabaddies_polarBear_1 from "./蜜罐阵营/1-BeraBaddies_polar_sm.png";
 import pot_berabaddies_brownBear_1 from "./蜜罐阵营/1-BeraBaddies_brown_sm.png";
-
+import pot_Berautistics_blackBear_1 from "./蜜罐阵营/1-Berautistics-black_sm.png";
+import pot_Berautistics_pandaBear_1 from "./蜜罐阵营/1-Berautistics-panda_sm.png";
+import pot_Berautistics_polarBear_1 from "./蜜罐阵营/1-Berautistics-polar_sm.png";
+import pot_Berautistics_brownBear_1 from "./蜜罐阵营/1-Berautistics-brown_sm.png";
+import pot_LasBeras_blackBear_1 from "./蜜罐阵营/1-LasBeras-black_sm.png";
+import pot_LasBeras_pandaBear_1 from "./蜜罐阵营/1-LasBeras-panda_sm.png";
+import pot_LasBeras_polarBear_1 from "./蜜罐阵营/1-LasBeras-polar_sm.png";
+import pot_LasBeras_brownBear_1 from "./蜜罐阵营/1-LasBeras-brown_sm.png";
 //layer 2 nail
 //import pot_bottomNail_2 from "./蜜罐阵营/2-下层爪子_sm.png";
 //layer 3 emotion
@@ -86,12 +93,14 @@ import pot_normal_3 from "./蜜罐阵营/3-默认_sm.png";
 import pot_nervous_3 from "./蜜罐阵营/3-紧张_sm.png";
 import pot_beraboyz_stare_3 from "./蜜罐阵营/3-Beraboyz瞪眼_sm.png";
 import pot_berabaddies_face_3 from "./蜜罐阵营/3-berabaddies_face_sm.png";
+import pot_BeraPong_face_3 from "./蜜罐阵营/3-BeraPong-face_sm.png";
 //layer 4 clothes
 import pot_purple_4 from "./蜜罐阵营/4-紫衣服_sm.png";
 import pot_green_4 from "./蜜罐阵营/4-绿衣服_sm.png";
 import pot_beraboyz_golden_pendant_4 from "./蜜罐阵营/4-Beraboyz金吊坠_sm.png";
 import pot_fable_cape_4 from "./蜜罐阵营/4-Fable紫色长袍_sm.png";
 import pot_thc_garland_4 from "./蜜罐阵营/4-THC花环_sm.png";
+import pot_BeraPong_necklace_4 from "./蜜罐阵营/4-BeraPong-necklace_sm.png";
 //layer 5 hat
 import pot_red_5 from "./蜜罐阵营/5-红帽子_sm.png";
 import pot_honeyCellHat_5 from "./蜜罐阵营/5-蜂窝帽_sm.png";
@@ -107,6 +116,7 @@ import pot_iron_6 from "./蜜罐阵营/6-金属框墨镜_sm.png";
 import pot_roundGlasses_6 from "./蜜罐阵营/6-圆框眼镜_sm.png";
 import pot_largeSunGlasses_6 from "./蜜罐阵营/6-描边墨镜_sm.png";
 import pot_thc_glasses_6 from "./蜜罐阵营/6-THC眼镜_sm.png";
+import pot_Berautistics_glasses_6 from "./蜜罐阵营/6-Berautistics-glasses_sm.png";
 //layer 7 smoke
 import pot_cigarette_7 from "./蜜罐阵营/7-卷烟_sm.png";
 import pot_pipe_7 from "./蜜罐阵营/7-烟斗_sm.png";
@@ -160,9 +170,98 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
       { name: "Berabaddies Panda Bear", img: pot_berabaddies_pandaBear_1 },
       { name: "Berabaddies Polar Bear", img: pot_berabaddies_polarBear_1 },
       { name: "Berabaddies Brown Bear", img: pot_berabaddies_brownBear_1 },
+      {
+        name: "Berautistics Black Bear",
+        img: pot_Berautistics_blackBear_1,
+        layerConstrain: {
+          3: ["None"],
+          4: ["None"],
+          5: ["None"],
+          6: ["None"],
+          7: ["None"],
+        },
+      },
+      {
+        name: "Berautistics Panda Bear",
+        img: pot_Berautistics_pandaBear_1,
+        layerConstrain: {
+          3: ["None"],
+          4: ["None"],
+          5: ["None"],
+          6: ["None"],
+          7: ["None"],
+        },
+      },
+      {
+        name: "Berautistics Polar Bear",
+        img: pot_Berautistics_polarBear_1,
+        layerConstrain: {
+          3: ["None"],
+          4: ["None"],
+          5: ["None"],
+          6: ["None"],
+          7: ["None"],
+        },
+      },
+      {
+        name: "Berautistics Brown Bear",
+        img: pot_Berautistics_brownBear_1,
+        layerConstrain: {
+          3: ["None"],
+          4: ["None"],
+          5: ["None"],
+          6: ["None"],
+          7: ["None"],
+        },
+      },
+      {
+        name: "LasBeras Black Bear",
+        img: pot_LasBeras_blackBear_1,
+        layerConstrain: {
+          3: ["None"],
+          4: ["None"],
+          5: ["None"],
+          6: ["None"],
+          7: ["None"],
+        },
+      },
+      {
+        name: "LasBeras Panda Bear",
+        img: pot_LasBeras_pandaBear_1,
+        layerConstrain: {
+          3: ["None"],
+          4: ["None"],
+          5: ["None"],
+          6: ["None"],
+          7: ["None"],
+        },
+      },
+      {
+        name: "LasBeras Polar Bear",
+        img: pot_LasBeras_polarBear_1,
+        layerConstrain: {
+          3: ["None"],
+          4: ["None"],
+          5: ["None"],
+          6: ["None"],
+          7: ["None"],
+        },
+      },
+      {
+        name: "LasBeras Brown Bear",
+        img: pot_LasBeras_brownBear_1,
+        layerConstrain: {
+          3: ["None"],
+          4: ["None"],
+          5: ["None"],
+          6: ["None"],
+          7: ["None"],
+        },
+      },
     ],
     2: [{ name: "None", img: none }],
     3: [
+      { name: "None", img: none },
       { name: "Anger", img: pot_anger_3 },
       { name: "Normal", img: pot_normal_3 },
       { name: "Nervous", img: pot_nervous_3 },
@@ -190,6 +289,10 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
           ],
         },
       },
+      {
+        name: "BeraPong Face",
+        img: pot_BeraPong_face_3,
+      },
     ],
     4: [
       { name: "None", img: none },
@@ -204,6 +307,7 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         },
       },
       { name: "THC Garland", img: pot_thc_garland_4 },
+      { name: "BeraPong Necklace", img: pot_BeraPong_necklace_4 },
     ],
     5: [
       { name: "None", img: none },
@@ -222,6 +326,7 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
       { name: "Round Glasses", img: pot_roundGlasses_6 },
       { name: "Large Sun Glasses", img: pot_largeSunGlasses_6 },
       { name: "THC Glasses", img: pot_thc_glasses_6 },
+      { name: "Berautistics Glasses", img: pot_Berautistics_glasses_6 },
     ],
     7: [
       { name: "None", img: none },
@@ -259,10 +364,34 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
       { name: "Bullas Brown Bear", img: predator_bullas_brownBear_1 },
       { name: "Bullas Panda Bear", img: predator_bullas_pandaBear_1 },
       { name: "Bullas Black Bear", img: predator_bullas_blackBear_1 },
-      { name: "Beraborrow Polar Bear", img: predator_beraborrow_polarBear_1 },
-      { name: "Beraborrow Brown Bear", img: predator_beraborrow_brownBear_1 },
-      { name: "Beraborrow Panda Bear", img: predator_beraborrow_pandaBear_1 },
-      { name: "Beraborrow Black Bear", img: predator_beraborrow_blackBear_1 },
+      {
+        name: "Beraborrow Polar Bear",
+        img: predator_beraborrow_polarBear_1,
+        layerConstrain: {
+          4: ["None"],
+        },
+      },
+      {
+        name: "Beraborrow Brown Bear",
+        img: predator_beraborrow_brownBear_1,
+        layerConstrain: {
+          4: ["None"],
+        },
+      },
+      {
+        name: "Beraborrow Panda Bear",
+        img: predator_beraborrow_pandaBear_1,
+        layerConstrain: {
+          4: ["None"],
+        },
+      },
+      {
+        name: "Beraborrow Black Bear",
+        img: predator_beraborrow_blackBear_1,
+        layerConstrain: {
+          4: ["None"],
+        },
+      },
     ],
     2: [{ name: "Nail", img: predator_bottomNail_2 }],
     3: [
