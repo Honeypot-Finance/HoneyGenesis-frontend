@@ -33,12 +33,14 @@ import predator_bottomNail_2 from "./掠夺阵营/2-下层爪子_sm.png";
 import predator_anger_3 from "./掠夺阵营/3-愤怒_sm.png";
 import predator_normal_3 from "./掠夺阵营/3-默认_sm.png";
 import predator_beraborrow_smirk_3 from "./掠夺阵营/3-BeraBorrow揶揄_sm.png";
+import predator_areb_face_3 from "./掠夺阵营/3-Areb-face_sm.png";
 //layer 4 clothes
 import predator_purple_4 from "./掠夺阵营/4-紫衣服破_sm.png";
 import predator_green_4 from "./掠夺阵营/4-绿衣服破_sm.png";
 //layer 5 hat
 import predator_honeyCell_5 from "./掠夺阵营/5-蜂窝帽_sm.png";
 import predator_ironPot_5 from "./掠夺阵营/5-铁锅帽_sm.png";
+import predator_areb_crown_5 from "./掠夺阵营/5-Areb-crown_sm.png";
 //layer 6 glasses
 import predator_triangle_6 from "./掠夺阵营/6-三角眼镜_sm.png";
 import predator_white_6 from "./掠夺阵营/6-白框眼镜_sm.png";
@@ -175,7 +177,7 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         img: pot_Berautistics_blackBear_1,
         layerConstrain: {
           3: ["None"],
-          4: ["None"],
+          4: ["None", "BeraPong Necklace"],
           5: ["None"],
           6: ["None"],
           7: ["None"],
@@ -186,7 +188,7 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         img: pot_Berautistics_pandaBear_1,
         layerConstrain: {
           3: ["None"],
-          4: ["None"],
+          4: ["None", "BeraPong Necklace"],
           5: ["None"],
           6: ["None"],
           7: ["None"],
@@ -197,7 +199,7 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         img: pot_Berautistics_polarBear_1,
         layerConstrain: {
           3: ["None"],
-          4: ["None"],
+          4: ["None", "BeraPong Necklace"],
           5: ["None"],
           6: ["None"],
           7: ["None"],
@@ -208,7 +210,7 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         img: pot_Berautistics_brownBear_1,
         layerConstrain: {
           3: ["None"],
-          4: ["None"],
+          4: ["None", "BeraPong Necklace"],
           5: ["None"],
           6: ["None"],
           7: ["None"],
@@ -219,8 +221,6 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         img: pot_LasBeras_blackBear_1,
         layerConstrain: {
           3: ["None"],
-          4: ["None"],
-          5: ["None"],
           6: ["None"],
           7: ["None"],
         },
@@ -230,8 +230,6 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         img: pot_LasBeras_pandaBear_1,
         layerConstrain: {
           3: ["None"],
-          4: ["None"],
-          5: ["None"],
           6: ["None"],
           7: ["None"],
         },
@@ -241,8 +239,6 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         img: pot_LasBeras_polarBear_1,
         layerConstrain: {
           3: ["None"],
-          4: ["None"],
-          5: ["None"],
           6: ["None"],
           7: ["None"],
         },
@@ -252,8 +248,6 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         img: pot_LasBeras_brownBear_1,
         layerConstrain: {
           3: ["None"],
-          4: ["None"],
-          5: ["None"],
           6: ["None"],
           7: ["None"],
         },
@@ -409,6 +403,10 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
           ],
         },
       },
+      {
+        name: "Areb Face",
+        img: predator_areb_face_3,
+      },
     ],
     4: [
       { name: "None", img: none },
@@ -419,6 +417,7 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
       { name: "None", img: none },
       { name: "Honey Cell", img: predator_honeyCell_5 },
       { name: "Iron Pot", img: predator_ironPot_5 },
+      { name: "Areb Crown", img: predator_areb_crown_5 },
     ],
     6: [
       { name: "None", img: none },
