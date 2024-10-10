@@ -87,6 +87,11 @@ import pot_LasBeras_blackBear_1 from "./蜜罐阵营/1-LasBeras-black_sm.png";
 import pot_LasBeras_pandaBear_1 from "./蜜罐阵营/1-LasBeras-panda_sm.png";
 import pot_LasBeras_polarBear_1 from "./蜜罐阵营/1-LasBeras-polar_sm.png";
 import pot_LasBeras_brownBear_1 from "./蜜罐阵营/1-LasBeras-brown_sm.png";
+import pot_THC_blackBear_1 from "./蜜罐阵营/1-THC黑熊_sm.png";
+import pot_THC_pandaBear_1 from "./蜜罐阵营/1-THC熊猫_sm.png";
+import pot_THC_polarBear_1 from "./蜜罐阵营/1-THC北极熊_sm.png";
+import pot_THC_brownBear_1 from "./蜜罐阵营/1-THC棕熊_sm.png";
+
 //layer 2 nail
 //import pot_bottomNail_2 from "./蜜罐阵营/2-下层爪子_sm.png";
 //layer 3 emotion
@@ -132,6 +137,11 @@ import pot_bronzeHotPot_8 from "./蜜罐阵营/8a-铜火锅_sm.png";
 import pot_highPressurePot_8 from "./蜜罐阵营/8a-高压锅_sm.png";
 import pot_thj_doll_8 from "./蜜罐阵营/8-THJ玩偶_sm.png";
 import pot_yeetie_doll_8 from "./蜜罐阵营/8-Yeetie玩偶_sm.png";
+import pot_THC_black_arm_8 from "./蜜罐阵营/8-THC黑熊左臂_sm.png";
+import pot_THC_panda_arm_8 from "./蜜罐阵营/8-THC熊猫左臂_sm.png";
+import pot_THC_polar_arm_8 from "./蜜罐阵营/8-THC北极熊左臂_sm.png";
+import pot_THC_brown_arm_8 from "./蜜罐阵营/8-THC棕熊左臂_sm.png";
+
 //layer 9 nail
 //import pot_topNail_9 from "./蜜罐阵营/9-上层爪子_sm.png";
 export type layerOption = {
@@ -252,6 +262,38 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
           7: ["None"],
         },
       },
+      {
+        name: "THC Black Bear",
+        img: pot_THC_blackBear_1,
+        layerConstrain: {
+          4: ["Beraboyz Golden Pendant", "THC Garland", "BeraPong Necklace"],
+          8: ["THC Black Arm"],
+        },
+      },
+      {
+        name: "THC Panda Bear",
+        img: pot_THC_pandaBear_1,
+        layerConstrain: {
+          4: ["Beraboyz Golden Pendant", "THC Garland", "BeraPong Necklace"],
+          8: ["THC Panda Arm"],
+        },
+      },
+      {
+        name: "THC Polar Bear",
+        img: pot_THC_polarBear_1,
+        layerConstrain: {
+          4: ["Beraboyz Golden Pendant", "THC Garland", "BeraPong Necklace"],
+          8: ["THC Polar Arm"],
+        },
+      },
+      {
+        name: "THC Brown Bear",
+        img: pot_THC_brownBear_1,
+        layerConstrain: {
+          4: ["Beraboyz Golden Pendant", "THC Garland", "BeraPong Necklace"],
+          8: ["THC Brown Arm"],
+        },
+      },
     ],
     2: [{ name: "None", img: none }],
     3: [
@@ -338,6 +380,26 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
       { name: "High Pressure Pot", img: pot_highPressurePot_8 },
       { name: "THJ Doll", img: pot_thj_doll_8 },
       { name: "Yeetie Doll", img: pot_yeetie_doll_8 },
+      {
+        name: "THC Black Arm",
+        img: pot_THC_black_arm_8,
+        layerConstrain: { 1: ["THC Black Bear"] },
+      },
+      {
+        name: "THC Panda Arm",
+        img: pot_THC_panda_arm_8,
+        layerConstrain: { 1: ["THC Panda Bear"] },
+      },
+      {
+        name: "THC Polar Arm",
+        img: pot_THC_polar_arm_8,
+        layerConstrain: { 1: ["THC Polar Bear"] },
+      },
+      {
+        name: "THC Brown Arm",
+        img: pot_THC_brown_arm_8,
+        layerConstrain: { 1: ["THC Brown Bear"] },
+      },
     ],
     9: [{ name: "None", img: none }],
   },

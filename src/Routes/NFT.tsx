@@ -106,9 +106,7 @@ export default function NFT() {
     }
     Object.entries(item.layerConstrain).forEach(([key, value]) => {
       value.forEach((name) => {
-        if (!layers[parseInt(key)].constraints.includes(name)) {
-          layers[parseInt(key)].constraints.push(name);
-        }
+        layers[parseInt(key)].constraints.push(name);
       });
 
       if (
@@ -263,6 +261,17 @@ export default function NFT() {
       removeConstraint(layers[parseInt(key)].value);
     }
 
+    const layerConstraints = {
+      1: [],
+      2: [],
+      3: [],
+      4: [],
+      5: [],
+      6: [],
+      7: [],
+      8: [],
+    };
+
     const newBearType =
       bearOptions[Math.floor(Math.random() * bearOptions.length)];
     setBearType(newBearType);
@@ -270,21 +279,21 @@ export default function NFT() {
 
     for (const key in layers) {
       const newLayer =
-        layers[parseInt(key)].constraints.length > 0
-          ? NFT_PARTS[newBearType][parseInt(key)].find(
-              (option) =>
-                option.name ===
-                layers[parseInt(key)].constraints[
-                  Math.floor(
-                    Math.random() * layers[parseInt(key)].constraints.length
-                  )
-                ]
-            )
+        layerConstraints[parseInt(key)].length > 0
+          ? NFT_PARTS[newBearType][parseInt(key)][
+              Math.floor(
+                Math.random() * NFT_PARTS[newBearType][parseInt(key)].length
+              )
+            ]
           : NFT_PARTS[newBearType][parseInt(key)][
               Math.floor(
                 Math.random() * NFT_PARTS[newBearType][parseInt(key)].length
               )
             ];
+
+      for (const [key, value] of Object.entries(newLayer.layerConstrain)) {
+        layerConstraints[key].push(value);
+      }
 
       setLayer(parseInt(key), newLayer, newBearType);
     }
