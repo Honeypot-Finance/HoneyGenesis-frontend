@@ -9,14 +9,16 @@ import bgImage from "@/assets/forest-bg.png";
 import { useEffect, useRef, useCallback } from "react";
 import { observer } from "mobx-react-lite";
 import nftStore, { bearOptions } from "@/lib/NFT";
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
 
 const NFT = observer(() => {
   const avatarImage = useRef<HTMLImageElement>(null);
   const nftContainer = useRef<HTMLDivElement>(null);
 
   const updateAvatarImage = useCallback(
-    (download = false) => {
-      function urltoFile(url, filename, mimeType) {
+    async (option?: { download?: boolean; returnUrl?: boolean }) => {
+      async function urltoFile(url, filename, mimeType) {
         mimeType = mimeType || (url.match(/^data:([^;]+);/) || "")[1];
         return fetch(url)
           .then(function (res) {
@@ -30,7 +32,8 @@ const NFT = observer(() => {
       const xPadding = 0;
       const yPadding = 50;
       const imageSize = 400;
-      mergeImages(
+
+      const res = mergeImages(
         Object.values(nftStore.layers).map((layer) => {
           return { src: layer.value.img, x: -xPadding, y: -yPadding };
         }),
@@ -38,27 +41,65 @@ const NFT = observer(() => {
           width: imageSize,
           height: imageSize,
         }
-      ).then((img) => {
+      ).then(async (img) => {
         avatarImage.current.src = img;
 
-        if (download) {
-          urltoFile(img, "nft.png", "base64").then(function (file) {
+        if (option.download) {
+          const res = await urltoFile(img, "nft.png", "base64").then(function (
+            file
+          ) {
             const url = URL.createObjectURL(file);
             const a = document.createElement("a");
             a.href = url;
             a.download = "nft.png";
             a.click();
             URL.revokeObjectURL(url);
+            return url;
           });
+
+          return res;
+        }
+
+        if (option.returnUrl) {
+          const res = await urltoFile(img, "nft.png", "base64").then(function (
+            file
+          ) {
+            const url = URL.createObjectURL(file);
+            return url;
+          });
+
+          return res;
         }
       });
+
+      return res;
     },
     [nftStore.layers]
   );
 
+  const bulkDownloadNfts = useCallback(
+    async (count: number) => {
+      const zip = new JSZip();
+      for (let i = 0; i < count; i++) {
+        nftStore.randomNFT();
+        const url = await updateAvatarImage({ returnUrl: true });
+        await fetch(url).then(async (res) => {
+          const blob = await res.blob();
+          zip.file(`nft-${i}.png`, blob);
+          console.log(i, url);
+        });
+      }
+
+      zip.generateAsync({ type: "blob" }).then(function (content) {
+        saveAs(content, "nfts.zip");
+      });
+    },
+    [updateAvatarImage]
+  );
+
   useEffect(() => {
     nftStore.randomNFT();
-    updateAvatarImage();
+    updateAvatarImage({});
   }, []);
 
   return (
@@ -130,12 +171,20 @@ const NFT = observer(() => {
               >
                 Random
               </GeneralButton>
-              <GeneralButton onClick={() => updateAvatarImage(true)}>
+              <GeneralButton
+                onClick={() =>
+                  updateAvatarImage({
+                    download: true,
+                  })
+                }
+              >
                 Download
               </GeneralButton>
-              {/**<GeneralButton onClick={() => downloadAllPossibleNFTs()}>
+
+              {/* 
+              <GeneralButton onClick={() => bulkDownloadNfts(6000)}>
                 Download All
-              </GeneralButton>*/}
+              </GeneralButton> */}
             </div>
             <GeneralDropDown
               value={nftStore.bearType}
