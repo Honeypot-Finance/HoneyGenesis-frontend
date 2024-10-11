@@ -150,6 +150,7 @@ export type layerOption = {
   layerConstrain?: {
     [key: number]: string[];
   };
+  defaultHidden?: boolean;
 };
 
 export type NFT_PARTS_TYPE = {
@@ -266,7 +267,12 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         name: "THC Black Bear",
         img: pot_THC_blackBear_1,
         layerConstrain: {
-          4: ["Beraboyz Golden Pendant", "THC Garland", "BeraPong Necklace"],
+          4: [
+            "None",
+            "Beraboyz Golden Pendant",
+            "THC Garland",
+            "BeraPong Necklace",
+          ],
           8: ["THC Black Arm"],
         },
       },
@@ -274,7 +280,12 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         name: "THC Panda Bear",
         img: pot_THC_pandaBear_1,
         layerConstrain: {
-          4: ["Beraboyz Golden Pendant", "THC Garland", "BeraPong Necklace"],
+          4: [
+            "None",
+            "Beraboyz Golden Pendant",
+            "THC Garland",
+            "BeraPong Necklace",
+          ],
           8: ["THC Panda Arm"],
         },
       },
@@ -282,7 +293,12 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         name: "THC Polar Bear",
         img: pot_THC_polarBear_1,
         layerConstrain: {
-          4: ["Beraboyz Golden Pendant", "THC Garland", "BeraPong Necklace"],
+          4: [
+            "None",
+            "Beraboyz Golden Pendant",
+            "THC Garland",
+            "BeraPong Necklace",
+          ],
           8: ["THC Polar Arm"],
         },
       },
@@ -290,7 +306,12 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         name: "THC Brown Bear",
         img: pot_THC_brownBear_1,
         layerConstrain: {
-          4: ["Beraboyz Golden Pendant", "THC Garland", "BeraPong Necklace"],
+          4: [
+            "None",
+            "Beraboyz Golden Pendant",
+            "THC Garland",
+            "BeraPong Necklace",
+          ],
           8: ["THC Brown Arm"],
         },
       },
@@ -304,26 +325,26 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
       {
         name: "Beraboyz Stare",
         img: pot_beraboyz_stare_3,
-        layerConstrain: {
-          1: [
-            "Beraboyz Polar Bear",
-            "Beraboyz Brown Bear",
-            "Beraboyz Panda Bear",
-            "Beraboyz Black Bear",
-          ],
-        },
+        // layerConstrain: {
+        //   1: [
+        //     "Beraboyz Polar Bear",
+        //     "Beraboyz Brown Bear",
+        //     "Beraboyz Panda Bear",
+        //     "Beraboyz Black Bear",
+        //   ],
+        // },
       },
       {
         name: "Berabaddies Face",
         img: pot_berabaddies_face_3,
-        layerConstrain: {
-          1: [
-            "Berabaddies Polar Bear",
-            "Berabaddies Brown Bear",
-            "Berabaddies Panda Bear",
-            "Berabaddies Black Bear",
-          ],
-        },
+        // layerConstrain: {
+        //   1: [
+        //     "Berabaddies Polar Bear",
+        //     "Berabaddies Brown Bear",
+        //     "Berabaddies Panda Bear",
+        //     "Berabaddies Black Bear",
+        //   ],
+        // },
       },
       {
         name: "BeraPong Face",
@@ -384,21 +405,25 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         name: "THC Black Arm",
         img: pot_THC_black_arm_8,
         layerConstrain: { 1: ["THC Black Bear"] },
+        defaultHidden: true,
       },
       {
         name: "THC Panda Arm",
         img: pot_THC_panda_arm_8,
         layerConstrain: { 1: ["THC Panda Bear"] },
+        defaultHidden: true,
       },
       {
         name: "THC Polar Arm",
         img: pot_THC_polar_arm_8,
         layerConstrain: { 1: ["THC Polar Bear"] },
+        defaultHidden: true,
       },
       {
         name: "THC Brown Arm",
         img: pot_THC_brown_arm_8,
         layerConstrain: { 1: ["THC Brown Bear"] },
+        defaultHidden: true,
       },
     ],
     9: [{ name: "None", img: none }],
