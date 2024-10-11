@@ -58,6 +58,7 @@ const NFT = observer(() => {
 
   useEffect(() => {
     nftStore.randomNFT();
+    updateAvatarImage();
   }, []);
 
   return (
