@@ -77,6 +77,7 @@ const NFT = observer(() => {
     [nftStore.layers]
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const bulkDownloadNfts = useCallback(
     async (count: number) => {
       const zip = new JSZip();
@@ -181,9 +182,9 @@ const NFT = observer(() => {
                 Download
               </GeneralButton>
 
-              <GeneralButton onClick={() => bulkDownloadNfts(6000)}>
+              {/* <GeneralButton onClick={() => bulkDownloadNfts(6000)}>
                 Download All
-              </GeneralButton>
+              </GeneralButton> */}
             </div>
             <GeneralDropDown
               value={nftStore.bearType}
@@ -211,7 +212,13 @@ const NFT = observer(() => {
                     options={NFT_PARTS[nftStore.bearType][index].map(
                       (option) => option.name
                     )}
-                    enabledOptions={layer.constraints ?? []}
+                    enabledOptions={
+                      layer.constraints && layer.constraints.length > 0
+                        ? layer.constraints
+                        : NFT_PARTS[nftStore.bearType][index]
+                            .filter((option) => !option.defaultHidden)
+                            .map((option) => option.name)
+                    }
                   ></GeneralDropDown>
                 )
               );
