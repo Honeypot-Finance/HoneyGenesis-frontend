@@ -77,7 +77,6 @@ const NFT = observer(() => {
     [nftStore.layers]
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const bulkDownloadNfts = useCallback(
     async (count: number) => {
       const zip = new JSZip();
@@ -182,9 +181,15 @@ const NFT = observer(() => {
                 Download
               </GeneralButton>
 
-              {/* <GeneralButton onClick={() => bulkDownloadNfts(6000)}>
+              <GeneralButton
+                onClick={() => bulkDownloadNfts(6000)}
+                //remove this style to enable bulk download
+                style={{
+                  display: "none",
+                }}
+              >
                 Download All
-              </GeneralButton> */}
+              </GeneralButton>
             </div>
             <GeneralDropDown
               value={nftStore.bearType}
