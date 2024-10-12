@@ -181,10 +181,9 @@ const NFT = observer(() => {
                 Download
               </GeneralButton>
 
-              {/* 
               <GeneralButton onClick={() => bulkDownloadNfts(6000)}>
                 Download All
-              </GeneralButton> */}
+              </GeneralButton>
             </div>
             <GeneralDropDown
               value={nftStore.bearType}

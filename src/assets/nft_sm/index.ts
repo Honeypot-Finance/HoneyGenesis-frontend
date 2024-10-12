@@ -66,6 +66,7 @@ import pot_house_0 from "./蜜罐阵营/0-家庭_sm.png";
 import pot_aigen_0 from "./蜜罐阵营/0-AIgen-compressed_sm.png";
 import pot_beraboyz_dollarbills_0 from "./蜜罐阵营/0-BeraBoyz-DollarBills_sm.png";
 import pot_beraboyz_paltrees_0 from "./蜜罐阵营/0-BeraBoyz-PalmTrees_sm.png";
+import pot_smileeBeras_bg_0 from "./蜜罐阵营/0-SmileeBeras-bg_sm.png";
 //layer 1 bear type
 import pot_polarBear_1 from "./蜜罐阵营/1-北极熊_sm.png";
 import pot_brownBear_1 from "./蜜罐阵营/1-棕熊_sm.png";
@@ -91,6 +92,14 @@ import pot_THC_blackBear_1 from "./蜜罐阵营/1-THC黑熊_sm.png";
 import pot_THC_pandaBear_1 from "./蜜罐阵营/1-THC熊猫_sm.png";
 import pot_THC_polarBear_1 from "./蜜罐阵营/1-THC北极熊_sm.png";
 import pot_THC_brownBear_1 from "./蜜罐阵营/1-THC棕熊_sm.png";
+import pot_burrbear_blackBear_1 from "./蜜罐阵营/1-burrbear-black_sm.png";
+import pot_burrbear_pandaBear_1 from "./蜜罐阵营/1-burrbear-panda_sm.png";
+import pot_burrbear_polarBear_1 from "./蜜罐阵营/1-burrbear-white_sm.png";
+import pot_burrbear_brownBear_1 from "./蜜罐阵营/1-burrbear-brown_sm.png";
+import pot_smileeBeras_blackBear_1 from "./蜜罐阵营/1-SmileeBeras-black_sm.png";
+import pot_smileeBeras_pandaBear_1 from "./蜜罐阵营/1-SmileeBeras-panda_sm.png";
+import pot_smileeBeras_polarBear_1 from "./蜜罐阵营/1-SmileeBeras-polar_sm.png";
+import pot_smileeBeras_brownBear_1 from "./蜜罐阵营/1-SmileeBeras-brown_sm.png";
 
 //layer 2 nail
 //import pot_bottomNail_2 from "./蜜罐阵营/2-下层爪子_sm.png";
@@ -101,6 +110,8 @@ import pot_nervous_3 from "./蜜罐阵营/3-紧张_sm.png";
 import pot_beraboyz_stare_3 from "./蜜罐阵营/3-Beraboyz瞪眼_sm.png";
 import pot_berabaddies_face_3 from "./蜜罐阵营/3-berabaddies_face_sm.png";
 import pot_BeraPong_face_3 from "./蜜罐阵营/3-BeraPong-face_sm.png";
+import pot_burrbear_face_3 from "./蜜罐阵营/3-burrbear-face_sm.png";
+
 //layer 4 clothes
 import pot_purple_4 from "./蜜罐阵营/4-紫衣服_sm.png";
 import pot_green_4 from "./蜜罐阵营/4-绿衣服_sm.png";
@@ -108,6 +119,10 @@ import pot_beraboyz_golden_pendant_4 from "./蜜罐阵营/4-Beraboyz金吊坠_sm
 import pot_fable_cape_4 from "./蜜罐阵营/4-Fable紫色长袍_sm.png";
 import pot_thc_garland_4 from "./蜜罐阵营/4-THC花环_sm.png";
 import pot_BeraPong_necklace_4 from "./蜜罐阵营/4-BeraPong-necklace_sm.png";
+import pot_berahorse_cloth_4 from "./蜜罐阵营/4-BeraHorse-cloth_sm.png";
+import pot_burrbear_cloth_4 from "./蜜罐阵营/4-burrbear-cloth_sm.png";
+import pot_smileeBeras_dick_4 from "./蜜罐阵营/4-SmileeBeras-dick_sm.png";
+
 //layer 5 hat
 import pot_red_5 from "./蜜罐阵营/5-红帽子_sm.png";
 import pot_honeyCellHat_5 from "./蜜罐阵营/5-蜂窝帽_sm.png";
@@ -116,6 +131,7 @@ import pot_berabaddies_flower_5 from "./蜜罐阵营/5-BeraBaddies_flower_sm.png
 import pot_berabaddies_hairband_5 from "./蜜罐阵营/5-BeraBaddies_hairband_sm.png";
 import pot_berahourse_5 from "./蜜罐阵营/5-BeraHorse_sm.png";
 import pot_Beracer_helmet_5 from "./蜜罐阵营/5-Beracer头盔_sm.png";
+import pot_smileebera_dickhead_5 from "./蜜罐阵营/5-SmileeBeras-dickhead_sm.png";
 
 //layer 6 glasses
 import pot_triangle_6 from "./蜜罐阵营/6-三角眼镜_sm.png";
@@ -124,10 +140,12 @@ import pot_roundGlasses_6 from "./蜜罐阵营/6-圆框眼镜_sm.png";
 import pot_largeSunGlasses_6 from "./蜜罐阵营/6-描边墨镜_sm.png";
 import pot_thc_glasses_6 from "./蜜罐阵营/6-THC眼镜_sm.png";
 import pot_Berautistics_glasses_6 from "./蜜罐阵营/6-Berautistics-glasses_sm.png";
+import pot_burrbear_glasses_6 from "./蜜罐阵营/6-burrbear-glasses_sm.png";
 //layer 7 smoke
 import pot_cigarette_7 from "./蜜罐阵营/7-卷烟_sm.png";
 import pot_pipe_7 from "./蜜罐阵营/7-烟斗_sm.png";
 import pot_cigar_7 from "./蜜罐阵营/7-雪茄_sm.png";
+import pot_smileeberas_lolipop_7 from "./蜜罐阵营/7-SmileeBeras-lolipop_sm.png";
 //layer 8 weapon
 import pot_ikeaBag_8 from "./蜜罐阵营/8a-IKEA购物袋_sm.png";
 import pot_honeyCell_8 from "./蜜罐阵营/8a-蜂窝_sm.png";
@@ -141,6 +159,8 @@ import pot_THC_black_arm_8 from "./蜜罐阵营/8-THC黑熊左臂_sm.png";
 import pot_THC_panda_arm_8 from "./蜜罐阵营/8-THC熊猫左臂_sm.png";
 import pot_THC_polar_arm_8 from "./蜜罐阵营/8-THC北极熊左臂_sm.png";
 import pot_THC_brown_arm_8 from "./蜜罐阵营/8-THC棕熊左臂_sm.png";
+import pot_berahorse_rope_8 from "./蜜罐阵营/8-BeraHorse-rope_sm.png";
+import pot_boogaberas_doll_8 from "./蜜罐阵营/8-BoogaBeras-doll_sm.png";
 
 //layer 9 nail
 //import pot_topNail_9 from "./蜜罐阵营/9-上层爪子_sm.png";
@@ -169,6 +189,7 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
       { name: "Logo Yellow", img: logoYellow },
       { name: "Beraboyz Dollar Bills", img: pot_beraboyz_dollarbills_0 },
       { name: "Beraboyz Palm Trees", img: pot_beraboyz_paltrees_0 },
+      { name: "SmileeBeras Background", img: pot_smileeBeras_bg_0 },
     ],
     1: [
       { name: "Polar Bear", img: pot_polarBear_1 },
@@ -232,6 +253,24 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         img: pot_LasBeras_blackBear_1,
         layerConstrain: {
           3: ["None"],
+          4: [
+            "None",
+            "Purple",
+            "Green",
+            "Beraboyz Golden Pendant",
+            "THC Garland",
+            "BeraPong Necklace",
+            "burrbear Cloth",
+            "SmileeBeras Dick",
+          ],
+          5: [
+            "None",
+            "Red",
+            "Iron Pot",
+            "Honey Cell Hat",
+            "Berabaddies Flower",
+            "Berabaddies Hairband",
+          ],
           6: ["None"],
           7: ["None"],
         },
@@ -241,6 +280,24 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         img: pot_LasBeras_pandaBear_1,
         layerConstrain: {
           3: ["None"],
+          4: [
+            "None",
+            "Purple",
+            "Green",
+            "Beraboyz Golden Pendant",
+            "THC Garland",
+            "BeraPong Necklace",
+            "burrbear Cloth",
+            "SmileeBeras Dick",
+          ],
+          5: [
+            "None",
+            "Red",
+            "Iron Pot",
+            "Honey Cell Hat",
+            "Berabaddies Flower",
+            "Berabaddies Hairband",
+          ],
           6: ["None"],
           7: ["None"],
         },
@@ -250,6 +307,24 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         img: pot_LasBeras_polarBear_1,
         layerConstrain: {
           3: ["None"],
+          4: [
+            "None",
+            "Purple",
+            "Green",
+            "Beraboyz Golden Pendant",
+            "THC Garland",
+            "BeraPong Necklace",
+            "burrbear Cloth",
+            "SmileeBeras Dick",
+          ],
+          5: [
+            "None",
+            "Red",
+            "Iron Pot",
+            "Honey Cell Hat",
+            "Berabaddies Flower",
+            "Berabaddies Hairband",
+          ],
           6: ["None"],
           7: ["None"],
         },
@@ -259,6 +334,24 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         img: pot_LasBeras_brownBear_1,
         layerConstrain: {
           3: ["None"],
+          4: [
+            "None",
+            "Purple",
+            "Green",
+            "Beraboyz Golden Pendant",
+            "THC Garland",
+            "BeraPong Necklace",
+            "burrbear Cloth",
+            "SmileeBeras Dick",
+          ],
+          5: [
+            "None",
+            "Red",
+            "Iron Pot",
+            "Honey Cell Hat",
+            "Berabaddies Flower",
+            "Berabaddies Hairband",
+          ],
           6: ["None"],
           7: ["None"],
         },
@@ -315,6 +408,66 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
           8: ["THC Brown Arm"],
         },
       },
+      {
+        name: "burrbear Black Bear",
+        img: pot_burrbear_blackBear_1,
+      },
+      {
+        name: "burrbear Panda Bear",
+        img: pot_burrbear_pandaBear_1,
+      },
+      {
+        name: "burrbear Polar Bear",
+        img: pot_burrbear_polarBear_1,
+      },
+      {
+        name: "burrbear Brown Bear",
+        img: pot_burrbear_brownBear_1,
+      },
+      {
+        name: "SmileeBeras Black Bear",
+        img: pot_smileeBeras_blackBear_1,
+        layerConstrain: {
+          3: ["None"],
+          4: ["None", "SmileeBeras Dick"],
+          5: ["None", "Smilee Beras Dick Head", "beracer helmet"],
+          6: ["None"],
+          7: ["None", "Smilee Lolipop"],
+        },
+      },
+      {
+        name: "SmileeBeras Panda Bear",
+        img: pot_smileeBeras_pandaBear_1,
+        layerConstrain: {
+          3: ["None"],
+          4: ["None", "SmileeBeras Dick"],
+          5: ["None", "Smilee Beras Dick Head", "beracer helmet"],
+          6: ["None"],
+          7: ["None", "Smilee Lolipop"],
+        },
+      },
+      {
+        name: "SmileeBeras Polar Bear",
+        img: pot_smileeBeras_polarBear_1,
+        layerConstrain: {
+          3: ["None"],
+          4: ["None", "SmileeBeras Dick"],
+          5: ["None", "Smilee Beras Dick Head", "beracer helmet"],
+          6: ["None"],
+          7: ["None", "Smilee Lolipop"],
+        },
+      },
+      {
+        name: "SmileeBeras Brown Bear",
+        img: pot_smileeBeras_brownBear_1,
+        layerConstrain: {
+          3: ["None"],
+          4: ["None", "SmileeBeras Dick"],
+          5: ["None", "Smilee Beras Dick Head", "beracer helmet"],
+          6: ["None"],
+          7: ["None", "Smilee Lolipop"],
+        },
+      },
     ],
     2: [{ name: "None", img: none }],
     3: [
@@ -350,6 +503,10 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         name: "BeraPong Face",
         img: pot_BeraPong_face_3,
       },
+      {
+        name: "burrbear Face",
+        img: pot_burrbear_face_3,
+      },
     ],
     4: [
       { name: "None", img: none },
@@ -365,6 +522,9 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
       },
       { name: "THC Garland", img: pot_thc_garland_4 },
       { name: "BeraPong Necklace", img: pot_BeraPong_necklace_4 },
+      { name: "BeraHorse Cloth", img: pot_berahorse_cloth_4 },
+      { name: "burrbear Cloth", img: pot_burrbear_cloth_4 },
+      { name: "SmileeBeras Dick", img: pot_smileeBeras_dick_4 },
     ],
     5: [
       { name: "None", img: none },
@@ -375,6 +535,11 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
       { name: "Berabaddies Hairband", img: pot_berabaddies_hairband_5 },
       { name: "BeraHorse", img: pot_berahourse_5 },
       { name: "beracer helmet", img: pot_Beracer_helmet_5 },
+      {
+        name: "Smilee Beras Dick Head",
+        img: pot_smileebera_dickhead_5,
+        defaultHidden: true,
+      },
     ],
     6: [
       { name: "None", img: none },
@@ -384,12 +549,21 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
       { name: "Large Sun Glasses", img: pot_largeSunGlasses_6 },
       { name: "THC Glasses", img: pot_thc_glasses_6 },
       { name: "Berautistics Glasses", img: pot_Berautistics_glasses_6 },
+      {
+        name: "Burr Bear Glasses",
+        img: pot_burrbear_glasses_6,
+      },
     ],
     7: [
       { name: "None", img: none },
       { name: "Cigarette", img: pot_cigarette_7 },
       { name: "Pipe", img: pot_pipe_7 },
       { name: "Cigar", img: pot_cigar_7 },
+      {
+        name: "Smilee Lolipop",
+        img: pot_smileeberas_lolipop_7,
+        defaultHidden: true,
+      },
     ],
     8: [
       { name: "None", img: none },
@@ -424,6 +598,14 @@ const NFT_PARTS: NFT_PARTS_TYPE = {
         img: pot_THC_brown_arm_8,
         layerConstrain: { 1: ["THC Brown Bear"] },
         defaultHidden: true,
+      },
+      {
+        name: "BeraHorse Rope",
+        img: pot_berahorse_rope_8,
+      },
+      {
+        name: "BoogaBeras Doll",
+        img: pot_boogaberas_doll_8,
       },
     ],
     9: [{ name: "None", img: none }],
