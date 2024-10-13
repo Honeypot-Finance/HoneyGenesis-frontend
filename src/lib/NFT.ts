@@ -89,6 +89,14 @@ export class NFT {
       },
       constraints: [],
     },
+    9: {
+      name: "Nail",
+      value: {
+        name: NFT_PARTS[this.bearType][9][0].name,
+        img: NFT_PARTS[this.bearType][9][0].img,
+      },
+      constraints: [],
+    },
   };
 
   constructor() {
@@ -109,6 +117,11 @@ export class NFT {
     //this.removeConstraint(Object.entries(this.layers[layer].constraints));
     this.layers[layer].value = this.getLayerOptionByName(layer, name);
     //this.addConstraint(Object.entries(this.layers[layer].constraints));
+    this.updateConstraints();
+  };
+
+  setLayerValue = (layer: number, value: layerOption) => {
+    this.layers[layer].value = value;
     this.updateConstraints();
   };
 

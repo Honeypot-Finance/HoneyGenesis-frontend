@@ -161,6 +161,8 @@ import pot_THC_polar_arm_8 from "./蜜罐阵营/8-THC北极熊左臂_sm.png";
 import pot_THC_brown_arm_8 from "./蜜罐阵营/8-THC棕熊左臂_sm.png";
 import pot_berahorse_rope_8 from "./蜜罐阵营/8-BeraHorse-rope_sm.png";
 import pot_boogaberas_doll_8 from "./蜜罐阵营/8-BoogaBeras-doll_sm.png";
+import { BEAR_TYPE } from "@/lib/NFT";
+import { layerOption } from ".";
 
 // Bullas	predator *1	Bullas *4	Farm/jail *2	anger/normal *2	green/purple *2	none *1	none	none/cigarette *2	wipe *1	64
 // Beraborrow	predator *1	Beraborrow *4	Farm/jail *2	Beraborrow *1	none	none/ironpot	none/white	Cigar/pipe *2	wipe *1	64
@@ -169,9 +171,9 @@ import pot_boogaberas_doll_8 from "./蜜罐阵营/8-BoogaBeras-doll_sm.png";
 // BeraBaddies	pot *1	BeraBaddies *4	Beraboy tree/farm *2	BeraBaddies *1	THC *1	BeraBaddies/redhat *3	none/Berautistics *2	none	none	48
 // Berautistics	pot *1	Berautistics *4	house *1	none	none/BurrBera *2	none	Berautistics *1	none	Ibeabag/THJ/boogabera/yeet dolls *4	32
 // THC	pot *1	THC *4	Beraboy/house *3	normal*1	thc *1	none/redhat/beracer *3	THC *1	none	THC arm *1(for each bear)	36
-// BurrBera	pot *1	BurrBera *4	Beraboy *2	BurrBera *1	BurrBera *1	none	BurrBera *1	Cigar/pipe *2	none	16
+// BurrBera	pot *1 BurrBera *4	Beraboy *2	BurrBera *1	BurrBera *1	none	BurrBera *1	Cigar/pipe *2	none	16
 // Smilee	pot *1	Smilee *4	Smilee/house *2	none	Smilee *1	Smilee *1	none	Smilee *1	rope/None/Honeycell/THJ/boogabera/yeet dolls *6	48
-// BeraBaddies X Fable	pot *1	BeraBaddies *4	farm *1	BeraBaddies *1	fable *1	BeraBaddies *2	none/Berautistics *2	none	none	16
+// BeraBaddies X Fable pot *1	BeraBaddies *4	farm *1	BeraBaddies *1	fable *1	BeraBaddies *2	none/Berautistics *2	none	none	16
 
 // POT X Areb	predator *1	normal *4	Farm/jail *2	anger/normal *2	green/purple *2	areb	none	none	wipe *1	32
 // POT predator	predator *1	normal *4	Farm/jail/aigen *3	anger/normal *2	green/purple *2	none/cell/ironpot *3	none/white *2	all *3	pan/saw/shove/sickle *4	1728
@@ -180,185 +182,511 @@ import pot_boogaberas_doll_8 from "./蜜罐阵营/8-BoogaBeras-doll_sm.png";
 // POT X Beracer	pot *1	normal *4	farm *1	normal*1	green/burrbera/purple *3	Beracer	none	none	none	15
 // POT pot	pot *1	normal *4	house/farm/aigen*3	normala+(anger/nervous 随机二选一) *2	none/green/purple *3	redhat/ironpot/none *3	iron/large/none *3	none/cigarette *2	cell/hotpot/highpresure*3	3888
 
-const generate_setting = {
+export const generate_setting: {
+  [key: string]: {
+    type: BEAR_TYPE;
+    totalOutput: number;
+    layers: {
+      [key: number]: layerOption[];
+    };
+  };
+} = {
   //predators
   Bullas: {
-    0: [
-      { name: "Farm", img: predator_farm_0 },
-      { name: "Jail", img: predator_jail_0 },
-    ],
-    1: [
-      { name: "Bullas Polar Bear", img: predator_bullas_polarBear_1 },
-      { name: "Bullas Brown Bear", img: predator_bullas_brownBear_1 },
-      { name: "Bullas Panda Bear", img: predator_bullas_pandaBear_1 },
-      { name: "Bullas Black Bear", img: predator_bullas_blackBear_1 },
-    ],
-    2: [{ name: "Bottom Nail", img: predator_bottomNail_2 }],
-    3: [
-      { name: "Anger", img: predator_anger_3 },
-      { name: "Normal", img: predator_normal_3 },
-    ],
-    4: [
-      { name: "Purple", img: predator_purple_4 },
-      { name: "Green", img: predator_green_4 },
-    ],
-    5: [{ name: "None", img: none }],
-    6: [{ name: "None", img: none }],
-    7: [
-      { name: "None", img: none },
-      { name: "Cigarette", img: predator_cigarette_7 },
-    ],
-    8: [{ name: "Bullas Whip", img: predator_bullas_whip_8 }],
+    type: "predator",
+    totalOutput: 64,
+    layers: {
+      0: [
+        { name: "Farm", img: predator_farm_0 },
+        { name: "Jail", img: predator_jail_0 },
+      ],
+      1: [
+        { name: "Bullas Polar Bear", img: predator_bullas_polarBear_1 },
+        { name: "Bullas Brown Bear", img: predator_bullas_brownBear_1 },
+        { name: "Bullas Panda Bear", img: predator_bullas_pandaBear_1 },
+        { name: "Bullas Black Bear", img: predator_bullas_blackBear_1 },
+      ],
+      2: [{ name: "Bottom Nail", img: predator_bottomNail_2 }],
+      3: [
+        { name: "Anger", img: predator_anger_3 },
+        { name: "Normal", img: predator_normal_3 },
+      ],
+      4: [
+        { name: "Purple", img: predator_purple_4 },
+        { name: "Green", img: predator_green_4 },
+      ],
+      5: [{ name: "None", img: none }],
+      6: [{ name: "None", img: none }],
+      7: [
+        { name: "None", img: none },
+        { name: "Cigarette", img: predator_cigarette_7 },
+      ],
+      8: [{ name: "Bullas Whip", img: predator_bullas_whip_8 }],
+    },
   },
   Beraborrow: {
-    0: [
-      { name: "Farm", img: predator_farm_0 },
-      { name: "Jail", img: predator_jail_0 },
-    ],
-    1: [
-      { name: "Beraborrow Polar Bear", img: predator_beraborrow_polarBear_1 },
-      { name: "Beraborrow Brown Bear", img: predator_beraborrow_brownBear_1 },
-      { name: "Beraborrow Panda Bear", img: predator_beraborrow_pandaBear_1 },
-      { name: "Beraborrow Black Bear", img: predator_beraborrow_blackBear_1 },
-    ],
-    2: [{ name: "Bottom Nail", img: predator_bottomNail_2 }],
-    3: [{ name: "Beraborrow Smirk", img: predator_beraborrow_smirk_3 }],
-    4: [{ name: "None", img: none }],
-    5: [
-      { name: "None", img: none },
-      { name: "Iron Pot", img: predator_ironPot_5 },
-    ],
-    6: [
-      { name: "None", img: none },
-      { name: "White", img: predator_white_6 },
-    ],
-    7: [
-      { name: "Pipe", img: predator_pipe_7 },
-      { name: "Cigar", img: predator_cigar_7 },
-    ],
-    8: [{ name: "Iron Shove", img: predator_bullas_whip_8 }],
+    type: "predator",
+    totalOutput: 64,
+    layers: {
+      0: [
+        { name: "Farm", img: predator_farm_0 },
+        { name: "Jail", img: predator_jail_0 },
+      ],
+      1: [
+        { name: "Beraborrow Polar Bear", img: predator_beraborrow_polarBear_1 },
+        { name: "Beraborrow Brown Bear", img: predator_beraborrow_brownBear_1 },
+        { name: "Beraborrow Panda Bear", img: predator_beraborrow_pandaBear_1 },
+        { name: "Beraborrow Black Bear", img: predator_beraborrow_blackBear_1 },
+      ],
+      2: [{ name: "Bottom Nail", img: predator_bottomNail_2 }],
+      3: [{ name: "Beraborrow Smirk", img: predator_beraborrow_smirk_3 }],
+      4: [{ name: "None", img: none }],
+      5: [
+        { name: "None", img: none },
+        { name: "Iron Pot", img: predator_ironPot_5 },
+      ],
+      6: [
+        { name: "None", img: none },
+        { name: "White", img: predator_white_6 },
+      ],
+      7: [
+        { name: "Pipe", img: predator_pipe_7 },
+        { name: "Cigar", img: predator_cigar_7 },
+      ],
+      8: [{ name: "Iron Shove", img: predator_bullas_whip_8 }],
+    },
   },
   Areb: {
-    0: [
-      { name: "Farm", img: predator_farm_0 },
-      { name: "Jail", img: predator_jail_0 },
-    ],
-    1: [
-      { name: "Polar Bear", img: predator_polarBear_1 },
-      { name: "Brown Bear", img: predator_brownBear_1 },
-      { name: "Panda Bear", img: predator_pandaBear_1 },
-      { name: "Black Bear", img: predator_blackBear_1 },
-    ],
-    2: [{ name: "Bottom Nail", img: predator_bottomNail_2 }],
-    3: [{ name: "Areb Face", img: predator_areb_face_3 }],
-    4: [
-      { name: "Green", img: predator_green_4 },
-      { name: "Purple", img: predator_purple_4 },
-    ],
-    5: [{ name: "Areb Crown", img: predator_areb_crown_5 }],
-    6: [{ name: "None", img: none }],
-    7: [{ name: "None", img: none }],
-    8: [{ name: "Iron Shove", img: predator_bullas_whip_8 }],
+    type: "predator",
+    totalOutput: 32,
+    layers: {
+      0: [
+        { name: "Farm", img: predator_farm_0 },
+        { name: "Jail", img: predator_jail_0 },
+      ],
+      1: [
+        { name: "Polar Bear", img: predator_polarBear_1 },
+        { name: "Brown Bear", img: predator_brownBear_1 },
+        { name: "Panda Bear", img: predator_pandaBear_1 },
+        { name: "Black Bear", img: predator_blackBear_1 },
+      ],
+      2: [{ name: "Bottom Nail", img: predator_bottomNail_2 }],
+      3: [{ name: "Areb Face", img: predator_areb_face_3 }],
+      4: [
+        { name: "Green", img: predator_green_4 },
+        { name: "Purple", img: predator_purple_4 },
+      ],
+      5: [{ name: "Areb Crown", img: predator_areb_crown_5 }],
+      6: [{ name: "None", img: none }],
+      7: [{ name: "None", img: none }],
+      8: [{ name: "Iron Shove", img: predator_bullas_whip_8 }],
+    },
   },
   HPOT_Predator: {
-    0: [
-      { name: "Farm", img: predator_farm_0 },
-      { name: "Jail", img: predator_jail_0 },
-      { name: "AI Gen", img: pot_aigen_0 },
-    ],
-    1: [
-      { name: "Polar Bear", img: predator_polarBear_1 },
-      { name: "Brown Bear", img: predator_brownBear_1 },
-      { name: "Panda Bear", img: predator_pandaBear_1 },
-      { name: "Black Bear", img: predator_blackBear_1 },
-    ],
-    2: [{ name: "Bottom Nail", img: predator_bottomNail_2 }],
-    3: [
-      { name: "Normal", img: predator_normal_3 },
-      { name: "Anger", img: predator_anger_3 },
-    ],
-    4: [
-      { name: "Green", img: predator_green_4 },
-      { name: "Purple", img: predator_purple_4 },
-    ],
-    5: [
-      { name: "None", img: none },
-      { name: "Honey Cell", img: predator_honeyCell_5 },
-      { name: "Iron Pot", img: predator_ironPot_5 },
-    ],
-    6: [
-      { name: "None", img: none },
-      { name: "White", img: predator_white_6 },
-    ],
-    7: [
-      { name: "Cigarette", img: predator_cigarette_7 },
-      { name: "Pipe", img: predator_pipe_7 },
-      { name: "Cigar", img: predator_cigar_7 },
-    ],
-    8: [
-      { name: "Pan", img: predator_pan_8 },
-      { name: "Chain Saw", img: predator_chainSaw_8 },
-      { name: "Iron Shove", img: predator_ironShove_8 },
-      { name: "Sickle", img: predator_sickle_8 },
-    ],
-    9: [{ name: "Top Nail", img: predator_topNail_9 }],
+    type: "predator",
+    totalOutput: 1728,
+    layers: {
+      0: [
+        { name: "Farm", img: predator_farm_0 },
+        { name: "Jail", img: predator_jail_0 },
+        { name: "AI Gen", img: pot_aigen_0 },
+      ],
+      1: [
+        { name: "Polar Bear", img: predator_polarBear_1 },
+        { name: "Brown Bear", img: predator_brownBear_1 },
+        { name: "Panda Bear", img: predator_pandaBear_1 },
+        { name: "Black Bear", img: predator_blackBear_1 },
+      ],
+      2: [{ name: "Bottom Nail", img: predator_bottomNail_2 }],
+      3: [
+        { name: "Normal", img: predator_normal_3 },
+        { name: "Anger", img: predator_anger_3 },
+      ],
+      4: [
+        { name: "Green", img: predator_green_4 },
+        { name: "Purple", img: predator_purple_4 },
+      ],
+      5: [
+        { name: "None", img: none },
+        { name: "Honey Cell", img: predator_honeyCell_5 },
+        { name: "Iron Pot", img: predator_ironPot_5 },
+      ],
+      6: [
+        { name: "None", img: none },
+        { name: "White", img: predator_white_6 },
+      ],
+      7: [
+        { name: "Cigarette", img: predator_cigarette_7 },
+        { name: "Pipe", img: predator_pipe_7 },
+        { name: "Cigar", img: predator_cigar_7 },
+      ],
+      8: [
+        { name: "Pan", img: predator_pan_8 },
+        { name: "Chain Saw", img: predator_chainSaw_8 },
+        { name: "Iron Shove", img: predator_ironShove_8 },
+        { name: "Sickle", img: predator_sickle_8 },
+      ],
+      9: [{ name: "Top Nail", img: predator_topNail_9 }],
+    },
   },
   //pots
   BeraBoyz: {
-    0: [
-      { name: "Dollar Bills", img: pot_beraboyz_dollarbills_0 },
-      { name: "Pal Trees", img: pot_beraboyz_paltrees_0 },
-    ],
-    1: [
-      { name: "Polar Bear", img: pot_beraboyz_polarBear_1 },
-      { name: "Brown Bear", img: pot_beraboyz_brownBear_1 },
-      { name: "Panda Bear", img: pot_beraboyz_pandaBear_1 },
-      { name: "Black Bear", img: pot_beraboyz_blackBear_1 },
-    ],
-    2: [{ name: "None", img: none }],
-    3: [{ name: "BeraBoyz Stare", img: pot_beraboyz_stare_3 }],
-    4: [{ name: "Golden Pendant", img: pot_beraboyz_golden_pendant_4 }],
-    5: [
-      { name: "None", img: none },
-      { name: "Red Hat", img: pot_red_5 },
-      { name: "Beracer Helmet", img: pot_Beracer_helmet_5 },
-    ],
-    6: [{ name: "None", img: none }],
-    7: [
-      //cigar
-      { name: "Cigar", img: pot_cigar_7 },
-      //pipe
-      { name: "Pipe", img: pot_pipe_7 },
-    ],
-    8: [{ name: "None", img: none }],
-    9: [{ name: "None", img: none }],
+    type: "pot",
+    totalOutput: 48,
+    layers: {
+      0: [
+        { name: "Dollar Bills", img: pot_beraboyz_dollarbills_0 },
+        { name: "Pal Trees", img: pot_beraboyz_paltrees_0 },
+      ],
+      1: [
+        { name: "Bera Boyz Polar Bear", img: pot_beraboyz_polarBear_1 },
+        { name: "Bera Boyz Brown Bear", img: pot_beraboyz_brownBear_1 },
+        { name: "Bera Boyz Panda Bear", img: pot_beraboyz_pandaBear_1 },
+        { name: "Bera Boyz Black Bear", img: pot_beraboyz_blackBear_1 },
+      ],
+      2: [{ name: "None", img: none }],
+      3: [{ name: "BeraBoyz Stare", img: pot_beraboyz_stare_3 }],
+      4: [{ name: "Golden Pendant", img: pot_beraboyz_golden_pendant_4 }],
+      5: [
+        { name: "None", img: none },
+        { name: "Red Hat", img: pot_red_5 },
+        { name: "Beracer Helmet", img: pot_Beracer_helmet_5 },
+      ],
+      6: [{ name: "None", img: none }],
+      7: [
+        //cigar
+        { name: "Cigar", img: pot_cigar_7 },
+        //pipe
+        { name: "Pipe", img: pot_pipe_7 },
+      ],
+      8: [{ name: "None", img: none }],
+      9: [{ name: "None", img: none }],
+    },
   },
   BeraBaddies: {
-    0: [
-      { name: "Pal Trees", img: pot_beraboyz_paltrees_0 },
-      { name: "Farm", img: predator_farm_0 },
-    ],
-    1: [
-      { name: "Black Bear", img: pot_berabaddies_blackBear_1 },
-      { name: "Panda Bear", img: pot_berabaddies_pandaBear_1 },
-      { name: "Polar Bear", img: pot_berabaddies_polarBear_1 },
-      { name: "Brown Bear", img: pot_berabaddies_brownBear_1 },
-    ],
-    2: [
-      { name: "Tree", img: pot_berabaddies_flower_5 },
-      { name: "Farm", img: predator_farm_0 },
-    ],
-    3: [{ name: "Berabaddies Face", img: pot_berabaddies_face_3 }],
-    4: [{ name: "THC", img: pot_thc_garland_4 }],
-    5: [
-      { name: "None", img: none },
-      { name: "Red Hat", img: pot_berabaddies_hairband_5 },
-    ],
-    6: [
-      { name: "None", img: none },
-      { name: "Berautistics Glasses", img: pot_Berautistics_glasses_6 },
-    ],
-    7: [{ name: "None", img: none }],
-    8: [{ name: "None", img: none }],
+    type: "pot",
+    totalOutput: 48,
+    layers: {
+      0: [
+        { name: "Pal Trees", img: pot_beraboyz_paltrees_0 },
+        { name: "Farm", img: predator_farm_0 },
+      ],
+      1: [
+        { name: "Bera Baddies Black Bear", img: pot_berabaddies_blackBear_1 },
+        { name: "Bera Baddies Panda Bear", img: pot_berabaddies_pandaBear_1 },
+        { name: "Bera Baddies Polar Bear", img: pot_berabaddies_polarBear_1 },
+        { name: "Bera Baddies Brown Bear", img: pot_berabaddies_brownBear_1 },
+      ],
+      2: [{ name: "None", img: none }],
+      3: [{ name: "Berabaddies Face", img: pot_berabaddies_face_3 }],
+      4: [{ name: "THC", img: pot_thc_garland_4 }],
+      5: [
+        { name: "Flower", img: pot_berabaddies_flower_5 },
+        { name: "Hair Band", img: pot_berabaddies_hairband_5 },
+        { name: "Red Hat", img: pot_red_5 },
+      ],
+      6: [{ name: "None", img: none }],
+      7: [{ name: "None", img: none }],
+      8: [{ name: "None", img: none }],
+    },
+  },
+  Beraustics: {
+    type: "pot",
+    totalOutput: 32,
+    layers: {
+      0: [{ name: "House", img: pot_house_0 }],
+      1: [
+        { name: "Berautistics Black Bear", img: pot_Berautistics_blackBear_1 },
+        { name: "Berautistics Panda Bear", img: pot_Berautistics_pandaBear_1 },
+        { name: "Berautistics Polar Bear", img: pot_Berautistics_polarBear_1 },
+        { name: "Berautistics Brown Bear", img: pot_Berautistics_brownBear_1 },
+      ],
+      2: [{ name: "None", img: none }],
+      3: [{ name: "None", img: none }],
+      4: [{ name: "None", img: none }],
+      5: [
+        { name: "None", img: none },
+        { name: "Burrbear", img: pot_burrbear_glasses_6 },
+      ],
+      6: [
+        { name: "None", img: none },
+        { name: "Berautistics Glasses", img: pot_Berautistics_glasses_6 },
+      ],
+      7: [{ name: "None", img: none }],
+      8: [
+        { name: "IKEA Bag", img: pot_ikeaBag_8 },
+        { name: "Honey Cell", img: pot_honeyCell_8 },
+        { name: "Iron Pot", img: pot_ironPot_8 },
+        { name: "Clay Pot", img: pot_clayPot_8 },
+      ],
+    },
+  },
+  THC: {
+    type: "pot",
+    totalOutput: 36,
+    layers: {
+      0: [
+        { name: "Farm", img: pot_farm_0 },
+        { name: "Beraboyz Dollar Bills", img: pot_beraboyz_dollarbills_0 },
+        { name: "Beraboyz Pal Trees", img: pot_beraboyz_paltrees_0 },
+      ],
+      1: [
+        {
+          name: "THC Black Bear",
+          img: pot_THC_blackBear_1,
+          layerConstrain: {
+            8: ["THC Black Arm"],
+          },
+        },
+        {
+          name: "THC Panda Bear",
+          img: pot_THC_pandaBear_1,
+          layerConstrain: {
+            8: ["THC Panda Arm"],
+          },
+        },
+        {
+          name: "THC Polar Bear",
+          img: pot_THC_polarBear_1,
+          layerConstrain: {
+            8: ["THC Polar Arm"],
+          },
+        },
+        {
+          name: "THC Brown Bear",
+          img: pot_THC_brownBear_1,
+          layerConstrain: {
+            8: ["THC Brown Arm"],
+          },
+        },
+      ],
+      2: [{ name: "none", img: none }],
+      3: [{ name: "Normal", img: pot_normal_3 }],
+      4: [{ name: "THC Garland", img: pot_thc_garland_4 }],
+      5: [
+        { name: "None", img: none },
+        { name: "Red Hat", img: pot_red_5 },
+        { name: "Beracer Helmet", img: pot_Beracer_helmet_5 },
+      ],
+      6: [
+        { name: "None", img: none },
+        { name: "THC Glasses", img: pot_thc_glasses_6 },
+      ],
+      7: [{ name: "None", img: none }],
+      8: [
+        { name: "THC Black Arm", img: pot_THC_black_arm_8 },
+        { name: "THC Panda Arm", img: pot_THC_panda_arm_8 },
+        { name: "THC Polar Arm", img: pot_THC_polar_arm_8 },
+        { name: "THC Brown Arm", img: pot_THC_brown_arm_8 },
+      ],
+    },
+  },
+  BurrBera: {
+    type: "pot",
+    totalOutput: 16,
+    layers: {
+      0: [
+        { name: "Beraboyz Dollar Bills", img: pot_beraboyz_dollarbills_0 },
+        { name: "Pal Trees", img: pot_beraboyz_paltrees_0 },
+      ],
+      1: [
+        { name: "Burrbear Black Bear", img: pot_burrbear_blackBear_1 },
+        { name: "Burrbear Panda Bear", img: pot_burrbear_pandaBear_1 },
+        { name: "Burrbear Polar Bear", img: pot_burrbear_polarBear_1 },
+        { name: "Burrbear Brown Bear", img: pot_burrbear_brownBear_1 },
+      ],
+      2: [{ name: "None", img: none }],
+      3: [{ name: "Burrbear Face", img: pot_burrbear_face_3 }],
+      4: [{ name: "BurrBear Cloth", img: pot_burrbear_cloth_4 }],
+      5: [{ name: "None", img: none }],
+      6: [{ name: "BurrBear Glasses", img: pot_burrbear_glasses_6 }],
+      7: [
+        { name: "Cigar", img: pot_cigar_7 },
+        { name: "Pipe", img: pot_pipe_7 },
+      ],
+      8: [{ name: "None", img: none }],
+    },
+  },
+  Smilee: {
+    type: "pot",
+    totalOutput: 48,
+    layers: {
+      0: [
+        { name: "SmileeBeras BG", img: pot_smileeBeras_bg_0 },
+        { name: "House", img: pot_house_0 },
+      ],
+      1: [
+        { name: "SmileeBeras Black Bear", img: pot_smileeBeras_blackBear_1 },
+        { name: "SmileeBeras Panda Bear", img: pot_smileeBeras_pandaBear_1 },
+        { name: "SmileeBeras Polar Bear", img: pot_smileeBeras_polarBear_1 },
+        { name: "SmileeBeras Brown Bear", img: pot_smileeBeras_brownBear_1 },
+      ],
+      2: [{ name: "None", img: none }],
+      3: [{ name: "None", img: none }],
+      4: [{ name: "Smilee D", img: pot_smileeBeras_dick_4 }],
+      5: [{ name: "Smilee D head", img: pot_smileebera_dickhead_5 }],
+      6: [
+        {
+          name: "None",
+          img: none,
+        },
+      ],
+      7: [
+        {
+          name: "Lolipop",
+          img: pot_smileeberas_lolipop_7,
+        },
+      ],
+      8: [
+        {
+          name: "None",
+          img: none,
+        },
+        {
+          name: "Rope",
+          img: pot_berahorse_rope_8,
+        },
+        {
+          name: "Honey Cell",
+          img: pot_honeyCell_8,
+        },
+        {
+          name: "THJ Doll",
+          img: pot_thj_doll_8,
+        },
+        {
+          name: "Yeet Doll",
+          img: pot_yeetie_doll_8,
+        },
+        {
+          name: "Booga Doll",
+          img: pot_boogaberas_doll_8,
+        },
+      ],
+    },
+  },
+  BeraBaddies_Fable: {
+    type: "pot",
+    totalOutput: 16,
+    layers: {
+      0: [{ name: "Farm", img: pot_farm_0 }],
+      1: [
+        { name: "Bera Baddies Black Bear", img: pot_berabaddies_blackBear_1 },
+        { name: "Bera Baddies Panda Bear", img: pot_berabaddies_pandaBear_1 },
+        { name: "Bera Baddies Polar Bear", img: pot_berabaddies_polarBear_1 },
+        { name: "Bera Baddies Brown Bear", img: pot_berabaddies_brownBear_1 },
+      ],
+      2: [{ name: "None", img: none }],
+      3: [{ name: "Berabaddies Face", img: pot_berabaddies_face_3 }],
+      4: [{ name: "Fable Cape", img: pot_fable_cape_4 }],
+      5: [
+        { name: "Flower", img: pot_berabaddies_flower_5 },
+        { name: "Hair Band", img: pot_berabaddies_hairband_5 },
+      ],
+      6: [
+        { name: "None", img: none },
+        { name: "Berautistics glasses", img: pot_Berautistics_glasses_6 },
+      ],
+      7: [{ name: "None", img: none }],
+      8: [{ name: "None", img: none }],
+    },
+  },
+  POT_Fable: {
+    type: "pot",
+    totalOutput: 80,
+    layers: {
+      0: [{ name: "Farm", img: pot_farm_0 }],
+      1: [
+        { name: "Polar Bear", img: pot_polarBear_1 },
+        { name: "Brown Bear", img: pot_brownBear_1 },
+        { name: "Panda Bear", img: pot_pandaBear_1 },
+        { name: "Black Bear", img: pot_blackBear_1 },
+      ],
+      2: [{ name: "None", img: none }],
+      3: [{ name: "Normal", img: pot_normal_3 }],
+      4: [{ name: "Fable Cape", img: pot_fable_cape_4 }],
+      5: [{ name: "None", img: none }],
+      6: [{ name: "None", img: none }],
+      7: [
+        { name: "Cigar", img: pot_cigar_7 },
+        { name: "Pipe", img: pot_pipe_7 },
+      ],
+      8: [
+        { name: "Clay Pot", img: pot_clayPot_8 },
+        { name: "THJ Doll", img: pot_thj_doll_8 },
+        { name: "Yeet Doll", img: pot_yeetie_doll_8 },
+      ],
+    },
+  },
+  POT_Beracer: {
+    type: "pot",
+    totalOutput: 15,
+    layers: {
+      0: [{ name: "Farm", img: pot_farm_0 }],
+      1: [
+        { name: "Polar Bear", img: pot_polarBear_1 },
+        { name: "Brown Bear", img: pot_brownBear_1 },
+        { name: "Panda Bear", img: pot_pandaBear_1 },
+        { name: "Black Bear", img: pot_blackBear_1 },
+      ],
+      2: [{ name: "None", img: none }],
+      3: [{ name: "Normal", img: pot_normal_3 }],
+      4: [
+        { name: "Green", img: pot_green_4 },
+        { name: "Purple", img: pot_purple_4 },
+        { name: "Burrbear", img: pot_burrbear_cloth_4 },
+      ],
+      5: [{ name: "Beracer Helmet", img: pot_Beracer_helmet_5 }],
+      6: [{ name: "None", img: none }],
+      7: [{ name: "None", img: none }],
+      8: [{ name: "None", img: none }],
+    },
+  },
+  POT_Pot: {
+    type: "pot",
+    totalOutput: 3888,
+    layers: {
+      0: [
+        { name: "House", img: pot_house_0 },
+        { name: "Farm", img: pot_farm_0 },
+        { name: "AI Gen", img: pot_aigen_0 },
+      ],
+      1: [
+        { name: "Polar Bear", img: pot_polarBear_1 },
+        { name: "Brown Bear", img: pot_brownBear_1 },
+        { name: "Panda Bear", img: pot_pandaBear_1 },
+        { name: "Black Bear", img: pot_blackBear_1 },
+      ],
+      2: [{ name: "None", img: none }],
+      3: [
+        { name: "Normal", img: pot_normal_3 },
+        { name: "Anger", img: pot_anger_3 },
+        { name: "Nervous", img: pot_nervous_3 },
+      ],
+      4: [
+        { name: "None", img: none },
+        { name: "Green", img: pot_green_4 },
+        { name: "Purple", img: pot_purple_4 },
+      ],
+      5: [
+        { name: "None", img: none },
+        { name: "Red Hat", img: pot_red_5 },
+        { name: "Iron Pot", img: pot_ironPot_5 },
+      ],
+      6: [
+        { name: "None", img: none },
+        { name: "Iron", img: pot_iron_6 },
+        { name: "Large Sun Glasses", img: pot_largeSunGlasses_6 },
+      ],
+      7: [
+        { name: "None", img: none },
+        { name: "Cigarette", img: pot_cigarette_7 },
+      ],
+      8: [
+        { name: "Honey Cell", img: pot_honeyCell_8 },
+        { name: "Bronze Hot Pot", img: pot_bronzeHotPot_8 },
+        { name: "High Pressure Pot", img: pot_highPressurePot_8 },
+      ],
+    },
   },
 };

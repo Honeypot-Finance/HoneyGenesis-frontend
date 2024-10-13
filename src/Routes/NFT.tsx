@@ -3,6 +3,7 @@ import GeneralDropDown from "@/components/atoms/GeneralDropDown/GeneralDropDown"
 import NFT_PARTS from "@/assets/nft_sm";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
 import mergeImages from "merge-images";
+import { generate_setting } from "@/assets/nft_sm/bulk_generating_index";
 
 //imgs
 import bgImage from "@/assets/forest-bg.png";
@@ -97,6 +98,65 @@ const NFT = observer(() => {
     [updateAvatarImage]
   );
 
+  const downloadPresets = async () => {
+    const zip = new JSZip();
+    const keys = Object.keys(generate_setting);
+
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      const value = generate_setting[key];
+      nftStore.setBearType(value.type);
+
+      for (let i = 0; i < value.totalOutput; i++) {
+        const constraints = {
+          0: undefined,
+          1: undefined,
+          2: undefined,
+          3: undefined,
+          4: undefined,
+          5: undefined,
+          6: undefined,
+          7: undefined,
+          8: undefined,
+          9: undefined,
+        };
+        for (let j = 0; j < Object.keys(value.layers).length; j++) {
+          let v;
+
+          if (constraints[j]) {
+            v = value.layers[j].find((layer) => {
+              return layer.name === constraints[j];
+            });
+          } else {
+            v =
+              value.layers[j][
+                Math.floor(Math.random() * value.layers[j].length)
+              ];
+          }
+
+          nftStore.setLayerValue(j, v);
+          if (v.layerConstrain) {
+            Object.keys(v.layerConstrain).forEach((key) => {
+              constraints[key] = v.layerConstrain[0];
+            });
+          }
+
+          console.log(key, j);
+        }
+
+        const url = await updateAvatarImage({ returnUrl: true });
+        await fetch(url).then(async (res) => {
+          const blob = await res.blob();
+          zip.folder(key).file(`nft-${i}.png`, blob);
+        });
+      }
+    }
+
+    await zip.generateAsync({ type: "blob" }).then(function (content) {
+      saveAs(content, "presets_nfts.zip");
+    });
+  };
+
   useEffect(() => {
     nftStore.randomNFT();
     updateAvatarImage({});
@@ -189,6 +249,16 @@ const NFT = observer(() => {
                 }}
               >
                 Download All
+              </GeneralButton>
+
+              <GeneralButton
+                onClick={() => downloadPresets()}
+                //remove this style to enable bulk download
+                // style={{
+                //   display: "none",
+                // }}
+              >
+                Download Presets
               </GeneralButton>
             </div>
             <GeneralDropDown
