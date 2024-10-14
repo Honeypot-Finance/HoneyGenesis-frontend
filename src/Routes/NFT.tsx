@@ -98,57 +98,112 @@ const NFT = observer(() => {
     [updateAvatarImage]
   );
 
-  const downloadPresets = async () => {
+  const downloadPresets = async (generateType: "random" | "all" = "random") => {
     const zip = new JSZip();
     const keys = Object.keys(generate_setting);
 
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      const value = generate_setting[key];
-      nftStore.setBearType(value.type);
+    if (generateType === "random") {
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        const value = generate_setting[key];
+        nftStore.setBearType(value.type);
 
-      for (let i = 0; i < value.totalOutput; i++) {
-        const constraints = {
-          0: undefined,
-          1: undefined,
-          2: undefined,
-          3: undefined,
-          4: undefined,
-          5: undefined,
-          6: undefined,
-          7: undefined,
-          8: undefined,
-          9: undefined,
-        };
-        for (let j = 0; j < Object.keys(value.layers).length; j++) {
-          let v;
+        for (let i = 0; i < value.totalOutput; i++) {
+          const constraints = {
+            0: undefined,
+            1: undefined,
+            2: undefined,
+            3: undefined,
+            4: undefined,
+            5: undefined,
+            6: undefined,
+            7: undefined,
+            8: undefined,
+            9: undefined,
+          };
+          for (let j = 0; j < Object.keys(value.layers).length; j++) {
+            let v;
 
-          if (constraints[j]) {
-            v = value.layers[j].find((layer) => {
-              return layer.name === constraints[j];
-            });
-          } else {
-            v =
-              value.layers[j][
-                Math.floor(Math.random() * value.layers[j].length)
-              ];
+            if (constraints[j]) {
+              v = value.layers[j].find((layer) => {
+                return layer.name === constraints[j];
+              });
+            } else {
+              v =
+                value.layers[j][
+                  Math.floor(Math.random() * value.layers[j].length)
+                ];
+            }
+
+            nftStore.setLayerValue(j, v);
+            if (v.layerConstrain) {
+              Object.keys(v.layerConstrain).forEach((key) => {
+                constraints[key] = v.layerConstrain[0];
+              });
+            }
+
+            console.log(key, j);
           }
 
-          nftStore.setLayerValue(j, v);
-          if (v.layerConstrain) {
-            Object.keys(v.layerConstrain).forEach((key) => {
-              constraints[key] = v.layerConstrain[0];
-            });
-          }
-
-          console.log(key, j);
+          const url = await updateAvatarImage({ returnUrl: true });
+          await fetch(url).then(async (res) => {
+            const blob = await res.blob();
+            zip.folder(key).file(`nft-${i}.png`, blob);
+            URL.revokeObjectURL(url);
+          });
         }
+      }
+    } else if (generateType === "all") {
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        const value = generate_setting[key];
+        nftStore.setBearType(value.type);
 
-        const url = await updateAvatarImage({ returnUrl: true });
-        await fetch(url).then(async (res) => {
-          const blob = await res.blob();
-          zip.folder(key).file(`nft-${i}.png`, blob);
-        });
+        //generate every possible combination
+        for (let b = 0; b < value.layers[0].length; i++) {
+          for (let j = 0; j < value.layers[1].length; j++) {
+            for (let k = 0; k < value.layers[2].length; k++) {
+              for (let l = 0; l < value.layers[3].length; l++) {
+                for (let m = 0; m < value.layers[4].length; m++) {
+                  for (let n = 0; n < value.layers[5].length; n++) {
+                    for (let o = 0; o < value.layers[6].length; o++) {
+                      for (let p = 0; p < value.layers[7].length; p++) {
+                        for (let q = 0; q < value.layers[8].length; q++) {
+                          for (let r = 0; r < value.layers[9].length; r++) {
+                            nftStore.setLayerValue(0, value.layers[0][i]);
+                            nftStore.setLayerValue(1, value.layers[1][j]);
+                            nftStore.setLayerValue(2, value.layers[2][k]);
+                            nftStore.setLayerValue(3, value.layers[3][l]);
+                            nftStore.setLayerValue(4, value.layers[4][m]);
+                            nftStore.setLayerValue(5, value.layers[5][n]);
+                            nftStore.setLayerValue(6, value.layers[6][o]);
+                            nftStore.setLayerValue(7, value.layers[7][p]);
+                            nftStore.setLayerValue(8, value.layers[8][q]);
+                            nftStore.setLayerValue(9, value.layers[9][r]);
+
+                            const url = await updateAvatarImage({
+                              returnUrl: true,
+                            });
+                            await fetch(url).then(async (res) => {
+                              const blob = await res.blob();
+                              zip
+                                .folder(key)
+                                .file(
+                                  `nft-${i}-${b}-${j}-${k}-${l}-${m}-${n}-${o}-${p}-${q}-${r}.png`,
+                                  blob
+                                );
+                              URL.revokeObjectURL(url);
+                            });
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
 
@@ -252,13 +307,22 @@ const NFT = observer(() => {
               </GeneralButton>
 
               <GeneralButton
-                onClick={() => downloadPresets()}
+                onClick={() => downloadPresets("random")}
                 //remove this style to enable bulk download
                 // style={{
                 //   display: "none",
                 // }}
               >
-                Download Presets
+                Download Presets(random)
+              </GeneralButton>
+              <GeneralButton
+                onClick={() => downloadPresets("all")}
+                //remove this style to enable bulk download
+                // style={{
+                //   display: "none",
+                // }}
+              >
+                Download Presets(every possible)
               </GeneralButton>
             </div>
             <GeneralDropDown
