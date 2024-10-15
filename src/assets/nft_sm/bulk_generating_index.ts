@@ -223,6 +223,7 @@ export const generate_setting: {
         { name: "Cigarette", img: predator_cigarette_7 },
       ],
       8: [{ name: "Bullas Whip", img: predator_bullas_whip_8 }],
+      9: [{ name: "Top Nail", img: predator_topNail_9 }],
     },
   },
   Beraborrow: {
@@ -255,6 +256,7 @@ export const generate_setting: {
         { name: "Cigar", img: predator_cigar_7 },
       ],
       8: [{ name: "Iron Shove", img: predator_bullas_whip_8 }],
+      9: [{ name: "Top Nail", img: predator_topNail_9 }],
     },
   },
   Areb: {
@@ -281,6 +283,8 @@ export const generate_setting: {
       6: [{ name: "None", img: none }],
       7: [{ name: "None", img: none }],
       8: [{ name: "Iron Shove", img: predator_bullas_whip_8 }],
+
+      9: [{ name: "Top Nail", img: predator_topNail_9 }],
     },
   },
   HPOT_Predator: {
@@ -389,6 +393,7 @@ export const generate_setting: {
       6: [{ name: "None", img: none }],
       7: [{ name: "None", img: none }],
       8: [{ name: "None", img: none }],
+      9: [{ name: "None", img: none }],
     },
   },
   Beraustics: {
@@ -423,6 +428,7 @@ export const generate_setting: {
         { name: "Iron Pot", img: pot_ironPot_8 },
         { name: "Clay Pot", img: pot_clayPot_8 },
       ],
+      9: [{ name: "None", img: none }],
     },
   },
   // THC: {
@@ -499,6 +505,7 @@ export const generate_setting: {
       6: [{ name: "THC Glasses", img: pot_thc_glasses_6 }],
       7: [{ name: "None", img: none }],
       8: [{ name: "THC Black Arm", img: pot_THC_black_arm_8 }],
+      9: [{ name: "None", img: none }],
     },
   },
   THC_panda: {
@@ -527,6 +534,7 @@ export const generate_setting: {
       6: [{ name: "THC Glasses", img: pot_thc_glasses_6 }],
       7: [{ name: "None", img: none }],
       8: [{ name: "THC Panda Arm", img: pot_THC_panda_arm_8 }],
+      9: [{ name: "None", img: none }],
     },
   },
   THC_polar: {
@@ -555,6 +563,7 @@ export const generate_setting: {
       6: [{ name: "THC Glasses", img: pot_thc_glasses_6 }],
       7: [{ name: "None", img: none }],
       8: [{ name: "THC Polar Arm", img: pot_THC_polar_arm_8 }],
+      9: [{ name: "None", img: none }],
     },
   },
   THC_brown: {
@@ -583,6 +592,7 @@ export const generate_setting: {
       6: [{ name: "THC Glasses", img: pot_thc_glasses_6 }],
       7: [{ name: "None", img: none }],
       8: [{ name: "THC Brown Arm", img: pot_THC_brown_arm_8 }],
+      9: [{ name: "None", img: none }],
     },
   },
   BurrBera: {
@@ -609,6 +619,7 @@ export const generate_setting: {
         { name: "Pipe", img: pot_pipe_7 },
       ],
       8: [{ name: "None", img: none }],
+      9: [{ name: "None", img: none }],
     },
   },
   Smilee: {
@@ -667,6 +678,7 @@ export const generate_setting: {
           img: pot_boogaberas_doll_8,
         },
       ],
+      9: [{ name: "None", img: none }],
     },
   },
   BeraBaddies_Fable: {
@@ -693,6 +705,7 @@ export const generate_setting: {
       ],
       7: [{ name: "None", img: none }],
       8: [{ name: "None", img: none }],
+      9: [{ name: "None", img: none }],
     },
   },
   POT_Fable: {
@@ -720,6 +733,7 @@ export const generate_setting: {
         { name: "THJ Doll", img: pot_thj_doll_8 },
         { name: "Yeet Doll", img: pot_yeetie_doll_8 },
       ],
+      9: [{ name: "None", img: none }],
     },
   },
   POT_Beracer: {
@@ -744,6 +758,7 @@ export const generate_setting: {
       6: [{ name: "None", img: none }],
       7: [{ name: "None", img: none }],
       8: [{ name: "None", img: none }],
+      9: [{ name: "None", img: none }],
     },
   },
   POT_Pot_normal: {
@@ -791,6 +806,7 @@ export const generate_setting: {
         { name: "Bronze Hot Pot", img: pot_bronzeHotPot_8 },
         { name: "High Pressure Pot", img: pot_highPressurePot_8 },
       ],
+      9: [{ name: "None", img: none }],
     },
   },
   POT_Pot_angry: {
@@ -838,6 +854,7 @@ export const generate_setting: {
         { name: "Bronze Hot Pot", img: pot_bronzeHotPot_8 },
         { name: "High Pressure Pot", img: pot_highPressurePot_8 },
       ],
+      9: [{ name: "None", img: none }],
     },
   },
   POT_Pot_nervous: {
@@ -885,6 +902,7 @@ export const generate_setting: {
         { name: "Bronze Hot Pot", img: pot_bronzeHotPot_8 },
         { name: "High Pressure Pot", img: pot_highPressurePot_8 },
       ],
+      9: [{ name: "None", img: none }],
     },
   },
 };

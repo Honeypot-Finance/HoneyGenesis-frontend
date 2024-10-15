@@ -194,6 +194,8 @@ const NFT = observer(() => {
                                 );
                               URL.revokeObjectURL(url);
                             });
+
+                            console.log(key, i, j, k, l, m, n, o, p, q, r);
                           }
                         }
                       }
