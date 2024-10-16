@@ -262,15 +262,15 @@ export const generate_setting: {
         { name: "Black Bear", img: predator_blackBear_1 },
       ],
       2: [{ name: "Bottom Nail", img: predator_bottomNail_2 }],
-      3: [{ name: "Areb Face", img: predator_areb_face_3 }],
+      3: [
+        { name: "Anger", img: predator_anger_3 },
+        { name: "Normal", img: predator_normal_3 },
+      ],
       4: [
         { name: "Green", img: predator_green_4 },
         { name: "Purple", img: predator_purple_4 },
       ],
-      5: [
-        { name: "None", img: none },
-        { name: "Areb Crown", img: predator_areb_crown_5 },
-      ],
+      5: [{ name: "Areb Crown", img: predator_areb_crown_5 }],
       6: [{ name: "None", img: none }],
       7: [{ name: "None", img: none }],
       8: [{ name: "Iron Shove", img: predator_bullas_whip_8 }],
@@ -362,7 +362,7 @@ export const generate_setting: {
       ],
       2: [{ name: "None", img: none }],
       3: [{ name: "None", img: none }],
-      4: [{ name: "None", img: none }],
+      4: [{ name: "Burrbear cloth", img: pot_burrbear_cloth_4 }],
       5: [{ name: "None", img: none }],
       6: [
         { name: "None", img: none },
@@ -374,9 +374,9 @@ export const generate_setting: {
       7: [{ name: "None", img: none }],
       8: [
         { name: "IKEA Bag", img: pot_ikeaBag_8 },
-        { name: "Honey Cell", img: pot_honeyCell_8 },
-        { name: "Iron Pot", img: pot_ironPot_8 },
-        { name: "Clay Pot", img: pot_clayPot_8 },
+        { name: "THJ Doll", img: pot_thj_doll_8 },
+        { name: "Yeetie Doll", img: pot_yeetie_doll_8 },
+        { name: "BoogaBeras Doll", img: pot_boogaberas_doll_8 },
       ],
       9: [{ name: "None", img: none }],
     },
