@@ -5,6 +5,8 @@ import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
 import mergeImages from "merge-images";
 import { generate_setting } from "@/assets/nft_sm/bulk_generating_index";
 
+import { bigOwnerTokenIds } from "@/assets/nft_sm/Owner_TokenIDs";
+
 //imgs
 import bgImage from "@/assets/forest-bg.png";
 import { useEffect, useRef, useCallback } from "react";
@@ -151,16 +153,35 @@ const NFT = observer(() => {
             zip.folder(key).file(`nft-${i}.png`, blob);
             URL.revokeObjectURL(url);
           });
+
+          zip
+            .folder("metadata")
+            .file(
+              `metadata-${i}.json`,
+              JSON.stringify(getCurrentMetadata(`HoneyGenesis #${i}`))
+            );
         }
       }
     } else if (generateType === "all") {
+      let nftCount = 1;
+      const specialNumbers = [];
+      const generateMapping = {};
+
+      //pick 3 number from each bigOwnerTokenIds into specialNumbers
+      //nfts marked as special will be assigned to these numbers
+      Object.values(bigOwnerTokenIds).forEach((value) => {
+        for (let i = 0; i < 3; i++) {
+          specialNumbers.push(value[i]);
+        }
+      });
+
       for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
         const value = generate_setting[key];
         nftStore.setBearType(value.type);
 
         //generate every possible combination
-        for (let b = 0; b < value.layers[0].length; i++) {
+        for (let b = 0; b < value.layers[0].length; b++) {
           for (let j = 0; j < value.layers[1].length; j++) {
             for (let k = 0; k < value.layers[2].length; k++) {
               for (let l = 0; l < value.layers[3].length; l++) {
@@ -170,7 +191,7 @@ const NFT = observer(() => {
                       for (let p = 0; p < value.layers[7].length; p++) {
                         for (let q = 0; q < value.layers[8].length; q++) {
                           for (let r = 0; r < value.layers[9].length; r++) {
-                            nftStore.setLayerValue(0, value.layers[0][i]);
+                            nftStore.setLayerValue(0, value.layers[0][b]);
                             nftStore.setLayerValue(1, value.layers[1][j]);
                             nftStore.setLayerValue(2, value.layers[2][k]);
                             nftStore.setLayerValue(3, value.layers[3][l]);
@@ -184,18 +205,41 @@ const NFT = observer(() => {
                             const url = await updateAvatarImage({
                               returnUrl: true,
                             });
+
+                            let metaDataNumber = nftCount;
+
+                            if (specialNumbers.length > 0) {
+                              metaDataNumber = specialNumbers.shift();
+                            } else {
+                              while (generateMapping[metaDataNumber]) {
+                                metaDataNumber = nftCount++;
+                              }
+                            }
+
+                            generateMapping[metaDataNumber] = true;
+
                             await fetch(url).then(async (res) => {
                               const blob = await res.blob();
-                              zip
-                                .folder(key)
-                                .file(
-                                  `nft-${i}-${b}-${j}-${k}-${l}-${m}-${n}-${o}-${p}-${q}-${r}.png`,
-                                  blob
-                                );
+                              zip.folder(key).file(
+                                //`nft-${i}-${b}-${j}-${k}-${l}-${m}-${n}-${o}-${p}-${q}-${r}.png`,
+                                `HoneyGenesis #${metaDataNumber}.png`,
+                                blob
+                              );
                               URL.revokeObjectURL(url);
                             });
 
-                            console.log(key, i, j, k, l, m, n, o, p, q, r);
+                            zip
+                              .folder("metadata")
+                              .file(
+                                `metadata-${metaDataNumber}.json`,
+                                JSON.stringify(
+                                  getCurrentMetadata(
+                                    `HoneyGenesis #${metaDataNumber}`
+                                  )
+                                )
+                              );
+
+                            console.log(metaDataNumber);
                           }
                         }
                       }
@@ -212,6 +256,62 @@ const NFT = observer(() => {
     await zip.generateAsync({ type: "blob" }).then(function (content) {
       saveAs(content, "presets_nfts.zip");
     });
+  };
+
+  const getCurrentMetadata = (name: string) => {
+    return {
+      name: name,
+      description:
+        "HoneyGenesis is the Gen-0 series NFT created by Honeypot Finance team. This will help Honeypot Finance OGs gain unique perks.",
+      //image: "https://bafybeianvftytynjzo3twbmv36xrolkwmwfai5xcrxo6u5q3s5zsg5hwb4.ipfs.nftstorage.link/",
+      image: "",
+      attributes: [
+        {
+          trait_type: "generation",
+          value: "zero",
+        },
+        {
+          trait_type: "faction",
+          value: nftStore.bearType,
+        },
+        {
+          trait_type: "nickname",
+          value: "HoneyPotOG",
+        },
+        {
+          trait_type: "background",
+          value: nftStore.layers[0].value.name,
+        },
+        {
+          trait_type: "bear",
+          value: nftStore.layers[1].value.name,
+        },
+        {
+          trait_type: "emotion",
+          value: nftStore.layers[3].value.name,
+        },
+        {
+          trait_type: "clothes",
+          value: nftStore.layers[4].value.name,
+        },
+        {
+          trait_type: "hat",
+          value: nftStore.layers[5].value.name,
+        },
+        {
+          trait_type: "glasses",
+          value: nftStore.layers[6].value.name,
+        },
+        {
+          trait_type: "smoke",
+          value: nftStore.layers[7].value.name,
+        },
+        {
+          trait_type: "weapon",
+          value: nftStore.layers[8].value.name,
+        },
+      ],
+    };
   };
 
   useEffect(() => {
