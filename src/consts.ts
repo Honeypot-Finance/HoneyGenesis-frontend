@@ -24,6 +24,14 @@ const chainUnit = {
   80085: "Bera",
 };
 
+// Staking contract addresses
+const BERACHAIN_TESTNET = 80069; // Berachain Bepolia
+const stakingContractAddresses = {
+  [BERACHAIN_TESTNET]: "0x6e0A189a03d04D5A20f3a20e684Ef953514bbA36" as const,
+};
+
+const DEFAULT_STAKING_CHAIN_ID = BERACHAIN_TESTNET;
+
 export {
   arbitrumSepoliaContractAddress,
   BeraTestnetContractAddress,
@@ -37,4 +45,8 @@ export {
   kingdomlyFee,
   arbitrumChainId,
   countDownDate,
+  // Staking exports
+  BERACHAIN_TESTNET,
+  stakingContractAddresses,
+  DEFAULT_STAKING_CHAIN_ID,
 };

@@ -1,0 +1,188 @@
+/* Staking Page Styles - Matching HoneyGenesis Theme */
+
+.App.staking {
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.App.staking .main {
+  max-width: 1200px;
+  width: 95%;
+  margin: 0 auto;
+  padding: 2rem;
+  padding-top: 6rem;
+  overflow-y: visible;
+  max-height: none;
+}
+
+@media (min-width: 1080px) {
+  .App.staking {
+    display: block;
+  }
+
+  .App.staking .main {
+    grid-column: unset;
+    grid-row: unset;
+    position: relative;
+    width: 90%;
+    max-width: 1400px;
+  }
+}
+
+.staking-connect-prompt {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.staking-connect-prompt .desc {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 2rem 0;
+}
+
+/* Rewards Display */
+.rewards-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+  width: 100%;
+}
+
+/* Staking Tabs */
+.staking-tabs-container {
+  background-color: #31220c;
+  border-radius: var(--border-radius);
+  border: var(--border-size) solid var(--border-color);
+  overflow: hidden;
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.staking-tabs-header {
+  display: flex;
+  border-bottom: 2px solid var(--border-color);
+  background-color: #291c0a;
+}
+
+.staking-tab {
+  flex: 1;
+  padding: 1rem;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: "inter black", sans-serif;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-bottom: 3px solid transparent;
+}
+
+.staking-tab:hover {
+  color: #ffcd4d;
+  background-color: rgba(247, 149, 29, 0.1);
+}
+
+.staking-tab.active {
+  color: #ffcd4d;
+  background-color: rgba(247, 149, 29, 0.2);
+  border-bottom: 3px solid #ffcd4d;
+}
+
+/* Tab Content */
+.staking-tab-content {
+  padding: 2rem;
+  min-height: 300px;
+  max-height: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.tab-panel {
+  color: white;
+}
+
+.tab-panel h3 {
+  color: #ffcd4d;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.tab-panel p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.info-box {
+  background-color: rgba(247, 149, 29, 0.1);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.info-box p {
+  margin: 0;
+  color: #ffcd4d;
+}
+
+/* How It Works Section */
+.how-it-works {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-section {
+  background-color: rgba(49, 34, 12, 0.5);
+  border-left: 4px solid #ffcd4d;
+  padding: 1.5rem;
+  border-radius: var(--border-radius-sm);
+}
+
+.info-section h3 {
+  color: #ffcd4d;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.info-section p {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.info-section.warning {
+  border-left-color: #f7941d;
+  background-color: rgba(247, 148, 29, 0.1);
+}
+
+.info-section.warning h3 {
+  color: #f7941d;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .staking-tabs-header {
+    flex-direction: column;
+  }
+
+  .staking-tab {
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .staking-tab.active {
+    border-bottom: 1px solid #ffcd4d;
+    border-left: 4px solid #ffcd4d;
+  }
+
+  .staking-tab-content {
+    padding: 1.5rem;
+  }
+
+  .rewards-display {
+    grid-template-columns: 1fr;
+  }
+}

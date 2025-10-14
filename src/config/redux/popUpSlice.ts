@@ -4,6 +4,8 @@ interface PopUpState {
   title: string;
   message: string;
   info: "normal" | "error" | "success" | "warning" | "pending";
+  link?: string;
+  linkText?: string;
 }
 
 const initialState = {
@@ -11,6 +13,8 @@ const initialState = {
   title: "",
   message: "",
   info: "normal",
+  link: undefined,
+  linkText: undefined,
 } as PopUpState;
 
 const popUpSlice = createSlice({
@@ -22,12 +26,16 @@ const popUpSlice = createSlice({
       state.title = action.payload.title;
       state.message = action.payload.message;
       state.info = action.payload.info;
+      state.link = action.payload.link;
+      state.linkText = action.payload.linkText;
     },
     closePopUp: (state) => {
       state.isOpen = false;
       state.title = "";
       state.message = "";
       state.info = "normal";
+      state.link = undefined;
+      state.linkText = undefined;
     },
   },
 });

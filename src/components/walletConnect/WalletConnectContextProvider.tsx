@@ -6,8 +6,8 @@ import {
   arbitrum,
   //arbitrumSepolia,
   // mainnet
-  //berachainTestnet,
 } from "wagmi/chains";
+import { defineChain } from 'viem';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // 0. Setup queryClient
@@ -24,11 +24,34 @@ const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 
+// Define Berachain Bepolia Testnet (for staking)
+const berachainBepolia = defineChain({
+  id: 80069,
+  name: 'Berachain Bepolia',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'BERA',
+    symbol: 'BERA',
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://bepolia.rpc.berachain.com'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Berascan',
+      url: 'https://testnet.berascan.com',
+    },
+  },
+  testnet: true,
+});
+
 const chains = [
   //mainnet,
   arbitrum,
   //arbitrumSepolia,
-  //berachainTestnet,
+  berachainBepolia,
 ] as const;
 const config = defaultWagmiConfig({
   chains, // required

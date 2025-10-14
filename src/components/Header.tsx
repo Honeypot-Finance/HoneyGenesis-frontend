@@ -60,6 +60,10 @@ export default function Header() {
               <Link to="/reveal">Reveal</Link>
             </li>
             <hr />
+            <li className="navbar__link">
+              <Link to="/staking">Staking</Link>
+            </li>
+            <hr />
             {/* <li className="navbar__link">
               <Link to="/mint">Mint</Link>
             </li>{" "}
