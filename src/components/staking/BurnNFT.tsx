@@ -137,7 +137,7 @@ export function BurnNFT() {
       {needsApproval && selectedTokenId !== undefined && (
         <GeneralButton
           onClick={handleApprove}
-          disabled={isApproving || isApprovingConfirming}
+          loading={isApproving || isApprovingConfirming}
           style={{ width: "100%", marginTop: "1rem" }}
         >
           {isApproving || isApprovingConfirming
@@ -176,7 +176,7 @@ export function BurnNFT() {
         (isSelectedNFTStaked || isApprovedForAll) && (
           <GeneralButton
             onClick={handleBurn}
-            disabled={isPending || isConfirming}
+            loading={isPending || isConfirming}
             style={{
               width: "100%",
               marginTop: "1rem",
