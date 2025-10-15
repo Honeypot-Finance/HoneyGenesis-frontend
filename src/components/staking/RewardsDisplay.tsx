@@ -53,7 +53,7 @@ export function RewardsDisplay() {
             margin: 0,
           }}
         >
-          Your Rewards Balance
+          Your Rewards Balance{"  "}
         </h2>
         {rewardsAddress && isCorrectNetwork && (
           <a
@@ -61,6 +61,7 @@ export function RewardsDisplay() {
             target="_blank"
             rel="noopener noreferrer"
             style={{
+              margin: "0 1rem ",
               padding: "0.5rem 1rem",
               borderRadius: "var(--border-radius-sm)",
               background: "rgba(247, 149, 29, 0.1)",
