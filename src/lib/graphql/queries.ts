@@ -32,7 +32,6 @@ export const GET_USER_STAKES = `
     stakes(
       where: {
         ownerAddress: $owner
-        status: STAKED
       }
       orderBy: tokenId
       orderDirection: asc
@@ -62,7 +61,6 @@ export const GET_USER_BURNABLE_STAKES = `
     stakes(
       where: {
         ownerAddress: $owner
-        status: STAKED
         burned: false
       }
       orderBy: tokenId
@@ -80,6 +78,50 @@ export const GET_USER_BURNABLE_STAKES = `
       status
       totalRewardsClaimed
       totalBurnRewardsClaimed
+    }
+  }
+`;
+
+/**
+ * Query to get all NFTs (both staked and unstaked) that can be burned
+ * Combines staked NFTs and wallet NFTs
+ */
+export const GET_USER_ALL_BURNABLE_NFTS = `
+  query GetUserAllBurnableNFTs($owner: String!) {
+    # Get staked NFTs that aren't burned
+    stakes(
+      where: {
+        ownerAddress: $owner
+        burned: false
+      }
+      orderBy: tokenId
+      orderDirection: asc
+      first: 1000
+    ) {
+      id
+      tokenId
+      ownerAddress
+      stakedAt
+      lastClaimAt
+      burned
+      status
+    }
+    # Get wallet NFTs (unstaked)
+    nfts(
+      where: {
+        ownerAddress: $owner
+        isStaked: false
+      }
+      orderBy: tokenId
+      orderDirection: asc
+      first: 1000
+    ) {
+      id
+      contract
+      tokenId
+      ownerAddress
+      isStaked
+      isBurned
     }
   }
 `;

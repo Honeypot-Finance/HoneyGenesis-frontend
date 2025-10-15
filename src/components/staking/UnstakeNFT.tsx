@@ -49,7 +49,8 @@ export function UnstakeNFT() {
 
       <GeneralButton
         onClick={handleUnstake}
-        disabled={selectedTokenId === undefined || isPending || isConfirming}
+        disabled={selectedTokenId === undefined}
+        loading={isPending || isConfirming}
         style={{ width: '100%', marginTop: '1rem' }}
       >
         {isPending || isConfirming ? 'Unstaking...' : 'Unstake NFT'}

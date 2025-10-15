@@ -4,7 +4,7 @@ import { useUserNFTs } from '@/hooks/useUserNFTs';
 interface NFTSelectorProps {
   onSelect: (tokenId: bigint) => void;
   selectedTokenId?: bigint;
-  mode?: 'wallet' | 'staked' | 'burnable';
+  mode?: 'wallet' | 'staked' | 'burnable' | 'all-burnable';
   title?: string;
 }
 
@@ -32,7 +32,7 @@ export function NFTSelector({ onSelect, selectedTokenId, mode = 'wallet', title 
   return (
     <div style={{ marginBottom: '1.5rem' }}>
       <h3 style={{ color: '#ffcd4d', fontSize: '1.2rem', marginBottom: '1rem' }}>
-        {title || (mode === 'wallet' ? 'Your NFTs' : 'Your Staked NFTs')}
+        {title || (mode === 'wallet' ? 'Your NFTs' : mode === 'all-burnable' ? 'Your Burnable NFTs' : 'Your Staked NFTs')}
       </h3>
 
       {isLoading ? (
@@ -42,7 +42,7 @@ export function NFTSelector({ onSelect, selectedTokenId, mode = 'wallet', title 
       ) : hasNFTs ? (
         <div>
           <p style={{ color: '#999999', fontSize: '0.9rem', marginBottom: '1rem' }}>
-            {mode === 'wallet' ? 'Select an NFT from your wallet:' : 'Select a staked NFT:'}
+            {mode === 'wallet' ? 'Select an NFT from your wallet:' : mode === 'all-burnable' ? 'Select an NFT to burn (staked or unstaked):' : 'Select a staked NFT:'}
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '1rem', maxHeight: '300px', overflowY: 'auto' }}>
             {nfts.map((nft) => (
@@ -62,6 +62,8 @@ export function NFTSelector({ onSelect, selectedTokenId, mode = 'wallet', title 
           <p style={{ color: '#999999', margin: 0 }}>
             {mode === 'wallet'
               ? 'No NFTs found in your wallet.'
+              : mode === 'all-burnable'
+              ? 'No burnable NFTs found.'
               : 'No staked NFTs found.'}
           </p>
         </div>

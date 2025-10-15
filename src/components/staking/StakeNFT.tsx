@@ -1,17 +1,29 @@
-import { useState, useEffect } from 'react';
-import { useStake } from '@/hooks/useNFTStaking';
-import { useApprove, useIsApproved } from '@/hooks/useNFT';
-import { NFTSelector } from './NFTSelector';
-import GeneralButton from '../atoms/GeneralButton/GeneralButton';
-import { useAppDispatch } from '@/hooks/useAppSelector';
-import { openPopUp } from '@/config/redux/popUpSlice';
+import { useState, useEffect } from "react";
+import { useStake } from "@/hooks/useNFTStaking";
+import { useSetApprovalForAll, useIsApproved } from "@/hooks/useNFT";
+import { NFTSelector } from "./NFTSelector";
+import GeneralButton from "../atoms/GeneralButton/GeneralButton";
+import { useAppDispatch } from "@/hooks/useAppSelector";
+import { openPopUp } from "@/config/redux/popUpSlice";
 
 export function StakeNFT() {
   const [selectedTokenId, setSelectedTokenId] = useState<bigint | undefined>();
   const [refetchTrigger, setRefetchTrigger] = useState(0);
-  const { stake, isPending: isStaking, isConfirming, isSuccess, hash: stakeHash } = useStake();
-  const { approve, isPending: isApproving, isConfirming: isApprovingConfirming, isSuccess: isApproveSuccess, hash: approveHash } = useApprove();
-  const { isApproved } = useIsApproved(selectedTokenId);
+  const {
+    stake,
+    isPending: isStaking,
+    isConfirming,
+    isSuccess,
+    hash: stakeHash,
+  } = useStake();
+  const {
+    setApprovalForAll,
+    isPending: isApproving,
+    isConfirming: isApprovingConfirming,
+    isSuccess: isApproveSuccess,
+    hash: approveHash,
+  } = useSetApprovalForAll();
+  const { isApproved, isApprovedForAll } = useIsApproved(selectedTokenId);
   const dispatch = useAppDispatch();
 
   const getExplorerUrl = (hash: string) => {
@@ -20,15 +32,20 @@ export function StakeNFT() {
 
   useEffect(() => {
     if (isSuccess && stakeHash) {
-      dispatch(openPopUp({
-        title: 'Stake Success',
-        message: `NFT staked successfully!\n\nTransaction: ${stakeHash.slice(0, 10)}...${stakeHash.slice(-8)}`,
-        info: 'success',
-        link: getExplorerUrl(stakeHash),
-        linkText: 'View on Explorer',
-      }));
+      dispatch(
+        openPopUp({
+          title: "Stake Success",
+          message: `NFT staked successfully!\n\nTransaction: ${stakeHash.slice(
+            0,
+            10
+          )}...${stakeHash.slice(-8)}`,
+          info: "success",
+          link: getExplorerUrl(stakeHash),
+          linkText: "View on Explorer",
+        })
+      );
       const timer = setTimeout(() => {
-        setRefetchTrigger(prev => prev + 1);
+        setRefetchTrigger((prev) => prev + 1);
         setSelectedTokenId(undefined);
       }, 2000);
       return () => clearTimeout(timer);
@@ -37,24 +54,28 @@ export function StakeNFT() {
 
   useEffect(() => {
     if (isApproveSuccess && approveHash) {
-      dispatch(openPopUp({
-        title: 'Approval Success',
-        message: `NFT approved successfully! You can now stake it.\n\nTransaction: ${approveHash.slice(0, 10)}...${approveHash.slice(-8)}`,
-        info: 'success',
-        link: getExplorerUrl(approveHash),
-        linkText: 'View on Explorer',
-      }));
+      dispatch(
+        openPopUp({
+          title: "Approval Success",
+          message: `All NFTs approved successfully! You can now stake any NFT.\n\nTransaction: ${approveHash.slice(
+            0,
+            10
+          )}...${approveHash.slice(-8)}`,
+          info: "success",
+          link: getExplorerUrl(approveHash),
+          linkText: "View on Explorer",
+        })
+      );
       // Force a refetch by updating the key
       const timer = setTimeout(() => {
-        setRefetchTrigger(prev => prev + 1);
+        setRefetchTrigger((prev) => prev + 1);
       }, 1000);
       return () => clearTimeout(timer);
     }
   }, [isApproveSuccess, approveHash, dispatch]);
 
   const handleApprove = () => {
-    if (selectedTokenId === undefined) return;
-    approve(selectedTokenId);
+    setApprovalForAll(true);
   };
 
   const handleStake = () => {
@@ -72,23 +93,25 @@ export function StakeNFT() {
         key={refetchTrigger}
       />
 
-      {selectedTokenId !== undefined && !isApproved && (
+      {!isApprovedForAll && (
         <GeneralButton
           onClick={handleApprove}
-          disabled={isApproving || isApprovingConfirming}
-          style={{ width: '100%', marginTop: '1rem' }}
+          loading={isApproving || isApprovingConfirming}
+          style={{ width: "100%", marginTop: "1rem" }}
         >
-          {isApproving || isApprovingConfirming ? 'Approving...' : 'Approve NFT'}
+          {isApproving || isApprovingConfirming
+            ? "Approving..."
+            : "Approve NFTs"}
         </GeneralButton>
       )}
 
       {selectedTokenId !== undefined && isApproved && (
         <GeneralButton
           onClick={handleStake}
-          disabled={isStaking || isConfirming}
-          style={{ width: '100%', marginTop: '1rem' }}
+          loading={isStaking || isConfirming}
+          style={{ width: "100%", marginTop: "1rem" }}
         >
-          {isStaking || isConfirming ? 'Staking...' : 'Stake NFT'}
+          {isStaking || isConfirming ? "Staking..." : "Stake NFT"}
         </GeneralButton>
       )}
     </div>

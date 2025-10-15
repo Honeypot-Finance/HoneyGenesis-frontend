@@ -2,7 +2,7 @@ import { useAccount } from 'wagmi';
 import { useContractAddresses } from './useContractAddresses';
 import { useState, useEffect } from 'react';
 import { stakingGraphqlClient } from '@/lib/graphql/client';
-import { GET_USER_STAKES, GET_USER_WALLET_NFTS, GET_USER_BURNABLE_STAKES } from '@/lib/graphql/queries';
+import { GET_USER_STAKES, GET_USER_WALLET_NFTS, GET_USER_BURNABLE_STAKES, GET_USER_ALL_BURNABLE_NFTS } from '@/lib/graphql/queries';
 
 export interface NFTToken {
   id: string;
@@ -40,9 +40,9 @@ interface SubgraphStake {
 
 /**
  * Hook to fetch user's NFTs dynamically from the subgraph
- * @param mode - 'wallet' to get NFTs in wallet (unstaked), 'staked' to get staked NFTs, 'burnable' to get staked non-burned NFTs
+ * @param mode - 'wallet' to get NFTs in wallet (unstaked), 'staked' to get staked NFTs, 'burnable' to get staked non-burned NFTs, 'all-burnable' to get both staked and unstaked burnable NFTs
  */
-export function useUserNFTs(mode: 'wallet' | 'staked' | 'burnable' = 'wallet') {
+export function useUserNFTs(mode: 'wallet' | 'staked' | 'burnable' | 'all-burnable' = 'wallet') {
   const { address } = useAccount();
   const { nftAddress } = useContractAddresses();
   const [nfts, setNfts] = useState<NFTToken[]>([]);
@@ -65,7 +65,47 @@ export function useUserNFTs(mode: 'wallet' | 'staked' | 'burnable' = 'wallet') {
       setError(null);
 
       try {
-        if (mode === 'staked' || mode === 'burnable') {
+        if (mode === 'all-burnable') {
+          // Fetch both staked and unstaked NFTs for burning
+          const data = await stakingGraphqlClient.request<{ stakes: SubgraphStake[], nfts: SubgraphNFT[] }>(GET_USER_ALL_BURNABLE_NFTS, {
+            owner: address.toLowerCase(),
+          });
+
+          console.log(`${mode} subgraph response:`, data);
+          console.log('Total stakes found:', data.stakes?.length || 0);
+          console.log('Total wallet NFTs found:', data.nfts?.length || 0);
+
+          // Transform staked NFTs (filter out UNSTAKED)
+          const stakedTokens: NFTToken[] = (data.stakes || [])
+            .filter(stake => stake.status !== 'UNSTAKED')
+            .map(stake => ({
+              id: stake.id,
+              tokenId: stake.tokenId,
+              owner: stake.ownerAddress,
+              contract: nftAddress || '',
+              isStaked: true,
+              stakedAt: stake.stakedAt,
+              lastClaimAt: stake.lastClaimAt,
+              burned: stake.burned,
+            }));
+
+          // Transform wallet NFTs (unstaked)
+          const walletTokens: NFTToken[] = (data.nfts || [])
+            .filter(nft => !nft.isBurned)
+            .map(nft => ({
+              id: nft.id,
+              tokenId: nft.tokenId,
+              owner: nft.ownerAddress,
+              contract: nft.contract,
+              isStaked: false,
+              burned: nft.isBurned,
+            }));
+
+          // Combine both lists
+          const allBurnableNFTs = [...stakedTokens, ...walletTokens];
+          console.log(`${mode} NFTs (combined):`, allBurnableNFTs);
+          setNfts(allBurnableNFTs);
+        } else if (mode === 'staked' || mode === 'burnable') {
           // Fetch staked NFTs from staking subgraph
           // For 'burnable' mode, only get non-burned staked NFTs
           const query = mode === 'burnable' ? GET_USER_BURNABLE_STAKES : GET_USER_STAKES;
@@ -76,19 +116,21 @@ export function useUserNFTs(mode: 'wallet' | 'staked' | 'burnable' = 'wallet') {
           console.log(`${mode} subgraph response:`, data);
           console.log('Total stakes found:', data.stakes?.length || 0);
 
-          // Transform staking data to NFTToken format
-          const stakedTokens: NFTToken[] = (data.stakes || []).map(stake => ({
-            id: stake.id,
-            tokenId: stake.tokenId,
-            owner: stake.ownerAddress,
-            contract: nftAddress || '',
-            isStaked: true,
-            stakedAt: stake.stakedAt,
-            lastClaimAt: stake.lastClaimAt,
-            burned: stake.burned,
-          }));
+          // Filter out unstaked NFTs and transform staking data to NFTToken format
+          const stakedTokens: NFTToken[] = (data.stakes || [])
+            .filter(stake => stake.status !== 'UNSTAKED') // Only include active stakes
+            .map(stake => ({
+              id: stake.id,
+              tokenId: stake.tokenId,
+              owner: stake.ownerAddress,
+              contract: nftAddress || '',
+              isStaked: true,
+              stakedAt: stake.stakedAt,
+              lastClaimAt: stake.lastClaimAt,
+              burned: stake.burned,
+            }));
 
-          console.log(`${mode} NFTs:`, stakedTokens);
+          console.log(`${mode} NFTs (after filtering):`, stakedTokens);
           setNfts(stakedTokens);
         } else {
           // For wallet mode: Query NFTs directly from the subgraph
@@ -133,21 +175,59 @@ export function useUserNFTs(mode: 'wallet' | 'staked' | 'burnable' = 'wallet') {
     setError(null);
 
     try {
-      if (mode === 'staked' || mode === 'burnable') {
+      if (mode === 'all-burnable') {
+        // Fetch both staked and unstaked NFTs for burning
+        const data = await stakingGraphqlClient.request<{ stakes: SubgraphStake[], nfts: SubgraphNFT[] }>(GET_USER_ALL_BURNABLE_NFTS, {
+          owner: address.toLowerCase(),
+        });
+
+        // Transform staked NFTs (filter out UNSTAKED)
+        const stakedTokens: NFTToken[] = (data.stakes || [])
+          .filter(stake => stake.status !== 'UNSTAKED')
+          .map(stake => ({
+            id: stake.id,
+            tokenId: stake.tokenId,
+            owner: stake.ownerAddress,
+            contract: nftAddress || '',
+            isStaked: true,
+            stakedAt: stake.stakedAt,
+            lastClaimAt: stake.lastClaimAt,
+            burned: stake.burned,
+          }));
+
+        // Transform wallet NFTs (unstaked)
+        const walletTokens: NFTToken[] = (data.nfts || [])
+          .filter(nft => !nft.isBurned)
+          .map(nft => ({
+            id: nft.id,
+            tokenId: nft.tokenId,
+            owner: nft.ownerAddress,
+            contract: nft.contract,
+            isStaked: false,
+            burned: nft.isBurned,
+          }));
+
+        // Combine both lists
+        const allBurnableNFTs = [...stakedTokens, ...walletTokens];
+        setNfts(allBurnableNFTs);
+      } else if (mode === 'staked' || mode === 'burnable') {
         const query = mode === 'burnable' ? GET_USER_BURNABLE_STAKES : GET_USER_STAKES;
         const data = await stakingGraphqlClient.request<{ stakes: SubgraphStake[] }>(query, {
           owner: address.toLowerCase(),
         });
-        const stakedTokens: NFTToken[] = (data.stakes || []).map(stake => ({
-          id: stake.id,
-          tokenId: stake.tokenId,
-          owner: stake.ownerAddress,
-          contract: nftAddress || '',
-          isStaked: true,
-          stakedAt: stake.stakedAt,
-          lastClaimAt: stake.lastClaimAt,
-          burned: stake.burned,
-        }));
+        // Filter out unstaked NFTs
+        const stakedTokens: NFTToken[] = (data.stakes || [])
+          .filter(stake => stake.status !== 'UNSTAKED') // Only include active stakes
+          .map(stake => ({
+            id: stake.id,
+            tokenId: stake.tokenId,
+            owner: stake.ownerAddress,
+            contract: nftAddress || '',
+            isStaked: true,
+            stakedAt: stake.stakedAt,
+            lastClaimAt: stake.lastClaimAt,
+            burned: stake.burned,
+          }));
         setNfts(stakedTokens);
       } else {
         const data = await stakingGraphqlClient.request<{ nfts: SubgraphNFT[] }>(GET_USER_WALLET_NFTS, {
