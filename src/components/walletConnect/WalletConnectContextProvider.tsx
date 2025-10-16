@@ -1,5 +1,5 @@
 import { createWeb3Modal } from "@web3modal/wagmi/react";
-import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
+import { createConfig, http } from "wagmi";
 
 import { WagmiProvider } from "wagmi";
 import {
@@ -9,6 +9,7 @@ import {
 } from "wagmi/chains";
 import { defineChain } from 'viem';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { walletConnect, injected, coinbaseWallet } from 'wagmi/connectors';
 
 // 0. Setup queryClient
 const queryClient = new QueryClient();
@@ -70,6 +71,7 @@ const berachainBepolia = defineChain({
   testnet: true,
 });
 
+// Put mainnet before testnet to ensure it's the default
 const chains = [
   //mainnet,
   arbitrum,
@@ -77,15 +79,28 @@ const chains = [
   berachainMainnet,
   berachainBepolia,
 ] as const;
-const config = defaultWagmiConfig({
-  chains, // required
-  projectId, // required
-  metadata, // required
-  enableWalletConnect: true, // Optional - true by default
-  enableInjected: true, // Optional - true by default
-  enableEIP6963: true, // Optional - true by default
-  enableCoinbase: true, // Optional - true by default
-  //...wagmiOptions, // Optional - Override createConfig parameters
+
+// Explicitly configure transports with correct RPC endpoints
+const config = createConfig({
+  chains,
+  transports: {
+    [arbitrum.id]: http(),
+    [berachainMainnet.id]: http('https://rpc.berachain.com'),
+    [berachainBepolia.id]: http('https://bepolia.rpc.berachain.com'),
+  },
+  connectors: [
+    walletConnect({ projectId, showQrModal: false }),
+    injected({ shimDisconnect: true }),
+    coinbaseWallet({ appName: metadata.name }),
+  ],
+});
+
+// Log chain configuration for debugging
+console.log('Wagmi chains configured:', chains.map(c => ({ id: c.id, name: c.name })));
+console.log('Wagmi transports:', {
+  [arbitrum.id]: 'default',
+  [berachainMainnet.id]: 'https://rpc.berachain.com',
+  [berachainBepolia.id]: 'https://bepolia.rpc.berachain.com',
 });
 
 // 3. Create modal
