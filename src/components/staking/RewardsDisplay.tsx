@@ -5,7 +5,7 @@ import {
 } from "@/hooks/useRewardsToken";
 import { useContractAddresses } from "@/hooks/useContractAddresses";
 import { formatTokenAmount } from "@/lib/stakingUtils";
-import { BERACHAIN_TESTNET } from "@/consts";
+import { DEFAULT_STAKING_CHAIN_ID } from "@/consts";
 import GeneralButton from "../atoms/GeneralButton/GeneralButton";
 
 export function RewardsDisplay() {
@@ -16,14 +16,14 @@ export function RewardsDisplay() {
   const { rewardsAddress } = useContractAddresses();
   const { switchChain, isPending: isSwitching } = useSwitchChain();
 
-  const isCorrectNetwork = chainId === BERACHAIN_TESTNET;
+  const isCorrectNetwork = chainId === DEFAULT_STAKING_CHAIN_ID;
 
   const handleSwitchNetwork = () => {
-    switchChain({ chainId: BERACHAIN_TESTNET });
+    switchChain({ chainId: DEFAULT_STAKING_CHAIN_ID });
   };
 
   const getExplorerUrl = (tokenAddress: string) => {
-    return `https://bepolia.beratrail.io/address/${tokenAddress}`;
+    return `https://berascan.com/address/${tokenAddress}`;
   };
 
   return (
@@ -88,7 +88,7 @@ export function RewardsDisplay() {
                 margin: "0.5rem 0",
               }}
             >
-              Switch to Berachain Testnet
+              Switch to Berachain
             </p>
             <p
               style={{
@@ -97,8 +97,8 @@ export function RewardsDisplay() {
                 margin: "0 0 1rem 0",
               }}
             >
-              Staking is only available on Berachain Testnet (Chain ID:{" "}
-              {BERACHAIN_TESTNET})
+              Staking is only available on Berachain (Chain ID:{" "}
+              {DEFAULT_STAKING_CHAIN_ID})
             </p>
             <GeneralButton
               onClick={handleSwitchNetwork}
@@ -150,7 +150,7 @@ export function RewardsDisplay() {
               {isLoading ? "Loading..." : "0 REWARD"}
             </p>
             <p style={{ fontSize: "0.9rem", color: "#666666", margin: 0 }}>
-              Connect to Berachain Testnet to see your rewards
+              Connect to Berachain to see your rewards
             </p>
           </div>
         )}

@@ -25,7 +25,7 @@ export function BurnNFT() {
   const dispatch = useAppDispatch();
 
   const getExplorerUrl = (txHash: string) => {
-    return `https://testnet.berascan.com/tx/${txHash}`;
+    return `https://berascan.com/tx/${txHash}`;
   };
 
   // Check if the selected NFT is staked
