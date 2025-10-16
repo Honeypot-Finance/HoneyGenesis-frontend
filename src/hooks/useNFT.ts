@@ -1,6 +1,7 @@
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { ERC721ABI } from '@/abi/ERC721ABI';
 import { NFT_STAKING_ADDRESS, useContractAddresses } from './useContractAddresses';
+import { DEFAULT_STAKING_CHAIN_ID } from '@/consts';
 import { Address } from 'viem';
 
 /**
@@ -15,6 +16,7 @@ export function useIsApproved(tokenId: bigint | undefined) {
     abi: ERC721ABI,
     functionName: 'getApproved',
     args: tokenId !== undefined ? [tokenId] : undefined,
+    chainId: DEFAULT_STAKING_CHAIN_ID,
     query: {
       enabled: tokenId !== undefined && !!nftAddress,
       refetchInterval: 2000, // Refetch every 2 seconds
@@ -26,6 +28,7 @@ export function useIsApproved(tokenId: bigint | undefined) {
     abi: ERC721ABI,
     functionName: 'isApprovedForAll',
     args: userAddress ? [userAddress, NFT_STAKING_ADDRESS] : undefined,
+    chainId: DEFAULT_STAKING_CHAIN_ID,
     query: {
       enabled: !!userAddress && !!nftAddress,
       refetchInterval: 2000, // Refetch every 2 seconds
@@ -62,6 +65,7 @@ export function useApprove() {
       abi: ERC721ABI,
       functionName: 'approve',
       args: [NFT_STAKING_ADDRESS, tokenId],
+      chainId: DEFAULT_STAKING_CHAIN_ID,
     });
   };
 
@@ -89,6 +93,7 @@ export function useSetApprovalForAll() {
       abi: ERC721ABI,
       functionName: 'setApprovalForAll',
       args: [NFT_STAKING_ADDRESS, approved],
+      chainId: DEFAULT_STAKING_CHAIN_ID,
     });
   };
 
@@ -112,6 +117,7 @@ export function useNFTOwner(tokenId: bigint | undefined) {
     abi: ERC721ABI,
     functionName: 'ownerOf',
     args: tokenId !== undefined ? [tokenId] : undefined,
+    chainId: DEFAULT_STAKING_CHAIN_ID,
     query: {
       enabled: tokenId !== undefined && !!nftAddress,
     },
@@ -135,6 +141,7 @@ export function useNFTBalance(address: Address | undefined) {
     abi: ERC721ABI,
     functionName: 'balanceOf',
     args: address ? [address] : undefined,
+    chainId: DEFAULT_STAKING_CHAIN_ID,
     query: {
       enabled: !!address && !!nftAddress,
     },
@@ -158,6 +165,7 @@ export function useTokenURI(tokenId: bigint | undefined) {
     abi: ERC721ABI,
     functionName: 'tokenURI',
     args: tokenId !== undefined ? [tokenId] : undefined,
+    chainId: DEFAULT_STAKING_CHAIN_ID,
     query: {
       enabled: tokenId !== undefined && !!nftAddress,
     },

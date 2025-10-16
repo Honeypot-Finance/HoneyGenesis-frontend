@@ -21,12 +21,14 @@ export function useContractAddresses() {
     address: NFT_STAKING_ADDRESS,
     abi: NFTStakingABI,
     functionName: "nft",
+    chainId: DEFAULT_STAKING_CHAIN_ID,
   });
 
   const { data: rewardsAddress } = useReadContract({
     address: NFT_STAKING_ADDRESS,
     abi: NFTStakingABI,
     functionName: "rewards",
+    chainId: DEFAULT_STAKING_CHAIN_ID,
   });
 
   return {

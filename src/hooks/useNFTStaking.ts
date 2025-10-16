@@ -1,6 +1,7 @@
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { NFTStakingABI } from '@/abi/NFTStakingABI';
 import { NFT_STAKING_ADDRESS } from './useContractAddresses';
+import { DEFAULT_STAKING_CHAIN_ID } from '@/consts';
 import { StakeData } from '@/types/staking';
 
 /**
@@ -16,6 +17,7 @@ export function useStake() {
       abi: NFTStakingABI,
       functionName: 'stake',
       args: [tokenId],
+      chainId: DEFAULT_STAKING_CHAIN_ID,
     });
   };
 
@@ -42,6 +44,7 @@ export function useUnstake() {
       abi: NFTStakingABI,
       functionName: 'unstake',
       args: [tokenId],
+      chainId: DEFAULT_STAKING_CHAIN_ID,
     });
   };
 
@@ -68,6 +71,7 @@ export function useClaim() {
       abi: NFTStakingABI,
       functionName: 'claim',
       args: [tokenId],
+      chainId: DEFAULT_STAKING_CHAIN_ID,
     });
   };
 
@@ -94,6 +98,7 @@ export function useBurn() {
       abi: NFTStakingABI,
       functionName: 'burn',
       args: [tokenId],
+      chainId: DEFAULT_STAKING_CHAIN_ID,
     });
   };
 
@@ -116,6 +121,7 @@ export function useStakeData(tokenId: bigint | undefined) {
     abi: NFTStakingABI,
     functionName: 'stakes',
     args: tokenId !== undefined ? [tokenId] : undefined,
+    chainId: DEFAULT_STAKING_CHAIN_ID,
     query: {
       enabled: tokenId !== undefined,
     },
@@ -149,6 +155,7 @@ export function usePreviewPayout(tokenId: bigint | undefined) {
     abi: NFTStakingABI,
     functionName: 'previewPayout',
     args: tokenId !== undefined ? [tokenId] : undefined,
+    chainId: DEFAULT_STAKING_CHAIN_ID,
     query: {
       enabled: tokenId !== undefined,
       refetchInterval: 5000, // Refetch every 5 seconds to show live rewards
@@ -171,12 +178,14 @@ export function useStakingParams() {
     address: NFT_STAKING_ADDRESS,
     abi: NFTStakingABI,
     functionName: 'rewardRatePerSecond',
+    chainId: DEFAULT_STAKING_CHAIN_ID,
   });
 
   const { data: burnBonusBps, refetch: refetchBonus } = useReadContract({
     address: NFT_STAKING_ADDRESS,
     abi: NFTStakingABI,
     functionName: 'burnBonusBps',
+    chainId: DEFAULT_STAKING_CHAIN_ID,
   });
 
   return {
@@ -198,6 +207,7 @@ export function useContractOwner() {
     address: NFT_STAKING_ADDRESS,
     abi: NFTStakingABI,
     functionName: 'owner',
+    chainId: DEFAULT_STAKING_CHAIN_ID,
   });
 
   const isOwner = address && owner ? address.toLowerCase() === owner.toLowerCase() : false;
@@ -221,6 +231,7 @@ export function useSetParameters() {
       abi: NFTStakingABI,
       functionName: 'setParameters',
       args: [ratePerSecond, burnBonusBps],
+      chainId: DEFAULT_STAKING_CHAIN_ID,
     });
   };
 

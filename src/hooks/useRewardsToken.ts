@@ -1,6 +1,7 @@
 import { useReadContract } from 'wagmi';
 import { ERC20ABI } from '@/abi/ERC20ABI';
 import { useContractAddresses } from './useContractAddresses';
+import { DEFAULT_STAKING_CHAIN_ID } from '@/consts';
 import { Address } from 'viem';
 
 /**
@@ -13,6 +14,7 @@ export function useRewardsBalance(address: Address | undefined) {
     abi: ERC20ABI,
     functionName: 'balanceOf',
     args: address ? [address] : undefined,
+    chainId: DEFAULT_STAKING_CHAIN_ID,
     query: {
       enabled: !!address && !!rewardsAddress,
       refetchInterval: 10000, // Refetch every 10 seconds
@@ -37,6 +39,7 @@ export function useRewardsTokenInfo() {
     address: rewardsAddress,
     abi: ERC20ABI,
     functionName: 'symbol',
+    chainId: DEFAULT_STAKING_CHAIN_ID,
     query: {
       enabled: !!rewardsAddress,
     },
@@ -46,6 +49,7 @@ export function useRewardsTokenInfo() {
     address: rewardsAddress,
     abi: ERC20ABI,
     functionName: 'name',
+    chainId: DEFAULT_STAKING_CHAIN_ID,
     query: {
       enabled: !!rewardsAddress,
     },
@@ -55,6 +59,7 @@ export function useRewardsTokenInfo() {
     address: rewardsAddress,
     abi: ERC20ABI,
     functionName: 'decimals',
+    chainId: DEFAULT_STAKING_CHAIN_ID,
     query: {
       enabled: !!rewardsAddress,
     },
