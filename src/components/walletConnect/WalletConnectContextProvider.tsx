@@ -24,6 +24,29 @@ const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 
+// Define Berachain Mainnet
+const berachainMainnet = defineChain({
+  id: 80084,
+  name: 'Berachain',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'BERA',
+    symbol: 'BERA',
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://rpc.berachain.com'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Berascan',
+      url: 'https://berascan.com',
+    },
+  },
+  testnet: false,
+});
+
 // Define Berachain Bepolia Testnet (for staking)
 const berachainBepolia = defineChain({
   id: 80069,
@@ -51,6 +74,7 @@ const chains = [
   //mainnet,
   arbitrum,
   //arbitrumSepolia,
+  berachainMainnet,
   berachainBepolia,
 ] as const;
 const config = defaultWagmiConfig({

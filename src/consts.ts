@@ -18,15 +18,24 @@ const chainUnit = {
 
 // Staking contract addresses
 const BERACHAIN_TESTNET = 80069; // Berachain Bepolia
+const BERACHAIN_MAINNET = 80084; // Berachain Mainnet
+
 const stakingContractAddresses = {
   [BERACHAIN_TESTNET]: "0xE72D2C76cE3B0302392513FAE83EF2b5949BaD7e" as const,
+  [BERACHAIN_MAINNET]: "0xd4A4C485a69d1f214fBebA389C5f24A33e4e48Ad" as const,
 };
 
 const nftContractProxy = {
   [BERACHAIN_TESTNET]: "0xfF95cdfC724Ca85b8d96D5a6Ea86333AC6a4799D" as const,
+  [BERACHAIN_MAINNET]: "0xC3c30Fba6387cff83474E684380930dFC64554EF" as const,
 };
 
-const DEFAULT_STAKING_CHAIN_ID = BERACHAIN_TESTNET;
+const rewardsTokenAddress = {
+  [BERACHAIN_TESTNET]: "0x168138899298A265c93930B4E972c5cFca04feC3" as const,
+  [BERACHAIN_MAINNET]: "0x3cf2393f314201D1A7F294F7BE9629E36FAF917E" as const,
+};
+
+const DEFAULT_STAKING_CHAIN_ID = BERACHAIN_MAINNET;
 
 export {
   acceptChainId,
@@ -37,7 +46,9 @@ export {
   countDownDate,
   // Staking exports
   BERACHAIN_TESTNET,
+  BERACHAIN_MAINNET,
   nftContractProxy,
   stakingContractAddresses,
+  rewardsTokenAddress,
   DEFAULT_STAKING_CHAIN_ID,
 };
