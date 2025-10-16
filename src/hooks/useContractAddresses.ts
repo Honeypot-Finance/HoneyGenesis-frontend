@@ -17,10 +17,6 @@ const REWARDS_TOKEN_ADDRESS = rewardsTokenAddress[DEFAULT_STAKING_CHAIN_ID];
  * This eliminates the need to configure these addresses separately
  */
 export function useContractAddresses() {
-  // Debug logging
-  console.log('useContractAddresses - Using chainId:', DEFAULT_STAKING_CHAIN_ID);
-  console.log('useContractAddresses - Staking address:', NFT_STAKING_ADDRESS);
-
   const { data: nftAddress } = useReadContract({
     address: NFT_STAKING_ADDRESS,
     abi: NFTStakingABI,

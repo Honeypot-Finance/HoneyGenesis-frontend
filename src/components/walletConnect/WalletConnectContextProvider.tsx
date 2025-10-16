@@ -27,7 +27,7 @@ const metadata = {
 
 // Define Berachain Mainnet
 const berachainMainnet = defineChain({
-  id: 80084,
+  id: 80094,
   name: 'Berachain',
   nativeCurrency: {
     decimals: 18,
@@ -48,10 +48,10 @@ const berachainMainnet = defineChain({
   testnet: false,
 });
 
-// Define Berachain Bepolia Testnet (for staking)
-const berachainBepolia = defineChain({
-  id: 80069,
-  name: 'Berachain Bepolia',
+// Define Berachain bArtio Testnet
+const berachainBartio = defineChain({
+  id: 80084,
+  name: 'Berachain bArtio',
   nativeCurrency: {
     decimals: 18,
     name: 'BERA',
@@ -59,13 +59,13 @@ const berachainBepolia = defineChain({
   },
   rpcUrls: {
     default: {
-      http: ['https://bepolia.rpc.berachain.com'],
+      http: ['https://bartio.rpc.berachain.com'],
     },
   },
   blockExplorers: {
     default: {
-      name: 'Berascan',
-      url: 'https://testnet.berascan.com',
+      name: 'Beratrail',
+      url: 'https://bartio.beratrail.io',
     },
   },
   testnet: true,
@@ -77,7 +77,7 @@ const chains = [
   arbitrum,
   //arbitrumSepolia,
   berachainMainnet,
-  berachainBepolia,
+  berachainBartio,
 ] as const;
 
 // Explicitly configure transports with correct RPC endpoints
@@ -85,22 +85,20 @@ const config = createConfig({
   chains,
   transports: {
     [arbitrum.id]: http(),
-    [berachainMainnet.id]: http('https://rpc.berachain.com'),
-    [berachainBepolia.id]: http('https://bepolia.rpc.berachain.com'),
+    [berachainMainnet.id]: http('https://rpc.berachain.com', {
+      batch: true,
+      retryCount: 3,
+    }),
+    [berachainBartio.id]: http('https://bartio.rpc.berachain.com', {
+      batch: true,
+      retryCount: 3,
+    }),
   },
   connectors: [
     walletConnect({ projectId, showQrModal: false }),
     injected({ shimDisconnect: true }),
     coinbaseWallet({ appName: metadata.name }),
   ],
-});
-
-// Log chain configuration for debugging
-console.log('Wagmi chains configured:', chains.map(c => ({ id: c.id, name: c.name })));
-console.log('Wagmi transports:', {
-  [arbitrum.id]: 'default',
-  [berachainMainnet.id]: 'https://rpc.berachain.com',
-  [berachainBepolia.id]: 'https://bepolia.rpc.berachain.com',
 });
 
 // 3. Create modal

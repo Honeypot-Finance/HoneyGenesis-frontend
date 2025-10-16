@@ -17,8 +17,8 @@ const chainUnit = {
 };
 
 // Staking contract addresses
-const BERACHAIN_TESTNET = 80069; // Berachain Bepolia
-const BERACHAIN_MAINNET = 80084; // Berachain Mainnet
+const BERACHAIN_TESTNET = 80084; // Berachain bArtio (Bartio) Testnet
+const BERACHAIN_MAINNET = 80094; // Berachain Mainnet
 
 const stakingContractAddresses = {
   [BERACHAIN_TESTNET]: "0xE72D2C76cE3B0302392513FAE83EF2b5949BaD7e" as const,
