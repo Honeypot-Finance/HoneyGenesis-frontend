@@ -1,14 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import { useStake } from "@/hooks/useNFTStaking";
 import { useSetApprovalForAll, useIsApproved } from "@/hooks/useNFT";
-import { NFTSelector } from "./NFTSelector";
+import { NFTSelector, NFTSelectorRef } from "./NFTSelector";
 import GeneralButton from "../atoms/GeneralButton/GeneralButton";
 import { useAppDispatch } from "@/hooks/useAppSelector";
 import { openPopUp } from "@/config/redux/popUpSlice";
 
-export function StakeNFT() {
+export interface StakeNFTRef {
+  refetchWalletNFTs: () => Promise<void>;
+}
+
+export const StakeNFT = forwardRef<StakeNFTRef>((props, ref) => {
   const [selectedTokenId, setSelectedTokenId] = useState<bigint | undefined>();
-  const [refetchTrigger, setRefetchTrigger] = useState(0);
+  const walletNFTSelectorRef = useRef<NFTSelectorRef>(null);
   const {
     stake,
     isPending: isStaking,
@@ -26,8 +30,15 @@ export function StakeNFT() {
   const { isApproved, isApprovedForAll } = useIsApproved(selectedTokenId);
   const dispatch = useAppDispatch();
 
+  // Expose refetch function to parent via ref
+  useImperativeHandle(ref, () => ({
+    refetchWalletNFTs: async () => {
+      await walletNFTSelectorRef.current?.refetch();
+    },
+  }));
+
   const getExplorerUrl = (hash: string) => {
-    return `https://testnet.berascan.com/tx/${hash}`;
+    return `https://berascan.com/tx/${hash}`;
   };
 
   useEffect(() => {
@@ -44,11 +55,28 @@ export function StakeNFT() {
           linkText: "View on Explorer",
         })
       );
-      const timer = setTimeout(() => {
-        setRefetchTrigger((prev) => prev + 1);
-        setSelectedTokenId(undefined);
-      }, 2000);
-      return () => clearTimeout(timer);
+
+      // Poll for subgraph updates with exponential backoff
+      const refetchWithRetry = async (attempts = 0, maxAttempts = 5) => {
+        if (attempts >= maxAttempts) {
+          console.log('Max refetch attempts reached');
+          setSelectedTokenId(undefined);
+          return;
+        }
+
+        // Wait with exponential backoff: 2s, 4s, 6s, 8s, 10s
+        const delay = 2000 * (attempts + 1);
+        await new Promise(resolve => setTimeout(resolve, delay));
+
+        console.log(`Refetching NFTs (attempt ${attempts + 1}/${maxAttempts})...`);
+        await walletNFTSelectorRef.current?.refetch();
+
+        // Continue polling
+        refetchWithRetry(attempts + 1, maxAttempts);
+      };
+
+      refetchWithRetry();
+      setSelectedTokenId(undefined);
     }
   }, [isSuccess, stakeHash, dispatch]);
 
@@ -66,11 +94,6 @@ export function StakeNFT() {
           linkText: "View on Explorer",
         })
       );
-      // Force a refetch by updating the key
-      const timer = setTimeout(() => {
-        setRefetchTrigger((prev) => prev + 1);
-      }, 1000);
-      return () => clearTimeout(timer);
     }
   }, [isApproveSuccess, approveHash, dispatch]);
 
@@ -86,11 +109,11 @@ export function StakeNFT() {
   return (
     <div>
       <NFTSelector
+        ref={walletNFTSelectorRef}
         onSelect={setSelectedTokenId}
         selectedTokenId={selectedTokenId}
         mode="wallet"
         title="Select NFT to Stake"
-        key={refetchTrigger}
       />
 
       {!isApprovedForAll && (
@@ -116,4 +139,4 @@ export function StakeNFT() {
       )}
     </div>
   );
-}
+});

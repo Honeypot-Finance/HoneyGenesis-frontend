@@ -60,6 +60,7 @@ export function useUserNFTs(mode: 'wallet' | 'staked' | 'burnable' | 'all-burnab
       console.log(`Fetching ${mode} NFTs from subgraph...`);
       console.log('User address:', address);
       console.log('NFT contract:', nftAddress);
+      console.log('Subgraph URL:', 'https://api.goldsky.com/api/public/project_cm78242tjtmme01uvcbkaay27/subgraphs/nft-staking-berachain/1.0.0/gn');
 
       setIsLoading(true);
       setError(null);
@@ -133,26 +134,52 @@ export function useUserNFTs(mode: 'wallet' | 'staked' | 'burnable' | 'all-burnab
           console.log(`${mode} NFTs (after filtering):`, stakedTokens);
           setNfts(stakedTokens);
         } else {
-          // For wallet mode: Query NFTs directly from the subgraph
-          // The subgraph now tracks all NFT holders with isStaked flag
-          const data = await stakingGraphqlClient.request<{ nfts: SubgraphNFT[] }>(GET_USER_WALLET_NFTS, {
+          // For wallet mode: Query both nfts and stakes entities
+          const data = await stakingGraphqlClient.request<{ nfts: SubgraphNFT[], stakes: SubgraphStake[] }>(GET_USER_WALLET_NFTS, {
             owner: address.toLowerCase(),
           });
 
+          console.log('=== WALLET NFTs DEBUG ===');
           console.log('Wallet NFTs subgraph response:', data);
-          console.log('Total wallet NFTs found:', data.nfts?.length || 0);
+          console.log('Total NFT entities found:', data.nfts?.length || 0);
+          console.log('Total stake entities found:', data.stakes?.length || 0);
+          console.log('Raw NFTs data:', JSON.stringify(data.nfts, null, 2));
+          console.log('Raw stakes data:', JSON.stringify(data.stakes, null, 2));
 
-          // Transform NFT data to our NFTToken format
-          const walletTokens: NFTToken[] = (data.nfts || []).map(nft => ({
-            id: nft.id,
-            tokenId: nft.tokenId,
-            owner: nft.ownerAddress,
-            contract: nft.contract,
-            isStaked: false,
-            burned: nft.isBurned,
-          }));
+          // Combine NFTs from both sources
+          const nftMap = new Map<string, NFTToken>();
 
-          console.log('Wallet NFTs:', walletTokens);
+          // First, add NFTs from the nfts entity (filter unstaked and not burned)
+          (data.nfts || []).forEach(nft => {
+            if (!nft.isStaked && !nft.isBurned) {
+              nftMap.set(nft.tokenId, {
+                id: nft.id,
+                tokenId: nft.tokenId,
+                owner: nft.ownerAddress,
+                contract: nft.contract,
+                isStaked: false,
+                burned: nft.isBurned,
+              });
+            }
+          });
+
+          // Then, add stakes with UNSTAKED status (they override nfts if present)
+          (data.stakes || []).forEach(stake => {
+            if (stake.status === 'UNSTAKED' && !stake.burned) {
+              nftMap.set(stake.tokenId, {
+                id: stake.id,
+                tokenId: stake.tokenId,
+                owner: stake.ownerAddress,
+                contract: nftAddress || '',
+                isStaked: false,
+                burned: stake.burned,
+              });
+            }
+          });
+
+          const walletTokens = Array.from(nftMap.values());
+          console.log('Merged wallet NFTs:', walletTokens);
+          console.log('=== END DEBUG ===');
           setNfts(walletTokens);
         }
       } catch (err) {
@@ -230,17 +257,50 @@ export function useUserNFTs(mode: 'wallet' | 'staked' | 'burnable' | 'all-burnab
           }));
         setNfts(stakedTokens);
       } else {
-        const data = await stakingGraphqlClient.request<{ nfts: SubgraphNFT[] }>(GET_USER_WALLET_NFTS, {
+        const data = await stakingGraphqlClient.request<{ nfts: SubgraphNFT[], stakes: SubgraphStake[] }>(GET_USER_WALLET_NFTS, {
           owner: address.toLowerCase(),
         });
-        const walletTokens: NFTToken[] = (data.nfts || []).map(nft => ({
-          id: nft.id,
-          tokenId: nft.tokenId,
-          owner: nft.ownerAddress,
-          contract: nft.contract,
-          isStaked: false,
-          burned: nft.isBurned,
-        }));
+        console.log('=== REFETCH WALLET NFTs DEBUG ===');
+        console.log('Refetch wallet NFTs response:', data);
+        console.log('Total NFT entities found:', data.nfts?.length || 0);
+        console.log('Total stake entities found:', data.stakes?.length || 0);
+        console.log('Raw NFTs data:', JSON.stringify(data.nfts, null, 2));
+        console.log('Raw stakes data:', JSON.stringify(data.stakes, null, 2));
+
+        // Combine NFTs from both sources
+        const nftMap = new Map<string, NFTToken>();
+
+        // First, add NFTs from the nfts entity (filter unstaked and not burned)
+        (data.nfts || []).forEach(nft => {
+          if (!nft.isStaked && !nft.isBurned) {
+            nftMap.set(nft.tokenId, {
+              id: nft.id,
+              tokenId: nft.tokenId,
+              owner: nft.ownerAddress,
+              contract: nft.contract,
+              isStaked: false,
+              burned: nft.isBurned,
+            });
+          }
+        });
+
+        // Then, add stakes with UNSTAKED status (they override nfts if present)
+        (data.stakes || []).forEach(stake => {
+          if (stake.status === 'UNSTAKED' && !stake.burned) {
+            nftMap.set(stake.tokenId, {
+              id: stake.id,
+              tokenId: stake.tokenId,
+              owner: stake.ownerAddress,
+              contract: nftAddress || '',
+              isStaked: false,
+              burned: stake.burned,
+            });
+          }
+        });
+
+        const walletTokens = Array.from(nftMap.values());
+        console.log('Merged wallet NFTs:', walletTokens);
+        console.log('=== END REFETCH DEBUG ===');
         setNfts(walletTokens);
       }
     } catch (err) {

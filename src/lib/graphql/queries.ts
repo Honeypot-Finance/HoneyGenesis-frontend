@@ -1,13 +1,13 @@
 /**
  * Query to get all NFTs owned by a specific address (wallet NFTs)
- * Uses the updated NFT Staking subgraph with NFT tracking
+ * Query both nfts and stakes entities to handle all cases
  */
 export const GET_USER_WALLET_NFTS = `
   query GetUserWalletNFTs($owner: String!) {
+    # Query NFT entities (if subgraph tracks them)
     nfts(
       where: {
         ownerAddress: $owner
-        isStaked: false
       }
       orderBy: tokenId
       orderDirection: asc
@@ -19,6 +19,21 @@ export const GET_USER_WALLET_NFTS = `
       ownerAddress
       isStaked
       isBurned
+    }
+    # Also query stakes with UNSTAKED status as backup
+    stakes(
+      where: {
+        ownerAddress: $owner
+      }
+      orderBy: tokenId
+      orderDirection: asc
+      first: 1000
+    ) {
+      id
+      tokenId
+      ownerAddress
+      status
+      burned
     }
   }
 `;

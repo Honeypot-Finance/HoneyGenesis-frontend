@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useBurn, useStakingParams } from "@/hooks/useNFTStaking";
 import { useSetApprovalForAll, useIsApproved } from "@/hooks/useNFT";
 import { formatBps } from "@/lib/stakingUtils";
-import { NFTSelector } from "./NFTSelector";
+import { NFTSelector, NFTSelectorRef } from "./NFTSelector";
 import GeneralButton from "../atoms/GeneralButton/GeneralButton";
 import { useAppDispatch } from "@/hooks/useAppSelector";
 import { openPopUp } from "@/config/redux/popUpSlice";
@@ -10,7 +10,7 @@ import { useUserNFTs } from "@/hooks/useUserNFTs";
 
 export function BurnNFT() {
   const [selectedTokenId, setSelectedTokenId] = useState<bigint | undefined>();
-  const [refetchTrigger, setRefetchTrigger] = useState(0);
+  const burnableNFTSelectorRef = useRef<NFTSelectorRef>(null);
   const { burn, isPending, isConfirming, isSuccess, hash } = useBurn();
   const {
     setApprovalForAll,
@@ -49,11 +49,28 @@ export function BurnNFT() {
           linkText: "View on Explorer",
         })
       );
-      const timer = setTimeout(() => {
-        setRefetchTrigger((prev) => prev + 1);
-        setSelectedTokenId(undefined);
-      }, 2000);
-      return () => clearTimeout(timer);
+
+      // Poll for subgraph updates with exponential backoff
+      const refetchWithRetry = async (attempts = 0, maxAttempts = 5) => {
+        if (attempts >= maxAttempts) {
+          console.log('Max refetch attempts reached');
+          setSelectedTokenId(undefined);
+          return;
+        }
+
+        // Wait with exponential backoff: 2s, 4s, 6s, 8s, 10s
+        const delay = 2000 * (attempts + 1);
+        await new Promise(resolve => setTimeout(resolve, delay));
+
+        console.log(`Refetching NFTs (attempt ${attempts + 1}/${maxAttempts})...`);
+        await burnableNFTSelectorRef.current?.refetch();
+
+        // Continue polling
+        refetchWithRetry(attempts + 1, maxAttempts);
+      };
+
+      refetchWithRetry();
+      setSelectedTokenId(undefined);
     }
   }, [isSuccess, hash, dispatch]);
 
@@ -71,10 +88,6 @@ export function BurnNFT() {
           linkText: "View on Explorer",
         })
       );
-      const timer = setTimeout(() => {
-        setRefetchTrigger((prev) => prev + 1);
-      }, 1000);
-      return () => clearTimeout(timer);
     }
   }, [isApproveSuccess, approveHash, dispatch]);
 
@@ -127,11 +140,11 @@ export function BurnNFT() {
       )}
 
       <NFTSelector
+        ref={burnableNFTSelectorRef}
         onSelect={setSelectedTokenId}
         selectedTokenId={selectedTokenId}
         mode="all-burnable"
         title="Select NFT to Burn"
-        key={refetchTrigger}
       />
 
       {needsApproval && selectedTokenId !== undefined && (

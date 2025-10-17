@@ -1,5 +1,6 @@
 import { useAccount } from 'wagmi';
 import { useUserNFTs } from '@/hooks/useUserNFTs';
+import { useImperativeHandle, forwardRef, useRef } from 'react';
 
 interface NFTSelectorProps {
   onSelect: (tokenId: bigint) => void;
@@ -8,9 +9,19 @@ interface NFTSelectorProps {
   title?: string;
 }
 
-export function NFTSelector({ onSelect, selectedTokenId, mode = 'wallet', title }: NFTSelectorProps) {
-  const { isConnected } = useAccount();
-  const { nfts, isLoading, hasNFTs } = useUserNFTs(mode);
+export interface NFTSelectorRef {
+  refetch: () => Promise<void>;
+}
+
+export const NFTSelector = forwardRef<NFTSelectorRef, NFTSelectorProps>(
+  ({ onSelect, selectedTokenId, mode = 'wallet', title }, ref) => {
+    const { isConnected } = useAccount();
+    const { nfts, isLoading, hasNFTs, refetch } = useUserNFTs(mode);
+
+    // Expose refetch function to parent via ref
+    useImperativeHandle(ref, () => ({
+      refetch,
+    }));
 
   if (!isConnected) {
     return (
@@ -82,7 +93,7 @@ export function NFTSelector({ onSelect, selectedTokenId, mode = 'wallet', title 
       )}
     </div>
   );
-}
+});
 
 function NFTCard({ tokenId, isSelected, onSelect, isStaked, burned }: {
   tokenId: string;
