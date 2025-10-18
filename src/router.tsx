@@ -8,6 +8,7 @@ import ErrorPage from "./Routes/ErrorPage/ErrorPage";
 import Terms from "./Routes/Terms";
 import NFT from "./Routes/NFT";
 import Staking from "./Routes/Staking";
+import StakingDynamic from "./Routes/StakingDynamic";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/staking",
         element: <Staking />,
+      },
+      {
+        path: "/staking-dynamic",
+        element: <StakingDynamic />,
       },
     ],
     errorElement: <ErrorPage />,

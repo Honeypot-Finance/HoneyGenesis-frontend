@@ -9,8 +9,9 @@
   max-width: 1200px;
   width: 95%;
   margin: 0 auto;
+  margin-top: 25vh;
   padding: 2rem;
-  padding-top: 6rem;
+  padding-bottom: 10rem;
   overflow-y: visible;
   max-height: none;
 }
@@ -26,6 +27,9 @@
     position: relative;
     width: 90%;
     max-width: 1400px;
+    margin-top: 4rem;
+    padding: 2.5rem;
+    padding-top: 3rem;
   }
 }
 
