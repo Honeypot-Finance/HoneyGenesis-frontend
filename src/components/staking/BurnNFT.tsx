@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useBurn, useStakingParams } from "@/hooks/useNFTStaking";
+import { useBurn, useStakingParams, useSimulateBurn } from "@/hooks/useNFTStaking";
 import { useSetApprovalForAll, useIsApproved } from "@/hooks/useNFT";
 import { formatBps } from "@/lib/stakingUtils";
 import { NFTSelector, NFTSelectorRef } from "./NFTSelector";
@@ -11,7 +11,8 @@ import { useUserNFTs } from "@/hooks/useUserNFTs";
 export function BurnNFT() {
   const [selectedTokenId, setSelectedTokenId] = useState<bigint | undefined>();
   const burnableNFTSelectorRef = useRef<NFTSelectorRef>(null);
-  const { burn, isPending, isConfirming, isSuccess, hash } = useBurn();
+  const { burn, isPending, isConfirming, isSuccess, hash, error } = useBurn();
+  const { simulationData, simulationError, isSimulating } = useSimulateBurn(selectedTokenId);
   const {
     setApprovalForAll,
     isPending: isApproving,
@@ -91,19 +92,33 @@ export function BurnNFT() {
     }
   }, [isApproveSuccess, approveHash, dispatch]);
 
+  // Log simulation results when token is selected
+  useEffect(() => {
+    if (selectedTokenId !== undefined) {
+      console.log("Burn simulation for token", selectedTokenId.toString(), ":", {
+        isSimulating,
+        simulationData,
+        simulationError,
+      });
+    }
+  }, [selectedTokenId, isSimulating, simulationData, simulationError]);
+
+  // Log burn errors
+  useEffect(() => {
+    if (error) {
+      console.log("Burn error:", error);
+    }
+  }, [error]);
+
   const handleApprove = () => {
     setApprovalForAll(true);
   };
 
   const handleBurn = () => {
     if (selectedTokenId === undefined) return;
-    if (
-      !window.confirm(
-        "Are you sure you want to burn this NFT? This action cannot be undone!"
-      )
-    ) {
-      return;
-    }
+
+    console.log("Burning NFT - Token ID:", selectedTokenId.toString());
+
     burn(selectedTokenId);
   };
 

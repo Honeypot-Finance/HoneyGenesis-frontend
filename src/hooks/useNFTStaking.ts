@@ -1,4 +1,4 @@
-import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useSimulateContract } from 'wagmi';
 import { NFTStakingABI } from '@/abi/NFTStakingABI';
 import { NFT_STAKING_ADDRESS } from './useContractAddresses';
 import { DEFAULT_STAKING_CHAIN_ID } from '@/consts';
@@ -109,6 +109,28 @@ export function useBurn() {
     isConfirming,
     isSuccess,
     error,
+  };
+}
+
+/**
+ * Hook to simulate burning an NFT (for logging only)
+ */
+export function useSimulateBurn(tokenId: bigint | undefined) {
+  const { data, error, isLoading } = useSimulateContract({
+    address: NFT_STAKING_ADDRESS,
+    abi: NFTStakingABI,
+    functionName: 'burn',
+    args: tokenId !== undefined ? [tokenId] : undefined,
+    chainId: DEFAULT_STAKING_CHAIN_ID,
+    query: {
+      enabled: tokenId !== undefined,
+    },
+  });
+
+  return {
+    simulationData: data,
+    simulationError: error,
+    isSimulating: isLoading,
   };
 }
 
