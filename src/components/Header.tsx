@@ -44,7 +44,10 @@ export default function Header() {
         style={{ backgroundImage: `url(${honeyTopFrame})` }}
       ></div>
       <header className="App-header">
-        <div className="close-header-button" ref={closeHeaderButton}>
+        <div
+          className="close-header-button"
+          ref={closeHeaderButton}
+        >
           X
         </div>
         <div
@@ -52,12 +55,24 @@ export default function Header() {
           style={{ backgroundImage: `url(${honeyTopFrame})` }}
         />
         <Link to={"/"}>
-          <img src={honeyGenesisLogo} alt="logo" className="logo" />
+          <img
+            src={honeyGenesisLogo}
+            alt="logo"
+            className="logo"
+          />
         </Link>
         <div className="link-group">
           <nav className="navbar">
             <li className="navbar__link">
-              <Link to="/reveal">Reveal</Link>
+              <Link to="/benefits">Benefits</Link>
+            </li>
+            <hr />
+            <li className="navbar__link">
+              <Link to="/staking">Staking</Link>
+            </li>
+            <hr />
+            <li className="navbar__link">
+              <Link to="/reveal">Gallery</Link>
             </li>
             <hr />
             {/* <li className="navbar__link">
@@ -73,7 +88,10 @@ export default function Header() {
             </li> */}
             <hr />{" "}
             <li className="navbar__link">
-              <a href="https://honeypotfinance.xyz/" target="blank">
+              <a
+                href="https://honeypotfinance.xyz/"
+                target="blank"
+              >
                 Honeypot Finance{" "}
                 <img
                   src={externalLinkIcon}
@@ -89,21 +107,30 @@ export default function Header() {
               href="https://twitter.com/honeypotfinance"
               target="_blank"
             >
-              <img src={twitterIcon} alt="Twitter" />
+              <img
+                src={twitterIcon}
+                alt="Twitter"
+              />
             </a>
             <a
               className="medias__link"
               href="https://discord.com/invite/8Z3VdhZ9V6"
               target="_blank"
             >
-              <img src={discordIcon} alt="Discord" />
+              <img
+                src={discordIcon}
+                alt="Discord"
+              />
             </a>
             <a
               className="medias__link"
               href="https://docs.honeypotfinance.xyz/"
               target="_blank"
             >
-              <img src={gitbookIcon} alt="Gitbook" />
+              <img
+                src={gitbookIcon}
+                alt="Gitbook"
+              />
             </a>
           </div>
         </div>
