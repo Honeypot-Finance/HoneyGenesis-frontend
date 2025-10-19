@@ -9,6 +9,7 @@ import Terms from "./Routes/Terms";
 import NFT from "./Routes/NFT";
 import Staking from "./Routes/Staking";
 import StakingDynamic from "./Routes/StakingDynamic";
+import Benefits from "./Routes/Benefits";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "/staking-dynamic",
         element: <StakingDynamic />,
+      },
+      {
+        path: "/benefits",
+        element: <Benefits />,
       },
     ],
     errorElement: <ErrorPage />,

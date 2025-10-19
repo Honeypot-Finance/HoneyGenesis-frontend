@@ -20,8 +20,8 @@ function Staking() {
             <h1 className="title">NFT Staking 🍯</h1>
             <div className="staking-connect-prompt">
               <p className="desc">
-                Connect your wallet to start staking your NFTs and earning
-                rewards
+                Connect your wallet to unlock passive rewards! Start earning
+                immediately by locking your NFTs.
               </p>
               <GeneralButton
                 onClick={() => open()}
@@ -72,33 +72,35 @@ function Staking() {
               </h2>
               <div className="how-it-works">
                 <div className="info-section">
-                  <h3>1. Stake Your NFT</h3>
+                  <h3>🔒 1. Stake Your NFT</h3>
                   <p>
-                    Deposit your NFT into the staking contract to start earning
-                    rewards. You'll need to approve the contract first.
+                    Simply lock your NFT to start earning passive rewards
+                    immediately. Your NFT stays safe and you keep full
+                    ownership!
                   </p>
                 </div>
                 <div className="info-section">
-                  <h3>2. Earn Rewards with Multipliers</h3>
+                  <h3>📈 2. Watch Your Rewards Grow</h3>
                   <p>
-                    Rewards accrue every second based on the current reward
-                    rate. Your multiplier increases by 1x for every 30 days
-                    staked (e.g., 2x after 30 days, 3x after 60 days).
+                    Earn rewards automatically every second! The longer you
+                    stay, the more you earn - your rewards multiply every 30
+                    days (2x after 30 days, 3x after 60 days, and so on).
                   </p>
                 </div>
                 <div className="info-section">
-                  <h3>3. Claim or Unstake</h3>
+                  <h3>💰 3. Collect Anytime</h3>
                   <p>
-                    Claim your rewards at any time without unstaking, or unstake
-                    to get your NFT back (rewards are automatically claimed on
-                    unstake).
+                    Claim your earnings whenever you want while keeping your NFT
+                    locked, or unlock to get everything back at once. You're
+                    always in control!
                   </p>
                 </div>
                 <div className="info-section warning">
-                  <h3>4. Burn for Bonus</h3>
+                  <h3>🔥 4. Supercharge with Burn Mode</h3>
                   <p>
-                    Burn your staked NFT permanently to earn additional bonus
-                    rewards. This action is irreversible!
+                    Ready to go all-in? Permanently sacrifice your NFT to
+                    activate mega bonus rewards! Only for the most dedicated -
+                    there's no going back.
                   </p>
                 </div>
               </div>
