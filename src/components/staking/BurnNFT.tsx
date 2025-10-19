@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { useBurn, useStakingParams, useSimulateBurn } from "@/hooks/useNFTStaking";
+import {
+  useBurn,
+  useStakingParams,
+  useSimulateBurn,
+} from "@/hooks/useNFTStaking";
 import { useSetApprovalForAll, useIsApproved } from "@/hooks/useNFT";
 import { formatBps } from "@/lib/stakingUtils";
 import { NFTSelector, NFTSelectorRef } from "./NFTSelector";
@@ -12,7 +16,8 @@ export function BurnNFT() {
   const [selectedTokenId, setSelectedTokenId] = useState<bigint | undefined>();
   const burnableNFTSelectorRef = useRef<NFTSelectorRef>(null);
   const { burn, isPending, isConfirming, isSuccess, hash, error } = useBurn();
-  const { simulationData, simulationError, isSimulating } = useSimulateBurn(selectedTokenId);
+  const { simulationData, simulationError, isSimulating } =
+    useSimulateBurn(selectedTokenId);
   const {
     setApprovalForAll,
     isPending: isApproving,
@@ -54,16 +59,18 @@ export function BurnNFT() {
       // Poll for subgraph updates with exponential backoff
       const refetchWithRetry = async (attempts = 0, maxAttempts = 5) => {
         if (attempts >= maxAttempts) {
-          console.log('Max refetch attempts reached');
+          console.log("Max refetch attempts reached");
           setSelectedTokenId(undefined);
           return;
         }
 
         // Wait with exponential backoff: 2s, 4s, 6s, 8s, 10s
         const delay = 2000 * (attempts + 1);
-        await new Promise(resolve => setTimeout(resolve, delay));
+        await new Promise((resolve) => setTimeout(resolve, delay));
 
-        console.log(`Refetching NFTs (attempt ${attempts + 1}/${maxAttempts})...`);
+        console.log(
+          `Refetching NFTs (attempt ${attempts + 1}/${maxAttempts})...`
+        );
         await burnableNFTSelectorRef.current?.refetch();
 
         // Continue polling
@@ -91,17 +98,6 @@ export function BurnNFT() {
       );
     }
   }, [isApproveSuccess, approveHash, dispatch]);
-
-  // Log simulation results when token is selected
-  useEffect(() => {
-    if (selectedTokenId !== undefined) {
-      console.log("Burn simulation for token", selectedTokenId.toString(), ":", {
-        isSimulating,
-        simulationData,
-        simulationError,
-      });
-    }
-  }, [selectedTokenId, isSimulating, simulationData, simulationError]);
 
   // Log burn errors
   useEffect(() => {
@@ -137,9 +133,9 @@ export function BurnNFT() {
               margin: 0,
             }}
           >
-            Current burn bonus:{" "}
+            Burn Bonus:{" "}
             <span style={{ fontSize: "1.2rem" }}>
-              {formatBps(burnBonusBps)}
+              1{formatBps(burnBonusBps)}
             </span>
           </p>
           <p
@@ -149,7 +145,7 @@ export function BurnNFT() {
               marginTop: "0.5rem",
             }}
           >
-            Burning increases your rewards by this percentage
+            Burning increases your rewards to this percentage
           </p>
         </div>
       )}
