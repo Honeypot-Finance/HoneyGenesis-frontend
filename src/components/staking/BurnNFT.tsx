@@ -1,9 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import {
-  useBurn,
-  useStakingParams,
-  useSimulateBurn,
-} from "@/hooks/useNFTStaking";
+import { useBurn, useStakingParams } from "@/hooks/useNFTStaking";
 import { useSetApprovalForAll, useIsApproved } from "@/hooks/useNFT";
 import { formatBps } from "@/lib/stakingUtils";
 import { NFTSelector, NFTSelectorRef } from "./NFTSelector";
@@ -16,8 +12,6 @@ export function BurnNFT() {
   const [selectedTokenId, setSelectedTokenId] = useState<bigint | undefined>();
   const burnableNFTSelectorRef = useRef<NFTSelectorRef>(null);
   const { burn, isPending, isConfirming, isSuccess, hash, error } = useBurn();
-  const { simulationData, simulationError, isSimulating } =
-    useSimulateBurn(selectedTokenId);
   const {
     setApprovalForAll,
     isPending: isApproving,
@@ -83,11 +77,11 @@ export function BurnNFT() {
   }, [isSuccess, hash, dispatch]);
 
   useEffect(() => {
-    if (isApproveSuccess && approveHash) {
+    if (isApproveSuccess && approveHash && selectedTokenId && !isPending && !isConfirming) {
       dispatch(
         openPopUp({
           title: "Approval Success",
-          message: `All NFTs approved successfully! You can now burn unstaked NFTs.\n\nTransaction: ${approveHash.slice(
+          message: `All NFTs approved successfully! Initiating burn transaction...\n\nTransaction: ${approveHash.slice(
             0,
             10
           )}...${approveHash.slice(-8)}`,
@@ -96,8 +90,12 @@ export function BurnNFT() {
           linkText: "View on Explorer",
         })
       );
+
+      // Automatically trigger burn after approval
+      burn(selectedTokenId);
     }
-  }, [isApproveSuccess, approveHash, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isApproveSuccess, approveHash, selectedTokenId, dispatch]);
 
   // Log burn errors
   useEffect(() => {
@@ -110,12 +108,8 @@ export function BurnNFT() {
     setApprovalForAll(true);
   };
 
-  const handleBurn = () => {
-    if (selectedTokenId === undefined) return;
-
-    console.log("Burning NFT - Token ID:", selectedTokenId.toString());
-
-    burn(selectedTokenId);
+  const handleRevokeApproval = () => {
+    setApprovalForAll(false);
   };
 
   return (
@@ -158,18 +152,6 @@ export function BurnNFT() {
         title="Select NFT to Burn"
       />
 
-      {needsApproval && selectedTokenId !== undefined && (
-        <GeneralButton
-          onClick={handleApprove}
-          loading={isApproving || isApprovingConfirming}
-          style={{ width: "100%", marginTop: "1rem" }}
-        >
-          {isApproving || isApprovingConfirming
-            ? "Approving..."
-            : "Approve NFTs for Burning"}
-        </GeneralButton>
-      )}
-
       <div
         className="info-box"
         style={{
@@ -196,20 +178,48 @@ export function BurnNFT() {
         </p>
       </div>
 
-      {selectedTokenId !== undefined &&
-        (isSelectedNFTStaked || isApprovedForAll) && (
-          <GeneralButton
-            onClick={handleBurn}
-            loading={isPending || isConfirming}
-            style={{
-              width: "100%",
-              marginTop: "1rem",
-              background: isPending || isConfirming ? "#666666" : "#FF494A",
-            }}
-          >
-            {isPending || isConfirming ? "Burning..." : "Burn NFT"}
-          </GeneralButton>
-        )}
+      {needsApproval && selectedTokenId !== undefined && (
+        <GeneralButton
+          onClick={handleApprove}
+          loading={isApproving || isApprovingConfirming || isPending || isConfirming}
+          style={{ width: "100%", marginTop: "1rem" }}
+        >
+          {isApproving || isApprovingConfirming
+            ? "Approving..."
+            : isPending || isConfirming
+            ? "Burning..."
+            : "Approve & Burn NFT"}
+        </GeneralButton>
+      )}
+
+      {selectedTokenId !== undefined && isSelectedNFTStaked && (
+        <GeneralButton
+          onClick={() => burn(selectedTokenId)}
+          loading={isPending || isConfirming}
+          style={{
+            width: "100%",
+            marginTop: "1rem",
+            background: "#FF494A",
+          }}
+        >
+          {isPending || isConfirming ? "Burning..." : "Burn NFT"}
+        </GeneralButton>
+      )}
+
+      {selectedTokenId !== undefined && !isSelectedNFTStaked && isApprovedForAll && (
+        <GeneralButton
+          onClick={handleRevokeApproval}
+          loading={isApproving || isApprovingConfirming}
+          style={{
+            width: "100%",
+            marginTop: "1rem",
+            background: "#666666",
+            fontSize: "0.8rem",
+          }}
+        >
+          {isApproving || isApprovingConfirming ? "Revoking..." : "🧪 Test: Revoke NFT Approval"}
+        </GeneralButton>
+      )}
     </div>
   );
 }

@@ -55,17 +55,27 @@ function Staking() {
           <StakingStats />
 
           {/* How It Works Section */}
-          <div className="staking-tabs-container" style={{ marginTop: '2rem' }}>
-            <div style={{ padding: '2rem' }}>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#ffcd4d', marginBottom: '1.5rem' }}>
+          <div
+            className="staking-tabs-container"
+            style={{ marginTop: "2rem" }}
+          >
+            <div style={{ padding: "2rem" }}>
+              <h2
+                style={{
+                  fontSize: "1.5rem",
+                  fontWeight: "bold",
+                  color: "#ffcd4d",
+                  marginBottom: "1.5rem",
+                }}
+              >
                 How It Works
               </h2>
               <div className="how-it-works">
                 <div className="info-section">
                   <h3>1. Stake Your NFT</h3>
                   <p>
-                    Deposit your NFT into the staking contract to start
-                    earning rewards. You'll need to approve the contract first.
+                    Deposit your NFT into the staking contract to start earning
+                    rewards. You'll need to approve the contract first.
                   </p>
                 </div>
                 <div className="info-section">
@@ -79,13 +89,13 @@ function Staking() {
                 <div className="info-section">
                   <h3>3. Claim or Unstake</h3>
                   <p>
-                    Claim your rewards at any time without unstaking, or
-                    unstake to get your NFT back (rewards are automatically
-                    claimed on unstake).
+                    Claim your rewards at any time without unstaking, or unstake
+                    to get your NFT back (rewards are automatically claimed on
+                    unstake).
                   </p>
                 </div>
                 <div className="info-section warning">
-                  <h3>4. Burn for Bonus (Optional)</h3>
+                  <h3>4. Burn for Bonus</h3>
                   <p>
                     Burn your staked NFT permanently to earn additional bonus
                     rewards. This action is irreversible!

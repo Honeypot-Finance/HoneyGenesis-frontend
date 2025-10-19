@@ -11,12 +11,16 @@ import "@/css/staking.css";
 function StakingDynamic() {
   const { isConnected } = useAccount();
   const { open } = useWeb3Modal();
-  const [stakingContractAddress, setStakingContractAddress] = useState<string>("");
+  const [stakingContractAddress, setStakingContractAddress] =
+    useState<string>("");
   const [isConfigured, setIsConfigured] = useState(false);
 
   // Fetch NFT address from staking contract
   const { data: nftContractAddress } = useReadContract({
-    address: isConfigured && stakingContractAddress ? (stakingContractAddress as `0x${string}`) : undefined,
+    address:
+      isConfigured && stakingContractAddress
+        ? (stakingContractAddress as `0x${string}`)
+        : undefined,
     abi: NFTStakingABI,
     functionName: "nft",
     chainId: DEFAULT_STAKING_CHAIN_ID,
@@ -54,19 +58,51 @@ function StakingDynamic() {
         <MainContentWrapper>
           <main className="main">
             <h1 className="title">Dynamic NFT Staking 🔧</h1>
-            <div className="staking-tabs-container" style={{ maxWidth: '600px', margin: '2rem auto' }}>
-              <div style={{ padding: '2rem' }}>
-                <div className="info-box" style={{ marginBottom: '2rem', background: 'rgba(255, 205, 77, 0.1)', border: '2px solid #ffcd4d' }}>
-                  <p style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#ffcd4d', margin: 0 }}>
+            <div
+              className="staking-tabs-container"
+              style={{ maxWidth: "600px", margin: "2rem auto" }}
+            >
+              <div style={{ padding: "2rem" }}>
+                <div
+                  className="info-box"
+                  style={{
+                    marginBottom: "2rem",
+                    background: "rgba(255, 205, 77, 0.1)",
+                    border: "2px solid #ffcd4d",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontSize: "0.9rem",
+                      fontWeight: "bold",
+                      color: "#ffcd4d",
+                      margin: 0,
+                    }}
+                  >
                     ⚙️ Configuration Required
                   </p>
-                  <p style={{ fontSize: '0.75rem', color: '#999999', marginTop: '0.5rem' }}>
-                    Enter the staking contract address. The NFT contract address will be automatically fetched from the staking contract.
+                  <p
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "#999999",
+                      marginTop: "0.5rem",
+                    }}
+                  >
+                    Enter the staking contract address. The NFT contract address
+                    will be automatically fetched from the staking contract.
                   </p>
                 </div>
 
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 'bold', color: '#ffcd4d', marginBottom: '0.5rem' }}>
+                <div style={{ marginBottom: "1.5rem" }}>
+                  <label
+                    style={{
+                      display: "block",
+                      fontSize: "0.9rem",
+                      fontWeight: "bold",
+                      color: "#ffcd4d",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
                     Staking Contract Address
                   </label>
                   <input
@@ -75,14 +111,14 @@ function StakingDynamic() {
                     onChange={(e) => setStakingContractAddress(e.target.value)}
                     placeholder="0x..."
                     style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      fontSize: '0.9rem',
-                      backgroundColor: '#1a1a1a',
-                      border: '2px solid #333',
-                      borderRadius: '8px',
-                      color: '#fff',
-                      fontFamily: 'monospace',
+                      width: "100%",
+                      padding: "0.75rem",
+                      fontSize: "0.9rem",
+                      backgroundColor: "#1a1a1a",
+                      border: "2px solid #333",
+                      borderRadius: "8px",
+                      color: "#fff",
+                      fontFamily: "monospace",
                     }}
                   />
                 </div>
@@ -94,7 +130,7 @@ function StakingDynamic() {
                     }
                   }}
                   disabled={!stakingContractAddress}
-                  style={{ width: '100%' }}
+                  style={{ width: "100%" }}
                 >
                   Configure Contract
                 </GeneralButton>
@@ -112,18 +148,46 @@ function StakingDynamic() {
         <main className="main">
           <h1 className="title">Dynamic NFT Staking 🔧</h1>
 
-          <div className="info-box" style={{ marginBottom: '2rem', background: 'rgba(255, 205, 77, 0.1)', border: '2px solid #ffcd4d' }}>
-            <p style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#ffcd4d', margin: 0 }}>
+          <div
+            className="info-box"
+            style={{
+              marginBottom: "2rem",
+              background: "rgba(255, 205, 77, 0.1)",
+              border: "2px solid #ffcd4d",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "0.9rem",
+                fontWeight: "bold",
+                color: "#ffcd4d",
+                margin: 0,
+              }}
+            >
               📋 Current Configuration
             </p>
-            <p style={{ fontSize: '0.75rem', color: '#999999', marginTop: '0.5rem', wordBreak: 'break-all' }}>
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "#999999",
+                marginTop: "0.5rem",
+                wordBreak: "break-all",
+              }}
+            >
               <strong>Staking Contract:</strong> {stakingContractAddress}
               <br />
-              <strong>NFT Contract:</strong> {nftContractAddress ? nftContractAddress.toString() : 'Loading...'}
+              <strong>NFT Contract:</strong>{" "}
+              {nftContractAddress
+                ? nftContractAddress.toString()
+                : "Loading..."}
             </p>
             <GeneralButton
               onClick={() => setIsConfigured(false)}
-              style={{ marginTop: '1rem', fontSize: '0.8rem', padding: '0.5rem 1rem' }}
+              style={{
+                marginTop: "1rem",
+                fontSize: "0.8rem",
+                padding: "0.5rem 1rem",
+              }}
             >
               Change Configuration
             </GeneralButton>
@@ -138,17 +202,27 @@ function StakingDynamic() {
           )}
 
           {/* How It Works Section */}
-          <div className="staking-tabs-container" style={{ marginTop: '2rem' }}>
-            <div style={{ padding: '2rem' }}>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#ffcd4d', marginBottom: '1.5rem' }}>
+          <div
+            className="staking-tabs-container"
+            style={{ marginTop: "2rem" }}
+          >
+            <div style={{ padding: "2rem" }}>
+              <h2
+                style={{
+                  fontSize: "1.5rem",
+                  fontWeight: "bold",
+                  color: "#ffcd4d",
+                  marginBottom: "1.5rem",
+                }}
+              >
                 How It Works
               </h2>
               <div className="how-it-works">
                 <div className="info-section">
                   <h3>1. Stake Your NFT</h3>
                   <p>
-                    Deposit your NFT into the staking contract to start
-                    earning rewards. You'll need to approve the contract first.
+                    Deposit your NFT into the staking contract to start earning
+                    rewards. You'll need to approve the contract first.
                   </p>
                 </div>
                 <div className="info-section">
@@ -162,13 +236,13 @@ function StakingDynamic() {
                 <div className="info-section">
                   <h3>3. Claim or Unstake</h3>
                   <p>
-                    Claim your rewards at any time without unstaking, or
-                    unstake to get your NFT back (rewards are automatically
-                    claimed on unstake).
+                    Claim your rewards at any time without unstaking, or unstake
+                    to get your NFT back (rewards are automatically claimed on
+                    unstake).
                   </p>
                 </div>
                 <div className="info-section warning">
-                  <h3>4. Burn for Bonus (Optional)</h3>
+                  <h3>4. Burn for Bonus </h3>
                   <p>
                     Burn your staked NFT permanently to earn additional bonus
                     rewards. This action is irreversible!

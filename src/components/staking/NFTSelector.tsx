@@ -131,16 +131,15 @@ function NFTCard({ tokenId, isSelected, onSelect, isStaked, burned }: {
       }}
     >
       <div style={{ fontWeight: 'bold', color: '#ffcd4d' }}>Token #{tokenId}</div>
-      {isStaked && (
-        <div style={{ fontSize: '0.75rem', marginTop: '0.5rem', color: '#10B981', fontWeight: 'bold' }}>
-          ✓ Staked
-        </div>
-      )}
-      {burned && (
+      {burned ? (
         <div style={{ fontSize: '0.75rem', marginTop: '0.5rem', color: '#FF494A', fontWeight: 'bold' }}>
           🔥 Burned
         </div>
-      )}
+      ) : isStaked ? (
+        <div style={{ fontSize: '0.75rem', marginTop: '0.5rem', color: '#10B981', fontWeight: 'bold' }}>
+          ✓ Staked
+        </div>
+      ) : null}
     </button>
   );
 }

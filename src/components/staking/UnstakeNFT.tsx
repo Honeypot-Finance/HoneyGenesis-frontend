@@ -59,7 +59,7 @@ export function UnstakeNFT({ onSuccess }: UnstakeNFTProps) {
         ref={stakedNFTSelectorRef}
         onSelect={setSelectedTokenId}
         selectedTokenId={selectedTokenId}
-        mode="staked"
+        mode="burnable"
         title="Select NFT to Unstake"
       />
 

@@ -81,11 +81,11 @@ export const StakeNFT = forwardRef<StakeNFTRef>((props, ref) => {
   }, [isSuccess, stakeHash, dispatch]);
 
   useEffect(() => {
-    if (isApproveSuccess && approveHash) {
+    if (isApproveSuccess && approveHash && selectedTokenId && !isStaking && !isConfirming) {
       dispatch(
         openPopUp({
           title: "Approval Success",
-          message: `All NFTs approved successfully! You can now stake any NFT.\n\nTransaction: ${approveHash.slice(
+          message: `All NFTs approved successfully! Initiating stake transaction...\n\nTransaction: ${approveHash.slice(
             0,
             10
           )}...${approveHash.slice(-8)}`,
@@ -94,16 +94,19 @@ export const StakeNFT = forwardRef<StakeNFTRef>((props, ref) => {
           linkText: "View on Explorer",
         })
       );
+
+      // Automatically trigger stake after approval
+      stake(selectedTokenId);
     }
-  }, [isApproveSuccess, approveHash, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isApproveSuccess, approveHash, selectedTokenId, dispatch]);
 
   const handleApprove = () => {
     setApprovalForAll(true);
   };
 
-  const handleStake = () => {
-    if (selectedTokenId === undefined) return;
-    stake(selectedTokenId);
+  const handleRevokeApproval = () => {
+    setApprovalForAll(false);
   };
 
   return (
@@ -116,25 +119,32 @@ export const StakeNFT = forwardRef<StakeNFTRef>((props, ref) => {
         title="Select NFT to Stake"
       />
 
-      {!isApprovedForAll && (
+      {selectedTokenId !== undefined && !isApprovedForAll && (
         <GeneralButton
           onClick={handleApprove}
-          loading={isApproving || isApprovingConfirming}
+          loading={isApproving || isApprovingConfirming || isStaking || isConfirming}
           style={{ width: "100%", marginTop: "1rem" }}
         >
           {isApproving || isApprovingConfirming
             ? "Approving..."
-            : "Approve NFTs"}
+            : isStaking || isConfirming
+            ? "Staking..."
+            : "Approve & Stake NFT"}
         </GeneralButton>
       )}
 
-      {selectedTokenId !== undefined && isApproved && (
+      {selectedTokenId !== undefined && isApprovedForAll && (
         <GeneralButton
-          onClick={handleStake}
-          loading={isStaking || isConfirming}
-          style={{ width: "100%", marginTop: "1rem" }}
+          onClick={handleRevokeApproval}
+          loading={isApproving || isApprovingConfirming}
+          style={{
+            width: "100%",
+            marginTop: "1rem",
+            background: "#666666",
+            fontSize: "0.8rem",
+          }}
         >
-          {isStaking || isConfirming ? "Staking..." : "Stake NFT"}
+          {isApproving || isApprovingConfirming ? "Revoking..." : "🧪 Test: Revoke NFT Approval"}
         </GeneralButton>
       )}
     </div>
