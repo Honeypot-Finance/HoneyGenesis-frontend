@@ -105,6 +105,11 @@ export const StakeNFT = forwardRef<StakeNFTRef>((props, ref) => {
     setApprovalForAll(true);
   };
 
+  const handleStake = () => {
+    if (selectedTokenId === undefined) return;
+    stake(selectedTokenId);
+  };
+
   return (
     <div>
       <NFTSelector
@@ -126,6 +131,16 @@ export const StakeNFT = forwardRef<StakeNFTRef>((props, ref) => {
             : isStaking || isConfirming
             ? "Staking..."
             : "Approve & Stake NFT"}
+        </GeneralButton>
+      )}
+
+      {selectedTokenId !== undefined && isApprovedForAll && (
+        <GeneralButton
+          onClick={handleStake}
+          loading={isStaking || isConfirming}
+          style={{ width: "100%", marginTop: "1rem" }}
+        >
+          {isStaking || isConfirming ? "Staking..." : "Stake NFT"}
         </GeneralButton>
       )}
     </div>

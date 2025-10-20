@@ -201,6 +201,20 @@ export function BurnNFT() {
           {isPending || isConfirming ? "Burning..." : "Burn NFT"}
         </GeneralButton>
       )}
+
+      {selectedTokenId !== undefined && !isSelectedNFTStaked && isApprovedForAll && (
+        <GeneralButton
+          onClick={() => burn(selectedTokenId)}
+          loading={isPending || isConfirming}
+          style={{
+            width: "100%",
+            marginTop: "1rem",
+            background: "#FF494A",
+          }}
+        >
+          {isPending || isConfirming ? "Burning..." : "Burn NFT"}
+        </GeneralButton>
+      )}
     </div>
   );
 }
