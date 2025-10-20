@@ -108,10 +108,6 @@ export function BurnNFT() {
     setApprovalForAll(true);
   };
 
-  const handleRevokeApproval = () => {
-    setApprovalForAll(false);
-  };
-
   return (
     <div>
       {burnBonusBps && (
@@ -203,21 +199,6 @@ export function BurnNFT() {
           }}
         >
           {isPending || isConfirming ? "Burning..." : "Burn NFT"}
-        </GeneralButton>
-      )}
-
-      {selectedTokenId !== undefined && !isSelectedNFTStaked && isApprovedForAll && (
-        <GeneralButton
-          onClick={handleRevokeApproval}
-          loading={isApproving || isApprovingConfirming}
-          style={{
-            width: "100%",
-            marginTop: "1rem",
-            background: "#666666",
-            fontSize: "0.8rem",
-          }}
-        >
-          {isApproving || isApprovingConfirming ? "Revoking..." : "🧪 Test: Revoke NFT Approval"}
         </GeneralButton>
       )}
     </div>
