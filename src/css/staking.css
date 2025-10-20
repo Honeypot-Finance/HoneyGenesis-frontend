@@ -167,8 +167,82 @@
   color: #f7941d;
 }
 
+/* Benefit Cards - Enhanced Styling */
+.benefit-card {
+  background: linear-gradient(135deg, rgba(49, 34, 12, 0.8) 0%, rgba(41, 28, 10, 0.9) 100%);
+  border: 2px solid rgba(255, 205, 77, 0.3);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.benefit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #ffcd4d 0%, #f7951d 100%);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-5px);
+  border-color: #ffcd4d;
+  box-shadow: 0 8px 20px rgba(255, 205, 77, 0.2);
+}
+
+.benefit-card:hover::before {
+  transform: scaleX(1);
+}
+
+.benefit-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, rgba(255, 205, 77, 0.15) 0%, rgba(247, 149, 29, 0.15) 100%);
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.benefit-card:hover .benefit-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.benefit-card h3 {
+  color: #ffcd4d;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.benefit-card p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0;
+  text-align: center;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
+  .App.staking .main {
+    padding: 1rem;
+    width: 100%;
+  }
+
   .staking-tabs-header {
     flex-direction: column;
   }
@@ -183,10 +257,48 @@
   }
 
   .staking-tab-content {
-    padding: 1.5rem;
+    padding: 1rem;
+  }
+
+  .staking-connect-prompt {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .info-section {
+    padding: 1rem;
+  }
+
+  .info-section h3 {
+    font-size: 1.1rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .info-section p {
+    font-size: 0.9rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .rewards-display {
     grid-template-columns: 1fr;
+  }
+
+  .benefit-card {
+    padding: 1.5rem;
+  }
+
+  .benefit-icon {
+    font-size: 3rem;
+    width: 70px;
+    height: 70px;
+  }
+
+  .benefit-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .benefit-card p {
+    font-size: 0.9rem;
   }
 }
