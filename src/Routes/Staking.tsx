@@ -6,15 +6,18 @@ import { RewardsDisplay } from "@/components/staking/RewardsDisplay";
 import { StakingStats } from "@/components/staking/StakingStats";
 import { StakingTabs } from "@/components/staking/StakingTabs";
 import { NFTRollingBanner } from "@/components/staking/NFTRollingBanner";
+import { TestToolkit } from "@/components/staking/TestToolkit";
 import "@/css/staking.css";
 
 function Staking() {
   const { isConnected } = useAccount();
   const { open } = useWeb3Modal();
+  const isDev = import.meta.env.VITE_DEV === "true";
 
   if (!isConnected) {
     return (
       <div className="App staking">
+        {isDev && <TestToolkit />}
         <MainContentWrapper>
           <main className="main">
             <h1 className="title">NFT Staking 🍯</h1>
@@ -38,6 +41,7 @@ function Staking() {
 
   return (
     <div className="App staking">
+      {isDev && <TestToolkit />}
       <MainContentWrapper>
         <main className="main">
           <h1 className="title">NFT Staking 🍯</h1>

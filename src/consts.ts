@@ -37,6 +37,9 @@ const rewardsTokenAddress = {
 
 const DEFAULT_STAKING_CHAIN_ID = BERACHAIN_MAINNET;
 
+// Multicall3 address (same across most chains)
+const MULTICALL3_ADDRESS = "0xcA11bde05977b3631167028862bE2a173976CA11" as const;
+
 export {
   acceptChainId,
   maxMintAmount,
@@ -51,4 +54,5 @@ export {
   stakingContractAddresses,
   rewardsTokenAddress,
   DEFAULT_STAKING_CHAIN_ID,
+  MULTICALL3_ADDRESS,
 };
