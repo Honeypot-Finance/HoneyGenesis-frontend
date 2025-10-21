@@ -19,8 +19,11 @@ export function ClaimRewards() {
     return `https://berascan.com/tx/${txHash}`;
   };
 
+  const burnTokenUrl = "https://leaderboard.honeypotfinance.xyz/all-in-one-vault?selectburntoken=0xa32bfaf94e37911d08531212d32eade94389243b";
+
   useEffect(() => {
     if (isSuccess && hash) {
+      // First show success popup
       dispatch(openPopUp({
         title: 'Claim Success',
         message: `Rewards claimed successfully!\n\nTransaction: ${hash.slice(0, 10)}...${hash.slice(-8)}`,
@@ -28,11 +31,27 @@ export function ClaimRewards() {
         link: getExplorerUrl(hash),
         linkText: 'View on Explorer',
       }));
-      const timer = setTimeout(() => {
+
+      // After 3 seconds, show burn suggestion popup
+      const burnSuggestionTimer = setTimeout(() => {
+        dispatch(openPopUp({
+          title: '🔥 Turn Rewards Into Real Value',
+          message: `Your reward tokens gain value when burned!\n\nBurning tokens unlocks real earnings in the All-in-One Vault. Don't just hold - maximize your value by burning now!`,
+          info: 'info',
+          link: burnTokenUrl,
+          linkText: '🔥 Burn for Value Now',
+        }));
+      }, 3000);
+
+      const resetTimer = setTimeout(() => {
         setRefetchTrigger(prev => prev + 1);
         setSelectedTokenId(undefined);
       }, 2000);
-      return () => clearTimeout(timer);
+
+      return () => {
+        clearTimeout(burnSuggestionTimer);
+        clearTimeout(resetTimer);
+      };
     }
   }, [isSuccess, hash, dispatch]);
 

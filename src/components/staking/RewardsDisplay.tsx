@@ -26,6 +26,9 @@ export function RewardsDisplay() {
     return `https://berascan.com/address/${tokenAddress}`;
   };
 
+  const burnTokenUrl =
+    "https://leaderboard.honeypotfinance.xyz/all-in-one-vault?selectburntoken=0xa32bfaf94e37911d08531212d32eade94389243b";
+
   return (
     <div
       style={{
@@ -37,46 +40,17 @@ export function RewardsDisplay() {
         marginBottom: "2rem",
       }}
     >
-      <div
+      <h2
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "start",
-          marginBottom: "1rem",
+          fontSize: "1.5rem",
+          fontWeight: "bold",
+          color: "#ffcd4d",
+          margin: "0 0 1.5rem 0",
         }}
       >
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            color: "#ffcd4d",
-            margin: 0,
-          }}
-        >
-          Your Rewards Balance{"  "}
-        </h2>
-        {rewardsAddress && isCorrectNetwork && (
-          <a
-            href={getExplorerUrl(rewardsAddress)}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              margin: "0 1rem ",
-              padding: "0.5rem 1rem",
-              borderRadius: "var(--border-radius-sm)",
-              background: "rgba(247, 149, 29, 0.1)",
-              border: "1px solid rgba(247, 149, 29, 0.3)",
-              color: "#ffcd4d",
-              fontSize: "0.75rem",
-              fontWeight: "bold",
-              textDecoration: "none",
-              transition: "all 0.3s",
-            }}
-          >
-            View Token ↗
-          </a>
-        )}
-      </div>
+        Your Rewards Balance
+      </h2>
+
       <div>
         {!isCorrectNetwork ? (
           <div>
@@ -140,7 +114,13 @@ export function RewardsDisplay() {
             >
               {formatTokenAmount(balance, decimals, 6)} {symbol || "REWARD"}
             </p>
-            <p style={{ fontSize: "0.9rem", color: "#999999", margin: 0 }}>
+            <p
+              style={{
+                fontSize: "0.9rem",
+                color: "#999999",
+                margin: "0 0 1.5rem 0",
+              }}
+            >
               {name || "Rewards Token"}
             </p>
           </div>
@@ -155,6 +135,75 @@ export function RewardsDisplay() {
           </div>
         )}
       </div>
+
+      {isCorrectNetwork && (
+        <div style={{ display: "flex", gap: "0.75rem", marginTop: "1.5rem" }}>
+          <a
+            href={burnTokenUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              flex: 1,
+              padding: "1rem 1.5rem",
+              borderRadius: "var(--border-radius-sm)",
+              background: "linear-gradient(135deg, #f7941d 0%, #ff9f1c 100%)",
+              border: "2px solid #ffb347",
+              color: "white",
+              fontSize: "1rem",
+              fontWeight: "bold",
+              textDecoration: "none",
+              transition: "all 0.3s",
+              textAlign: "center",
+              boxShadow: "0 4px 12px rgba(247, 148, 29, 0.4)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.25rem",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.boxShadow =
+                "0 6px 16px rgba(247, 148, 29, 0.5)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow =
+                "0 4px 12px rgba(247, 148, 29, 0.4)";
+            }}
+          >
+            <span>Burn Tokens in AIOV</span>
+          </a>
+          {rewardsAddress && (
+            <a
+              href={getExplorerUrl(rewardsAddress)}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                padding: "1rem 1.25rem",
+                borderRadius: "var(--border-radius-sm)",
+                background: "rgba(247, 149, 29, 0.1)",
+                border: "2px solid rgba(247, 149, 29, 0.3)",
+                color: "#ffcd4d",
+                fontSize: "0.875rem",
+                fontWeight: "bold",
+                textDecoration: "none",
+                transition: "all 0.3s",
+                textAlign: "center",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(247, 149, 29, 0.2)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(247, 149, 29, 0.1)";
+              }}
+            >
+              View Token ↗
+            </a>
+          )}
+        </div>
+      )}
     </div>
   );
 }
