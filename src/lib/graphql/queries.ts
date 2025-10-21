@@ -140,3 +140,51 @@ export const GET_USER_ALL_BURNABLE_NFTS = `
     }
   }
 `;
+
+/**
+ * Query to get all NFTs that can claim rewards
+ * Includes: all staked NFTs + burned NFTs (even if not staked)
+ */
+export const GET_USER_CLAIMABLE_NFTS = `
+  query GetUserClaimableNFTs($owner: String!) {
+    # Get all staked NFTs (both burned and not burned)
+    stakes(
+      where: {
+        ownerAddress: $owner
+      }
+      orderBy: tokenId
+      orderDirection: asc
+      first: 1000
+    ) {
+      id
+      tokenId
+      ownerAddress
+      stakedAt
+      lastClaimAt
+      burned
+      burnedAt
+      lastBurnClaimAt
+      status
+      totalRewardsClaimed
+      totalBurnRewardsClaimed
+    }
+    # Get burned NFTs that are not staked
+    nfts(
+      where: {
+        ownerAddress: $owner
+        isBurned: true
+        isStaked: false
+      }
+      orderBy: tokenId
+      orderDirection: asc
+      first: 1000
+    ) {
+      id
+      contract
+      tokenId
+      ownerAddress
+      isStaked
+      isBurned
+    }
+  }
+`;

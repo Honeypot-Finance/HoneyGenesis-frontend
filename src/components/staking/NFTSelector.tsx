@@ -5,8 +5,12 @@ import { useImperativeHandle, forwardRef, useRef } from 'react';
 interface NFTSelectorProps {
   onSelect: (tokenId: bigint) => void;
   selectedTokenId?: bigint;
-  mode?: 'wallet' | 'staked' | 'burnable' | 'all-burnable';
+  mode?: 'wallet' | 'staked' | 'burnable' | 'all-burnable' | 'claimable';
   title?: string;
+  // Multi-select props
+  multiSelect?: boolean;
+  selectedTokenIds?: bigint[];
+  onMultiSelect?: (tokenIds: bigint[]) => void;
 }
 
 export interface NFTSelectorRef {
@@ -14,7 +18,7 @@ export interface NFTSelectorRef {
 }
 
 export const NFTSelector = forwardRef<NFTSelectorRef, NFTSelectorProps>(
-  ({ onSelect, selectedTokenId, mode = 'wallet', title }, ref) => {
+  ({ onSelect, selectedTokenId, mode = 'wallet', title, multiSelect = false, selectedTokenIds = [], onMultiSelect }, ref) => {
     const { isConnected } = useAccount();
     const { nfts, isLoading, hasNFTs, refetch } = useUserNFTs(mode);
 
@@ -37,13 +41,31 @@ export const NFTSelector = forwardRef<NFTSelectorRef, NFTSelectorProps>(
   }
 
   const handleSelectNFT = (tokenId: string) => {
-    onSelect(BigInt(tokenId));
+    if (multiSelect && onMultiSelect) {
+      const tokenIdBigInt = BigInt(tokenId);
+      const isAlreadySelected = selectedTokenIds.some(id => id === tokenIdBigInt);
+
+      if (isAlreadySelected) {
+        // Remove from selection
+        onMultiSelect(selectedTokenIds.filter(id => id !== tokenIdBigInt));
+      } else {
+        // Add to selection
+        onMultiSelect([...selectedTokenIds, tokenIdBigInt]);
+      }
+    } else {
+      onSelect(BigInt(tokenId));
+    }
   };
 
   return (
     <div style={{ marginBottom: '1.5rem' }}>
       <h3 style={{ color: '#ffcd4d', fontSize: '1.2rem', marginBottom: '1rem' }}>
-        {title || (mode === 'wallet' ? 'Your NFTs' : mode === 'all-burnable' ? 'Your Burnable NFTs' : 'Your Staked NFTs')}
+        {title || (
+          mode === 'wallet' ? 'Your NFTs' :
+          mode === 'all-burnable' ? 'Your Burnable NFTs' :
+          mode === 'claimable' ? 'Your Claimable NFTs' :
+          'Your Staked NFTs'
+        )}
       </h3>
 
       {isLoading ? (
@@ -53,14 +75,21 @@ export const NFTSelector = forwardRef<NFTSelectorRef, NFTSelectorProps>(
       ) : hasNFTs ? (
         <div>
           <p style={{ color: '#999999', fontSize: '0.9rem', marginBottom: '1rem' }}>
-            {mode === 'wallet' ? 'Select an NFT from your wallet:' : mode === 'all-burnable' ? 'Select an NFT to burn (staked or unstaked):' : 'Select a staked NFT:'}
+            {multiSelect
+              ? `Select multiple NFTs (${selectedTokenIds.length} selected):`
+              : mode === 'wallet' ? 'Select an NFT from your wallet:' :
+                mode === 'all-burnable' ? 'Select an NFT to burn (staked or unstaked):' :
+                mode === 'claimable' ? 'Select NFTs to claim rewards from:' :
+                'Select a staked NFT:'}
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '1rem', maxHeight: '300px', overflowY: 'auto' }}>
             {nfts.map((nft) => (
               <NFTCard
                 key={nft.id}
                 tokenId={nft.tokenId}
-                isSelected={selectedTokenId?.toString() === nft.tokenId}
+                isSelected={multiSelect
+                  ? selectedTokenIds.some(id => id.toString() === nft.tokenId)
+                  : selectedTokenId?.toString() === nft.tokenId}
                 onSelect={() => handleSelectNFT(nft.tokenId)}
                 isStaked={nft.isStaked}
                 burned={nft.burned}
@@ -75,12 +104,30 @@ export const NFTSelector = forwardRef<NFTSelectorRef, NFTSelectorProps>(
               ? 'No NFTs found in your wallet.'
               : mode === 'all-burnable'
               ? 'No burnable NFTs found.'
+              : mode === 'claimable'
+              ? 'No claimable NFTs found.'
               : 'No staked NFTs found.'}
           </p>
         </div>
       )}
 
-      {selectedTokenId !== undefined && (
+      {multiSelect && selectedTokenIds.length > 0 && (
+        <div className="info-box" style={{
+          marginTop: '1rem',
+          background: 'rgba(16, 185, 129, 0.1)',
+          border: '2px solid #10B981'
+        }}>
+          <p style={{ color: '#10B981', margin: 0 }}>
+            Selected: <strong>{selectedTokenIds.length} NFT{selectedTokenIds.length > 1 ? 's' : ''}</strong>
+            {selectedTokenIds.length <= 5 && (
+              <span style={{ marginLeft: '0.5rem', fontSize: '0.85rem' }}>
+                (#{selectedTokenIds.map(id => id.toString()).join(', #')})
+              </span>
+            )}
+          </p>
+        </div>
+      )}
+      {!multiSelect && selectedTokenId !== undefined && (
         <div className="info-box" style={{
           marginTop: '1rem',
           background: 'rgba(16, 185, 129, 0.1)',

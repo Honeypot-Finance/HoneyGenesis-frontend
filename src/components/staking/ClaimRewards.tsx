@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useClaim, usePreviewPayout } from '@/hooks/useNFTStaking';
+import { usePreviewPayout, useClaim } from '@/hooks/useNFTStaking';
 import { useRewardsTokenInfo } from '@/hooks/useRewardsToken';
 import { formatTokenAmount } from '@/lib/stakingUtils';
 import { NFTSelector } from './NFTSelector';
@@ -16,7 +16,7 @@ export function ClaimRewards() {
   const dispatch = useAppDispatch();
 
   const getExplorerUrl = (txHash: string) => {
-    return `https://testnet.berascan.com/tx/${txHash}`;
+    return `https://berascan.com/tx/${txHash}`;
   };
 
   useEffect(() => {
@@ -30,6 +30,7 @@ export function ClaimRewards() {
       }));
       const timer = setTimeout(() => {
         setRefetchTrigger(prev => prev + 1);
+        setSelectedTokenId(undefined);
       }, 2000);
       return () => clearTimeout(timer);
     }
@@ -45,8 +46,8 @@ export function ClaimRewards() {
       <NFTSelector
         onSelect={setSelectedTokenId}
         selectedTokenId={selectedTokenId}
-        mode="staked"
-        title="Select Staked NFT"
+        mode="claimable"
+        title="Select NFT to Claim Rewards"
         key={refetchTrigger}
       />
 

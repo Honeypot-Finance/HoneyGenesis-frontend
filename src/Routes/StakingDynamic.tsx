@@ -6,11 +6,13 @@ import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { StakingTabsDynamic } from "@/components/staking/StakingTabsDynamic";
 import { NFTStakingABI } from "@/abi/NFTStakingABI";
 import { DEFAULT_STAKING_CHAIN_ID } from "@/consts";
+import { TestToolkit } from "@/components/staking/TestToolkit";
 import "@/css/staking.css";
 
 function StakingDynamic() {
   const { isConnected } = useAccount();
   const { open } = useWeb3Modal();
+  const isDev = import.meta.env.VITE_DEV === "true";
   const [stakingContractAddress, setStakingContractAddress] =
     useState<string>("");
   const [isConfigured, setIsConfigured] = useState(false);
@@ -32,6 +34,7 @@ function StakingDynamic() {
   if (!isConnected) {
     return (
       <div className="App staking">
+        {isDev && <TestToolkit />}
         <MainContentWrapper>
           <main className="main">
             <h1 className="title">Dynamic NFT Staking 🔧</h1>
@@ -56,6 +59,7 @@ function StakingDynamic() {
   if (!isConfigured) {
     return (
       <div className="App staking">
+        {isDev && <TestToolkit />}
         <MainContentWrapper>
           <main className="main">
             <h1 className="title">Dynamic NFT Staking 🔧</h1>
@@ -145,6 +149,7 @@ function StakingDynamic() {
 
   return (
     <div className="App staking">
+      {isDev && <TestToolkit />}
       <MainContentWrapper>
         <main className="main">
           <h1 className="title">Dynamic NFT Staking 🔧</h1>

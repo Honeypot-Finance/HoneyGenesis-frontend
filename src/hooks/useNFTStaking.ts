@@ -1,4 +1,5 @@
-import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useSimulateContract } from 'wagmi';
+import { useState, useEffect } from 'react';
+import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useSimulateContract, usePublicClient } from 'wagmi';
 import { NFTStakingABI } from '@/abi/NFTStakingABI';
 import { NFT_STAKING_ADDRESS } from './useContractAddresses';
 import { DEFAULT_STAKING_CHAIN_ID } from '@/consts';
@@ -189,6 +190,68 @@ export function usePreviewPayout(tokenId: bigint | undefined) {
     isLoading,
     error,
     refetch,
+  };
+}
+
+/**
+ * Hook to preview pending rewards for multiple tokens
+ * Uses manual fetching to avoid Rules of Hooks violations
+ */
+export function useMultiPreviewPayout(tokenIds: bigint[]) {
+  const [rewardsMap, setRewardsMap] = useState<Map<string, bigint>>(new Map());
+  const [isLoading, setIsLoading] = useState(false);
+  const publicClient = usePublicClient({ chainId: DEFAULT_STAKING_CHAIN_ID });
+
+  useEffect(() => {
+    if (tokenIds.length === 0) {
+      setRewardsMap(new Map());
+      return;
+    }
+
+    if (!publicClient) {
+      return;
+    }
+
+    const fetchRewards = async () => {
+      setIsLoading(true);
+      const newRewardsMap = new Map<string, bigint>();
+
+      // Fetch rewards for each token using viem's readContract
+      for (const tokenId of tokenIds) {
+        try {
+          const pendingRewards = await publicClient.readContract({
+            address: NFT_STAKING_ADDRESS as `0x${string}`,
+            abi: NFTStakingABI,
+            functionName: 'previewPayout',
+            args: [tokenId],
+          });
+          newRewardsMap.set(tokenId.toString(), pendingRewards as bigint);
+        } catch (error) {
+          console.error(`Error fetching rewards for token ${tokenId}:`, error);
+          newRewardsMap.set(tokenId.toString(), 0n);
+        }
+      }
+
+      setRewardsMap(newRewardsMap);
+      setIsLoading(false);
+    };
+
+    fetchRewards();
+
+    // Set up interval for live updates
+    const intervalId = setInterval(fetchRewards, 5000);
+    return () => clearInterval(intervalId);
+  }, [tokenIds.join(','), publicClient]); // Use join to create stable dependency
+
+  const totalPendingRewards = Array.from(rewardsMap.values()).reduce(
+    (acc, rewards) => acc + rewards,
+    0n
+  );
+
+  return {
+    rewardsMap,
+    totalPendingRewards,
+    isLoading,
   };
 }
 
