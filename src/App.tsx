@@ -29,17 +29,23 @@ function App() {
       <MainContentWrapper>
         <main className="homepage-main">
           <div className="bg-logo" />
-          <img className="meme-img" src={mole} alt="" />{" "}
-          <img className="meme-img2" src={mole} alt="" />
+          <img
+            className="meme-img"
+            src={mole}
+            alt=""
+          />{" "}
+          <img
+            className="meme-img2"
+            src={mole}
+            alt=""
+          />
           <p className="desc">
             Join <span style={{ color: "#ECC94E" }}>HoneyGenesis NFT</span> for
             a thrilling battle with sweet rewards.
           </p>{" "}
           {/* <Countdown date={countDownDate} completeRenderer={completeRenderer} /> */}{" "}
           <a
-            href={
-              "https://www.okx.com/web3/marketplace/nft/collection/arbi/honeygenesis-1"
-            }
+            href={"https://magiceden.io/collections/berachain/honeygenesis-44"}
           >
             <GeneralButton
               style={{
