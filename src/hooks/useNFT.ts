@@ -83,11 +83,24 @@ export function useApprove() {
  * Hook to set approval for all NFTs
  */
 export function useSetApprovalForAll() {
-  const { nftAddress } = useContractAddresses();
+  const { nftAddress, stakingAddress } = useContractAddresses();
   const { data: hash, writeContract, isPending, error } = useWriteContract();
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash });
 
   const setApprovalForAll = (approved: boolean) => {
+    console.log('=== SET APPROVAL FOR ALL ===');
+    console.log('Calling setApprovalForAll on NFT CONTRACT:', nftAddress);
+    console.log('Approving STAKING CONTRACT as operator:', NFT_STAKING_ADDRESS);
+    console.log('Approved:', approved);
+    console.log('For reference, staking address from hook:', stakingAddress);
+    console.log('These should match! NFT_STAKING_ADDRESS:', NFT_STAKING_ADDRESS);
+    console.log('===========================');
+
+    if (!nftAddress) {
+      console.error('ERROR: nftAddress is undefined! Cannot approve.');
+      return;
+    }
+
     writeContract({
       address: nftAddress,
       abi: ERC721ABI,

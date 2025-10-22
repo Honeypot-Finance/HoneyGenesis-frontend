@@ -1,10 +1,9 @@
 /**
- * Query to get all NFTs owned by a specific address (wallet NFTs)
- * Query both nfts and stakes entities to handle all cases
+ * Query to get NFTs from NFT subgraph (ownership info)
+ * Note: NFT subgraph only tracks ownership, not staking/burn status
  */
-export const GET_USER_WALLET_NFTS = `
-  query GetUserWalletNFTs($owner: String!) {
-    # Query NFT entities (if subgraph tracks them)
+export const GET_USER_NFTS_FROM_NFT_SUBGRAPH = `
+  query GetUserNFTs($owner: String!) {
     nfts(
       where: {
         ownerAddress: $owner
@@ -17,13 +16,18 @@ export const GET_USER_WALLET_NFTS = `
       contract
       tokenId
       ownerAddress
-      isStaked
-      isBurned
     }
-    # Also query stakes with UNSTAKED status as backup
+  }
+`;
+
+/**
+ * Query to get stakes from Staking subgraph
+ */
+export const GET_USER_STAKES_FROM_STAKING_SUBGRAPH = `
+  query GetUserStakes($owner: String!) {
     stakes(
       where: {
-        ownerAddress: $owner
+        owner: $owner
       }
       orderBy: tokenId
       orderDirection: asc
@@ -31,7 +35,9 @@ export const GET_USER_WALLET_NFTS = `
     ) {
       id
       tokenId
-      ownerAddress
+      owner {
+        id
+      }
       status
       burned
     }
@@ -46,7 +52,7 @@ export const GET_USER_STAKES = `
   query GetUserStakes($owner: String!) {
     stakes(
       where: {
-        ownerAddress: $owner
+        owner: $owner
       }
       orderBy: tokenId
       orderDirection: asc
@@ -54,15 +60,15 @@ export const GET_USER_STAKES = `
     ) {
       id
       tokenId
-      ownerAddress
+      owner {
+        id
+      }
       stakedAt
       lastClaimAt
       burned
       burnedAt
       lastBurnClaimAt
       status
-      totalRewardsClaimed
-      totalBurnRewardsClaimed
     }
   }
 `;
@@ -75,7 +81,7 @@ export const GET_USER_BURNABLE_STAKES = `
   query GetUserBurnableStakes($owner: String!) {
     stakes(
       where: {
-        ownerAddress: $owner
+        owner: $owner
         burned: false
       }
       orderBy: tokenId
@@ -84,29 +90,27 @@ export const GET_USER_BURNABLE_STAKES = `
     ) {
       id
       tokenId
-      ownerAddress
+      owner {
+        id
+      }
       stakedAt
       lastClaimAt
       burned
       burnedAt
       lastBurnClaimAt
       status
-      totalRewardsClaimed
-      totalBurnRewardsClaimed
     }
   }
 `;
 
 /**
- * Query to get all NFTs (both staked and unstaked) that can be burned
- * Combines staked NFTs and wallet NFTs
+ * Query to get burnable staked NFTs from Staking subgraph
  */
-export const GET_USER_ALL_BURNABLE_NFTS = `
-  query GetUserAllBurnableNFTs($owner: String!) {
-    # Get staked NFTs that aren't burned
+export const GET_USER_BURNABLE_STAKES_FROM_STAKING = `
+  query GetUserBurnableStakes($owner: String!) {
     stakes(
       where: {
-        ownerAddress: $owner
+        owner: $owner
         burned: false
       }
       orderBy: tokenId
@@ -115,17 +119,26 @@ export const GET_USER_ALL_BURNABLE_NFTS = `
     ) {
       id
       tokenId
-      ownerAddress
+      owner {
+        id
+      }
       stakedAt
       lastClaimAt
       burned
       status
     }
-    # Get wallet NFTs (unstaked)
+  }
+`;
+
+/**
+ * Query to get burnable wallet NFTs from NFT subgraph
+ * Note: NFT subgraph only tracks ownership, filtering by stake/burn status done in app logic
+ */
+export const GET_USER_BURNABLE_NFTS_FROM_NFT = `
+  query GetUserBurnableNFTs($owner: String!) {
     nfts(
       where: {
         ownerAddress: $owner
-        isStaked: false
       }
       orderBy: tokenId
       orderDirection: asc
@@ -135,22 +148,18 @@ export const GET_USER_ALL_BURNABLE_NFTS = `
       contract
       tokenId
       ownerAddress
-      isStaked
-      isBurned
     }
   }
 `;
 
 /**
- * Query to get all NFTs that can claim rewards
- * Includes: all staked NFTs + burned NFTs (even if not staked)
+ * Query to get all staked NFTs from Staking subgraph (for claiming)
  */
-export const GET_USER_CLAIMABLE_NFTS = `
-  query GetUserClaimableNFTs($owner: String!) {
-    # Get all staked NFTs (both burned and not burned)
+export const GET_USER_STAKES_FOR_CLAIMING = `
+  query GetUserStakesForClaiming($owner: String!) {
     stakes(
       where: {
-        ownerAddress: $owner
+        owner: $owner
       }
       orderBy: tokenId
       orderDirection: asc
@@ -158,22 +167,29 @@ export const GET_USER_CLAIMABLE_NFTS = `
     ) {
       id
       tokenId
-      ownerAddress
+      owner {
+        id
+      }
       stakedAt
       lastClaimAt
       burned
       burnedAt
       lastBurnClaimAt
       status
-      totalRewardsClaimed
-      totalBurnRewardsClaimed
     }
-    # Get burned NFTs that are not staked
+  }
+`;
+
+/**
+ * Query to get burned but unstaked NFTs from NFT subgraph (for claiming)
+ * Note: If NFT subgraph doesn't track burn status, this will return empty
+ * Burn status should be tracked in Staking subgraph
+ */
+export const GET_USER_BURNED_NFTS_FROM_NFT = `
+  query GetUserBurnedNFTs($owner: String!) {
     nfts(
       where: {
         ownerAddress: $owner
-        isBurned: true
-        isStaked: false
       }
       orderBy: tokenId
       orderDirection: asc
@@ -183,8 +199,22 @@ export const GET_USER_CLAIMABLE_NFTS = `
       contract
       tokenId
       ownerAddress
-      isStaked
-      isBurned
+    }
+  }
+`;
+
+/**
+ * Query to get global statistics
+ */
+export const GET_GLOBAL_STATS = `
+  query GetGlobalStats {
+    globalStats(id: "global") {
+      id
+      totalStaked
+      totalBurned
+      totalStakingRewardsClaimed
+      totalBurnRewardsClaimed
+      totalAllRewardsClaimed
     }
   }
 `;

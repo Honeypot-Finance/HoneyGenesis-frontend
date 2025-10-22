@@ -37,7 +37,9 @@ export function RewardsDisplay() {
         border: "var(--border-size) solid #ffcd4d",
         background: "linear-gradient(135deg, #31220c 0%, #1a1410 100%)",
         boxShadow: "0 4px 24px rgba(255, 205, 77, 0.15)",
-        marginBottom: "2rem",
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
       }}
     >
       <h2
@@ -51,7 +53,7 @@ export function RewardsDisplay() {
         Your Rewards Balance
       </h2>
 
-      <div>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
         {!isCorrectNetwork ? (
           <div>
             <p

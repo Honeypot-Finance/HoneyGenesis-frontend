@@ -1,8 +1,10 @@
 // NFT Staking subgraph with staking information
-const STAKING_SUBGRAPH_URL = 'https://api.goldsky.com/api/public/project_cm78242tjtmme01uvcbkaay27/subgraphs/nft-staking-berachain/1.0.0/gn';
+const STAKING_SUBGRAPH_URL =
+  "https://api.goldsky.com/api/public/project_cm78242tjtmme01uvcbkaay27/subgraphs/nft-staking-berachain/1.0.2/gn";
 
 // NFT Tracker subgraph for NFT ownership (using same endpoint for now)
-const NFT_TRACKER_SUBGRAPH_URL = 'https://api.goldsky.com/api/public/project_cm78242tjtmme01uvcbkaay27/subgraphs/nft-staking-berachain/1.0.0/gn';
+const NFT_TRACKER_SUBGRAPH_URL =
+  "https://api.goldsky.com/api/public/project_cm78242tjtmme01uvcbkaay27/subgraphs/honeygenesis-berachain/1.0.2/gn";
 
 interface GraphQLRequest {
   query: string;
@@ -17,11 +19,14 @@ interface GraphQLResponse<T = any> {
 class SimpleGraphQLClient {
   constructor(private url: string) {}
 
-  async request<T = any>(query: string, variables?: Record<string, any>): Promise<T> {
+  async request<T = any>(
+    query: string,
+    variables?: Record<string, any>
+  ): Promise<T> {
     const response = await fetch(this.url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         query,
@@ -43,8 +48,12 @@ class SimpleGraphQLClient {
   }
 }
 
-export const stakingGraphqlClient = new SimpleGraphQLClient(STAKING_SUBGRAPH_URL);
-export const nftGraphqlClient = new SimpleGraphQLClient(NFT_TRACKER_SUBGRAPH_URL);
+export const stakingGraphqlClient = new SimpleGraphQLClient(
+  STAKING_SUBGRAPH_URL
+);
+export const nftGraphqlClient = new SimpleGraphQLClient(
+  NFT_TRACKER_SUBGRAPH_URL
+);
 
 // Default client for backward compatibility
 export const graphqlClient = stakingGraphqlClient;

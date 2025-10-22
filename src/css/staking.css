@@ -53,6 +53,11 @@
   width: 100%;
 }
 
+/* Stats Grid - Rewards and Global Stats side by side */
+.stats-grid {
+  margin-bottom: 2rem;
+}
+
 /* Staking Tabs */
 .staking-tabs-container {
   background-color: #31220c;
@@ -282,6 +287,10 @@
 
   .rewards-display {
     grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr !important;
   }
 
   .benefit-card {

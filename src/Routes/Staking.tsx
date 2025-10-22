@@ -3,6 +3,7 @@ import MainContentWrapper from "@/components/template/MainContentWrapper/MainCon
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { RewardsDisplay } from "@/components/staking/RewardsDisplay";
+import { GlobalStats } from "@/components/staking/GlobalStats";
 import { StakingStats } from "@/components/staking/StakingStats";
 import { StakingTabs } from "@/components/staking/StakingTabs";
 import { NFTRollingBanner } from "@/components/staking/NFTRollingBanner";
@@ -46,8 +47,19 @@ function Staking() {
         <main className="main">
           <h1 className="title">NFT Staking 🍯</h1>
 
-          {/* Rewards Display */}
-          <RewardsDisplay />
+          {/* Stats Grid: Rewards and Global Stats side by side */}
+          <div
+            className="stats-grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "1.5rem",
+              alignItems: "stretch",
+            }}
+          >
+            <RewardsDisplay />
+            <GlobalStats />
+          </div>
 
           {/* NFT Rolling Banner */}
           <NFTRollingBanner />
