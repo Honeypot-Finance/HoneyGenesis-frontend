@@ -7,6 +7,8 @@ import { useContractAddresses } from "@/hooks/useContractAddresses";
 import { formatTokenAmount } from "@/lib/stakingUtils";
 import { DEFAULT_STAKING_CHAIN_ID } from "@/consts";
 import GeneralButton from "../atoms/GeneralButton/GeneralButton";
+import { useUserNFTs } from "@/hooks/useUserNFTs";
+import { useMultiPreviewPayout } from "@/hooks/useNFTStaking";
 
 export function RewardsDisplay() {
   const { address } = useAccount();
@@ -17,6 +19,14 @@ export function RewardsDisplay() {
   const { switchChain, isPending: isSwitching } = useSwitchChain();
 
   const isCorrectNetwork = chainId === DEFAULT_STAKING_CHAIN_ID;
+
+  // Fetch claimable NFTs (staked and burned)
+  const { nfts: claimableNFTs } = useUserNFTs("claimable");
+
+  // Get token IDs and calculate total unclaimed rewards
+  const claimableTokenIds = claimableNFTs.map((nft) => BigInt(nft.tokenId));
+  const { totalPendingRewards, isLoading: isLoadingRewards } =
+    useMultiPreviewPayout(claimableTokenIds);
 
   const handleSwitchNetwork = () => {
     switchChain({ chainId: DEFAULT_STAKING_CHAIN_ID });
@@ -53,7 +63,14 @@ export function RewardsDisplay() {
         Your Rewards Balance
       </h2>
 
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
         {!isCorrectNetwork ? (
           <div>
             <p
@@ -120,11 +137,33 @@ export function RewardsDisplay() {
               style={{
                 fontSize: "0.9rem",
                 color: "#999999",
-                margin: "0 0 1.5rem 0",
+                margin: "0 0 0.5rem 0",
               }}
             >
               {name || "Rewards Token"}
             </p>
+            {isLoadingRewards ? (
+              <p
+                style={{
+                  fontSize: "0.9rem",
+                  color: "green",
+                  margin: "0.5rem 0 0 0",
+                }}
+              >
+                Calculating unclaimed rewards...
+              </p>
+            ) : totalPendingRewards > 0n ? (
+              <p
+                style={{
+                  fontSize: "1.1rem",
+                  fontWeight: "600",
+                  color: "green",
+                  margin: "0.5rem 0 0 0",
+                }}
+              >
+                {formatTokenAmount(totalPendingRewards, decimals, 6)} unclaimed
+              </p>
+            ) : null}
           </div>
         ) : (
           <div>

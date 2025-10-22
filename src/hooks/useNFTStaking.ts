@@ -333,11 +333,14 @@ export function usePreviewPayout(tokenId: bigint | undefined) {
 export function useMultiPreviewPayout(tokenIds: bigint[]) {
   const [rewardsMap, setRewardsMap] = useState<Map<string, bigint>>(new Map());
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const publicClient = usePublicClient({ chainId: DEFAULT_STAKING_CHAIN_ID });
 
   useEffect(() => {
     if (tokenIds.length === 0) {
       setRewardsMap(new Map());
+      setIsLoading(false);
+      setIsInitialLoad(false);
       return;
     }
 
@@ -345,8 +348,11 @@ export function useMultiPreviewPayout(tokenIds: bigint[]) {
       return;
     }
 
-    const fetchRewards = async () => {
-      setIsLoading(true);
+    const fetchRewards = async (isInitial = false) => {
+      // Only show loading on initial fetch, not on refetches
+      if (isInitial) {
+        setIsLoading(true);
+      }
       const newRewardsMap = new Map<string, bigint>();
 
       // Fetch rewards for each token using viem's readContract
@@ -366,15 +372,18 @@ export function useMultiPreviewPayout(tokenIds: bigint[]) {
       }
 
       setRewardsMap(newRewardsMap);
-      setIsLoading(false);
+      if (isInitial) {
+        setIsLoading(false);
+        setIsInitialLoad(false);
+      }
     };
 
-    fetchRewards();
+    fetchRewards(isInitialLoad);
 
-    // Set up interval for live updates
-    const intervalId = setInterval(fetchRewards, 5000);
+    // Set up interval for live updates (without showing loading state)
+    const intervalId = setInterval(() => fetchRewards(false), 5000);
     return () => clearInterval(intervalId);
-  }, [tokenIds.join(','), publicClient]); // Use join to create stable dependency
+  }, [tokenIds.join(','), publicClient, isInitialLoad]); // Use join to create stable dependency
 
   const totalPendingRewards = Array.from(rewardsMap.values()).reduce(
     (acc, rewards) => acc + rewards,
