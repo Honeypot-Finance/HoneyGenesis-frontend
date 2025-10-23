@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
-import { usePreviewPayout, useClaim } from '@/hooks/useNFTStaking';
+import { useState, useEffect, useRef } from 'react';
+import { useBatchClaim, useMultiPreviewPayout } from '@/hooks/useNFTStaking';
 import { useRewardsTokenInfo } from '@/hooks/useRewardsToken';
 import { formatTokenAmount } from '@/lib/stakingUtils';
-import { NFTSelector } from './NFTSelector';
+import { NFTSelector, NFTSelectorRef } from './NFTSelector';
 import GeneralButton from '../atoms/GeneralButton/GeneralButton';
 import { useAppDispatch } from '@/hooks/useAppSelector';
 import { openPopUp } from '@/config/redux/popUpSlice';
 
 export function ClaimRewards() {
-  const [selectedTokenId, setSelectedTokenId] = useState<bigint | undefined>();
-  const [refetchTrigger, setRefetchTrigger] = useState(0);
-  const { claim, isPending, isConfirming, isSuccess, hash } = useClaim();
-  const { pendingRewards } = usePreviewPayout(selectedTokenId);
+  const [selectedTokenIds, setSelectedTokenIds] = useState<bigint[]>([]);
+  const claimableNFTSelectorRef = useRef<NFTSelectorRef>(null);
+  const { batchClaim, isPending, isConfirming, isSuccess, hash, allHashes, currentBatch, totalBatches } = useBatchClaim();
+  const { totalPendingRewards } = useMultiPreviewPayout(selectedTokenIds);
   const { symbol, decimals } = useRewardsTokenInfo();
   const dispatch = useAppDispatch();
 
@@ -22,14 +22,18 @@ export function ClaimRewards() {
   const burnTokenUrl = "https://leaderboard.honeypotfinance.xyz/all-in-one-vault?selectburntoken=0xa32bfaf94e37911d08531212d32eade94389243b";
 
   useEffect(() => {
-    if (isSuccess && hash) {
+    if (isSuccess && allHashes && allHashes.length > 0) {
+      const hashesText = allHashes.length === 1
+        ? `Transaction: ${allHashes[0].slice(0, 10)}...${allHashes[0].slice(-8)}`
+        : `${allHashes.length} transactions completed\nLast: ${allHashes[allHashes.length - 1].slice(0, 10)}...${allHashes[allHashes.length - 1].slice(-8)}`;
+
       // First show success popup
       dispatch(openPopUp({
         title: 'Claim Success',
-        message: `Rewards claimed successfully!\n\nTransaction: ${hash.slice(0, 10)}...${hash.slice(-8)}`,
+        message: `Rewards for ${selectedTokenIds.length} NFT${selectedTokenIds.length > 1 ? 's' : ''} claimed successfully!\n\n${hashesText}`,
         info: 'success',
-        link: getExplorerUrl(hash),
-        linkText: 'View on Explorer',
+        link: getExplorerUrl(allHashes[allHashes.length - 1]),
+        linkText: 'View Last Transaction',
       }));
 
       // After 3 seconds, show burn suggestion popup
@@ -43,44 +47,60 @@ export function ClaimRewards() {
         }));
       }, 3000);
 
-      const resetTimer = setTimeout(() => {
-        setRefetchTrigger(prev => prev + 1);
-        setSelectedTokenId(undefined);
-      }, 2000);
+      // Poll for subgraph updates
+      const refetchWithRetry = async (attempts = 0, maxAttempts = 5) => {
+        if (attempts >= maxAttempts) {
+          console.log("Max refetch attempts reached");
+          setSelectedTokenIds([]);
+          return;
+        }
+
+        const delay = 2000 * (attempts + 1);
+        await new Promise((resolve) => setTimeout(resolve, delay));
+
+        console.log(`Refetching NFTs (attempt ${attempts + 1}/${maxAttempts})...`);
+        await claimableNFTSelectorRef.current?.refetch();
+
+        refetchWithRetry(attempts + 1, maxAttempts);
+      };
+
+      refetchWithRetry();
+      setSelectedTokenIds([]);
 
       return () => {
         clearTimeout(burnSuggestionTimer);
-        clearTimeout(resetTimer);
       };
     }
-  }, [isSuccess, hash, dispatch]);
+  }, [isSuccess, allHashes, dispatch, selectedTokenIds.length]);
 
   const handleClaim = () => {
-    if (selectedTokenId === undefined) return;
-    claim(selectedTokenId);
+    if (selectedTokenIds.length === 0) return;
+    batchClaim(selectedTokenIds);
   };
 
   return (
     <div>
       <NFTSelector
-        onSelect={setSelectedTokenId}
-        selectedTokenId={selectedTokenId}
+        ref={claimableNFTSelectorRef}
+        onSelect={() => {}} // Not used in multi-select mode
+        onMultiSelect={setSelectedTokenIds}
+        selectedTokenIds={selectedTokenIds}
+        multiSelect={true}
         mode="claimable"
-        title="Select NFT to Claim Rewards"
-        key={refetchTrigger}
+        title="Select NFTs to Claim Rewards"
       />
 
-      {selectedTokenId !== undefined && pendingRewards !== undefined && decimals !== undefined && (
+      {selectedTokenIds.length > 0 && totalPendingRewards !== undefined && decimals !== undefined && (
         <div className="info-box" style={{
           background: 'linear-gradient(135deg, rgba(247, 149, 29, 0.1) 0%, rgba(217, 119, 6, 0.1) 100%)',
           border: '2px solid #ffcd4d',
           marginTop: '1rem'
         }}>
           <p style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#ffcd4d', marginBottom: '0.5rem' }}>
-            Current Claimable Rewards
+            Total Claimable Rewards ({selectedTokenIds.length} NFT{selectedTokenIds.length > 1 ? 's' : ''})
           </p>
           <p style={{ fontSize: '2rem', fontWeight: 'bold', color: 'white', margin: '0.5rem 0' }}>
-            {formatTokenAmount(pendingRewards, decimals, 6)} {symbol || 'REWARD'}
+            {formatTokenAmount(totalPendingRewards, decimals, 6)} {symbol || 'REWARD'}
           </p>
           <p style={{ fontSize: '0.75rem', color: '#999999', marginTop: '0.5rem' }}>
             Claim now to add these rewards to your wallet
@@ -90,11 +110,15 @@ export function ClaimRewards() {
 
       <GeneralButton
         onClick={handleClaim}
-        disabled={selectedTokenId === undefined}
+        disabled={selectedTokenIds.length === 0}
         loading={isPending || isConfirming}
         style={{ width: '100%', marginTop: '1rem' }}
       >
-        {isPending || isConfirming ? 'Claiming...' : 'Claim Rewards'}
+        {isPending || isConfirming
+          ? currentBatch > 0
+            ? `Claiming NFT ${currentBatch}/${totalBatches}...`
+            : 'Preparing...'
+          : `Claim ${selectedTokenIds.length > 0 ? selectedTokenIds.length : ''} NFT${selectedTokenIds.length > 1 ? 's' : selectedTokenIds.length === 1 ? '' : 's'}`}
       </GeneralButton>
     </div>
   );

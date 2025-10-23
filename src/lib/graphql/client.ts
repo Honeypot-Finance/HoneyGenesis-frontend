@@ -1,6 +1,6 @@
 // NFT Staking subgraph with staking information
 const STAKING_SUBGRAPH_URL =
-  "https://api.goldsky.com/api/public/project_cm78242tjtmme01uvcbkaay27/subgraphs/nft-staking-berachain/1.0.2/gn";
+  "https://api.goldsky.com/api/public/project_cm78242tjtmme01uvcbkaay27/subgraphs/nft-staking-berachain/1.1.0/gn";
 
 // NFT Tracker subgraph for NFT ownership (using same endpoint for now)
 const NFT_TRACKER_SUBGRAPH_URL =

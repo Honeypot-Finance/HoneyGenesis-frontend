@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useBurn, useStakingParams } from "@/hooks/useNFTStaking";
+import { useBatchBurn, useStakingParams } from "@/hooks/useNFTStaking";
 import { useSetApprovalForAll, useIsApproved } from "@/hooks/useNFT";
 import { formatBps } from "@/lib/stakingUtils";
 import { NFTSelector, NFTSelectorRef } from "./NFTSelector";
@@ -9,9 +9,9 @@ import { openPopUp } from "@/config/redux/popUpSlice";
 import { useUserNFTs } from "@/hooks/useUserNFTs";
 
 export function BurnNFT() {
-  const [selectedTokenId, setSelectedTokenId] = useState<bigint | undefined>();
+  const [selectedTokenIds, setSelectedTokenIds] = useState<bigint[]>([]);
   const burnableNFTSelectorRef = useRef<NFTSelectorRef>(null);
-  const { burn, isPending, isConfirming, isSuccess, hash, error } = useBurn();
+  const { batchBurn, isPending, isConfirming, isSuccess, hash, allHashes, currentBatch, totalBatches, error } = useBatchBurn();
   const {
     setApprovalForAll,
     isPending: isApproving,
@@ -19,7 +19,7 @@ export function BurnNFT() {
     isSuccess: isApproveSuccess,
     hash: approveHash,
   } = useSetApprovalForAll();
-  const { isApprovedForAll } = useIsApproved(selectedTokenId);
+  const { isApprovedForAll } = useIsApproved(selectedTokenIds[0]);
   const { burnBonusBps } = useStakingParams();
   const { nfts } = useUserNFTs("all-burnable");
   const dispatch = useAppDispatch();
@@ -28,25 +28,26 @@ export function BurnNFT() {
     return `https://berascan.com/tx/${txHash}`;
   };
 
-  // Check if the selected NFT is staked
-  const selectedNFT = nfts.find(
-    (nft) => nft.tokenId === selectedTokenId?.toString()
-  );
-  const isSelectedNFTStaked = selectedNFT?.isStaked || false;
-  const needsApproval = !isSelectedNFTStaked && !isApprovedForAll;
+  // Check if any selected NFTs are not staked (wallet NFTs need approval)
+  const hasWalletNFTs = selectedTokenIds.some(tokenId => {
+    const nft = nfts.find(n => n.tokenId === tokenId.toString());
+    return nft && !nft.isStaked;
+  });
+  const needsApproval = hasWalletNFTs && !isApprovedForAll;
 
   useEffect(() => {
-    if (isSuccess && hash) {
+    if (isSuccess && allHashes && allHashes.length > 0) {
+      const hashesText = allHashes.length === 1
+        ? `Transaction: ${allHashes[0].slice(0, 10)}...${allHashes[0].slice(-8)}`
+        : `${allHashes.length} transactions completed\nLast: ${allHashes[allHashes.length - 1].slice(0, 10)}...${allHashes[allHashes.length - 1].slice(-8)}`;
+
       dispatch(
         openPopUp({
           title: "Burn Success",
-          message: `NFT burned successfully! You are now earning bonus rewards!\n\nTransaction: ${hash.slice(
-            0,
-            10
-          )}...${hash.slice(-8)}`,
+          message: `${selectedTokenIds.length} NFT${selectedTokenIds.length > 1 ? 's' : ''} burned successfully! You are now earning bonus rewards!\n\n${hashesText}`,
           info: "success",
-          link: getExplorerUrl(hash),
-          linkText: "View on Explorer",
+          link: getExplorerUrl(allHashes[allHashes.length - 1]),
+          linkText: "View Last Transaction",
         })
       );
 
@@ -54,7 +55,7 @@ export function BurnNFT() {
       const refetchWithRetry = async (attempts = 0, maxAttempts = 5) => {
         if (attempts >= maxAttempts) {
           console.log("Max refetch attempts reached");
-          setSelectedTokenId(undefined);
+          setSelectedTokenIds([]);
           return;
         }
 
@@ -72,12 +73,12 @@ export function BurnNFT() {
       };
 
       refetchWithRetry();
-      setSelectedTokenId(undefined);
+      setSelectedTokenIds([]);
     }
-  }, [isSuccess, hash, dispatch]);
+  }, [isSuccess, allHashes, dispatch, selectedTokenIds.length]);
 
   useEffect(() => {
-    if (isApproveSuccess && approveHash && selectedTokenId && !isPending && !isConfirming) {
+    if (isApproveSuccess && approveHash && selectedTokenIds.length > 0 && !isPending && !isConfirming) {
       dispatch(
         openPopUp({
           title: "Approval Success",
@@ -91,11 +92,11 @@ export function BurnNFT() {
         })
       );
 
-      // Automatically trigger burn after approval
-      burn(selectedTokenId);
+      // Automatically trigger batch burn after approval
+      batchBurn(selectedTokenIds);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isApproveSuccess, approveHash, selectedTokenId, dispatch]);
+  }, [isApproveSuccess, approveHash, selectedTokenIds.length, dispatch]);
 
   // Log burn errors
   useEffect(() => {
@@ -142,10 +143,12 @@ export function BurnNFT() {
 
       <NFTSelector
         ref={burnableNFTSelectorRef}
-        onSelect={setSelectedTokenId}
-        selectedTokenId={selectedTokenId}
+        onSelect={() => {}} // Not used in multi-select mode
+        onMultiSelect={setSelectedTokenIds}
+        selectedTokenIds={selectedTokenIds}
+        multiSelect={true}
         mode="all-burnable"
-        title="Select NFT to Burn"
+        title="Select NFTs to Burn"
       />
 
       <div
@@ -169,12 +172,12 @@ export function BurnNFT() {
         <p
           style={{ fontSize: "0.75rem", color: "#999999", marginTop: "0.5rem" }}
         >
-          Burning your NFT is permanent and irreversible. The NFT will be
+          Burning your NFTs is permanent and irreversible. The NFTs will be
           destroyed, and you will enter burn mode to earn bonus rewards.
         </p>
       </div>
 
-      {needsApproval && selectedTokenId !== undefined && (
+      {selectedTokenIds.length > 0 && needsApproval && (
         <GeneralButton
           onClick={handleApprove}
           loading={isApproving || isApprovingConfirming || isPending || isConfirming}
@@ -184,13 +187,13 @@ export function BurnNFT() {
             ? "Approving..."
             : isPending || isConfirming
             ? "Burning..."
-            : "Approve & Burn NFT"}
+            : `Approve & Burn ${selectedTokenIds.length} NFT${selectedTokenIds.length > 1 ? 's' : ''}`}
         </GeneralButton>
       )}
 
-      {selectedTokenId !== undefined && isSelectedNFTStaked && (
+      {selectedTokenIds.length > 0 && !needsApproval && (
         <GeneralButton
-          onClick={() => burn(selectedTokenId)}
+          onClick={() => batchBurn(selectedTokenIds)}
           loading={isPending || isConfirming}
           style={{
             width: "100%",
@@ -198,21 +201,11 @@ export function BurnNFT() {
             background: "#FF494A",
           }}
         >
-          {isPending || isConfirming ? "Burning..." : "Burn NFT"}
-        </GeneralButton>
-      )}
-
-      {selectedTokenId !== undefined && !isSelectedNFTStaked && isApprovedForAll && (
-        <GeneralButton
-          onClick={() => burn(selectedTokenId)}
-          loading={isPending || isConfirming}
-          style={{
-            width: "100%",
-            marginTop: "1rem",
-            background: "#FF494A",
-          }}
-        >
-          {isPending || isConfirming ? "Burning..." : "Burn NFT"}
+          {isPending || isConfirming
+            ? currentBatch > 0
+              ? `Burning NFT ${currentBatch}/${totalBatches}...`
+              : "Preparing..."
+            : `Burn ${selectedTokenIds.length} NFT${selectedTokenIds.length > 1 ? 's' : ''}`}
         </GeneralButton>
       )}
     </div>

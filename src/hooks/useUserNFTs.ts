@@ -139,10 +139,13 @@ export function useUserNFTs(
               burned: stake.burned,
             }));
 
-          // Build set of staked/burned token IDs to exclude from wallet NFTs
+          // Build set of currently staked token IDs to exclude from wallet NFTs
+          // Only exclude NFTs that are currently STAKED (not UNSTAKED)
           const excludeTokenIds = new Set<string>();
           (stakingData.stakes || []).forEach((stake) => {
-            excludeTokenIds.add(stake.tokenId);
+            if (stake.status !== "UNSTAKED") {
+              excludeTokenIds.add(stake.tokenId);
+            }
           });
 
           // Transform wallet NFTs (exclude those that are staked)
@@ -333,10 +336,13 @@ export function useUserNFTs(
             burned: stake.burned,
           }));
 
-        // Build set of staked/burned token IDs to exclude from wallet NFTs
+        // Build set of currently staked token IDs to exclude from wallet NFTs
+        // Only exclude NFTs that are currently STAKED (not UNSTAKED)
         const excludeTokenIds = new Set<string>();
         (stakingData.stakes || []).forEach((stake) => {
-          excludeTokenIds.add(stake.tokenId);
+          if (stake.status !== "UNSTAKED") {
+            excludeTokenIds.add(stake.tokenId);
+          }
         });
 
         // Transform wallet NFTs (exclude those that are staked)

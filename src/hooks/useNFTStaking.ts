@@ -5,6 +5,9 @@ import { NFT_STAKING_ADDRESS } from './useContractAddresses';
 import { DEFAULT_STAKING_CHAIN_ID } from '@/consts';
 import { StakeData } from '@/types/staking';
 
+// Maximum number of operations per batch (contract limit)
+const BATCH_SIZE = 100;
+
 /**
  * Hook to stake an NFT
  */
@@ -33,15 +36,14 @@ export function useStake() {
 }
 
 /**
- * Hook to batch stake multiple NFTs
- * NOTE: Due to a bug in the smart contract, batchStakeFor is missing the "msg.sender == owner" check
- * that batchUnstakeFor has. We need to call individual stake() for each NFT sequentially.
+ * Hook to batch stake multiple NFTs using multiCall
+ * Supports up to 50 NFTs per transaction
  */
 export function useBatchStake() {
   const { address } = useAccount();
   const { writeContractAsync } = useWriteContract();
-  const [currentStakeIndex, setCurrentStakeIndex] = useState<number>(-1);
-  const [totalToStake, setTotalToStake] = useState<number>(0);
+  const [currentBatch, setCurrentBatch] = useState<number>(0);
+  const [totalBatches, setTotalBatches] = useState<number>(0);
   const [isPending, setIsPending] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -59,58 +61,61 @@ export function useBatchStake() {
       return;
     }
 
-    console.log('=== SEQUENTIAL STAKE CALLS ===');
-    console.log(`Staking ${tokenIds.length} NFTs using individual stake() calls`);
+    console.log('=== MULTICALL BATCH STAKE ===');
+    console.log(`Staking ${tokenIds.length} NFTs using multiCall`);
     console.log('Token IDs:', tokenIds);
     console.log('Contract:', NFT_STAKING_ADDRESS);
     console.log('Chain ID:', DEFAULT_STAKING_CHAIN_ID);
-    console.log('');
-    console.log('NOTE: Using sequential stake() calls because batchStakeFor has a bug:');
-    console.log('  - batchStakeFor is missing "msg.sender == owner" check');
-    console.log('  - batchUnstakeFor HAS this check (line 460)');
-    console.log('  - This is why unstake works but stake fails with NOT_AUTHORIZED');
 
     setIsPending(true);
     setIsConfirming(false);
     setIsSuccess(false);
     setError(null);
-    setTotalToStake(tokenIds.length);
     setAllHashes([]);
+
+    // Split into batches of BATCH_SIZE
+    const batches: bigint[][] = [];
+    for (let i = 0; i < tokenIds.length; i += BATCH_SIZE) {
+      batches.push(tokenIds.slice(i, i + BATCH_SIZE));
+    }
+
+    setTotalBatches(batches.length);
+    console.log(`Split into ${batches.length} batch(es) of max ${BATCH_SIZE} each`);
 
     const hashes: `0x${string}`[] = [];
 
     try {
-      // Stake each NFT sequentially
-      for (let i = 0; i < tokenIds.length; i++) {
-        const tokenId = tokenIds[i];
-        setCurrentStakeIndex(i);
+      for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
+        const batch = batches[batchIndex];
+        setCurrentBatch(batchIndex + 1);
 
-        console.log(`\n[${i + 1}/${tokenIds.length}] Staking token ${tokenId}...`);
+        console.log(`\n[Batch ${batchIndex + 1}/${batches.length}] Staking ${batch.length} NFTs...`);
 
+        // Use batchStake with msg.sender as recipient for rewards
         const hash = await writeContractAsync({
           address: NFT_STAKING_ADDRESS,
           abi: NFTStakingABI,
-          functionName: 'stake',
-          args: [tokenId],
+          functionName: 'batchStake',
+          args: [batch, address],
           chainId: DEFAULT_STAKING_CHAIN_ID,
         });
 
-        console.log(`  ✓ Transaction submitted: ${hash}`);
+        console.log(`  ✓ Batch transaction submitted: ${hash}`);
         hashes.push(hash);
         setAllHashes([...hashes]);
       }
 
-      console.log('\n=== ALL STAKES COMPLETED ===');
-      console.log(`Successfully staked ${tokenIds.length} NFTs`);
+      console.log('\n=== ALL BATCHES COMPLETED ===');
+      console.log(`Successfully staked ${tokenIds.length} NFTs in ${batches.length} batch(es)`);
       console.log('Transaction hashes:', hashes);
 
       setIsPending(false);
       setIsConfirming(false);
       setIsSuccess(true);
-      setCurrentStakeIndex(-1);
+      setCurrentBatch(0);
     } catch (err) {
       console.error('\n=== BATCH STAKE ERROR ===');
-      console.error(`Failed at NFT ${currentStakeIndex + 1}/${tokenIds.length}`);
+      console.error(`Failed at batch ${currentBatch}/${totalBatches}`);
       console.error('Error:', err);
       console.error('=== END ERROR ===');
 
@@ -118,7 +123,7 @@ export function useBatchStake() {
       setIsPending(false);
       setIsConfirming(false);
       setIsSuccess(false);
-      setCurrentStakeIndex(-1);
+      setCurrentBatch(0);
     }
   };
 
@@ -126,8 +131,8 @@ export function useBatchStake() {
     batchStake,
     hash: allHashes.length > 0 ? allHashes[allHashes.length - 1] : undefined,
     allHashes,
-    currentStakeIndex,
-    totalToStake,
+    currentBatch,
+    totalBatches,
     isPending,
     isConfirming,
     isSuccess,
@@ -164,27 +169,102 @@ export function useUnstake() {
 
 /**
  * Hook to batch unstake multiple NFTs
+ * Supports up to 100 NFTs per transaction
  */
 export function useBatchUnstake() {
   const { address } = useAccount();
-  const { data: hash, writeContract, isPending, error } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash });
+  const { writeContractAsync } = useWriteContract();
+  const [currentBatch, setCurrentBatch] = useState<number>(0);
+  const [totalBatches, setTotalBatches] = useState<number>(0);
+  const [isPending, setIsPending] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const [allHashes, setAllHashes] = useState<`0x${string}`[]>([]);
 
-  const batchUnstake = (tokenIds: bigint[]) => {
-    if (!address) return;
+  const batchUnstake = async (tokenIds: bigint[]) => {
+    if (!address) {
+      console.error('Cannot batch unstake: No address connected');
+      return;
+    }
 
-    writeContract({
-      address: NFT_STAKING_ADDRESS,
-      abi: NFTStakingABI,
-      functionName: 'batchUnstakeFor',
-      args: [address, tokenIds],
-      chainId: DEFAULT_STAKING_CHAIN_ID,
-    });
+    if (tokenIds.length === 0) {
+      console.error('Cannot batch unstake: No token IDs provided');
+      return;
+    }
+
+    console.log('=== BATCH UNSTAKE ===');
+    console.log(`Unstaking ${tokenIds.length} NFTs using batchUnstake`);
+    console.log('Token IDs:', tokenIds);
+    console.log('Contract:', NFT_STAKING_ADDRESS);
+    console.log('Chain ID:', DEFAULT_STAKING_CHAIN_ID);
+
+    setIsPending(true);
+    setIsConfirming(false);
+    setIsSuccess(false);
+    setError(null);
+    setAllHashes([]);
+
+    // Split into batches of BATCH_SIZE
+    const batches: bigint[][] = [];
+    for (let i = 0; i < tokenIds.length; i += BATCH_SIZE) {
+      batches.push(tokenIds.slice(i, i + BATCH_SIZE));
+    }
+
+    setTotalBatches(batches.length);
+    console.log(`Split into ${batches.length} batch(es) of max ${BATCH_SIZE} each`);
+
+    const hashes: `0x${string}`[] = [];
+
+    try {
+      for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
+        const batch = batches[batchIndex];
+        setCurrentBatch(batchIndex + 1);
+
+        console.log(`\n[Batch ${batchIndex + 1}/${batches.length}] Unstaking ${batch.length} NFTs...`);
+
+        // Use batchUnstake with msg.sender as token receiver
+        const hash = await writeContractAsync({
+          address: NFT_STAKING_ADDRESS,
+          abi: NFTStakingABI,
+          functionName: 'batchUnstake',
+          args: [batch, address],
+          chainId: DEFAULT_STAKING_CHAIN_ID,
+        });
+
+        console.log(`  ✓ Batch transaction submitted: ${hash}`);
+        hashes.push(hash);
+        setAllHashes([...hashes]);
+      }
+
+      console.log('\n=== ALL BATCHES COMPLETED ===');
+      console.log(`Successfully unstaked ${tokenIds.length} NFTs in ${batches.length} batch(es)`);
+      console.log('Transaction hashes:', hashes);
+
+      setIsPending(false);
+      setIsConfirming(false);
+      setIsSuccess(true);
+      setCurrentBatch(0);
+    } catch (err) {
+      console.error('\n=== BATCH UNSTAKE ERROR ===');
+      console.error(`Failed at batch ${currentBatch}/${totalBatches}`);
+      console.error('Error:', err);
+      console.error('=== END ERROR ===');
+
+      setError(err as Error);
+      setIsPending(false);
+      setIsConfirming(false);
+      setIsSuccess(false);
+      setCurrentBatch(0);
+    }
   };
 
   return {
     batchUnstake,
-    hash,
+    hash: allHashes.length > 0 ? allHashes[allHashes.length - 1] : undefined,
+    allHashes,
+    currentBatch,
+    totalBatches,
     isPending,
     isConfirming,
     isSuccess,
@@ -220,6 +300,111 @@ export function useClaim() {
 }
 
 /**
+ * Hook to batch claim rewards for multiple NFTs
+ * Supports up to 100 NFTs per transaction
+ */
+export function useBatchClaim() {
+  const { address } = useAccount();
+  const { writeContractAsync } = useWriteContract();
+  const [currentBatch, setCurrentBatch] = useState<number>(0);
+  const [totalBatches, setTotalBatches] = useState<number>(0);
+  const [isPending, setIsPending] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const [allHashes, setAllHashes] = useState<`0x${string}`[]>([]);
+
+  const batchClaim = async (tokenIds: bigint[]) => {
+    if (!address) {
+      console.error('Cannot batch claim: No address connected');
+      return;
+    }
+
+    if (tokenIds.length === 0) {
+      console.error('Cannot batch claim: No token IDs provided');
+      return;
+    }
+
+    console.log('=== BATCH CLAIM ===');
+    console.log(`Claiming rewards for ${tokenIds.length} NFTs using batchClaim`);
+    console.log('Token IDs:', tokenIds);
+    console.log('Contract:', NFT_STAKING_ADDRESS);
+    console.log('Chain ID:', DEFAULT_STAKING_CHAIN_ID);
+
+    setIsPending(true);
+    setIsConfirming(false);
+    setIsSuccess(false);
+    setError(null);
+    setAllHashes([]);
+
+    // Split into batches of BATCH_SIZE
+    const batches: bigint[][] = [];
+    for (let i = 0; i < tokenIds.length; i += BATCH_SIZE) {
+      batches.push(tokenIds.slice(i, i + BATCH_SIZE));
+    }
+
+    setTotalBatches(batches.length);
+    console.log(`Split into ${batches.length} batch(es) of max ${BATCH_SIZE} each`);
+
+    const hashes: `0x${string}`[] = [];
+
+    try {
+      for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
+        const batch = batches[batchIndex];
+        setCurrentBatch(batchIndex + 1);
+
+        console.log(`\n[Batch ${batchIndex + 1}/${batches.length}] Claiming ${batch.length} NFTs...`);
+
+        // Use batchClaim with array of token IDs
+        const hash = await writeContractAsync({
+          address: NFT_STAKING_ADDRESS,
+          abi: NFTStakingABI,
+          functionName: 'batchClaim',
+          args: [batch],
+          chainId: DEFAULT_STAKING_CHAIN_ID,
+        });
+
+        console.log(`  ✓ Batch transaction submitted: ${hash}`);
+        hashes.push(hash);
+        setAllHashes([...hashes]);
+      }
+
+      console.log('\n=== ALL BATCHES COMPLETED ===');
+      console.log(`Successfully claimed rewards for ${tokenIds.length} NFTs in ${batches.length} batch(es)`);
+      console.log('Transaction hashes:', hashes);
+
+      setIsPending(false);
+      setIsConfirming(false);
+      setIsSuccess(true);
+      setCurrentBatch(0);
+    } catch (err) {
+      console.error('\n=== BATCH CLAIM ERROR ===');
+      console.error(`Failed at batch ${currentBatch}/${totalBatches}`);
+      console.error('Error:', err);
+      console.error('=== END ERROR ===');
+
+      setError(err as Error);
+      setIsPending(false);
+      setIsConfirming(false);
+      setIsSuccess(false);
+      setCurrentBatch(0);
+    }
+  };
+
+  return {
+    batchClaim,
+    hash: allHashes.length > 0 ? allHashes[allHashes.length - 1] : undefined,
+    allHashes,
+    currentBatch,
+    totalBatches,
+    isPending,
+    isConfirming,
+    isSuccess,
+    error,
+  };
+}
+
+/**
  * Hook to burn an NFT
  */
 export function useBurn() {
@@ -239,6 +424,111 @@ export function useBurn() {
   return {
     burn,
     hash,
+    isPending,
+    isConfirming,
+    isSuccess,
+    error,
+  };
+}
+
+/**
+ * Hook to batch burn multiple NFTs
+ * Supports up to 100 NFTs per transaction
+ */
+export function useBatchBurn() {
+  const { address } = useAccount();
+  const { writeContractAsync } = useWriteContract();
+  const [currentBatch, setCurrentBatch] = useState<number>(0);
+  const [totalBatches, setTotalBatches] = useState<number>(0);
+  const [isPending, setIsPending] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const [allHashes, setAllHashes] = useState<`0x${string}`[]>([]);
+
+  const batchBurn = async (tokenIds: bigint[]) => {
+    if (!address) {
+      console.error('Cannot batch burn: No address connected');
+      return;
+    }
+
+    if (tokenIds.length === 0) {
+      console.error('Cannot batch burn: No token IDs provided');
+      return;
+    }
+
+    console.log('=== BATCH BURN ===');
+    console.log(`Burning ${tokenIds.length} NFTs using batchBurn`);
+    console.log('Token IDs:', tokenIds);
+    console.log('Contract:', NFT_STAKING_ADDRESS);
+    console.log('Chain ID:', DEFAULT_STAKING_CHAIN_ID);
+
+    setIsPending(true);
+    setIsConfirming(false);
+    setIsSuccess(false);
+    setError(null);
+    setAllHashes([]);
+
+    // Split into batches of BATCH_SIZE
+    const batches: bigint[][] = [];
+    for (let i = 0; i < tokenIds.length; i += BATCH_SIZE) {
+      batches.push(tokenIds.slice(i, i + BATCH_SIZE));
+    }
+
+    setTotalBatches(batches.length);
+    console.log(`Split into ${batches.length} batch(es) of max ${BATCH_SIZE} each`);
+
+    const hashes: `0x${string}`[] = [];
+
+    try {
+      for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
+        const batch = batches[batchIndex];
+        setCurrentBatch(batchIndex + 1);
+
+        console.log(`\n[Batch ${batchIndex + 1}/${batches.length}] Burning ${batch.length} NFTs...`);
+
+        // Use batchBurn with msg.sender as recipient for rewards
+        const hash = await writeContractAsync({
+          address: NFT_STAKING_ADDRESS,
+          abi: NFTStakingABI,
+          functionName: 'batchBurn',
+          args: [batch, address],
+          chainId: DEFAULT_STAKING_CHAIN_ID,
+        });
+
+        console.log(`  ✓ Batch transaction submitted: ${hash}`);
+        hashes.push(hash);
+        setAllHashes([...hashes]);
+      }
+
+      console.log('\n=== ALL BATCHES COMPLETED ===');
+      console.log(`Successfully burned ${tokenIds.length} NFTs in ${batches.length} batch(es)`);
+      console.log('Transaction hashes:', hashes);
+
+      setIsPending(false);
+      setIsConfirming(false);
+      setIsSuccess(true);
+      setCurrentBatch(0);
+    } catch (err) {
+      console.error('\n=== BATCH BURN ERROR ===');
+      console.error(`Failed at batch ${currentBatch}/${totalBatches}`);
+      console.error('Error:', err);
+      console.error('=== END ERROR ===');
+
+      setError(err as Error);
+      setIsPending(false);
+      setIsConfirming(false);
+      setIsSuccess(false);
+      setCurrentBatch(0);
+    }
+  };
+
+  return {
+    batchBurn,
+    hash: allHashes.length > 0 ? allHashes[allHashes.length - 1] : undefined,
+    allHashes,
+    currentBatch,
+    totalBatches,
     isPending,
     isConfirming,
     isSuccess,

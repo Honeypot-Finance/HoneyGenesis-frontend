@@ -1,6 +1,6 @@
 import { useAccount } from 'wagmi';
 import { useUserNFTs } from '@/hooks/useUserNFTs';
-import { useImperativeHandle, forwardRef, useRef } from 'react';
+import { useImperativeHandle, forwardRef } from 'react';
 
 interface NFTSelectorProps {
   onSelect: (tokenId: bigint) => void;
@@ -74,14 +74,79 @@ export const NFTSelector = forwardRef<NFTSelectorRef, NFTSelectorProps>(
         </div>
       ) : hasNFTs ? (
         <div>
-          <p style={{ color: '#999999', fontSize: '0.9rem', marginBottom: '1rem' }}>
-            {multiSelect
-              ? `Select multiple NFTs (${selectedTokenIds.length} selected):`
-              : mode === 'wallet' ? 'Select an NFT from your wallet:' :
-                mode === 'all-burnable' ? 'Select an NFT to burn (staked or unstaked):' :
-                mode === 'claimable' ? 'Select NFTs to claim rewards from:' :
-                'Select a staked NFT:'}
-          </p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <p style={{ color: '#999999', fontSize: '0.9rem', margin: 0 }}>
+              {multiSelect
+                ? `Select multiple NFTs (${selectedTokenIds.length} selected):`
+                : mode === 'wallet' ? 'Select an NFT from your wallet:' :
+                  mode === 'all-burnable' ? 'Select an NFT to burn (staked or unstaked):' :
+                  mode === 'claimable' ? 'Select NFTs to claim rewards from:' :
+                  'Select a staked NFT:'}
+            </p>
+            {multiSelect && onMultiSelect && (
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button
+                  onClick={() => {
+                    const allTokenIds = nfts.map(nft => BigInt(nft.tokenId));
+                    onMultiSelect(allTokenIds);
+                  }}
+                  style={{
+                    padding: '0.4rem 0.75rem',
+                    fontSize: '0.8rem',
+                    fontWeight: '600',
+                    color: '#ffcd4d',
+                    background: 'transparent',
+                    border: '1.5px solid rgba(255, 205, 77, 0.4)',
+                    borderRadius: 'var(--border-radius-sm)',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    fontFamily: '"inter black", sans-serif',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 205, 77, 0.1)';
+                    e.currentTarget.style.borderColor = '#ffcd4d';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.borderColor = 'rgba(255, 205, 77, 0.4)';
+                  }}
+                >
+                  Select All ({nfts.length})
+                </button>
+                <button
+                  onClick={() => onMultiSelect([])}
+                  disabled={selectedTokenIds.length === 0}
+                  style={{
+                    padding: '0.4rem 0.75rem',
+                    fontSize: '0.8rem',
+                    fontWeight: '600',
+                    color: selectedTokenIds.length === 0 ? '#666666' : '#999999',
+                    background: 'transparent',
+                    border: '1.5px solid rgba(153, 153, 153, 0.3)',
+                    borderRadius: 'var(--border-radius-sm)',
+                    cursor: selectedTokenIds.length === 0 ? 'not-allowed' : 'pointer',
+                    transition: 'all 0.2s',
+                    fontFamily: '"inter black", sans-serif',
+                    opacity: selectedTokenIds.length === 0 ? 0.5 : 1,
+                  }}
+                  onMouseEnter={(e) => {
+                    if (selectedTokenIds.length > 0) {
+                      e.currentTarget.style.background = 'rgba(153, 153, 153, 0.1)';
+                      e.currentTarget.style.borderColor = '#999999';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (selectedTokenIds.length > 0) {
+                      e.currentTarget.style.background = 'transparent';
+                      e.currentTarget.style.borderColor = 'rgba(153, 153, 153, 0.3)';
+                    }
+                  }}
+                >
+                  Clear
+                </button>
+              </div>
+            )}
+          </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '1rem', maxHeight: '300px', overflowY: 'auto' }}>
             {nfts.map((nft) => (
               <NFTCard

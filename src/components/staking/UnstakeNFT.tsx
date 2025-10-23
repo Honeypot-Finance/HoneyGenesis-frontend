@@ -12,7 +12,7 @@ interface UnstakeNFTProps {
 export function UnstakeNFT({ onSuccess }: UnstakeNFTProps) {
   const [selectedTokenIds, setSelectedTokenIds] = useState<bigint[]>([]);
   const stakedNFTSelectorRef = useRef<NFTSelectorRef>(null);
-  const { batchUnstake, isPending, isConfirming, isSuccess, hash } = useBatchUnstake();
+  const { batchUnstake, isPending, isConfirming, isSuccess, hash, allHashes, currentBatch, totalBatches } = useBatchUnstake();
   const dispatch = useAppDispatch();
 
   const getExplorerUrl = (txHash: string) => {
@@ -20,13 +20,17 @@ export function UnstakeNFT({ onSuccess }: UnstakeNFTProps) {
   };
 
   useEffect(() => {
-    if (isSuccess && hash) {
+    if (isSuccess && allHashes && allHashes.length > 0) {
+      const hashesText = allHashes.length === 1
+        ? `Transaction: ${allHashes[0].slice(0, 10)}...${allHashes[0].slice(-8)}`
+        : `${allHashes.length} transactions completed\nLast: ${allHashes[allHashes.length - 1].slice(0, 10)}...${allHashes[allHashes.length - 1].slice(-8)}`;
+
       dispatch(openPopUp({
         title: 'Unstake Success',
-        message: `${selectedTokenIds.length} NFT${selectedTokenIds.length > 1 ? 's' : ''} unstaked successfully! Switch to the "Stake NFT" tab to see them in your wallet.\n\nTransaction: ${hash.slice(0, 10)}...${hash.slice(-8)}`,
+        message: `${selectedTokenIds.length} NFT${selectedTokenIds.length > 1 ? 's' : ''} unstaked successfully! Switch to the "Stake NFT" tab to see them in your wallet.\n\n${hashesText}`,
         info: 'success',
-        link: getExplorerUrl(hash),
-        linkText: 'View on Explorer',
+        link: getExplorerUrl(allHashes[allHashes.length - 1]),
+        linkText: 'View Last Transaction',
       }));
 
       // Refetch the staked NFTs list to remove the unstaked NFTs
@@ -46,7 +50,7 @@ export function UnstakeNFT({ onSuccess }: UnstakeNFTProps) {
         }, 2500);
       }
     }
-  }, [isSuccess, hash, dispatch, onSuccess, selectedTokenIds.length]);
+  }, [isSuccess, allHashes, dispatch, onSuccess, selectedTokenIds.length]);
 
   const handleUnstake = () => {
     if (selectedTokenIds.length === 0) return;
@@ -71,7 +75,11 @@ export function UnstakeNFT({ onSuccess }: UnstakeNFTProps) {
         loading={isPending || isConfirming}
         style={{ width: '100%', marginTop: '1rem' }}
       >
-        {isPending || isConfirming ? 'Unstaking...' : `Unstake ${selectedTokenIds.length > 0 ? selectedTokenIds.length : ''} NFT${selectedTokenIds.length > 1 ? 's' : selectedTokenIds.length === 1 ? '' : 's'}`}
+        {isPending || isConfirming
+          ? currentBatch > 0
+            ? `Unstaking Batch ${currentBatch}/${totalBatches}...`
+            : 'Preparing...'
+          : `Unstake ${selectedTokenIds.length > 0 ? selectedTokenIds.length : ''} NFT${selectedTokenIds.length > 1 ? 's' : selectedTokenIds.length === 1 ? '' : 's'}`}
       </GeneralButton>
     </div>
   );

@@ -20,8 +20,8 @@ export const StakeNFT = forwardRef<StakeNFTRef>((props, ref) => {
     isSuccess,
     hash: stakeHash,
     allHashes,
-    currentStakeIndex,
-    totalToStake,
+    currentBatch,
+    totalBatches,
     error: stakeError,
   } = useBatchStake();
   const {
@@ -193,8 +193,8 @@ export const StakeNFT = forwardRef<StakeNFTRef>((props, ref) => {
           style={{ width: "100%", marginTop: "1rem" }}
         >
           {isStaking || isConfirming
-            ? currentStakeIndex >= 0
-              ? `Staking ${currentStakeIndex + 1}/${totalToStake}...`
+            ? currentBatch > 0
+              ? `Staking Batch ${currentBatch}/${totalBatches}...`
               : "Preparing..."
             : `Stake ${selectedTokenIds.length} NFT${selectedTokenIds.length > 1 ? 's' : ''}`}
         </GeneralButton>
