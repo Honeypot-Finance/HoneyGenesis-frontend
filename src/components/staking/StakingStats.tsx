@@ -3,87 +3,135 @@ import { useStakingParams } from '@/hooks/useNFTStaking';
 import { formatTokenAmount, formatBps, calculateRewardsPerDay } from '@/lib/stakingUtils';
 
 export function StakingStats() {
-  const [isExpanded, setIsExpanded] = useState(false);
   const { rewardRatePerSecond, burnBonusBps } = useStakingParams();
 
   return (
-    <div className="staking-tabs-container" style={{ marginTop: '2rem' }}>
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
+    <div style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+      <h2
         style={{
-          width: '100%',
-          padding: '1rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          background: 'none',
-          border: 'none',
-          cursor: 'pointer',
-          color: 'white',
-          fontFamily: '"inter black", sans-serif',
+          fontSize: '1.25rem',
+          fontWeight: '600',
+          color: '#C4B5A0',
+          margin: '0 0 1.5rem 0',
         }}
       >
-        <h2 style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#ffcd4d', margin: 0 }}>
-          Staking Parameters
-        </h2>
-        <span style={{
-          transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-          transition: 'transform 0.3s',
-          color: '#ffcd4d',
-          fontSize: '1.5rem',
-        }}>
-          ▼
-        </span>
-      </button>
+        Staking paramaters
+      </h2>
 
-      {isExpanded && (
-        <div style={{ padding: '0 1rem 1rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
-            {rewardRatePerSecond !== undefined && (
-              <div className="info-section">
-                <p style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#60A5FA' }}>
-                  Base Rewards per Second
-                </p>
-                <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#60A5FA', margin: '0.5rem 0' }}>
-                  {formatTokenAmount(rewardRatePerSecond, 18, 6)}
-                </p>
-                <p style={{ fontSize: '0.75rem', color: '#999999' }}>
-                  ≈ {calculateRewardsPerDay(rewardRatePerSecond)} per day (at 1x multiplier)
-                </p>
-              </div>
-            )}
-
-            {burnBonusBps !== undefined && (
-              <div className="info-section" style={{ borderLeftColor: '#f7941d' }}>
-                <p style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#f7941d' }}>
-                  Burn Bonus
-                </p>
-                <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#f7941d', margin: '0.5rem 0' }}>
-                  +{formatBps(burnBonusBps)}
-                </p>
-                <p style={{ fontSize: '0.75rem', color: '#999999' }}>
-                  Additional rewards for burning your NFT
-                </p>
-              </div>
-            )}
-
-            <div className="info-section" style={{ borderLeftColor: '#A78BFA' }}>
-              <p style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#A78BFA' }}>
-                Multiplier System
-              </p>
-              <p style={{ fontSize: '0.75rem', color: '#999999', marginTop: '0.5rem' }}>
-                Your rewards increase by 1x for every 30 days staked:
-              </p>
-              <ul style={{ fontSize: '0.75rem', color: '#999999', marginTop: '0.5rem', paddingLeft: '1.5rem' }}>
-                <li>0-30 days: 1x multiplier</li>
-                <li>30-60 days: 2x multiplier</li>
-                <li>60-90 days: 3x multiplier</li>
-                <li>And so on...</li>
-              </ul>
-            </div>
+      <div
+        className="staking-params-grid"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '2rem',
+        }}
+      >
+        {/* Base Rewards per Second */}
+        {rewardRatePerSecond !== undefined && (
+          <div>
+            <p
+              style={{
+                fontSize: '2.5rem',
+                fontWeight: '700',
+                color: '#F7A129',
+                margin: '0 0 0.5rem 0',
+                fontFamily: "'Clash Display', sans-serif",
+              }}
+            >
+              {formatTokenAmount(rewardRatePerSecond, 18, 6)}
+            </p>
+            <p
+              style={{
+                fontSize: '0.9rem',
+                color: '#C4B5A0',
+                margin: 0,
+              }}
+            >
+              Base Rewards per Second{' '}
+              <span
+                style={{
+                  fontSize: '1.2rem',
+                  color: '#A08B6F',
+                  cursor: 'help',
+                }}
+                title="Base rewards earned per second of staking at 1x multiplier"
+              >
+                ⓘ
+              </span>
+            </p>
           </div>
+        )}
+
+        {/* Burn Bonus */}
+        {burnBonusBps !== undefined && (
+          <div>
+            <p
+              style={{
+                fontSize: '2.5rem',
+                fontWeight: '700',
+                color: '#F7A129',
+                margin: '0 0 0.5rem 0',
+                fontFamily: "'Clash Display', sans-serif",
+              }}
+            >
+              +{formatBps(burnBonusBps)}
+            </p>
+            <p
+              style={{
+                fontSize: '0.9rem',
+                color: '#C4B5A0',
+                margin: 0,
+              }}
+            >
+              Burn Bonus{' '}
+              <span
+                style={{
+                  fontSize: '1.2rem',
+                  color: '#A08B6F',
+                  cursor: 'help',
+                }}
+                title="Additional rewards multiplier when you burn your NFT"
+              >
+                ⓘ
+              </span>
+            </p>
+          </div>
+        )}
+
+        {/* Multiplier System */}
+        <div>
+          <p
+            style={{
+              fontSize: '2.5rem',
+              fontWeight: '700',
+              color: '#F7A129',
+              margin: '0 0 0.5rem 0',
+              fontFamily: "'Clash Display', sans-serif",
+            }}
+          >
+            1X for 30D
+          </p>
+          <p
+            style={{
+              fontSize: '0.9rem',
+              color: '#C4B5A0',
+              margin: 0,
+            }}
+          >
+            Multiplier System{' '}
+            <span
+              style={{
+                fontSize: '1.2rem',
+                color: '#A08B6F',
+                cursor: 'help',
+              }}
+              title="Rewards multiply every 30 days: 1x (0-30d), 2x (30-60d), 3x (60-90d), and so on"
+            >
+              ⓘ
+            </span>
+          </p>
         </div>
-      )}
+      </div>
     </div>
   );
 }

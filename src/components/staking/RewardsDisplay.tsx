@@ -42,35 +42,39 @@ export function RewardsDisplay() {
   return (
     <div
       style={{
-        borderRadius: "var(--border-radius)",
+        borderRadius: "16px",
         padding: "2rem",
-        border: "var(--border-size) solid #ffcd4d",
-        background: "linear-gradient(135deg, #31220c 0%, #1a1410 100%)",
-        boxShadow: "0 4px 24px rgba(255, 205, 77, 0.15)",
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
+        border: "3px solid #5A4530",
+        background: "#4A3420",
+        boxShadow: "0 4px 24px rgba(0, 0, 0, 0.3)",
+        display: "grid",
+        gridTemplateColumns: "1fr auto",
+        gap: "2rem",
+        alignItems: "center",
+        position: "relative",
       }}
     >
-      <h2
-        style={{
-          fontSize: "1.5rem",
-          fontWeight: "bold",
-          color: "#ffcd4d",
-          margin: "0 0 1.5rem 0",
-        }}
-      >
-        Your Rewards Balance
-      </h2>
-
+      {/* Left Side - Balance and Buttons */}
       <div
         style={{
-          flex: 1,
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
+          gap: "1rem",
         }}
       >
+        <h2
+          style={{
+            fontSize: "1rem",
+            fontWeight: "400",
+            color: "#C4B5A0",
+            margin: "0",
+            textTransform: "none",
+          }}
+        >
+          Your rewards balance
+        </h2>
+
+        <div>
         {!isCorrectNetwork ? (
           <div>
             <p
@@ -125,22 +129,23 @@ export function RewardsDisplay() {
           <div>
             <p
               style={{
-                fontSize: "2.5rem",
-                fontWeight: "bold",
-                color: "white",
-                margin: "0.5rem 0",
+                fontSize: "3rem",
+                fontWeight: "700",
+                color: "#F7A129",
+                margin: "0 0 0.5rem 0",
+                fontFamily: "'Clash Display', sans-serif",
               }}
             >
-              {formatTokenAmount(balance, decimals, 6)} {symbol || "REWARD"}
+              {formatTokenAmount(balance, decimals, 2)} {symbol || "PBTC"}
             </p>
             <p
               style={{
                 fontSize: "0.9rem",
-                color: "#999999",
+                color: "#A08B6F",
                 margin: "0 0 0.5rem 0",
               }}
             >
-              {name || "Rewards Token"}
+              {name || "Pots Buy This Coin"}
             </p>
             {isLoadingRewards ? (
               <p
@@ -175,43 +180,42 @@ export function RewardsDisplay() {
             </p>
           </div>
         )}
-      </div>
+        </div>
 
-      {isCorrectNetwork && (
-        <div style={{ display: "flex", gap: "0.75rem", marginTop: "1.5rem" }}>
+        {isCorrectNetwork && (
+          <div style={{ display: "flex", gap: "0.75rem" }}>
           <a
             href={burnTokenUrl}
             target="_blank"
             rel="noopener noreferrer"
             style={{
               flex: 1,
-              padding: "1rem 1.5rem",
-              borderRadius: "var(--border-radius-sm)",
-              background: "linear-gradient(135deg, #f7941d 0%, #ff9f1c 100%)",
-              border: "2px solid #ffb347",
-              color: "white",
-              fontSize: "1rem",
-              fontWeight: "bold",
+              padding: "0.875rem 1.5rem",
+              borderRadius: "12px",
+              background: "#F7A129",
+              border: "none",
+              color: "#2D1F10",
+              fontSize: "0.9rem",
+              fontWeight: "700",
               textDecoration: "none",
               transition: "all 0.3s",
               textAlign: "center",
-              boxShadow: "0 4px 12px rgba(247, 148, 29, 0.4)",
               display: "flex",
-              flexDirection: "column",
-              gap: "0.25rem",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.5rem",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow =
-                "0 6px 16px rgba(247, 148, 29, 0.5)";
+              e.currentTarget.style.background = "#FB9A1B";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow =
-                "0 4px 12px rgba(247, 148, 29, 0.4)";
+              e.currentTarget.style.background = "#F7A129";
             }}
           >
             <span>Burn Tokens in AIOV</span>
+            <span>→</span>
           </a>
           {rewardsAddress && (
             <a
@@ -219,13 +223,13 @@ export function RewardsDisplay() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                padding: "1rem 1.25rem",
-                borderRadius: "var(--border-radius-sm)",
-                background: "rgba(247, 149, 29, 0.1)",
-                border: "2px solid rgba(247, 149, 29, 0.3)",
-                color: "#ffcd4d",
+                padding: "0.875rem 1.25rem",
+                borderRadius: "12px",
+                background: "rgba(247, 161, 41, 0.15)",
+                border: "2px solid rgba(247, 161, 41, 0.3)",
+                color: "#F7A129",
                 fontSize: "0.875rem",
-                fontWeight: "bold",
+                fontWeight: "700",
                 textDecoration: "none",
                 transition: "all 0.3s",
                 textAlign: "center",
@@ -234,17 +238,80 @@ export function RewardsDisplay() {
                 justifyContent: "center",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(247, 149, 29, 0.2)";
+                e.currentTarget.style.background = "rgba(247, 161, 41, 0.25)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(247, 149, 29, 0.1)";
+                e.currentTarget.style.background = "rgba(247, 161, 41, 0.15)";
               }}
             >
               View Token ↗
             </a>
           )}
+          </div>
+        )}
+      </div>
+
+      {/* Right Side - NFT Cards */}
+      <div
+        style={{
+          display: "flex",
+          gap: "1rem",
+          transform: "perspective(1000px) rotateY(-10deg)",
+        }}
+      >
+        <div
+          style={{
+            width: "140px",
+            height: "160px",
+            borderRadius: "12px",
+            border: "3px solid #F7A129",
+            overflow: "hidden",
+            boxShadow: "0 8px 16px rgba(0, 0, 0, 0.3)",
+            transform: "translateX(20px) rotate(-5deg)",
+          }}
+        >
+          <img
+            src="/nft-rolling-banner/1.avif"
+            alt="NFT 1"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
         </div>
-      )}
+        <div
+          style={{
+            width: "140px",
+            height: "160px",
+            borderRadius: "12px",
+            border: "3px solid #F7A129",
+            overflow: "hidden",
+            boxShadow: "0 8px 16px rgba(0, 0, 0, 0.3)",
+            transform: "translateZ(20px)",
+            zIndex: 2,
+          }}
+        >
+          <img
+            src="/nft-rolling-banner/2.avif"
+            alt="NFT 2"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </div>
+        <div
+          style={{
+            width: "140px",
+            height: "160px",
+            borderRadius: "12px",
+            border: "3px solid #F7A129",
+            overflow: "hidden",
+            boxShadow: "0 8px 16px rgba(0, 0, 0, 0.3)",
+            transform: "translateX(-20px) rotate(5deg)",
+          }}
+        >
+          <img
+            src="/nft-rolling-banner/3.avif"
+            alt="NFT 3"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </div>
+      </div>
     </div>
   );
 }

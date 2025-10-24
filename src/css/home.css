@@ -785,6 +785,14 @@ hr {
   }
 }
 
+.App.nft {
+  background-color: #281C0B;
+  background-image: url(/background-pot-icon.svg);
+  background-repeat: repeat;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
 .App.nft .nft-section {
   width: 100%;
   display: flex;

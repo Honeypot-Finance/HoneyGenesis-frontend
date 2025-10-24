@@ -3,17 +3,72 @@
 .App.staking {
   min-height: 100vh;
   overflow-y: auto;
+  background-color: #281C0B;
+  background-image: url(/background-pot-icon.svg);
+  background-repeat: repeat;
+}
+
+/* Staking Title - Matching Benefits Page */
+.staking-title {
+  font-family: 'Clash Display', sans-serif;
+  background: linear-gradient(90deg, #F7931A 0%, #FB9A1B 50%, #F7931A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 auto 1rem auto;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+}
+
+@media (min-width: 768px) {
+  .staking-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 1080px) {
+  .staking-title {
+    font-size: 4rem;
+  }
+}
+
+.staking-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  color: #FFDCA0B2;
+  margin: 0 auto 2rem auto;
+  max-width: 700px;
+  padding: 0 2rem;
+}
+
+@media (min-width: 768px) {
+  .staking-subtitle {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1080px) {
+  .staking-subtitle {
+    font-size: 1.5rem;
+  }
 }
 
 .App.staking .main {
-  max-width: 1200px;
+  max-width: 1400px;
   width: 95%;
   margin: 0 auto;
-  margin-top: 25vh;
+  margin-top: 15vh;
   padding: 2rem;
   padding-bottom: 10rem;
   overflow-y: visible;
   max-height: none;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 @media (min-width: 1080px) {
@@ -27,9 +82,40 @@
     position: relative;
     width: 90%;
     max-width: 1400px;
-    margin-top: calc(18vh + 2rem); /* 10vh header + 8vh decoration + 2rem spacing */
-    padding: 2.5rem;
-    padding-top: 3rem;
+    margin-top: calc(10vh + 1rem); /* 10vh header + 1rem spacing */
+    padding: 2rem;
+    padding-top: 2rem;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+}
+
+/* Global Stats Grid */
+.global-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .global-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Staking Parameters Grid */
+.staking-params-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .staking-params-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 }
 
@@ -60,9 +146,9 @@
 
 /* Staking Tabs */
 .staking-tabs-container {
-  background-color: #31220c;
-  border-radius: var(--border-radius);
-  border: var(--border-size) solid var(--border-color);
+  background-color: #4A3420;
+  border-radius: 16px;
+  border: 3px solid #5A4530;
   overflow: hidden;
   margin: 2rem 0;
   width: 100%;
@@ -70,33 +156,36 @@
 
 .staking-tabs-header {
   display: flex;
-  border-bottom: 2px solid var(--border-color);
-  background-color: #291c0a;
+  border-bottom: 3px solid #5A4530;
+  background-color: transparent;
+  padding: 0;
 }
 
 .staking-tab {
   flex: 1;
-  padding: 1rem;
+  padding: 1.25rem 1rem;
   background: none;
   border: none;
   color: rgba(255, 255, 255, 0.5);
-  font-family: "inter black", sans-serif;
-  font-size: 0.9rem;
-  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
   border-bottom: 3px solid transparent;
+  position: relative;
+  margin-bottom: -3px;
 }
 
 .staking-tab:hover {
-  color: #ffcd4d;
-  background-color: rgba(247, 149, 29, 0.1);
+  color: #F7A129;
+  background-color: rgba(247, 161, 41, 0.05);
 }
 
 .staking-tab.active {
-  color: #ffcd4d;
-  background-color: rgba(247, 149, 29, 0.2);
-  border-bottom: 3px solid #ffcd4d;
+  color: #F7A129;
+  background-color: transparent;
+  border-bottom: 3px solid #F7A129;
 }
 
 /* Tab Content */
