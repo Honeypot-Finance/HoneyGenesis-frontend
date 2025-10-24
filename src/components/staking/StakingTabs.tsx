@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { StakeNFT, StakeNFTRef } from './StakeNFT';
-import { UnstakeNFT } from './UnstakeNFT';
+import { UnstakeNFT, UnstakeNFTRef } from './UnstakeNFT';
 import { ClaimRewards } from './ClaimRewards';
 import { BurnNFT } from './BurnNFT';
 
@@ -10,6 +10,7 @@ export function StakingTabs() {
   const [activeTab, setActiveTab] = useState<TabType>('stake');
   const [shouldRefetchWallet, setShouldRefetchWallet] = useState(false);
   const stakeNFTRef = useRef<StakeNFTRef>(null);
+  const unstakeNFTRef = useRef<UnstakeNFTRef>(null);
 
   const tabs = [
     { id: 'stake' as TabType, label: 'Stake NFT' },
@@ -17,6 +18,23 @@ export function StakingTabs() {
     { id: 'claim' as TabType, label: 'Claim Rewards' },
     { id: 'burn' as TabType, label: 'Burn NFT' },
   ];
+
+  const handleStakeSuccess = () => {
+    console.log('Stake successful, refetching staked NFTs list...');
+    // Refetch the unstake tab to show newly staked NFTs
+    const refetchStaked = async (attempts = 0, maxAttempts = 5) => {
+      if (attempts >= maxAttempts) {
+        console.log('Max staked NFTs refetch attempts reached');
+        return;
+      }
+      const delay = 2000 * (attempts + 1);
+      await new Promise(resolve => setTimeout(resolve, delay));
+      console.log(`Refetching staked NFTs (attempt ${attempts + 1}/${maxAttempts})...`);
+      await unstakeNFTRef.current?.refetchStakedNFTs();
+      refetchStaked(attempts + 1, maxAttempts);
+    };
+    refetchStaked();
+  };
 
   const handleUnstakeSuccess = () => {
     // Mark that we need to refetch wallet NFTs
@@ -77,8 +95,8 @@ export function StakingTabs() {
 
       {/* Tab Content */}
       <div className="staking-tab-content">
-        {activeTab === 'stake' && <StakeNFT ref={stakeNFTRef} />}
-        {activeTab === 'unstake' && <UnstakeNFT onSuccess={handleUnstakeSuccess} />}
+        {activeTab === 'stake' && <StakeNFT ref={stakeNFTRef} onSuccess={handleStakeSuccess} />}
+        {activeTab === 'unstake' && <UnstakeNFT ref={unstakeNFTRef} onSuccess={handleUnstakeSuccess} />}
         {activeTab === 'claim' && <ClaimRewards />}
         {activeTab === 'burn' && <BurnNFT />}
       </div>

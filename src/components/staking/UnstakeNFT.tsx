@@ -1,19 +1,30 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { useBatchUnstake } from '@/hooks/useNFTStaking';
 import { NFTSelector, NFTSelectorRef } from './NFTSelector';
 import GeneralButton from '../atoms/GeneralButton/GeneralButton';
 import { useAppDispatch } from '@/hooks/useAppSelector';
 import { openPopUp } from '@/config/redux/popUpSlice';
 
+export interface UnstakeNFTRef {
+  refetchStakedNFTs: () => Promise<void>;
+}
+
 interface UnstakeNFTProps {
   onSuccess?: () => void;
 }
 
-export function UnstakeNFT({ onSuccess }: UnstakeNFTProps) {
+export const UnstakeNFT = forwardRef<UnstakeNFTRef, UnstakeNFTProps>(({ onSuccess }, ref) => {
   const [selectedTokenIds, setSelectedTokenIds] = useState<bigint[]>([]);
   const stakedNFTSelectorRef = useRef<NFTSelectorRef>(null);
   const { batchUnstake, isPending, isConfirming, isSuccess, hash, allHashes, currentBatch, totalBatches } = useBatchUnstake();
   const dispatch = useAppDispatch();
+
+  // Expose refetch function to parent via ref
+  useImperativeHandle(ref, () => ({
+    refetchStakedNFTs: async () => {
+      await stakedNFTSelectorRef.current?.refetch();
+    },
+  }));
 
   const getExplorerUrl = (txHash: string) => {
     return `https://berascan.com/tx/${txHash}`;
@@ -83,4 +94,4 @@ export function UnstakeNFT({ onSuccess }: UnstakeNFTProps) {
       </GeneralButton>
     </div>
   );
-}
+});

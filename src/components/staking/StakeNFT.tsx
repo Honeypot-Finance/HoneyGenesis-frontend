@@ -10,7 +10,11 @@ export interface StakeNFTRef {
   refetchWalletNFTs: () => Promise<void>;
 }
 
-export const StakeNFT = forwardRef<StakeNFTRef>((props, ref) => {
+interface StakeNFTProps {
+  onSuccess?: () => void;
+}
+
+export const StakeNFT = forwardRef<StakeNFTRef, StakeNFTProps>(({ onSuccess }, ref) => {
   const [selectedTokenIds, setSelectedTokenIds] = useState<bigint[]>([]);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [recipientAddress, setRecipientAddress] = useState("");
@@ -85,8 +89,13 @@ export const StakeNFT = forwardRef<StakeNFTRef>((props, ref) => {
 
       refetchWithRetry();
       setSelectedTokenIds([]);
+
+      // Call the success callback
+      if (onSuccess) {
+        onSuccess();
+      }
     }
-  }, [isSuccess, allHashes, dispatch]);
+  }, [isSuccess, allHashes, dispatch, onSuccess]);
 
   // Handle stake errors
   useEffect(() => {
