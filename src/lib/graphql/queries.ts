@@ -154,12 +154,16 @@ export const GET_USER_BURNABLE_NFTS_FROM_NFT = `
 
 /**
  * Query to get all staked NFTs from Staking subgraph (for claiming)
+ * Includes both NFTs owned by the user AND NFTs where user is the payoutRecipient
  */
 export const GET_USER_STAKES_FOR_CLAIMING = `
   query GetUserStakesForClaiming($owner: String!) {
     stakes(
       where: {
-        owner: $owner
+        or: [
+          { owner: $owner },
+          { payoutRecipient: $owner }
+        ]
       }
       orderBy: tokenId
       orderDirection: asc
@@ -170,6 +174,7 @@ export const GET_USER_STAKES_FOR_CLAIMING = `
       owner {
         id
       }
+      payoutRecipient
       stakedAt
       lastClaimAt
       burned

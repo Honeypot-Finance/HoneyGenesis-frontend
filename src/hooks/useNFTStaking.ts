@@ -50,7 +50,7 @@ export function useBatchStake() {
   const [error, setError] = useState<Error | null>(null);
   const [allHashes, setAllHashes] = useState<`0x${string}`[]>([]);
 
-  const batchStake = async (tokenIds: bigint[]) => {
+  const batchStake = async (tokenIds: bigint[], recipient?: string) => {
     if (!address) {
       console.error('Cannot batch stake: No address connected');
       return;
@@ -61,9 +61,13 @@ export function useBatchStake() {
       return;
     }
 
+    // Use provided recipient or default to msg.sender (self)
+    const rewardsRecipient = recipient || address;
+
     console.log('=== MULTICALL BATCH STAKE ===');
     console.log(`Staking ${tokenIds.length} NFTs using multiCall`);
     console.log('Token IDs:', tokenIds);
+    console.log('Rewards Recipient:', rewardsRecipient);
     console.log('Contract:', NFT_STAKING_ADDRESS);
     console.log('Chain ID:', DEFAULT_STAKING_CHAIN_ID);
 
@@ -91,12 +95,12 @@ export function useBatchStake() {
 
         console.log(`\n[Batch ${batchIndex + 1}/${batches.length}] Staking ${batch.length} NFTs...`);
 
-        // Use batchStake with msg.sender as recipient for rewards
+        // Use batchStake with specified recipient for rewards
         const hash = await writeContractAsync({
           address: NFT_STAKING_ADDRESS,
           abi: NFTStakingABI,
           functionName: 'batchStake',
-          args: [batch, address],
+          args: [batch, rewardsRecipient as `0x${string}`],
           chainId: DEFAULT_STAKING_CHAIN_ID,
         });
 

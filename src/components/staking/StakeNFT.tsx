@@ -12,6 +12,8 @@ export interface StakeNFTRef {
 
 export const StakeNFT = forwardRef<StakeNFTRef>((props, ref) => {
   const [selectedTokenIds, setSelectedTokenIds] = useState<bigint[]>([]);
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [recipientAddress, setRecipientAddress] = useState("");
   const walletNFTSelectorRef = useRef<NFTSelectorRef>(null);
   const {
     batchStake,
@@ -157,7 +159,7 @@ export const StakeNFT = forwardRef<StakeNFTRef>((props, ref) => {
       return;
     }
 
-    batchStake(selectedTokenIds);
+    batchStake(selectedTokenIds, recipientAddress || undefined);
   };
 
   return (
@@ -171,6 +173,83 @@ export const StakeNFT = forwardRef<StakeNFTRef>((props, ref) => {
         mode="wallet"
         title="Select NFTs to Stake"
       />
+
+      {/* Advanced Options - Collapsed */}
+      {selectedTokenIds.length > 0 && (
+        <div style={{ marginTop: "1.5rem" }}>
+          <button
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            style={{
+              background: "transparent",
+              border: "none",
+              color: "#F7A129",
+              fontSize: "0.9rem",
+              fontWeight: "600",
+              cursor: "pointer",
+              padding: "0.5rem 0",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+            }}
+          >
+            <span style={{ transform: showAdvanced ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>
+              ▶
+            </span>
+            Advanced Options
+          </button>
+
+          {showAdvanced && (
+            <div
+              style={{
+                marginTop: "1rem",
+                padding: "1rem",
+                background: "rgba(247, 161, 41, 0.1)",
+                border: "2px solid rgba(247, 161, 41, 0.3)",
+                borderRadius: "12px",
+              }}
+            >
+              <label
+                style={{
+                  display: "block",
+                  color: "#C4B5A0",
+                  fontSize: "0.9rem",
+                  fontWeight: "600",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                Rewards Recipient Address (Optional)
+              </label>
+              <input
+                type="text"
+                value={recipientAddress}
+                onChange={(e) => setRecipientAddress(e.target.value)}
+                placeholder="0x... (leave empty to receive rewards yourself)"
+                style={{
+                  width: "100%",
+                  padding: "0.75rem",
+                  borderRadius: "8px",
+                  border: "2px solid #5A4530",
+                  background: "#3A2810",
+                  color: "white",
+                  fontSize: "0.9rem",
+                  boxSizing: "border-box",
+                }}
+              />
+              <p
+                style={{
+                  color: "#A08B6F",
+                  fontSize: "0.8rem",
+                  margin: "0.5rem 0 0 0",
+                  lineHeight: "1.5",
+                }}
+              >
+                Specify a different address to receive staking rewards. If left empty, you will receive the rewards.
+                This is useful for staking NFTs on behalf of others.
+              </p>
+            </div>
+          )}
+        </div>
+      )}
 
       {selectedTokenIds.length > 0 && !isApprovedForAll && (
         <GeneralButton

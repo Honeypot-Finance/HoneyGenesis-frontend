@@ -39,6 +39,7 @@ interface SubgraphStake {
   owner: {
     id: string;
   };
+  payoutRecipient?: string | null;
   stakedAt: string;
   lastClaimAt: string;
   burned: boolean;
@@ -49,7 +50,7 @@ interface SubgraphStake {
 
 /**
  * Hook to fetch user's NFTs dynamically from the subgraph
- * @param mode - 'wallet' to get NFTs in wallet (unstaked), 'staked' to get staked NFTs, 'burnable' to get staked non-burned NFTs, 'all-burnable' to get both staked and unstaked burnable NFTs, 'claimable' to get all NFTs that can claim rewards (staked + burned)
+ * @param mode - 'wallet' to get NFTs in wallet (unstaked), 'staked' to get staked NFTs, 'burnable' to get staked non-burned NFTs, 'all-burnable' to get both staked and unstaked burnable NFTs, 'claimable' to get all NFTs that can claim rewards (owned by user OR user is payoutRecipient)
  */
 export function useUserNFTs(
   mode:
@@ -79,6 +80,7 @@ export function useUserNFTs(
       try {
         if (mode === "claimable") {
           // Fetch from Staking subgraph only (includes both staked and burned NFTs)
+          // Also includes NFTs where the connected wallet is the payoutRecipient
           const stakingData = await stakingGraphqlClient.request<{
             stakes: SubgraphStake[];
           }>(GET_USER_STAKES_FOR_CLAIMING, {
@@ -87,6 +89,14 @@ export function useUserNFTs(
 
           console.log(`${mode} - Staking subgraph response:`, stakingData);
           console.log("Total stakes found:", stakingData.stakes?.length || 0);
+
+          // Log NFTs where user is payoutRecipient
+          const recipientNFTs = (stakingData.stakes || []).filter(
+            (stake) => stake.payoutRecipient?.toLowerCase() === address.toLowerCase()
+          );
+          if (recipientNFTs.length > 0) {
+            console.log(`Found ${recipientNFTs.length} NFTs where you are the payoutRecipient:`, recipientNFTs);
+          }
 
           // Transform all stakes (both staked and burned can claim rewards)
           // Filter out only UNSTAKED status (those can't claim)
@@ -103,7 +113,7 @@ export function useUserNFTs(
               burned: stake.burned,
             }));
 
-          console.log(`${mode} NFTs:`, claimableNFTs);
+          console.log(`${mode} NFTs (total claimable):`, claimableNFTs);
           setNfts(claimableNFTs);
         } else if (mode === "all-burnable") {
           // Fetch from both NFT and Staking subgraphs
@@ -244,19 +254,10 @@ export function useUserNFTs(
             }
           });
 
-          // Also add stakes with UNSTAKED status (they were staked before but now returned to wallet)
-          (stakingData.stakes || []).forEach((stake) => {
-            if (stake.status === "UNSTAKED" && !stake.burned) {
-              nftMap.set(stake.tokenId, {
-                id: stake.id,
-                tokenId: stake.tokenId,
-                owner: stake.owner.id,
-                contract: nftAddress || "",
-                isStaked: false,
-                burned: stake.burned,
-              });
-            }
-          });
+          // DO NOT add UNSTAKED stakes to wallet view
+          // UNSTAKED status means the NFT was unstaked, but it doesn't mean it's in the current wallet
+          // We only show NFTs that are actually in the wallet (from NFT subgraph)
+          // If an NFT was unstaked, it went back to the original owner, not necessarily the current connected wallet
 
           const walletTokens = Array.from(nftMap.values());
           console.log("Merged wallet NFTs:", walletTokens);
@@ -285,11 +286,22 @@ export function useUserNFTs(
     try {
       if (mode === "claimable") {
         // Fetch from Staking subgraph only (includes both staked and burned NFTs)
+        // Also includes NFTs where the connected wallet is the payoutRecipient
         const stakingData = await stakingGraphqlClient.request<{
           stakes: SubgraphStake[];
         }>(GET_USER_STAKES_FOR_CLAIMING, {
           owner: address.toLowerCase(),
         });
+
+        console.log(`Refetch ${mode} - Staking subgraph response:`, stakingData);
+
+        // Log NFTs where user is payoutRecipient
+        const recipientNFTs = (stakingData.stakes || []).filter(
+          (stake) => stake.payoutRecipient?.toLowerCase() === address.toLowerCase()
+        );
+        if (recipientNFTs.length > 0) {
+          console.log(`Refetch: Found ${recipientNFTs.length} NFTs where you are the payoutRecipient:`, recipientNFTs);
+        }
 
         // Transform all stakes (both staked and burned can claim rewards)
         // Filter out only UNSTAKED status (those can't claim)
@@ -306,6 +318,7 @@ export function useUserNFTs(
             burned: stake.burned,
           }));
 
+        console.log(`Refetch ${mode} NFTs (total claimable):`, claimableNFTs);
         setNfts(claimableNFTs);
       } else if (mode === "all-burnable") {
         // Fetch from both NFT and Staking subgraphs
@@ -432,19 +445,10 @@ export function useUserNFTs(
           }
         });
 
-        // Also add stakes with UNSTAKED status (they were staked before but now returned to wallet)
-        (stakingData.stakes || []).forEach((stake) => {
-          if (stake.status === "UNSTAKED" && !stake.burned) {
-            nftMap.set(stake.tokenId, {
-              id: stake.id,
-              tokenId: stake.tokenId,
-              owner: stake.owner.id,
-              contract: nftAddress || "",
-              isStaked: false,
-              burned: stake.burned,
-            });
-          }
-        });
+        // DO NOT add UNSTAKED stakes to wallet view
+        // UNSTAKED status means the NFT was unstaked, but it doesn't mean it's in the current wallet
+        // We only show NFTs that are actually in the wallet (from NFT subgraph)
+        // If an NFT was unstaked, it went back to the original owner, not necessarily the current connected wallet
 
         const walletTokens = Array.from(nftMap.values());
         console.log("Merged wallet NFTs:", walletTokens);
