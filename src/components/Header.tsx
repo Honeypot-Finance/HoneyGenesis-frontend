@@ -1,17 +1,15 @@
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "@/css/home.css";
 import WalletConnectButton from "@/components/walletConnect/WalletConnectConnectButton";
 import honeyTopFrame from "@/assets/honey-top-frame.png";
 import honeyGenesisLogo from "@/assets/brand-header-icon.svg";
 
 //icons
-import discordIcon from "@/assets/icon-discord.svg";
-import twitterIcon from "@/assets/icon-twitter.svg";
-import gitbookIcon from "@/assets/icon-gitbook.svg";
-import externalLinkIcon from "@/assets/external-link-icon.svg";
+import arrowUpRight from "@/assets/arrow_up_right.svg";
 
 export default function Header() {
+  const location = useLocation();
   const closeHeaderButton = useRef<HTMLDivElement>(null);
   const openHeaderButton = useRef<HTMLDivElement>(null);
 
@@ -63,76 +61,44 @@ export default function Header() {
         </Link>
         <div className="link-group">
           <nav className="navbar">
-            <li className="navbar__link">
-              <Link to="/benefits">Benefits</Link>
-            </li>
+            <Link to="/benefits" className={`navbar__link ${location.pathname === '/benefits' ? 'active' : ''}`}>
+              Benefits
+            </Link>
             <hr />
-            <li className="navbar__link">
-              <Link to="/staking">Staking</Link>
-            </li>
+            <Link to="/staking" className={`navbar__link ${location.pathname === '/staking' ? 'active' : ''}`}>
+              Staking
+            </Link>
             <hr />
-            <li className="navbar__link">
-              <Link to="/reveal">Gallery</Link>
-            </li>
+            <Link to="/reveal" className={`navbar__link ${location.pathname === '/reveal' ? 'active' : ''}`}>
+              Gallery
+            </Link>
             <hr />
-            {/* <li className="navbar__link">
-              <Link to="/mint">Mint</Link>
-            </li>{" "}
+            {/* <Link to="/mint" className="navbar__link">
+              Mint
+            </Link>
             <hr /> */}
-            {/* <li className="navbar__link">
-              <Link to="/vip-mint">Priority Mint</Link>
-            </li>
+            {/* <Link to="/vip-mint" className="navbar__link">
+              Priority Mint
+            </Link>
             <hr /> */}
-            {/* <li className="navbar__link">
-              <Link to="/whitelist-check">Whitelist</Link>
-            </li> */}
-            <hr />{" "}
-            <li className="navbar__link">
-              <a
-                href="https://honeypotfinance.xyz/"
-                target="blank"
-              >
-                Honeypot Finance{" "}
-                <img
-                  src={externalLinkIcon}
-                  alt=""
-                  style={{ display: "inline" }}
-                />
-              </a>
-            </li>
+            {/* <Link to="/whitelist-check" className="navbar__link">
+              Whitelist
+            </Link> */}
+            <hr />
+            <a
+              href="https://honeypotfinance.xyz/"
+              target="blank"
+              className="navbar__link"
+              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+            >
+              Honeypot Finance
+              <img
+                src={arrowUpRight}
+                alt=""
+                style={{ display: "inline-block", verticalAlign: "middle", scale: "75%" }}
+              />
+            </a>
           </nav>
-          <div className="medias">
-            <a
-              className="medias__link"
-              href="https://twitter.com/honeypotfinance"
-              target="_blank"
-            >
-              <img
-                src={twitterIcon}
-                alt="Twitter"
-              />
-            </a>
-            <a
-              className="medias__link"
-              href="https://discord.com/invite/8Z3VdhZ9V6"
-              target="_blank"
-            >
-              <img
-                src={discordIcon}
-                alt="Discord"
-              />
-            </a>
-            <a
-              className="medias__link"
-              href="https://docs.honeypotfinance.xyz/"
-              target="_blank"
-            >
-              <img
-                src={gitbookIcon}
-                alt="Gitbook"
-              />
-            </a>
-          </div>
         </div>
         <WalletConnectButton />
       </header>

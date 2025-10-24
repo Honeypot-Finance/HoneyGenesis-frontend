@@ -27,7 +27,7 @@
     position: relative;
     width: 90%;
     max-width: 1400px;
-    margin-top: 4rem;
+    margin-top: calc(18vh + 2rem); /* 10vh header + 8vh decoration + 2rem spacing */
     padding: 2.5rem;
     padding-top: 3rem;
   }
