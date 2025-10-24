@@ -217,7 +217,10 @@ hr {
   }
   .App-header .navbar__link:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    color: #e8d4b8;
+    color: white;
+  }
+  .App-header .navbar__link:hover img {
+    opacity: 1;
   }
   .App-header .navbar__link.active {
     background-color: #d89a4a;

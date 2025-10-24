@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import "@/css/home.css";
 import WalletConnectButton from "@/components/walletConnect/WalletConnectConnectButton";
 import honeyTopFrame from "@/assets/honey-top-frame.png";
-import honeyGenesisLogo from "@/assets/brand-header-icon.svg";
+import honeypotBrandIcon from "@/assets/honeypot_brand_icon_brown_yellow.svg";
 
 //icons
 import arrowUpRight from "@/assets/arrow_up_right.svg";
@@ -52,12 +52,13 @@ export default function Header() {
           className="header-bg"
           style={{ backgroundImage: `url(${honeyTopFrame})` }}
         />
-        <Link to={"/"}>
+        <Link to={"/"} style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
           <img
-            src={honeyGenesisLogo}
+            src={honeypotBrandIcon}
             alt="logo"
             className="logo"
           />
+          <span style={{ color: "#3B2712", fontSize: "1.2rem", fontWeight: "900", fontFamily: "'Bebas Neue', sans-serif", textTransform: "uppercase", letterSpacing: "-0.02em" }}>Honeypot NFT</span>
         </Link>
         <div className="link-group">
           <nav className="navbar">
@@ -95,7 +96,7 @@ export default function Header() {
               <img
                 src={arrowUpRight}
                 alt=""
-                style={{ display: "inline-block", verticalAlign: "middle", scale: "75%" }}
+                style={{ display: "inline-block", verticalAlign: "middle", scale: "75%", opacity: "0.5" }}
               />
             </a>
           </nav>
