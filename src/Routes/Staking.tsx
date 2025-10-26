@@ -63,22 +63,25 @@ function Staking() {
           <StakingStats />
 
           {/* How It Works Section */}
-          <div style={{ marginTop: "2rem", marginBottom: "3rem" }}>
+          <div style={{ marginTop: "2rem", marginBottom: "3rem", width: "100%" }}>
             <h2
+              className="stats-title"
               style={{
                 fontSize: "1.25rem",
-                fontWeight: "600",
+                fontWeight: "700",
                 color: "#C4B5A0",
                 margin: "0 0 1.5rem 0",
+                fontFamily: "'Poppins', sans-serif",
               }}
             >
               How It Works
             </h2>
             <div
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                gap: "1.5rem",
+                display: "flex",
+                flexDirection: "column",
+                gap: "1rem",
+                width: "100%",
               }}
             >
               <div
@@ -86,7 +89,10 @@ function Staking() {
                   background: "#4A3420",
                   borderRadius: "16px",
                   border: "3px solid #5A4530",
-                  padding: "2rem",
+                  padding: "1.5rem 2rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1.5rem",
                 }}
               >
                 <div
@@ -98,34 +104,35 @@ function Staking() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    marginBottom: "1rem",
+                    flexShrink: 0,
                   }}
                 >
                   <span style={{ fontSize: "2rem" }}>🔒</span>
                 </div>
-                <h3
-                  style={{
-                    fontSize: "1.1rem",
-                    fontWeight: "700",
-                    color: "white",
-                    margin: "0 0 0.75rem 0",
-                    fontFamily: "'Poppins', sans-serif",
-                  }}
-                >
-                  1. Stake your NFT
-                </h3>
-                <p
-                  style={{
-                    fontSize: "0.9rem",
-                    fontWeight: "400",
-                    color: "#C4B5A0",
-                    lineHeight: "1.6",
-                    margin: 0,
-                  }}
-                >
-                  Simply lock your NFT to start earning passive rewards
-                  immediately. Your NFT stays safe and you keep full ownership!
-                </p>
+                <div style={{ flex: 1 }}>
+                  <h3
+                    style={{
+                      fontSize: "1.1rem",
+                      fontWeight: "700",
+                      color: "white",
+                      margin: "0 0 0.5rem 0",
+                      fontFamily: "'Poppins', sans-serif",
+                    }}
+                  >
+                    1. Stake your NFT
+                  </h3>
+                  <p
+                    style={{
+                      fontSize: "0.9rem",
+                      fontWeight: "400",
+                      color: "#C4B5A0",
+                      lineHeight: "1.6",
+                      margin: 0,
+                    }}
+                  >
+                    Simply lock your NFT to start earning passive rewards immediately. Your NFT stays safe and you keep full ownership!
+                  </p>
+                </div>
               </div>
 
               <div
@@ -133,7 +140,10 @@ function Staking() {
                   background: "#4A3420",
                   borderRadius: "16px",
                   border: "3px solid #5A4530",
-                  padding: "2rem",
+                  padding: "1.5rem 2rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1.5rem",
                 }}
               >
                 <div
@@ -145,35 +155,35 @@ function Staking() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    marginBottom: "1rem",
+                    flexShrink: 0,
                   }}
                 >
                   <span style={{ fontSize: "2rem" }}>📈</span>
                 </div>
-                <h3
-                  style={{
-                    fontSize: "1.1rem",
-                    fontWeight: "700",
-                    color: "white",
-                    margin: "0 0 0.75rem 0",
-                    fontFamily: "'Poppins', sans-serif",
-                  }}
-                >
-                  2. Watch Your Rewards Grow
-                </h3>
-                <p
-                  style={{
-                    fontSize: "0.9rem",
-                    fontWeight: "400",
-                    color: "#C4B5A0",
-                    lineHeight: "1.6",
-                    margin: 0,
-                  }}
-                >
-                  Earn rewards automatically every second! The longer you stay,
-                  the more you earn - your rewards multiply every 30 days (2x
-                  after 30 days, 3x after 60 days, and so on).
-                </p>
+                <div style={{ flex: 1 }}>
+                  <h3
+                    style={{
+                      fontSize: "1.1rem",
+                      fontWeight: "700",
+                      color: "white",
+                      margin: "0 0 0.5rem 0",
+                      fontFamily: "'Poppins', sans-serif",
+                    }}
+                  >
+                    2. Watch Your Rewards Grow
+                  </h3>
+                  <p
+                    style={{
+                      fontSize: "0.9rem",
+                      fontWeight: "400",
+                      color: "#C4B5A0",
+                      lineHeight: "1.6",
+                      margin: 0,
+                    }}
+                  >
+                    Earn rewards automatically every second! The longer you stay, the more you earn - your rewards multiply every 30 days (2x after 30 days, 3x after 60 days, and so on).
+                  </p>
+                </div>
               </div>
 
               <div
@@ -181,7 +191,10 @@ function Staking() {
                   background: "#4A3420",
                   borderRadius: "16px",
                   border: "3px solid #5A4530",
-                  padding: "2rem",
+                  padding: "1.5rem 2rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1.5rem",
                 }}
               >
                 <div
@@ -193,35 +206,35 @@ function Staking() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    marginBottom: "1rem",
+                    flexShrink: 0,
                   }}
                 >
                   <span style={{ fontSize: "2rem" }}>💰</span>
                 </div>
-                <h3
-                  style={{
-                    fontSize: "1.1rem",
-                    fontWeight: "700",
-                    color: "white",
-                    margin: "0 0 0.75rem 0",
-                    fontFamily: "'Poppins', sans-serif",
-                  }}
-                >
-                  3. Collect Anytime
-                </h3>
-                <p
-                  style={{
-                    fontSize: "0.9rem",
-                    fontWeight: "400",
-                    color: "#C4B5A0",
-                    lineHeight: "1.6",
-                    margin: 0,
-                  }}
-                >
-                  Claim your earnings whenever you want while keeping your NFT
-                  locked, or unlock to get everything back at once. You're always
-                  in control!
-                </p>
+                <div style={{ flex: 1 }}>
+                  <h3
+                    style={{
+                      fontSize: "1.1rem",
+                      fontWeight: "700",
+                      color: "white",
+                      margin: "0 0 0.5rem 0",
+                      fontFamily: "'Poppins', sans-serif",
+                    }}
+                  >
+                    3. Collect Anytime
+                  </h3>
+                  <p
+                    style={{
+                      fontSize: "0.9rem",
+                      fontWeight: "400",
+                      color: "#C4B5A0",
+                      lineHeight: "1.6",
+                      margin: 0,
+                    }}
+                  >
+                    Claim your earnings whenever you want while keeping your NFT locked, or unlock to get everything back at once. You're always in control!
+                  </p>
+                </div>
               </div>
 
               <div
@@ -229,7 +242,10 @@ function Staking() {
                   background: "#4A3420",
                   borderRadius: "16px",
                   border: "3px solid #5A4530",
-                  padding: "2rem",
+                  padding: "1.5rem 2rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1.5rem",
                 }}
               >
                 <div
@@ -241,35 +257,35 @@ function Staking() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    marginBottom: "1rem",
+                    flexShrink: 0,
                   }}
                 >
                   <span style={{ fontSize: "2rem" }}>🔥</span>
                 </div>
-                <h3
-                  style={{
-                    fontSize: "1.1rem",
-                    fontWeight: "700",
-                    color: "white",
-                    margin: "0 0 0.75rem 0",
-                    fontFamily: "'Poppins', sans-serif",
-                  }}
-                >
-                  4. Supercharge with Burn Mode
-                </h3>
-                <p
-                  style={{
-                    fontSize: "0.9rem",
-                    fontWeight: "400",
-                    color: "#C4B5A0",
-                    lineHeight: "1.6",
-                    margin: 0,
-                  }}
-                >
-                  Ready to go all-in? Permanently sacrifice your NFT to activate
-                  mega bonus rewards! Only for the most dedicated - there's no
-                  going back.
-                </p>
+                <div style={{ flex: 1 }}>
+                  <h3
+                    style={{
+                      fontSize: "1.1rem",
+                      fontWeight: "700",
+                      color: "white",
+                      margin: "0 0 0.5rem 0",
+                      fontFamily: "'Poppins', sans-serif",
+                    }}
+                  >
+                    4. Supercharge with Burn Mode
+                  </h3>
+                  <p
+                    style={{
+                      fontSize: "0.9rem",
+                      fontWeight: "400",
+                      color: "#C4B5A0",
+                      lineHeight: "1.6",
+                      margin: 0,
+                    }}
+                  >
+                    Ready to go all-in? Permanently sacrifice your NFT to activate mega bonus rewards! Only for the most dedicated - there's no going back.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
