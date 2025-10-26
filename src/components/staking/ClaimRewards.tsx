@@ -3,7 +3,7 @@ import { useBatchClaim, useMultiPreviewPayout } from '@/hooks/useNFTStaking';
 import { useRewardsTokenInfo } from '@/hooks/useRewardsToken';
 import { formatTokenAmount } from '@/lib/stakingUtils';
 import { NFTSelector, NFTSelectorRef } from './NFTSelector';
-import GeneralButton from '../atoms/GeneralButton/GeneralButton';
+import GeneralButtonClean from '../atoms/GeneralButtonClean/GeneralButtonClean';
 import { useAppDispatch } from '@/hooks/useAppSelector';
 import { openPopUp } from '@/config/redux/popUpSlice';
 
@@ -108,7 +108,7 @@ export function ClaimRewards() {
         </div>
       )}
 
-      <GeneralButton
+      <GeneralButtonClean
         onClick={handleClaim}
         disabled={selectedTokenIds.length === 0}
         loading={isPending || isConfirming}
@@ -119,7 +119,7 @@ export function ClaimRewards() {
             ? `Claiming NFT ${currentBatch}/${totalBatches}...`
             : 'Preparing...'
           : `Claim ${selectedTokenIds.length > 0 ? selectedTokenIds.length : ''} NFT${selectedTokenIds.length > 1 ? 's' : selectedTokenIds.length === 1 ? '' : 's'}`}
-      </GeneralButton>
+      </GeneralButtonClean>
     </div>
   );
 }

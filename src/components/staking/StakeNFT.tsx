@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "re
 import { useBatchStake } from "@/hooks/useNFTStaking";
 import { useSetApprovalForAll, useIsApproved } from "@/hooks/useNFT";
 import { NFTSelector, NFTSelectorRef } from "./NFTSelector";
-import GeneralButton from "../atoms/GeneralButton/GeneralButton";
+import GeneralButtonClean from "../atoms/GeneralButtonClean/GeneralButtonClean";
 import { useAppDispatch } from "@/hooks/useAppSelector";
 import { openPopUp } from "@/config/redux/popUpSlice";
 
@@ -261,7 +261,7 @@ export const StakeNFT = forwardRef<StakeNFTRef, StakeNFTProps>(({ onSuccess }, r
       )}
 
       {selectedTokenIds.length > 0 && !isApprovedForAll && (
-        <GeneralButton
+        <GeneralButtonClean
           onClick={handleApprove}
           loading={isApproving || isApprovingConfirming || isStaking || isConfirming}
           style={{ width: "100%", marginTop: "1rem" }}
@@ -271,11 +271,11 @@ export const StakeNFT = forwardRef<StakeNFTRef, StakeNFTProps>(({ onSuccess }, r
             : isStaking || isConfirming
             ? "Staking..."
             : `Approve All & Stake ${selectedTokenIds.length} NFT${selectedTokenIds.length > 1 ? 's' : ''}`}
-        </GeneralButton>
+        </GeneralButtonClean>
       )}
 
       {selectedTokenIds.length > 0 && isApprovedForAll && (
-        <GeneralButton
+        <GeneralButtonClean
           onClick={handleStake}
           loading={isStaking || isConfirming}
           style={{ width: "100%", marginTop: "1rem" }}
@@ -285,7 +285,7 @@ export const StakeNFT = forwardRef<StakeNFTRef, StakeNFTProps>(({ onSuccess }, r
               ? `Staking Batch ${currentBatch}/${totalBatches}...`
               : "Preparing..."
             : `Stake ${selectedTokenIds.length} NFT${selectedTokenIds.length > 1 ? 's' : ''}`}
-        </GeneralButton>
+        </GeneralButtonClean>
       )}
     </div>
   );

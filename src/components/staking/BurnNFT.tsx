@@ -3,7 +3,7 @@ import { useBatchBurn, useStakingParams } from "@/hooks/useNFTStaking";
 import { useSetApprovalForAll, useIsApproved } from "@/hooks/useNFT";
 import { formatBps } from "@/lib/stakingUtils";
 import { NFTSelector, NFTSelectorRef } from "./NFTSelector";
-import GeneralButton from "../atoms/GeneralButton/GeneralButton";
+import GeneralButtonClean from "../atoms/GeneralButtonClean/GeneralButtonClean";
 import { useAppDispatch } from "@/hooks/useAppSelector";
 import { openPopUp } from "@/config/redux/popUpSlice";
 import { useUserNFTs } from "@/hooks/useUserNFTs";
@@ -178,7 +178,7 @@ export function BurnNFT() {
       </div>
 
       {selectedTokenIds.length > 0 && needsApproval && (
-        <GeneralButton
+        <GeneralButtonClean
           onClick={handleApprove}
           loading={isApproving || isApprovingConfirming || isPending || isConfirming}
           style={{ width: "100%", marginTop: "1rem" }}
@@ -188,11 +188,11 @@ export function BurnNFT() {
             : isPending || isConfirming
             ? "Burning..."
             : `Approve & Burn ${selectedTokenIds.length} NFT${selectedTokenIds.length > 1 ? 's' : ''}`}
-        </GeneralButton>
+        </GeneralButtonClean>
       )}
 
       {selectedTokenIds.length > 0 && !needsApproval && (
-        <GeneralButton
+        <GeneralButtonClean
           onClick={() => batchBurn(selectedTokenIds)}
           loading={isPending || isConfirming}
           style={{
@@ -206,7 +206,7 @@ export function BurnNFT() {
               ? `Burning NFT ${currentBatch}/${totalBatches}...`
               : "Preparing..."
             : `Burn ${selectedTokenIds.length} NFT${selectedTokenIds.length > 1 ? 's' : ''}`}
-        </GeneralButton>
+        </GeneralButtonClean>
       )}
     </div>
   );

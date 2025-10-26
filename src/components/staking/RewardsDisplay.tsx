@@ -41,7 +41,10 @@ export function RewardsDisplay() {
 
   return (
     <div
+      className="rewards-display-container"
       style={{
+        width: "100%",
+        marginBottom: "2rem",
         borderRadius: "16px",
         padding: "2rem",
         border: "3px solid #5A4530",

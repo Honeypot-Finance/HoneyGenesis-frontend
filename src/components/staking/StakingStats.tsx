@@ -6,8 +6,9 @@ export function StakingStats() {
   const { rewardRatePerSecond, burnBonusBps } = useStakingParams();
 
   return (
-    <div style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+    <div style={{ marginTop: '2rem', marginBottom: '2rem', width: '100%' }}>
       <h2
+        className="stats-title"
         style={{
           fontSize: '1.25rem',
           fontWeight: '600',
@@ -21,9 +22,10 @@ export function StakingStats() {
       <div
         className="staking-params-grid"
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          display: 'flex',
+          justifyContent: 'space-between',
           gap: '2rem',
+          width: '100%',
         }}
       >
         {/* Base Rewards per Second */}

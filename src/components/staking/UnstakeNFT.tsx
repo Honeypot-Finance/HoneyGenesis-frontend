@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { useBatchUnstake } from '@/hooks/useNFTStaking';
 import { NFTSelector, NFTSelectorRef } from './NFTSelector';
-import GeneralButton from '../atoms/GeneralButton/GeneralButton';
+import GeneralButtonClean from '../atoms/GeneralButtonClean/GeneralButtonClean';
 import { useAppDispatch } from '@/hooks/useAppSelector';
 import { openPopUp } from '@/config/redux/popUpSlice';
 
@@ -80,7 +80,7 @@ export const UnstakeNFT = forwardRef<UnstakeNFTRef, UnstakeNFTProps>(({ onSucces
         title="Select NFTs to Unstake"
       />
 
-      <GeneralButton
+      <GeneralButtonClean
         onClick={handleUnstake}
         disabled={selectedTokenIds.length === 0}
         loading={isPending || isConfirming}
@@ -91,7 +91,7 @@ export const UnstakeNFT = forwardRef<UnstakeNFTRef, UnstakeNFTProps>(({ onSucces
             ? `Unstaking Batch ${currentBatch}/${totalBatches}...`
             : 'Preparing...'
           : `Unstake ${selectedTokenIds.length > 0 ? selectedTokenIds.length : ''} NFT${selectedTokenIds.length > 1 ? 's' : selectedTokenIds.length === 1 ? '' : 's'}`}
-      </GeneralButton>
+      </GeneralButtonClean>
     </div>
   );
 });

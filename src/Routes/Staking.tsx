@@ -51,9 +51,7 @@ function Staking() {
           </p>
 
           {/* Rewards Display with NFT Cards */}
-          <div style={{ marginBottom: "2rem" }}>
-            <RewardsDisplay />
-          </div>
+          <RewardsDisplay />
 
           {/* Global Stats - Below Rewards */}
           <GlobalStats />

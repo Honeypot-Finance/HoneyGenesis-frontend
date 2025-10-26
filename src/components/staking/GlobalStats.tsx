@@ -12,8 +12,9 @@ export function GlobalStats() {
 
   return (
     <>
-      <div style={{ marginBottom: "2rem" }}>
+      <div style={{ marginBottom: "2rem", width: "100%" }}>
         <h2
+          className="stats-title"
           style={{
             fontSize: "1.25rem",
             fontWeight: "600",
@@ -34,9 +35,10 @@ export function GlobalStats() {
           <div
             className="global-stats-grid"
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
+              display: "flex",
+              justifyContent: "space-between",
               gap: "2rem",
+              width: "100%",
             }}
           >
             {/* Total Rewards Claimed */}
