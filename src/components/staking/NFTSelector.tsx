@@ -1,6 +1,6 @@
 import { useAccount } from 'wagmi';
 import { useUserNFTs } from '@/hooks/useUserNFTs';
-import { useImperativeHandle, forwardRef } from 'react';
+import { useImperativeHandle, forwardRef, useState } from 'react';
 
 interface NFTSelectorProps {
   onSelect: (tokenId: bigint) => void;
@@ -21,6 +21,7 @@ export const NFTSelector = forwardRef<NFTSelectorRef, NFTSelectorProps>(
   ({ onSelect, selectedTokenId, mode = 'wallet', title, multiSelect = false, selectedTokenIds = [], onMultiSelect }, ref) => {
     const { isConnected } = useAccount();
     const { nfts, isLoading, hasNFTs, refetch } = useUserNFTs(mode);
+    const [lastSelectedIndex, setLastSelectedIndex] = useState<number | null>(null);
 
     // Expose refetch function to parent via ref
     useImperativeHandle(ref, () => ({
@@ -40,17 +41,37 @@ export const NFTSelector = forwardRef<NFTSelectorRef, NFTSelectorProps>(
     );
   }
 
-  const handleSelectNFT = (tokenId: string) => {
+  const handleSelectNFT = (tokenId: string, index: number, shiftKey: boolean) => {
     if (multiSelect && onMultiSelect) {
       const tokenIdBigInt = BigInt(tokenId);
       const isAlreadySelected = selectedTokenIds.some(id => id === tokenIdBigInt);
 
-      if (isAlreadySelected) {
-        // Remove from selection
-        onMultiSelect(selectedTokenIds.filter(id => id !== tokenIdBigInt));
+      // Handle shift-click for range selection
+      if (shiftKey && lastSelectedIndex !== null && lastSelectedIndex !== index) {
+        const start = Math.min(lastSelectedIndex, index);
+        const end = Math.max(lastSelectedIndex, index);
+        const rangeTokenIds = nfts.slice(start, end + 1).map(nft => BigInt(nft.tokenId));
+
+        // Combine existing selections with range
+        const newSelection = [...selectedTokenIds];
+        rangeTokenIds.forEach(id => {
+          if (!newSelection.some(existingId => existingId === id)) {
+            newSelection.push(id);
+          }
+        });
+
+        onMultiSelect(newSelection);
+        setLastSelectedIndex(index);
       } else {
-        // Add to selection
-        onMultiSelect([...selectedTokenIds, tokenIdBigInt]);
+        // Normal click behavior
+        if (isAlreadySelected) {
+          // Remove from selection
+          onMultiSelect(selectedTokenIds.filter(id => id !== tokenIdBigInt));
+        } else {
+          // Add to selection
+          onMultiSelect([...selectedTokenIds, tokenIdBigInt]);
+        }
+        setLastSelectedIndex(index);
       }
     } else {
       onSelect(BigInt(tokenId));
@@ -77,7 +98,7 @@ export const NFTSelector = forwardRef<NFTSelectorRef, NFTSelectorProps>(
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
             <p style={{ color: '#999999', fontSize: '0.9rem', margin: 0 }}>
               {multiSelect
-                ? `Select multiple NFTs (${selectedTokenIds.length} selected):`
+                ? `Select multiple NFTs (${selectedTokenIds.length} selected) - Hold Shift to select range`
                 : mode === 'wallet' ? 'Select an NFT from your wallet:' :
                   mode === 'all-burnable' ? 'Select an NFT to burn (staked or unstaked):' :
                   mode === 'claimable' ? 'Select NFTs to claim rewards from:' :
@@ -148,14 +169,14 @@ export const NFTSelector = forwardRef<NFTSelectorRef, NFTSelectorProps>(
             )}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '1rem', maxHeight: '300px', overflowY: 'auto' }}>
-            {nfts.map((nft) => (
+            {nfts.map((nft, index) => (
               <NFTCard
                 key={nft.id}
                 tokenId={nft.tokenId}
                 isSelected={multiSelect
                   ? selectedTokenIds.some(id => id.toString() === nft.tokenId)
                   : selectedTokenId?.toString() === nft.tokenId}
-                onSelect={() => handleSelectNFT(nft.tokenId)}
+                onSelect={(shiftKey: boolean) => handleSelectNFT(nft.tokenId, index, shiftKey)}
                 isStaked={nft.isStaked}
                 burned={nft.burned}
               />
@@ -210,13 +231,13 @@ export const NFTSelector = forwardRef<NFTSelectorRef, NFTSelectorProps>(
 function NFTCard({ tokenId, isSelected, onSelect, isStaked, burned }: {
   tokenId: string;
   isSelected: boolean;
-  onSelect: () => void;
+  onSelect: (shiftKey: boolean) => void;
   isStaked?: boolean;
   burned?: boolean;
 }) {
   return (
     <button
-      onClick={onSelect}
+      onClick={(e) => onSelect(e.shiftKey)}
       style={{
         padding: '1rem',
         background: isSelected ? 'rgba(247, 149, 29, 0.2)' : '#31220c',
