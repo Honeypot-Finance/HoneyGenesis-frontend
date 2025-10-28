@@ -2,6 +2,9 @@ import { useGlobalStats } from "@/hooks/useGlobalStats";
 import { useRewardsTokenInfo } from "@/hooks/useRewardsToken";
 import { formatTokenAmount } from "@/lib/stakingUtils";
 
+// Hard-coded Arbitrum burn count to add to Berachain burns
+const ARBITRUM_BURN_COUNT = 282;
+
 export function GlobalStats() {
   const { stats, isLoading, error } = useGlobalStats();
   const { symbol, decimals } = useRewardsTokenInfo();
@@ -107,7 +110,7 @@ export function GlobalStats() {
                   fontFamily: "'Clash Display', sans-serif",
                 }}
               >
-                {stats.totalBurned}
+                {parseInt(stats.totalBurned) + ARBITRUM_BURN_COUNT}
               </p>
               <p
                 style={{
