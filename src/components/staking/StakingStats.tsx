@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useStakingParams } from '@/hooks/useNFTStaking';
 import { formatTokenAmount, formatBps, calculateRewardsPerDay } from '@/lib/stakingUtils';
+import { Tooltip } from '@/components/atoms/Tooltip/Tooltip';
 
 export function StakingStats() {
   const { rewardRatePerSecond, burnBonusBps } = useStakingParams();
@@ -50,16 +51,17 @@ export function StakingStats() {
               }}
             >
               Base Rewards per Second{' '}
-              <span
-                style={{
-                  fontSize: '1.2rem',
-                  color: '#A08B6F',
-                  cursor: 'help',
-                }}
-                title="Base rewards earned per second of staking at 1x multiplier"
-              >
-                ⓘ
-              </span>
+              <Tooltip content="Base rewards earned per second of staking at 1x multiplier">
+                <span
+                  style={{
+                    fontSize: '1.2rem',
+                    color: '#A08B6F',
+                    cursor: 'help',
+                  }}
+                >
+                  ⓘ
+                </span>
+              </Tooltip>
             </p>
           </div>
         )}
@@ -86,16 +88,17 @@ export function StakingStats() {
               }}
             >
               Burn Bonus{' '}
-              <span
-                style={{
-                  fontSize: '1.2rem',
-                  color: '#A08B6F',
-                  cursor: 'help',
-                }}
-                title="Additional rewards multiplier when you burn your NFT"
-              >
-                ⓘ
-              </span>
+              <Tooltip content="Additional rewards multiplier when you burn your NFT">
+                <span
+                  style={{
+                    fontSize: '1.2rem',
+                    color: '#A08B6F',
+                    cursor: 'help',
+                  }}
+                >
+                  ⓘ
+                </span>
+              </Tooltip>
             </p>
           </div>
         )}
@@ -121,16 +124,17 @@ export function StakingStats() {
             }}
           >
             Multiplier System{' '}
-            <span
-              style={{
-                fontSize: '1.2rem',
-                color: '#A08B6F',
-                cursor: 'help',
-              }}
-              title="Rewards multiply every 30 days: 1x (0-30d), 2x (30-60d), 3x (60-90d), and so on"
-            >
-              ⓘ
-            </span>
+            <Tooltip content="Rewards multiply every 30 days: 1x (0-30d), 2x (30-60d), 3x (60-90d), and so on">
+              <span
+                style={{
+                  fontSize: '1.2rem',
+                  color: '#A08B6F',
+                  cursor: 'help',
+                }}
+              >
+                ⓘ
+              </span>
+            </Tooltip>
           </p>
         </div>
       </div>
