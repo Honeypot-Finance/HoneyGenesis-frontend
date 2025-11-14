@@ -1,4 +1,3 @@
-import { useAccount } from "wagmi";
 import MainContentWrapper from "@/components/template/MainContentWrapper/MainContentWrapper";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
@@ -8,10 +7,11 @@ import { StakingStats } from "@/components/staking/StakingStats";
 import { StakingTabs } from "@/components/staking/StakingTabs";
 import { NFTRollingBanner } from "@/components/staking/NFTRollingBanner";
 import { TestToolkit } from "@/components/staking/TestToolkit";
+import { useDevAccount } from "@/hooks/useDevAccount";
 import "@/css/staking.css";
 
 function Staking() {
-  const { isConnected } = useAccount();
+  const { isConnected } = useDevAccount();
   const { open } = useWeb3Modal();
   const isDev = import.meta.env.VITE_DEV === "true";
 

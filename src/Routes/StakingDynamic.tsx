@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAccount, useReadContract } from "wagmi";
+import { useReadContract } from "wagmi";
 import MainContentWrapper from "@/components/template/MainContentWrapper/MainContentWrapper";
 import GeneralButton from "@/components/atoms/GeneralButton/GeneralButton";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
@@ -7,10 +7,11 @@ import { StakingTabsDynamic } from "@/components/staking/StakingTabsDynamic";
 import { NFTStakingABI } from "@/abi/NFTStakingABI";
 import { DEFAULT_STAKING_CHAIN_ID } from "@/consts";
 import { TestToolkit } from "@/components/staking/TestToolkit";
+import { useDevAccount } from "@/hooks/useDevAccount";
 import "@/css/staking.css";
 
 function StakingDynamic() {
-  const { isConnected } = useAccount();
+  const { isConnected } = useDevAccount();
   const { open } = useWeb3Modal();
   const isDev = import.meta.env.VITE_DEV === "true";
   const [stakingContractAddress, setStakingContractAddress] =

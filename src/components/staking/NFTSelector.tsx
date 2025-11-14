@@ -1,5 +1,5 @@
-import { useAccount } from 'wagmi';
 import { useUserNFTs } from '@/hooks/useUserNFTs';
+import { useDevAccount } from '@/hooks/useDevAccount';
 import { useImperativeHandle, forwardRef, useState } from 'react';
 
 interface NFTSelectorProps {
@@ -19,7 +19,7 @@ export interface NFTSelectorRef {
 
 export const NFTSelector = forwardRef<NFTSelectorRef, NFTSelectorProps>(
   ({ onSelect, selectedTokenId, mode = 'wallet', title, multiSelect = false, selectedTokenIds = [], onMultiSelect }, ref) => {
-    const { isConnected } = useAccount();
+    const { isConnected } = useDevAccount();
     const { nfts, isLoading, hasNFTs, refetch } = useUserNFTs(mode);
     const [lastSelectedIndex, setLastSelectedIndex] = useState<number | null>(null);
 

@@ -1,4 +1,5 @@
-import { useAccount, useChainId, useSwitchChain } from "wagmi";
+import { useChainId, useSwitchChain } from "wagmi";
+import { useDevAccount } from "@/hooks/useDevAccount";
 import {
   useRewardsBalance,
   useRewardsTokenInfo,
@@ -11,7 +12,7 @@ import { useUserNFTs } from "@/hooks/useUserNFTs";
 import { useMultiPreviewPayout } from "@/hooks/useNFTStaking";
 
 export function RewardsDisplay() {
-  const { address } = useAccount();
+  const { address } = useDevAccount();
   const chainId = useChainId();
   const { balance, isLoading, error } = useRewardsBalance(address);
   const { symbol, name, decimals } = useRewardsTokenInfo();

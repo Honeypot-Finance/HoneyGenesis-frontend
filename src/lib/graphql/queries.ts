@@ -3,7 +3,7 @@
  * Note: NFT subgraph only tracks ownership, not staking/burn status
  */
 export const GET_USER_NFTS_FROM_NFT_SUBGRAPH = `
-  query GetUserNFTs($owner: String!) {
+  query GetUserNFTs($owner: String!, $skip: Int = 0) {
     nfts(
       where: {
         ownerAddress: $owner
@@ -11,6 +11,7 @@ export const GET_USER_NFTS_FROM_NFT_SUBGRAPH = `
       orderBy: tokenId
       orderDirection: asc
       first: 1000
+      skip: $skip
     ) {
       id
       contract
@@ -24,7 +25,7 @@ export const GET_USER_NFTS_FROM_NFT_SUBGRAPH = `
  * Query to get stakes from Staking subgraph
  */
 export const GET_USER_STAKES_FROM_STAKING_SUBGRAPH = `
-  query GetUserStakes($owner: String!) {
+  query GetUserStakes($owner: String!, $skip: Int = 0) {
     stakes(
       where: {
         owner: $owner
@@ -32,6 +33,7 @@ export const GET_USER_STAKES_FROM_STAKING_SUBGRAPH = `
       orderBy: tokenId
       orderDirection: asc
       first: 1000
+      skip: $skip
     ) {
       id
       tokenId
@@ -49,7 +51,7 @@ export const GET_USER_STAKES_FROM_STAKING_SUBGRAPH = `
  * Uses the NFT Staking subgraph schema
  */
 export const GET_USER_STAKES = `
-  query GetUserStakes($owner: String!) {
+  query GetUserStakes($owner: String!, $skip: Int = 0) {
     stakes(
       where: {
         owner: $owner
@@ -57,6 +59,7 @@ export const GET_USER_STAKES = `
       orderBy: tokenId
       orderDirection: asc
       first: 1000
+      skip: $skip
     ) {
       id
       tokenId
@@ -78,7 +81,7 @@ export const GET_USER_STAKES = `
  * Uses the NFT Staking subgraph schema
  */
 export const GET_USER_BURNABLE_STAKES = `
-  query GetUserBurnableStakes($owner: String!) {
+  query GetUserBurnableStakes($owner: String!, $skip: Int = 0) {
     stakes(
       where: {
         owner: $owner
@@ -87,6 +90,7 @@ export const GET_USER_BURNABLE_STAKES = `
       orderBy: tokenId
       orderDirection: asc
       first: 1000
+      skip: $skip
     ) {
       id
       tokenId
@@ -107,7 +111,7 @@ export const GET_USER_BURNABLE_STAKES = `
  * Query to get burnable staked NFTs from Staking subgraph
  */
 export const GET_USER_BURNABLE_STAKES_FROM_STAKING = `
-  query GetUserBurnableStakes($owner: String!) {
+  query GetUserBurnableStakes($owner: String!, $skip: Int = 0) {
     stakes(
       where: {
         owner: $owner
@@ -116,6 +120,7 @@ export const GET_USER_BURNABLE_STAKES_FROM_STAKING = `
       orderBy: tokenId
       orderDirection: asc
       first: 1000
+      skip: $skip
     ) {
       id
       tokenId
@@ -135,7 +140,7 @@ export const GET_USER_BURNABLE_STAKES_FROM_STAKING = `
  * Note: NFT subgraph only tracks ownership, filtering by stake/burn status done in app logic
  */
 export const GET_USER_BURNABLE_NFTS_FROM_NFT = `
-  query GetUserBurnableNFTs($owner: String!) {
+  query GetUserBurnableNFTs($owner: String!, $skip: Int = 0) {
     nfts(
       where: {
         ownerAddress: $owner
@@ -143,6 +148,7 @@ export const GET_USER_BURNABLE_NFTS_FROM_NFT = `
       orderBy: tokenId
       orderDirection: asc
       first: 1000
+      skip: $skip
     ) {
       id
       contract
@@ -157,7 +163,7 @@ export const GET_USER_BURNABLE_NFTS_FROM_NFT = `
  * Includes both NFTs owned by the user AND NFTs where user is the payoutRecipient
  */
 export const GET_USER_STAKES_FOR_CLAIMING = `
-  query GetUserStakesForClaiming($owner: String!) {
+  query GetUserStakesForClaiming($owner: String!, $skip: Int = 0) {
     stakes(
       where: {
         or: [
@@ -168,6 +174,7 @@ export const GET_USER_STAKES_FOR_CLAIMING = `
       orderBy: tokenId
       orderDirection: asc
       first: 1000
+      skip: $skip
     ) {
       id
       tokenId
@@ -191,7 +198,7 @@ export const GET_USER_STAKES_FOR_CLAIMING = `
  * Burn status should be tracked in Staking subgraph
  */
 export const GET_USER_BURNED_NFTS_FROM_NFT = `
-  query GetUserBurnedNFTs($owner: String!) {
+  query GetUserBurnedNFTs($owner: String!, $skip: Int = 0) {
     nfts(
       where: {
         ownerAddress: $owner
@@ -199,6 +206,7 @@ export const GET_USER_BURNED_NFTS_FROM_NFT = `
       orderBy: tokenId
       orderDirection: asc
       first: 1000
+      skip: $skip
     ) {
       id
       contract
