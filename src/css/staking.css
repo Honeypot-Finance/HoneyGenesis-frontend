@@ -1,0 +1,433 @@
+/* Staking Page Styles - Matching HoneyGenesis Theme */
+
+.App.staking {
+  min-height: 100vh;
+  overflow-y: auto;
+  background-color: #281C0B;
+  background-image: url(/background-pot-icon.svg);
+  background-repeat: repeat;
+}
+
+/* Staking Title - Matching Benefits Page */
+.staking-title {
+  font-family: 'Clash Display', sans-serif;
+  background: linear-gradient(90deg, #F7931A 0%, #FB9A1B 50%, #F7931A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 auto 1rem auto;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+}
+
+@media (min-width: 768px) {
+  .staking-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 1080px) {
+  .staking-title {
+    font-size: 4rem;
+  }
+}
+
+.staking-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  color: #FFDCA0B2;
+  margin: 0 auto 2rem auto;
+  max-width: 700px;
+  padding: 0 2rem;
+}
+
+@media (min-width: 768px) {
+  .staking-subtitle {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1080px) {
+  .staking-subtitle {
+    font-size: 1.5rem;
+  }
+}
+
+.App.staking .main {
+  max-width: 1200px;
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 15vh;
+  padding: 2rem;
+  padding-bottom: 10rem;
+  overflow-y: visible;
+  max-height: none;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+@media (min-width: 1080px) {
+  .App.staking {
+    display: block;
+  }
+
+  .App.staking .main {
+    grid-column: unset;
+    grid-row: unset;
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    margin-top: calc(10vh + 1rem); /* 10vh header + 1rem spacing */
+    padding: 2rem;
+    padding-top: 2rem;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+}
+
+/* Stats Title */
+.stats-title {
+  text-align: left;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .stats-title {
+    text-align: center;
+  }
+}
+
+/* Global Stats Grid */
+.global-stats-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .global-stats-grid {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* Staking Parameters Grid */
+.staking-params-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .staking-params-grid {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.staking-connect-prompt {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.staking-connect-prompt .desc {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 2rem 0;
+}
+
+/* Rewards Display */
+.rewards-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.rewards-display-container {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .rewards-display-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+}
+
+/* Stats Grid - Rewards and Global Stats side by side */
+.stats-grid {
+  margin-bottom: 2rem;
+}
+
+/* Staking Tabs */
+.staking-tabs-container {
+  background-color: #4A3420;
+  border-radius: 16px;
+  border: 3px solid #5A4530;
+  overflow: hidden;
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.staking-tabs-header {
+  display: flex;
+  border-bottom: 3px solid #5A4530;
+  background-color: transparent;
+  padding: 0;
+}
+
+.staking-tab {
+  flex: 1;
+  padding: 1.25rem 1rem;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-bottom: 3px solid transparent;
+  position: relative;
+  margin-bottom: -3px;
+}
+
+.staking-tab:hover {
+  color: #F7A129;
+  background-color: rgba(247, 161, 41, 0.05);
+}
+
+.staking-tab.active {
+  color: #F7A129;
+  background-color: transparent;
+  border-bottom: 3px solid #F7A129;
+}
+
+/* Tab Content */
+.staking-tab-content {
+  padding: 2rem;
+  min-height: 300px;
+  max-height: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.tab-panel {
+  color: white;
+}
+
+.tab-panel h3 {
+  color: #ffcd4d;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.tab-panel p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.info-box {
+  background-color: rgba(247, 149, 29, 0.1);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.info-box p {
+  margin: 0;
+  color: #ffcd4d;
+}
+
+/* How It Works Section */
+.how-it-works {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-section {
+  background-color: rgba(49, 34, 12, 0.5);
+  border-left: 4px solid #ffcd4d;
+  padding: 1.5rem;
+  border-radius: var(--border-radius-sm);
+}
+
+.info-section h3 {
+  color: #ffcd4d;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.info-section p {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.info-section.warning {
+  border-left-color: #f7941d;
+  background-color: rgba(247, 148, 29, 0.1);
+}
+
+.info-section.warning h3 {
+  color: #f7941d;
+}
+
+/* Benefit Cards - Enhanced Styling */
+.benefit-card {
+  background: linear-gradient(135deg, rgba(49, 34, 12, 0.8) 0%, rgba(41, 28, 10, 0.9) 100%);
+  border: 2px solid rgba(255, 205, 77, 0.3);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.benefit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #ffcd4d 0%, #f7951d 100%);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-5px);
+  border-color: #ffcd4d;
+  box-shadow: 0 8px 20px rgba(255, 205, 77, 0.2);
+}
+
+.benefit-card:hover::before {
+  transform: scaleX(1);
+}
+
+.benefit-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, rgba(255, 205, 77, 0.15) 0%, rgba(247, 149, 29, 0.15) 100%);
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.benefit-card:hover .benefit-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.benefit-card h3 {
+  color: #ffcd4d;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.benefit-card p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .App.staking .main {
+    padding: 1rem;
+    width: 100%;
+  }
+
+  .staking-tabs-header {
+    flex-direction: column;
+  }
+
+  .staking-tab {
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .staking-tab.active {
+    border-bottom: 1px solid #ffcd4d;
+    border-left: 4px solid #ffcd4d;
+  }
+
+  .staking-tab-content {
+    padding: 1rem;
+  }
+
+  .staking-connect-prompt {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .info-section {
+    padding: 1rem;
+  }
+
+  .info-section h3 {
+    font-size: 1.1rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .info-section p {
+    font-size: 0.9rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .rewards-display {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .benefit-card {
+    padding: 1.5rem;
+  }
+
+  .benefit-icon {
+    font-size: 3rem;
+    width: 70px;
+    height: 70px;
+  }
+
+  .benefit-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .benefit-card p {
+    font-size: 0.9rem;
+  }
+}

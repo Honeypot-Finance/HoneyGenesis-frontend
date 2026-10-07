@@ -1,0 +1,111 @@
+.tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-content {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  padding: 0.75rem 1rem;
+  background: #2A1810;
+  border: 2px solid #5A4530;
+  border-radius: 8px;
+  color: #C4B5A0;
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.5;
+  white-space: normal;
+  max-width: 320px;
+  min-width: 200px;
+  text-align: left;
+  word-wrap: break-word;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  animation: tooltip-fade-in 0.15s ease-out;
+}
+
+.tooltip-content::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #5A4530;
+}
+
+.tooltip-content::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: -2px;
+  border: 5px solid transparent;
+  border-top-color: #2A1810;
+  z-index: 1;
+}
+
+@keyframes tooltip-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .tooltip-content {
+    position: fixed;
+    white-space: normal;
+    max-width: calc(100vw - 40px);
+    min-width: 280px;
+    text-align: center;
+    font-size: 0.95rem;
+    padding: 1rem 1.25rem;
+    left: 50%;
+    bottom: auto;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin-bottom: 0;
+  }
+
+  .tooltip-content::after,
+  .tooltip-content::before {
+    display: none;
+  }
+}
+
+/* Responsive positioning - flip to top if too close to bottom */
+@media (max-height: 600px) {
+  .tooltip-content {
+    bottom: auto;
+    top: 100%;
+    margin-bottom: 0;
+    margin-top: 8px;
+  }
+
+  .tooltip-content::after {
+    top: auto;
+    bottom: 100%;
+    border-top-color: transparent;
+    border-bottom-color: #5A4530;
+  }
+
+  .tooltip-content::before {
+    top: auto;
+    bottom: 100%;
+    margin-top: 0;
+    margin-bottom: -2px;
+    border-top-color: transparent;
+    border-bottom-color: #2A1810;
+  }
+}

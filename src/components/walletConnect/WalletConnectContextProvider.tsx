@@ -1,14 +1,15 @@
 import { createWeb3Modal } from "@web3modal/wagmi/react";
-import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
+import { createConfig, http } from "wagmi";
 
 import { WagmiProvider } from "wagmi";
 import {
   arbitrum,
   //arbitrumSepolia,
   // mainnet
-  //berachainTestnet,
 } from "wagmi/chains";
+import { defineChain } from 'viem';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { walletConnect, injected, coinbaseWallet } from 'wagmi/connectors';
 
 // 0. Setup queryClient
 const queryClient = new QueryClient();
@@ -24,21 +25,80 @@ const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 
+// Define Berachain Mainnet
+const berachainMainnet = defineChain({
+  id: 80094,
+  name: 'Berachain',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'BERA',
+    symbol: 'BERA',
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://rpc.berachain.com'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Berascan',
+      url: 'https://berascan.com',
+    },
+  },
+  testnet: false,
+});
+
+// Define Berachain bArtio Testnet
+const berachainBartio = defineChain({
+  id: 80084,
+  name: 'Berachain bArtio',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'BERA',
+    symbol: 'BERA',
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://bartio.rpc.berachain.com'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Beratrail',
+      url: 'https://bartio.beratrail.io',
+    },
+  },
+  testnet: true,
+});
+
+// Put mainnet before testnet to ensure it's the default
 const chains = [
   //mainnet,
   arbitrum,
   //arbitrumSepolia,
-  //berachainTestnet,
+  berachainMainnet,
+  berachainBartio,
 ] as const;
-const config = defaultWagmiConfig({
-  chains, // required
-  projectId, // required
-  metadata, // required
-  enableWalletConnect: true, // Optional - true by default
-  enableInjected: true, // Optional - true by default
-  enableEIP6963: true, // Optional - true by default
-  enableCoinbase: true, // Optional - true by default
-  //...wagmiOptions, // Optional - Override createConfig parameters
+
+// Explicitly configure transports with correct RPC endpoints
+const config = createConfig({
+  chains,
+  transports: {
+    [arbitrum.id]: http(),
+    [berachainMainnet.id]: http('https://rpc.berachain.com', {
+      batch: true,
+      retryCount: 3,
+    }),
+    [berachainBartio.id]: http('https://bartio.rpc.berachain.com', {
+      batch: true,
+      retryCount: 3,
+    }),
+  },
+  connectors: [
+    walletConnect({ projectId, showQrModal: false }),
+    injected({ shimDisconnect: true }),
+    coinbaseWallet({ appName: metadata.name }),
+  ],
 });
 
 // 3. Create modal

@@ -47,8 +47,9 @@ export default function WalletConnectButton() {
       onClick={() => open()}
       style={{
         padding: "0.5rem 1rem",
-        borderWidth: "0.2rem",
+        border: "none",
         borderRadius: "1rem",
+        backgroundColor: "#3B2712",
       }}
     >
       {isConnecting
